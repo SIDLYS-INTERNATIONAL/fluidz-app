@@ -34,3 +34,4 @@ Sessions Templates Covers/
 
 # Claude Code worktrees
 .claude/worktrees/
+.vercel
