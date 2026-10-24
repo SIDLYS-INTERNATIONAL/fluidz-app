@@ -34,7 +34,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 24px;display:fl
 .btn-sp{background:var(--p);color:#fff}.btn-sp:hover{box-shadow:0 4px 20px rgba(224,136,122,0.3);transform:translateY(-1px)}
 .btn-sg{background:transparent;color:var(--tx2);border:1px solid var(--rule2) !important}.btn-sg:hover{border-color:var(--pbd) !important;color:var(--p)}
 .btn-app{background:var(--bg2);color:var(--tx);border:1px solid var(--rule2) !important;font-weight:700}.btn-app:hover{border-color:var(--sagebd) !important;color:var(--sage)}
-.lang-btn{background:transparent;border:1px solid var(--rule2) !important;color:var(--tx3);font-size:10px;padding:5px 9px;border-radius:8px;cursor:pointer;font-family:var(--fb)}.lang-btn:hover{color:var(--p);border-color:var(--pbd) !important}
 
 /* SECTIONS */
 .sec{padding:120px 24px;max-width:960px;margin:0 auto;position:relative}
@@ -98,6 +97,31 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 24px;display:fl
 .sn{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-weight:800;font-size:16px;flex-shrink:0;z-index:1}
 .st h3{font-family:var(--fh);font-size:16px;font-weight:700;margin-bottom:4px;letter-spacing:-0.02em}
 .st p{font-size:13px;color:var(--tx2);line-height:1.6}
+.st-shot{margin-top:14px;border-radius:14px;overflow:hidden;border:1px solid var(--rule2);max-width:480px;background:var(--bg2)}
+.st-shot img{display:block;width:100%;height:auto}
+
+/* DEMO VIDEO */
+.demo-wrap{margin-top:40px;border-radius:20px;overflow:hidden;border:1px solid var(--rule2);background:var(--bg1);position:relative}
+.demo-wrap video{display:block;width:100%;height:auto}
+.demo-note{font-size:12px;color:var(--tx3);margin-top:12px;line-height:1.6;max-width:600px}
+
+/* APP PREVIEW */
+.preview{padding:80px 24px;text-align:center}
+.pg{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:32px}
+.phone-frame{width:200px;position:relative;flex-shrink:0}
+.phone-notch{width:80px;height:6px;border-radius:0 0 8px 8px;background:var(--bg);margin:0 auto;position:relative;z-index:2}
+.phone-screen{background:var(--bg1);border:1px solid var(--rule2);border-radius:24px;overflow:hidden;min-height:340px;position:relative}
+.phone-screen::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 70%,rgba(224,136,122,0.03) 100%);pointer-events:none;z-index:1}
+.phone-label{text-align:center;font-size:12px;font-weight:600;color:var(--tx2);margin-top:10px}
+
+/* PRO BANNER */
+.pro-banner{padding:80px 24px;text-align:center;position:relative}
+.pro-banner-inner{max-width:700px;margin:0 auto;background:var(--bg1);border:1px solid var(--lavbd);border-radius:24px;padding:40px 32px;position:relative;overflow:hidden}
+.pro-banner-inner::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(144,128,186,0.08),transparent 70%);pointer-events:none}
+.pro-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:99px;background:var(--lavbg);border:1px solid var(--lavbd);font-size:11px;font-weight:700;color:var(--lav);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:16px}
+.btn-lav{padding:13px 28px;border-radius:14px;font-size:14px;font-weight:700;color:#fff;background:var(--lav);border:none;cursor:pointer;font-family:var(--fb);transition:all .2s;position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:6px}
+.btn-lav::after{content:'';position:absolute;top:0;left:-180%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent);animation:shm 3s ease-in-out infinite}
+.btn-lav:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(144,128,186,0.3)}
 
 /* WAITLIST */
 .waitlist{padding:100px 24px;text-align:center}
@@ -139,13 +163,12 @@ footer{padding:48px 24px 32px;border-top:1px solid var(--rule);max-width:960px;m
 <nav>
   <a href="index.html" class="logo">fluidz</a>
   <div class="nav-r">
-    <a href="index.html#features" class="hm" data-fr="Fluidz" data-en="Fluidz">Fluidz</a>
-    <a href="pro.html" class="hm" style="color:var(--lav)" data-fr="Fluidz Pro" data-en="Fluidz Pro">Fluidz Pro</a>
+    <a href="index.html#features" class="hm">Fluidz</a>
+    <a href="pro.html" class="hm" style="color:var(--lav)">Fluidz Pro</a>
     <a href="https://fluidz-app.vercel.app" class="btn-s btn-app" target="_blank">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 3h6v6"/><path d="M10 14L21 3"/><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/></svg>
-      <span data-fr="Ouvrir l'app" data-en="Open App">Open App</span>
+      <span>Open App</span>
     </a>
-    <button class="lang-btn" onclick="toggleLang()">FR</button>
   </div>
 </nav>
 
@@ -154,77 +177,124 @@ footer{padding:48px 24px 32px;border-top:1px solid var(--rule);max-width:960px;m
   <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
   <div class="hero-badge">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-    <span data-fr="Outil gratuit pour Grindr Web" data-en="Free tool for Grindr Web">Free tool for Grindr Web</span>
+    <span>Free tool for Grindr Web</span>
   </div>
-  <h1><em>Profile</em><br data-fr-hide>Hunter</h1>
-  <div class="tagline" data-fr="On l'a construit pour nous. On te le donne." data-en="We built it for ourselves. We're giving it to you.">We built it for ourselves. We're giving it to you.</div>
-  <p class="hero-p" data-fr="Une extension Chrome qui ajoute un panneau de recherche flottant sur Grindr Web : surligne ou filtre les profils de la grille par nom, retrouve tes favoris ★, et défile automatiquement la liste. Rien n'est automatisé sur les profils, rien n'est envoyé où que ce soit — tout reste dans ton navigateur." data-en="A Chrome extension that adds a floating search panel to Grindr Web: highlight or filter grid profiles by name, find your favorites ★, auto-scroll the list. Nothing is automated on profiles, nothing is sent anywhere — it all stays in your browser.">A Chrome extension that adds a floating search panel to Grindr Web: highlight or filter grid profiles by name, find your favorites ★, auto-scroll the list. Nothing is automated on profiles, nothing is sent anywhere — it all stays in your browser.</p>
+  <h1><em>Profile</em><br>Hunter</h1>
+  <div class="tagline">We built it for ourselves. We're giving it to you.</div>
+  <p class="hero-p">A Chrome extension that adds a floating search panel to Grindr Web: highlight or filter grid profiles by name, find your favorites ★, auto-scroll the list. Nothing is automated on profiles, nothing is sent anywhere — it all stays in your browser.</p>
   <div class="hero-cta">
-    <a href="#download" class="btn-l btn-p" data-fr="Télécharger gratuitement" data-en="Download for free">Download for free</a>
-    <a href="#how" class="btn-l btn-g" data-fr="Voir comment ça marche" data-en="See how it works">See how it works</a>
+    <a href="#download" class="btn-l btn-p">Download for free</a>
+    <a href="#how" class="btn-l btn-g">See how it works</a>
   </div>
 </section>
 
 <!-- WHAT IT DOES -->
 <section id="features" class="sec">
-  <div class="sec-label rv" style="color:var(--sage)" data-fr="Ce qu'il fait" data-en="What it does">What it does</div>
-  <h2 class="sec-title rv" data-fr="Retrouve un profil en secondes" data-en="Find a profile in seconds">Find a profile in seconds</h2>
-  <p class="sec-sub rv" data-fr="Grindr Web vide le contenu des cartes une fois qu'elles sortent de l'écran. Profile Hunter s'en souvient pour toi." data-en="Grindr Web clears a card's content once it scrolls off-screen. Profile Hunter remembers it for you.">Grindr Web clears a card's content once it scrolls off-screen. Profile Hunter remembers it for you.</p>
+  <div class="sec-label rv" style="color:var(--sage)">What it does</div>
+  <h2 class="sec-title rv">Find a profile in seconds</h2>
+  <p class="sec-sub rv">Grindr Web clears a card's content once it scrolls off-screen. Profile Hunter remembers it for you.</p>
   <div class="fg">
-    <div class="fc rv"><div class="fi" style="background:var(--p2);border:1px solid var(--pbd)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--p)" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div><h3 data-fr="Recherche par nom" data-en="Search by name">Search by name</h3><p data-fr="Tape un nom ou un emoji (ex : 🚀), plusieurs critères séparés par une virgule. Surligne ou masque les autres." data-en="Type a name or emoji (e.g. 🚀), several terms separated by commas. Highlight matches or hide everything else.">Type a name or emoji (e.g. 🚀), several terms separated by commas. Highlight matches or hide everything else.</p></div>
-    <div class="fc rv"><div class="fi" style="background:var(--lavbg);border:1px solid var(--lavbd)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--lav)" stroke-width="1.5" stroke-linecap="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg></div><h3 data-fr="Filtre ★ Favoris" data-en="★ Favorites filter">★ Favorites filter</h3><p data-fr="Détecte automatiquement les profils déjà en favori (la vraie icône Grindr, pas une supposition) et te permet de ne lister qu'eux." data-en="Automatically detects profiles already favorited (the real Grindr icon, not a guess) and lets you list only those.">Automatically detects profiles already favorited (the real Grindr icon, not a guess) and lets you list only those.</p></div>
-    <div class="fc rv"><div class="fi" style="background:var(--sagebg);border:1px solid var(--sagebd)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--sage)" stroke-width="1.5" stroke-linecap="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div><h3 data-fr="Défilement auto" data-en="Auto-scroll">Auto-scroll</h3><p data-fr="Fait défiler la grille à une vitesse adaptative, et peut s'arrêter tout seul dès qu'un nouveau résultat apparaît." data-en="Scrolls the grid at an adaptive pace, and can stop itself the moment a new match shows up.">Scrolls the grid at an adaptive pace, and can stop itself the moment a new match shows up.</p></div>
-    <div class="fc rv"><div class="fi" style="background:var(--p2);border:1px solid var(--pbd)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--p)" stroke-width="1.5" stroke-linecap="round"><path d="M5 8l6 6 6-6"/><path d="M5 8h14"/></svg></div><h3 data-fr="Bilingue FR / EN" data-en="Bilingual FR / EN">Bilingual FR / EN</h3><p data-fr="Toute l'interface bascule d'une langue à l'autre en un clic, et ton choix est mémorisé." data-en="The whole interface switches language in one click, and your choice is remembered.">The whole interface switches language in one click, and your choice is remembered.</p></div>
+    <div class="fc rv"><div class="fi" style="background:var(--p2);border:1px solid var(--pbd)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--p)" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div><h3>Search by name</h3><p>Type a name or emoji (e.g. 🚀), several terms separated by commas. Highlight matches or hide everything else.</p></div>
+    <div class="fc rv"><div class="fi" style="background:var(--lavbg);border:1px solid var(--lavbd)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--lav)" stroke-width="1.5" stroke-linecap="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg></div><h3>★ Favorites filter</h3><p>Automatically detects profiles already favorited (the real Grindr icon, not a guess) and lets you list only those.</p></div>
+    <div class="fc rv"><div class="fi" style="background:var(--sagebg);border:1px solid var(--sagebd)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--sage)" stroke-width="1.5" stroke-linecap="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div><h3>Auto-scroll</h3><p>Scrolls the grid at an adaptive pace, and can stop itself the moment a new match shows up.</p></div>
+    <div class="fc rv"><div class="fi" style="background:var(--p2);border:1px solid var(--pbd)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--p)" stroke-width="1.5" stroke-linecap="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/><circle cx="12" cy="12" r="2"/></svg></div><h3>Pinned shortcuts</h3><p>Save any search as a one-click chip — 🚀 and ❄️ come pinned by default. Right-click a chip to remove it.</p></div>
   </div>
 </section>
 
 <!-- PRIVACY -->
 <section class="after">
   <div class="after-card rv">
-    <div class="sec-label" style="color:var(--sage)" data-fr="La règle" data-en="The rule">The rule</div>
-    <h2 data-fr="Zéro automatisation. Zéro collecte." data-en="Zero automation. Zero collection.">Zero automation. Zero collection.</h2>
-    <p style="font-size:14px;color:var(--tx2);line-height:1.7" data-fr="Profile Hunter ne clique jamais à ta place sur un profil, ne favorise rien, n'envoie de message à personne. Il lit juste ce qui est déjà affiché sur ta page, et t'aide à t'y retrouver." data-en="Profile Hunter never clicks a profile, favorites anything, or messages anyone on your behalf. It only reads what's already on your page, and helps you find your way through it.">Profile Hunter never clicks a profile, favorites anything, or messages anyone on your behalf. It only reads what's already on your page, and helps you find your way through it.</p>
+    <div class="sec-label" style="color:var(--sage)">The rule</div>
+    <h2>Zero automation. Zero collection.</h2>
+    <p style="font-size:14px;color:var(--tx2);line-height:1.7">Profile Hunter never clicks a profile, favorites anything, or messages anyone on your behalf. It only reads what's already on your page, and helps you find your way through it.</p>
     <div class="ag">
-      <div class="ai"><span class="x">✕</span><div><strong data-fr="Aucune requête réseau" data-en="No network calls">No network calls</strong><p data-fr="Le code source (content.js) ne contient ni fetch ni appel HTTP — vérifiable par n'importe qui." data-en="The source code (content.js) contains no fetch, no HTTP call — checkable by anyone.">The source code (content.js) contains no fetch, no HTTP call — checkable by anyone.</p></div></div>
-      <div class="ai"><span class="ck">→</span><div><strong data-fr="Tout reste local" data-en="Everything stays local">Everything stays local</strong><p data-fr="Tes recherches et réglages restent dans le stockage local de Chrome, sur ton appareil." data-en="Your searches and settings stay in Chrome's local storage, on your own device.">Your searches and settings stay in Chrome's local storage, on your own device.</p></div></div>
-      <div class="ai"><span class="x">✕</span><div><strong data-fr="Pas d'estimation de distance" data-en="No distance estimation">No distance estimation</strong><p data-fr="Volontairement : on n'essaie jamais de déduire la distance d'un profil qui l'a masquée." data-en="On purpose: we never try to infer the distance of a profile that chose to hide it.">On purpose: we never try to infer the distance of a profile that chose to hide it.</p></div></div>
-      <div class="ai"><span class="ck">→</span><div><strong data-fr="Code source lisible" data-en="Readable source code">Readable source code</strong><p data-fr="Pas de minification. Ouvre content.js dans un éditeur de texte si tu veux vérifier toi-même." data-en="No minification. Open content.js in a text editor if you want to check for yourself.">No minification. Open content.js in a text editor if you want to check for yourself.</p></div></div>
+      <div class="ai"><span class="x">✕</span><div><strong>No network calls</strong><p>The source code (content.js) contains no fetch, no HTTP call — checkable by anyone.</p></div></div>
+      <div class="ai"><span class="ck">→</span><div><strong>Everything stays local</strong><p>Your searches and settings stay in Chrome's local storage, on your own device.</p></div></div>
+      <div class="ai"><span class="x">✕</span><div><strong>No distance estimation</strong><p>On purpose: we never try to infer the distance of a profile that chose to hide it.</p></div></div>
+      <div class="ai"><span class="ck">→</span><div><strong>Readable source code</strong><p>No minification. Open content.js in a text editor if you want to check for yourself.</p></div></div>
     </div>
   </div>
 </section>
 
 <!-- HOW TO INSTALL -->
 <section id="how" class="sec">
-  <div class="sec-label rv" style="color:var(--lav)" data-fr="Installation" data-en="Installation">Installation</div>
-  <h2 class="sec-title rv" data-fr="Deux minutes, mode développeur" data-en="Two minutes, developer mode">Two minutes, developer mode</h2>
-  <p class="sec-sub rv" data-fr="Pas encore sur le Chrome Web Store — installation manuelle, comme n'importe quelle extension open-source." data-en="Not on the Chrome Web Store yet — manual install, like any open-source extension.">Not on the Chrome Web Store yet — manual install, like any open-source extension.</p>
+  <div class="sec-label rv" style="color:var(--lav)">Installation</div>
+  <h2 class="sec-title rv">Two minutes, developer mode</h2>
+  <p class="sec-sub rv">Not on the Chrome Web Store yet — manual install, like any open-source extension. Here's exactly what to click, screenshot by screenshot.</p>
   <div class="hw">
-    <div class="st rv"><div class="sn" style="background:var(--p2);border:1.5px solid var(--pbd);color:var(--p)">1</div><div><h3 data-fr="Télécharge et dézippe" data-en="Download and unzip">Download and unzip</h3><p data-fr="Récupère le .zip ci-dessous et dézippe-le quelque part sur ton ordinateur." data-en="Grab the .zip below and unzip it somewhere on your computer.">Grab the .zip below and unzip it somewhere on your computer.</p></div></div>
-    <div class="st rv"><div class="sn" style="background:var(--lavbg);border:1.5px solid var(--lavbd);color:var(--lav)">2</div><div><h3 data-fr="Mode développeur" data-en="Developer mode">Developer mode</h3><p data-fr="Va sur chrome://extensions et active le mode développeur en haut à droite." data-en="Go to chrome://extensions and turn on developer mode, top right.">Go to chrome://extensions and turn on developer mode, top right.</p></div></div>
-    <div class="st rv"><div class="sn" style="background:var(--sagebg);border:1.5px solid var(--sagebd);color:var(--sage)">3</div><div><h3 data-fr="Charger l'extension" data-en="Load unpacked">Load unpacked</h3><p data-fr='Clique \"Charger l'"'"'extension non empaquetée\" et sélectionne le dossier dézippé.' data-en='Click \"Load unpacked\" and select the unzipped folder.'>Click "Load unpacked" and select the unzipped folder.</p></div></div>
-    <div class="st rv"><div class="sn" style="background:var(--p2);border:1.5px solid var(--pbd);color:var(--p)">4</div><div><h3 data-fr="Ouvre Grindr Web" data-en="Open Grindr Web">Open Grindr Web</h3><p data-fr="Va sur web.grindr.com (recharge si besoin) — le panneau apparaît en haut à droite." data-en="Go to web.grindr.com (reload if needed) — the panel appears top right.">Go to web.grindr.com (reload if needed) — the panel appears top right.</p></div></div>
+    <div class="st rv">
+      <div class="sn" style="background:var(--p2);border:1.5px solid var(--pbd);color:var(--p)">1</div>
+      <div>
+        <h3>Download and unzip</h3>
+        <p>Grab the .zip from the download section below and unzip it to a folder you'll remember — you'll need to point Chrome at that folder in step 3.</p>
+      </div>
+    </div>
+    <div class="st rv">
+      <div class="sn" style="background:var(--lavbg);border:1.5px solid var(--lavbd);color:var(--lav)">2</div>
+      <div>
+        <h3>Open chrome://extensions and turn on Developer mode</h3>
+        <p>Type <code>chrome://extensions</code> into Chrome's address bar and hit Enter. In the top-right corner, click the <strong>Developer mode</strong> toggle to switch it on (circled below) — three new buttons appear once it's on.</p>
+        <div class="st-shot"><img src="/api/profile-hunter-asset?file=install-1.png" alt="Chrome's chrome://extensions page with an arrow pointing at the Developer mode toggle in the top-right corner"></div>
+      </div>
+    </div>
+    <div class="st rv">
+      <div class="sn" style="background:var(--sagebg);border:1.5px solid var(--sagebd);color:var(--sage)">3</div>
+      <div>
+        <h3>Click "Load unpacked"</h3>
+        <p>Click the <strong>Load unpacked</strong> button that just appeared in the top-left (circled below). A file picker opens — navigate to the folder you unzipped in step 1, the one that directly contains <code>manifest.json</code>, and select it (select the folder itself, not a file inside it).</p>
+        <div class="st-shot"><img src="/api/profile-hunter-asset?file=install-2.png" alt="Chrome's chrome://extensions page with an arrow pointing at the Load unpacked button"></div>
+      </div>
+    </div>
+    <div class="st rv">
+      <div class="sn" style="background:var(--p2);border:1.5px solid var(--pbd);color:var(--p)">4</div>
+      <div>
+        <h3>Confirm it's loaded and enabled</h3>
+        <p>A "Profile Hunter" card appears in your extensions list. Make sure its toggle (bottom-right of the card, circled below) is switched on and blue.</p>
+        <div class="st-shot"><img src="/api/profile-hunter-asset?file=install-3.png" alt="The Profile Hunter card in Chrome's extensions list, with an arrow pointing at its enabled toggle"></div>
+      </div>
+    </div>
+    <div class="st rv">
+      <div class="sn" style="background:var(--lavbg);border:1.5px solid var(--lavbd);color:var(--lav)">5</div>
+      <div>
+        <h3>Open Grindr Web</h3>
+        <p>Go to <code>web.grindr.com</code> (reload the tab if it was already open) — the "🔎 Profile Hunter" panel appears in the top-right corner automatically, ready to search.</p>
+      </div>
+    </div>
   </div>
+</section>
+
+<!-- DEMO VIDEO -->
+<section class="sec" style="padding-top:0">
+  <div class="sec-label rv" style="color:var(--p)">See it in action</div>
+  <h2 class="sec-title rv">30 seconds, real extension</h2>
+  <p class="sec-sub rv">This is the actual Profile Hunter code running — search, favorites filter, hide mode, and auto-scroll — captured against a grid of placeholder profiles instead of real Grindr accounts.</p>
+  <div class="demo-wrap rv">
+    <video autoplay loop muted playsinline>
+      <source src="/api/profile-hunter-demo-video" type="video/mp4">
+    </video>
+  </div>
+  <p class="demo-note">Shown on a generated sample grid with fictional names and placeholder avatars — no real Grindr profiles were loaded or recorded to make this demo. On your own account, the panel works exactly the same way, directly on your real grid.</p>
 </section>
 
 <!-- DOWNLOAD / EMAIL GATE -->
 <section id="download" class="sec" style="text-align:center">
-  <div class="sec-label rv" style="color:var(--p);margin:0 auto 14px" data-fr="Télécharger" data-en="Download">Download</div>
-  <h2 class="sec-title rv" style="text-align:center;margin:0 auto 12px" data-fr="Laisse ton email, récupère l'extension" data-en="Leave your email, get the extension">Leave your email, get the extension</h2>
-  <p class="rv" style="color:var(--tx2);font-size:14px;max-width:420px;margin:0 auto 8px;line-height:1.6" data-fr="C'est gratuit. On te demande juste un email pour te prévenir des prochaines mises à jour — et te présenter Fluidz, l'app qu'on construit pour la suite." data-en="It's free. We just ask for an email so we can let you know about future updates — and introduce you to Fluidz, the app we're building for what comes next.">It's free. We just ask for an email so we can let you know about future updates — and introduce you to Fluidz, the app we're building for what comes next.</p>
+  <div class="sec-label rv" style="color:var(--p);margin:0 auto 14px">Download</div>
+  <h2 class="sec-title rv" style="text-align:center;margin:0 auto 12px">Leave your email, get the extension</h2>
+  <p class="rv" style="color:var(--tx2);font-size:14px;max-width:420px;margin:0 auto 8px;line-height:1.6">It's free. We just ask for an email so we can let you know about future updates — and introduce you to Fluidz, the app we're building for what comes next.</p>
 
   <div id="ph-form-wrap">
     <form class="wf rv" onsubmit="handleDL(event)" style="margin-top:20px">
       <input type="email" placeholder="you@email.com" required id="ph-e" autocomplete="email">
-      <button type="submit" class="btn-l btn-p" data-fr="Débloquer le téléchargement" data-en="Unlock download">Unlock download</button>
+      <button type="submit" class="btn-l btn-p">Unlock download</button>
     </form>
-    <p class="wn" data-fr="Pas de spam. Jamais revendu. Tu peux te désinscrire à tout moment." data-en="No spam. Never sold. Unsubscribe anytime.">No spam. Never sold. Unsubscribe anytime.</p>
+    <p class="wn">No spam. Never sold. Unsubscribe anytime.</p>
     <p id="ph-m" style="font-size:13px;margin-top:14px;display:none;font-weight:600"></p>
   </div>
 
   <div id="ph-dl-wrap" class="rv" style="display:none;margin-top:20px">
     <div class="after-card" style="display:inline-block;padding:28px 36px;text-align:center">
-      <p style="font-size:14px;color:var(--sage);font-weight:700;margin-bottom:16px" data-fr="Merci ! Ton téléchargement est prêt." data-en="Thanks! Your download is ready.">Thanks! Your download is ready.</p>
-      <a href="/api/profile-hunter-download" download="profile-hunter.zip" class="btn-l btn-p" data-fr="Télécharger le .zip" data-en="Download the .zip">Download the .zip</a>
+      <p style="font-size:14px;color:var(--sage);font-weight:700;margin-bottom:16px">Thanks! Your download is ready.</p>
+      <a href="/api/profile-hunter-download" download="profile-hunter.zip" class="btn-l btn-p">Download the .zip</a>
     </div>
   </div>
 </section>
@@ -233,9 +303,9 @@ footer{padding:48px 24px 32px;border-top:1px solid var(--rule);max-width:960px;m
 <section class="pro-banner">
   <div class="pro-banner-inner rv">
     <div class="pro-badge" style="background:var(--p2);border-color:var(--pbd);color:var(--p)">Fluidz</div>
-    <h2 class="sec-title" style="text-align:center;margin:0 auto 12px" data-fr='On construit aussi l'"'"'app <span style="color:var(--p)">après Grindr</span>' data-en='We'"'"'re also building the <span style="color:var(--p)">After Grindr</span> app'>We're also building the <span style="color:var(--p)">After Grindr</span> app</h2>
-    <p style="font-size:14px;color:var(--tx2);line-height:1.6;max-width:460px;margin:0 auto 24px" data-fr="Grindr c'est le début. Fluidz prend le relais : sessions de groupe, profils privés, confiance par réputation. Conçu pour la communauté queer." data-en="Grindr is where it starts. Fluidz takes over: group sessions, private profiles, reputation-based trust. Made for the queer community.">Grindr is where it starts. Fluidz takes over: group sessions, private profiles, reputation-based trust. Made for the queer community.</p>
-    <a href="index.html#waitlist" class="btn-l btn-p" data-fr="Découvrir Fluidz" data-en="Discover Fluidz">
+    <h2 class="sec-title" style="text-align:center;margin:0 auto 12px">We're also building the <span style="color:var(--p)">After Grindr</span> app</h2>
+    <p style="font-size:14px;color:var(--tx2);line-height:1.6;max-width:460px;margin:0 auto 24px">Grindr is where it starts. Fluidz takes over: group sessions, private profiles, reputation-based trust. Made for the queer community.</p>
+    <a href="index.html#waitlist" class="btn-l btn-p">
       Discover Fluidz
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
     </a>
@@ -245,7 +315,7 @@ footer{padding:48px 24px 32px;border-top:1px solid var(--rule);max-width:960px;m
 <!-- FOOTER -->
 <footer>
   <div class="ft">
-    <div class="ft-b"><div class="logo" style="font-size:18px">fluidz</div><p data-fr="Profile Hunter est un projet gratuit et open-source par l'équipe Fluidz. Paris, 2026." data-en="Profile Hunter is a free, open-source side project by the Fluidz team. Paris, 2026.">Profile Hunter is a free, open-source side project by the Fluidz team. Paris, 2026.</p></div>
+    <div class="ft-b"><div class="logo" style="font-size:18px">fluidz</div><p>Profile Hunter is a free, open-source side project by the Fluidz team. Paris, 2026.</p></div>
     <div class="ft-ls">
       <div class="ft-c"><h4>Profile Hunter</h4><a href="#features">Features</a><a href="#how">Install</a><a href="#download">Download</a></div>
       <div class="ft-c"><h4>Fluidz</h4><a href="index.html">Home</a><a href="pro.html">Fluidz Pro</a><a href="index.html#waitlist">Waitlist</a></div>
@@ -255,8 +325,6 @@ footer{padding:48px 24px 32px;border-top:1px solid var(--rule);max-width:960px;m
 </footer>
 
 <script>
-let lang='en'
-function toggleLang(){lang=lang==='en'?'fr':'en';document.querySelector('.lang-btn').textContent=lang==='en'?'FR':'EN';document.querySelectorAll('[data-fr]').forEach(el=>{const v=el.getAttribute('data-'+lang);if(v.includes('<em>')||v.includes('<span'))el.innerHTML=v;else el.textContent=v})}
 const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('v');obs.unobserve(e.target)}})},{threshold:0.12})
 document.querySelectorAll('.rv').forEach(el=>obs.observe(el))
 
@@ -272,7 +340,7 @@ async function handleDL(e){
     const res = await fetch('/api/profile-hunter-lead', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, lang })
+      body: JSON.stringify({ email, lang: 'en' })
     })
     if (!res.ok) throw new Error('request_failed')
     document.getElementById('ph-form-wrap').style.display = 'none'
@@ -281,7 +349,7 @@ async function handleDL(e){
   } catch (err) {
     msg.style.display = 'block'
     msg.style.color = '#F87171'
-    msg.textContent = lang === 'fr' ? "Oups, réessaie dans un instant." : "Oops, please try again in a moment."
+    msg.textContent = "Oops, please try again in a moment."
     btn.disabled = false
   }
 }
