@@ -1,13 +1,14 @@
 // Vercel Serverless Function: serves the autoplaying demo video embedded on
 // site/profile-hunter.html ("See it in action"). Recorded against a
-// synthetic placeholder grid (fictional names, generated avatars) with the
-// real extension code — no actual Grindr data was loaded or recorded.
+// mock Grindr-style profile grid using stock/AI-generated photos (not real
+// people's photos) with the real extension code — no actual Grindr data
+// was loaded or recorded.
 //
 // Same reasoning as api/profile-hunter-download.js and
 // api/profile-hunter-asset.js: this repo is edited through tools that only
 // accept a limited amount of text content per write. The video is checked
 // in as several small base64 text parts
-// (site/downloads/profile-hunter-demo.mp4.gz.part*.b64) and reassembled
+// (site/downloads/profile-hunter-demo2.mp4.gz.part*.b64) and reassembled
 // here, in filename order, at request time before being decoded,
 // gunzipped, and streamed.
 //
@@ -17,7 +18,11 @@
 // identical base64 characters, and those runs were silently corrupted when
 // written through the repo-editing tool that checks these parts in.
 // Gzipping first breaks up those repeated runs, so each part is reliably
-// byte-for-byte verifiable after upload.
+// byte-for-byte verifiable after upload. Two parts (09 and 43) still
+// corrupted occasionally even after gzipping and were further split into
+// 500-byte sub-parts (e.g. part09s00.b64 .. part09s09.b64); filename sort
+// order still reassembles everything correctly since "08" < "09s00" <
+// "10" lexicographically.
 
 import { readFileSync, readdirSync } from 'fs'
 import { join } from 'path'
@@ -29,7 +34,7 @@ export default async function handler(req, res) {
   let files
   try {
     files = readdirSync(dir)
-      .filter((f) => /^profile-hunter-demo\.mp4\.gz\.part[^.]*\.b64$/.test(f))
+      .filter((f) => /^profile-hunter-demo2\.mp4\.gz\.part[^.]*\.b64$/.test(f))
       .sort()
   } catch (e) {
     console.error('profile-hunter demo video: downloads dir not found', e)
