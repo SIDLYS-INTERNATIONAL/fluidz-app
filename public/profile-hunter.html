@@ -267,8 +267,8 @@ footer{padding:48px 24px 32px;border-top:1px solid var(--rule);max-width:960px;m
   <p class="rv" style="color:var(--tx2);font-size:14px;max-width:480px;margin:0 auto 8px;line-height:1.6">Grindr is where it starts — Fluidz takes over: group sessions, private profiles, reputation-based trust. Made for the queer community.</p>
 
   <div id="ph-form-wrap">
-    <form class="wf rv" onsubmit="handleDL(event)" style="margin-top:20px">
-      <input type="email" placeholder="you@email.com" required id="ph-e" autocomplete="email">
+    <form class="wf rv" onsubmit="handleDL(event)" novalidate style="margin-top:20px">
+      <input type="email" placeholder="you@email.com" id="ph-e" autocomplete="email">
       <button type="submit" class="btn-l btn-p">Unlock download</button>
     </form>
     <p class="wn">No spam. Never sold. Unsubscribe anytime.</p>
@@ -305,6 +305,16 @@ async function handleDL(e){
   const btn = e.target.querySelector('button')
   const msg = document.getElementById('ph-m')
   msg.style.display = 'none'
+
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  if (!email || !emailRe.test(email)) {
+    msg.style.display = 'block'
+    msg.style.color = '#F87171'
+    msg.textContent = "Please enter a valid email address."
+    emailEl.focus()
+    return
+  }
+
   btn.disabled = true
   try {
     const res = await fetch('/api/profile-hunter-lead', {
