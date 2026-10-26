@@ -32,6 +32,8 @@ body::before{content:'';position:fixed;inset:0;opacity:0.022;background-image:ur
 .sec-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:14px}
 .sec-title{font-family:var(--fh);font-size:clamp(28px,5vw,44px);font-weight:800;letter-spacing:-0.04em;line-height:1.05;margin-bottom:20px}
 .sec-sub{font-size:15px;color:var(--tx2);line-height:1.7;max-width:520px}
+h1,h2,h3,.tagline{text-wrap:balance}
+p{text-wrap:pretty}
 
 /* HERO */
 .hero{display:flex;flex-direction:column;justify-content:center;position:relative;padding:96px 24px 100px;overflow:hidden;background:var(--bg)}
@@ -123,6 +125,26 @@ body::before{content:'';position:fixed;inset:0;opacity:0.022;background-image:ur
 .wf input::placeholder{color:var(--tx3)}
 .wn{font-size:11px;color:var(--tx3);margin-top:12px;max-width:360px;margin-left:auto;margin-right:auto;line-height:1.5}
 
+/* INSTALL NOTE */
+.note{margin-top:28px;padding:22px 24px;border-radius:18px;background:var(--lavbg);border:1px solid var(--lavbd);max-width:640px}
+.note h3{font-family:var(--fh);font-size:16px;font-weight:800;letter-spacing:-0.02em;margin-bottom:8px}
+.note p{font-size:13.5px;color:var(--tx2);line-height:1.65}
+.note p+p{margin-top:10px}
+.note strong{color:var(--tx);font-weight:600}
+
+/* DOWNLOAD CARD */
+.dl-card{max-width:640px;margin:0 auto;text-align:center;background:var(--bg1);border:1px solid var(--pbd);border-radius:28px;padding:52px 44px 44px;position:relative;overflow:hidden}
+.dl-card::before{content:'';position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:420px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(224,136,122,0.12),transparent 70%);pointer-events:none}
+.dl-card .sec-title{margin-bottom:14px}
+.dl-lead{font-size:15px;color:var(--tx2);line-height:1.65;max-width:44ch;margin:0 auto}
+.fz{margin:32px auto 0;padding-top:28px;border-top:1px solid var(--rule2)}
+.fz-line{font-family:var(--fh);font-size:clamp(20px,3.4vw,26px);font-weight:800;letter-spacing:-0.03em;line-height:1.25;color:var(--tx2)}
+.fz-line span{color:var(--p)}
+.fz-body{font-size:14px;color:var(--tx2);line-height:1.6;margin:10px auto 0;max-width:48ch}
+.fz-pills{list-style:none;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:18px}
+.fz-pills li{font-size:12px;font-weight:600;padding:7px 13px;border-radius:99px;background:var(--p2);border:1px solid var(--pbd);color:var(--p)}
+.dl-card .wf{margin-top:32px}
+
 /* FOOTER */
 footer{padding:48px 24px 32px;border-top:1px solid var(--rule);max-width:960px;margin:0 auto}
 .ft{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:32px;margin-bottom:32px}
@@ -152,6 +174,9 @@ footer{padding:48px 24px 32px;border-top:1px solid var(--rule);max-width:960px;m
   .ag{grid-template-columns:1fr}.after-card{padding:28px 20px}
   .pg{gap:10px}.phone-frame{width:160px}.phone-screen{min-height:260px}
   .ft{flex-direction:column}.ft-ls{gap:24px}
+  .dl-card{padding:40px 22px 32px;border-radius:22px}
+  .wf{flex-direction:column}.wf input,.wf .btn-l{width:100%}
+  .note{padding:18px}
 }
 </style>
 </head>
@@ -202,8 +227,8 @@ footer{padding:48px 24px 32px;border-top:1px solid var(--rule);max-width:960px;m
 <section class="after">
   <div class="after-card rv">
     <div class="sec-label" style="color:var(--sage)">The rule</div>
-    <h2>Zero automation. Zero collection.</h2>
-    <p style="font-size:14px;color:var(--tx2);line-height:1.7">Profile Hunter never clicks a profile, favorites anything, or messages anyone on your behalf. It only reads what's already on your page, and helps you find your way through it.</p>
+    <h2>Nothing clicked. Nothing collected.</h2>
+    <p style="font-size:14px;color:var(--tx2);line-height:1.7">Profile Hunter never clicks a profile, favorites anyone or sends a message for you. It reads what's already on your screen — and helps you get through it faster.</p>
     <div class="ag">
       <div class="ai"><span class="x">✕</span><div><strong>No network calls</strong><p>The source code (content.js) contains no fetch, no HTTP call — checkable by anyone.</p></div></div>
       <div class="ai"><span class="ck">→</span><div><strong>Everything stays local</strong><p>Your searches and settings stay in Chrome's local storage, on your own device.</p></div></div>
@@ -217,7 +242,12 @@ footer{padding:48px 24px 32px;border-top:1px solid var(--rule);max-width:960px;m
 <section id="how" class="sec">
   <div class="sec-label rv" style="color:var(--lav)">Installation</div>
   <h2 class="sec-title rv">Two minutes, developer mode</h2>
-  <p class="sec-sub rv">Not on the Chrome Web Store yet — manual install, like any open-source extension. Here's exactly what to click, screenshot by screenshot.</p>
+  <p class="sec-sub rv">Here's exactly what to click, screenshot by screenshot.</p>
+  <div class="note rv">
+    <h3>Why isn't it on the Chrome Web Store?</h3>
+    <p>Grindr's terms are strict about third-party tools on its site. Profile Hunter never clicks, favorites or messages anyone — but it does scroll for you, and that grey zone is enough to keep it out of the official store.</p>
+    <p>So we ship it directly, and make it easy to trust: <strong>no data collected, no tracking, no network calls.</strong> Unzip it and every line of code is yours to read. As with any unofficial tool, use it at your own discretion.</p>
+  </div>
   <div class="hw">
     <div class="st rv">
       <div class="sn" style="background-image:linear-gradient(var(--p2),var(--p2));background-color:var(--bg1);border:1.5px solid var(--pbd);color:var(--p)">1</div>
@@ -259,26 +289,31 @@ footer{padding:48px 24px 32px;border-top:1px solid var(--rule);max-width:960px;m
   </div>
 </section>
 
-<!-- DOWNLOAD (Fluidz woven into the closing paragraph, no separate banner) -->
-<section id="download" class="sec" style="text-align:center">
-  <div class="sec-label rv" style="color:var(--p);margin:0 auto 14px">Download</div>
-  <h2 class="sec-title rv" style="text-align:center;margin:0 auto 12px">Leave your email, get the extension</h2>
-  <p class="rv" style="color:var(--tx2);font-size:14px;max-width:480px;margin:0 auto 10px;line-height:1.6">It's free. We just ask for an email so we can let you know about future updates — and introduce you to <strong style="color:var(--p)">Fluidz</strong>, the app we're building for what comes next: we're also building the <strong style="color:var(--p)">After Grindr</strong> app.</p>
-  <p class="rv" style="color:var(--tx2);font-size:14px;max-width:480px;margin:0 auto 8px;line-height:1.6">Grindr is where it starts — Fluidz takes over: group sessions, private profiles, reputation-based trust. Made for the queer community.</p>
+<!-- DOWNLOAD (one block: get the extension, meet Fluidz) -->
+<section id="download" class="sec">
+  <div class="dl-card rv">
+    <div class="sec-label" style="color:var(--p)">Download</div>
+    <h2 class="sec-title">Get it free.</h2>
+    <p class="dl-lead">Leave your email and the download unlocks right away. We'll only write for updates — and to introduce&nbsp;you&nbsp;to&nbsp;Fluidz.</p>
 
-  <div id="ph-form-wrap">
-    <form class="wf rv" onsubmit="handleDL(event)" novalidate style="margin-top:20px">
-      <input type="email" placeholder="you@email.com" id="ph-e" autocomplete="email">
-      <button type="submit" class="btn-l btn-p">Unlock download</button>
-    </form>
-    <p class="wn">No spam. Never sold. Unsubscribe anytime.</p>
-    <p id="ph-m" style="font-size:13px;margin-top:14px;display:none;font-weight:600"></p>
-  </div>
+    <div class="fz">
+      <p class="fz-line">Grindr is where it starts.<br><span>Fluidz is what comes after.</span></p>
+      <p class="fz-body">We're building the after-Grindr app. Made for the queer&nbsp;community.</p>
+      <ul class="fz-pills"><li>Group sessions</li><li>Private profiles</li><li>Reputation-based trust</li></ul>
+    </div>
 
-  <div id="ph-dl-wrap" class="rv" style="display:none;margin-top:20px">
-    <div class="after-card" style="display:inline-block;padding:28px 36px;text-align:center">
+    <div id="ph-form-wrap">
+      <form class="wf" onsubmit="handleDL(event)" novalidate>
+        <input type="email" placeholder="you@email.com" id="ph-e" autocomplete="email">
+        <button type="submit" class="btn-l btn-p">Unlock download</button>
+      </form>
+      <p class="wn">No spam. Never sold. Unsubscribe anytime.</p>
+      <p id="ph-m" style="font-size:13px;margin-top:14px;display:none;font-weight:600"></p>
+    </div>
+
+    <div id="ph-dl-wrap" style="display:none;margin-top:32px">
       <p style="font-size:14px;color:var(--sage);font-weight:700;margin-bottom:16px">Thanks! Your download is ready.</p>
-      <a href="/api/profile-hunter-download" download="profile-hunter.zip" class="btn-l btn-p">Download the .zip</a>
+      <a href="/api/profile-hunter-download" download="profile-hunter.zip" class="btn-l btn-p" style="display:inline-block">Download the .zip</a>
     </div>
   </div>
 </section>
