@@ -3,15 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Profile Hunter — free Grindr Web tool by Fluidz</title>
-<meta name="description" content="Profile Hunter: a free, open-source Chrome extension that adds search and filtering to Grindr Web. By the Fluidz team.">
+<title>Profile Hunter — find anyone on Grindr Web, in seconds</title>
+<meta name="description" content="A free Chrome extension for Grindr Web: search the grid by name or emoji, auto-scroll, and keep every match. No data collected. By the Fluidz team.">
+<link rel="canonical" href="https://fluidz.app/profile-hunter.html">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#05040A">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Fluidz">
+<meta property="og:url" content="https://fluidz.app/profile-hunter.html">
+<meta property="og:title" content="Profile Hunter — find anyone on Grindr Web, in seconds">
+<meta property="og:description" content="Free Chrome extension: search the grid by name or emoji, auto-scroll, keep every match. No data collected.">
+<meta property="og:image" content="https://fluidz.app/api/profile-hunter-asset?file=og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Profile Hunter: find anyone on Grindr Web, in seconds. Free Chrome extension, no data collected.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Profile Hunter — find anyone on Grindr Web, in seconds">
+<meta name="twitter:description" content="Free Chrome extension: search the grid by name or emoji, auto-scroll, keep every match. No data collected.">
+<meta name="twitter:image" content="https://fluidz.app/api/profile-hunter-asset?file=og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
   --bg:#05040A;--bg1:#0D0C16;--bg2:#141222;--bg3:#1D1B2E;
-  --tx:#EDE8F5;--tx2:rgba(237,232,245,0.50);--tx3:rgba(237,232,245,0.22);--tx4:rgba(237,232,245,0.08);
+  --tx:#EDE8F5;--tx2:rgba(237,232,245,0.56);--tx3:rgba(237,232,245,0.28);
   --p:#E0887A;--p2:rgba(224,136,122,0.12);--p3:rgba(224,136,122,0.06);--pbd:rgba(224,136,122,0.28);
   --sage:#6BA888;--sagebg:rgba(107,168,136,0.10);--sagebd:rgba(107,168,136,0.22);
   --lav:#9080BA;--lavbg:rgba(144,128,186,0.10);--lavbd:rgba(144,128,186,0.22);
@@ -21,162 +38,190 @@
 html{scroll-behavior:smooth;background:var(--bg)}
 body{font-family:var(--fb);color:var(--tx);background:var(--bg);overflow-x:hidden;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em;color:var(--tx);background:rgba(255,255,255,0.06);padding:1px 6px;border-radius:6px}
 ::selection{background:rgba(224,136,122,0.3);color:#fff}
 body::before{content:'';position:fixed;inset:0;opacity:0.022;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
+h1,h2,h3,blockquote{text-wrap:balance}
+p{text-wrap:pretty}
 
-/* BRAND MARK (standalone page — no nav, just the wordmark used in the footer) */
 .logo{font-family:var(--fh);font-size:22px;font-weight:800;color:var(--p);letter-spacing:-0.04em}
 
 /* SECTIONS */
 .sec{padding:120px 24px;max-width:960px;margin:0 auto;position:relative}
 .sec-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:14px}
-.sec-title{font-family:var(--fh);font-size:clamp(28px,5vw,44px);font-weight:800;letter-spacing:-0.04em;line-height:1.05;margin-bottom:20px}
+.sec-title{font-family:var(--fh);font-size:clamp(28px,5vw,44px);font-weight:800;letter-spacing:-0.04em;line-height:1.05;margin-bottom:18px}
 .sec-sub{font-size:15px;color:var(--tx2);line-height:1.7;max-width:520px}
-h1,h2,h3,.tagline{text-wrap:balance}
-p{text-wrap:pretty}
 
-/* HERO */
-.hero{display:flex;flex-direction:column;justify-content:center;position:relative;padding:96px 24px 100px;overflow:hidden;background:var(--bg)}
-.orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(60px);z-index:1}
-.o1{width:500px;height:500px;background:rgba(224,136,122,0.10);top:-120px;right:-160px;animation:od 11s ease-in-out infinite}
-.o2{width:420px;height:420px;background:rgba(144,128,186,0.07);bottom:-80px;left:-140px;animation:od 14s ease-in-out infinite reverse}
-.o3{width:280px;height:280px;background:rgba(107,168,136,0.05);top:35%;left:55%;animation:od 17s ease-in-out infinite}
-.hero-inner{display:flex;align-items:center;gap:56px;max-width:1180px;margin:0 auto;position:relative;z-index:2;width:100%}
-.hero-copy{flex:1 1 420px;min-width:300px}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:99px;border:1px solid var(--pbd);background:var(--p2);font-size:12px;font-weight:600;color:var(--p);margin-bottom:28px;animation:fu .6s ease both}
-.hero-badge svg{opacity:0.7;position:relative;z-index:2}
-.hero h1{font-family:var(--fh);font-size:clamp(40px,6vw,64px);font-weight:800;letter-spacing:-0.05em;line-height:0.95;margin-bottom:14px;animation:fu .6s .1s ease both}
-.hero h1 em{font-style:normal;color:var(--p);position:relative;text-shadow:0 0 60px rgba(224,136,122,0.3)}
-.hero h1 em::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--p);border-radius:2px;opacity:0.5}
-.tagline{font-family:var(--fh);font-size:clamp(15px,2vw,19px);font-weight:700;color:var(--tx2);letter-spacing:-0.03em;margin-bottom:22px;animation:fu .6s .15s ease both}
-.tagline span{color:var(--p)}
-.hero-p{font-size:clamp(14px,2vw,16px);color:var(--tx2);max-width:460px;line-height:1.65;margin-bottom:34px;animation:fu .6s .2s ease both}
-.hero-cta{display:flex;gap:12px;flex-wrap:wrap;animation:fu .6s .3s ease both}
-
-/* HERO DEMO (the live extension, front and center) */
-.hero-demo{flex:1 1 480px;min-width:300px;animation:fu .7s .25s ease both;position:relative}
-.hero-demo-glow{position:absolute;inset:-40px;background:radial-gradient(circle at 50% 40%,rgba(224,136,122,0.16),transparent 65%);pointer-events:none;z-index:0}
-.browser-frame{position:relative;z-index:1;border-radius:16px;overflow:hidden;border:1px solid var(--rule2);background:var(--bg1);box-shadow:0 30px 80px -20px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.03)}
-.browser-bar{display:flex;align-items:center;gap:6px;padding:10px 14px;background:var(--bg2);border-bottom:1px solid var(--rule)}
-.browser-bar i{width:9px;height:9px;border-radius:50%;background:var(--rule2);display:block}
-.browser-bar i:nth-child(1){background:#F87171}
-.browser-bar i:nth-child(2){background:#FBBF24}
-.browser-bar i:nth-child(3){background:#6BA888}
-.browser-url{margin-left:10px;font-size:11px;color:var(--tx3);background:var(--bg3);padding:3px 10px;border-radius:6px;font-family:var(--fb)}
-.browser-frame video{display:block;width:100%;height:auto;background:#0c0c10}
-.hero-demo-note{font-size:11px;color:var(--tx3);margin-top:14px;line-height:1.6;max-width:460px}
-.btn-l{padding:15px 36px;border-radius:16px;font-size:15px;font-weight:700;cursor:pointer;font-family:var(--fb);border:none;position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s}
+/* BUTTONS */
+.btn-l{display:inline-block;padding:15px 34px;border-radius:16px;font-size:15px;font-weight:700;cursor:pointer;font-family:var(--fb);border:none;position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s;text-align:center}
 .btn-p{background:var(--p);color:#fff}.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(224,136,122,0.3)}
 .btn-p::after{content:'';position:absolute;top:0;left:-180%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.14),transparent);animation:shm 3s ease-in-out infinite}
 .btn-g{background:transparent;color:var(--tx);border:1px solid var(--rule2)}.btn-g:hover{border-color:var(--pbd);background:var(--p3)}
+.btn-p:disabled{opacity:.6;cursor:wait}
 
-/* MANIFESTO */
-.manifesto{text-align:center;padding:100px 24px;position:relative;max-width:960px;margin:0 auto}
-.manifesto::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:1px;height:60px;background:linear-gradient(180deg,transparent,var(--p),transparent)}
-.manifesto blockquote{font-family:var(--fh);font-size:clamp(20px,4vw,32px);font-weight:800;letter-spacing:-0.03em;line-height:1.25;max-width:640px;margin:0 auto 24px}
-.manifesto blockquote em{font-style:normal;color:var(--p)}
-.manifesto p{font-size:14px;color:var(--tx2);max-width:480px;margin:0 auto;line-height:1.7}
+/* HERO */
+.hero{position:relative;padding:88px 24px 96px;overflow:hidden}
+.orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(60px);z-index:0}
+.o1{width:520px;height:520px;background:rgba(224,136,122,0.11);top:-140px;right:-160px;animation:od 11s ease-in-out infinite}
+.o2{width:420px;height:420px;background:rgba(144,128,186,0.07);bottom:-80px;left:-140px;animation:od 14s ease-in-out infinite reverse}
+.hero-inner{display:flex;align-items:center;gap:56px;max-width:1180px;margin:0 auto;position:relative;z-index:2}
+.hero-copy{flex:1 1 440px;min-width:0}
+.brand{display:inline-flex;align-items:center;gap:10px;font-family:var(--fh);font-weight:800;font-size:19px;color:var(--p);letter-spacing:-0.03em;margin-bottom:26px;animation:fu .6s ease both}
+.brand i{width:34px;height:34px;border-radius:10px;background:var(--p2);border:1px solid var(--pbd);display:flex;align-items:center;justify-content:center}
+.brand small{font-family:var(--fb);font-size:11px;font-weight:700;color:var(--tx3);letter-spacing:0.06em;text-transform:uppercase;margin-left:4px}
+.hero h1{font-family:var(--fh);font-size:clamp(42px,6.4vw,72px);font-weight:800;letter-spacing:-0.05em;line-height:0.96;margin-bottom:24px;animation:fu .6s .08s ease both}
+.hero h1 em{font-style:normal;color:var(--p);text-shadow:0 0 60px rgba(224,136,122,0.3)}
+.hero-p{font-size:clamp(15px,1.7vw,17px);color:var(--tx2);max-width:470px;line-height:1.65;margin-bottom:32px;animation:fu .6s .16s ease both}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;animation:fu .6s .24s ease both}
+.proof{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:28px;font-size:13px;font-weight:600;color:var(--tx2);animation:fu .6s .32s ease both}
+.proof span{display:inline-flex;align-items:center;gap:7px}
+.proof svg{flex-shrink:0}
+.proof .count{color:var(--tx)}
+.proof .count b,.dl-count b{font-variant-numeric:tabular-nums;color:var(--p)}
+.hero-demo{flex:1 1 500px;min-width:0;position:relative;animation:fu .7s .2s ease both}
+.hero-demo-glow{position:absolute;inset:-40px;background:radial-gradient(circle at 50% 40%,rgba(224,136,122,0.16),transparent 65%);pointer-events:none}
+.browser-frame{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--rule2);background:var(--bg1);box-shadow:0 30px 80px -20px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.03)}
+.browser-bar{display:flex;align-items:center;gap:6px;padding:10px 14px;background:var(--bg2);border-bottom:1px solid var(--rule)}
+.browser-bar i{width:9px;height:9px;border-radius:50%;display:block}
+.browser-bar i:nth-child(1){background:#F87171}.browser-bar i:nth-child(2){background:#FBBF24}.browser-bar i:nth-child(3){background:#6BA888}
+.browser-url{margin-left:10px;font-size:11px;color:var(--tx3);background:var(--bg3);padding:3px 10px;border-radius:6px}
+.browser-frame video{display:block;width:100%;height:auto;background:#0c0c10}
+.hero-demo-note{font-size:11px;color:var(--tx3);margin-top:14px;line-height:1.6;max-width:480px}
 
-/* AFTER GRINDR */
-.after{padding:80px 24px;max-width:740px;margin:0 auto}
+/* STATEMENT BAND */
+.band{text-align:center;padding:96px 24px;position:relative;max-width:960px;margin:0 auto}
+.band::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:1px;height:64px;background:linear-gradient(180deg,transparent,var(--p),transparent)}
+.band blockquote{font-family:var(--fh);font-size:clamp(26px,4.6vw,46px);font-weight:800;letter-spacing:-0.04em;line-height:1.1;max-width:760px;margin:0 auto 22px;color:var(--tx2)}
+.band blockquote em{font-style:normal;color:var(--tx)}
+.band blockquote em span{color:var(--p)}
+.band p{font-size:15px;color:var(--tx2);max-width:440px;margin:0 auto;line-height:1.7}
+
+/* FEATURES */
+.fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:40px}
+.fc{background:var(--bg1);border:1px solid var(--rule);border-radius:22px;overflow:hidden;transition:border-color .3s,transform .3s;display:flex;flex-direction:column}
+.fc:hover{border-color:var(--pbd);transform:translateY(-3px)}
+.fc-body{padding:24px 26px 28px}
+.fc h3{font-family:var(--fh);font-size:19px;font-weight:800;margin-bottom:8px;letter-spacing:-0.02em}
+.fc p{font-size:14px;color:var(--tx2);line-height:1.65}
+.viz{height:220px;position:relative;background:linear-gradient(180deg,var(--bg2),var(--bg1));border-bottom:1px solid var(--rule);overflow:hidden;padding:22px}
+.vz-search{display:flex;align-items:center;gap:10px;height:42px;border-radius:12px;background:var(--bg3);border:1px solid var(--pbd);padding:0 14px;font-size:14px;font-weight:600}
+.vz-search b{color:var(--p)}
+.caret{width:2px;height:18px;background:var(--p);animation:blink 1s steps(1) infinite}
+.vz-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+.tile{height:56px;border-radius:10px;background:rgba(255,255,255,0.045);position:relative}
+.tile.dim{opacity:.4}
+.tile.hit{background:rgba(224,136,122,0.18);box-shadow:inset 0 0 0 2px var(--p);animation:glow 2.4s ease-in-out infinite}
+.tile.hit span{position:absolute;left:6px;bottom:6px;font-size:10px;font-weight:700;background:var(--p);color:#fff;padding:2px 7px;border-radius:6px}
+.vz-scroll{position:absolute;left:22px;right:22px;top:64px;bottom:0;overflow:hidden;-webkit-mask-image:linear-gradient(180deg,transparent,#000 18%,#000 75%,transparent);mask-image:linear-gradient(180deg,transparent,#000 18%,#000 75%,transparent)}
+.vz-track{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;animation:scrollup 9s linear infinite}
+.vz-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;height:42px;border-radius:12px;background:var(--bg3);border:1px solid var(--sagebd);padding:0 14px;font-size:13px;font-weight:600}
+.vz-bar .dot{width:8px;height:8px;border-radius:50%;background:var(--sage);display:inline-block;margin-right:8px;animation:pulse 1.6s ease-in-out infinite}
+.vz-bar .tog{font-size:11px;color:var(--sage);background:var(--sagebg);border:1px solid var(--sagebd);padding:3px 9px;border-radius:99px;white-space:nowrap}
+
+/* PRIVACY */
+.after{padding:40px 24px 80px;max-width:760px;margin:0 auto}
 .after-card{background:var(--bg1);border:1px solid var(--pbd);border-radius:24px;padding:40px 32px;position:relative;overflow:hidden}
 .after-card::before{content:'';position:absolute;top:-80px;right:-80px;width:250px;height:250px;border-radius:50%;background:radial-gradient(circle,rgba(224,136,122,0.08),transparent 70%);pointer-events:none}
-.after h2{font-family:var(--fh);font-size:clamp(22px,4vw,30px);font-weight:800;letter-spacing:-0.04em;margin-bottom:20px;line-height:1.1}
-.after h2 span{color:var(--p)}
+.after h2{font-family:var(--fh);font-size:clamp(24px,4vw,32px);font-weight:800;letter-spacing:-0.04em;margin-bottom:16px;line-height:1.1}
 .ag{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}
 .ai{display:flex;align-items:flex-start;gap:10px;padding:14px;border-radius:14px;background:rgba(255,255,255,0.02);border:1px solid var(--rule)}
 .ai .x{color:#F87171;font-weight:700;font-size:14px;flex-shrink:0;margin-top:1px}
 .ai .ck{color:var(--sage);font-weight:700;font-size:14px;flex-shrink:0;margin-top:1px}
-.ai p{font-size:12px;color:var(--tx2);line-height:1.5}
-.ai strong{color:var(--tx);font-weight:600}
-
-/* FEATURES */
-.fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:40px}
-.fc{background:var(--bg1);border:1px solid var(--rule);border-radius:20px;padding:28px 24px;transition:border-color .3s,transform .3s}
-.fc:hover{border-color:var(--pbd);transform:translateY(-3px)}
-.fi{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
-.fc h3{font-family:var(--fh);font-size:16px;font-weight:800;margin-bottom:6px;letter-spacing:-0.02em}
-.fc p{font-size:13px;color:var(--tx2);line-height:1.6}
+.ai p{font-size:12.5px;color:var(--tx2);line-height:1.5;margin-top:2px}
+.ai strong{color:var(--tx);font-weight:600;font-size:14px}
 
 /* HOW */
-.hw{display:flex;flex-direction:column;gap:0;position:relative;margin-top:40px}
-.hw::before{content:'';position:absolute;left:23px;top:28px;bottom:28px;width:2px;background:linear-gradient(180deg,var(--p),var(--lav),var(--sage),var(--p))}
-.st{display:flex;gap:20px;align-items:flex-start;padding:20px 0}
-.sn{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-weight:800;font-size:16px;flex-shrink:0;z-index:1}
-.st h3{font-family:var(--fh);font-size:16px;font-weight:700;margin-bottom:4px;letter-spacing:-0.02em}
-.st p{font-size:13px;color:var(--tx2);line-height:1.6}
-.st-shot{margin-top:14px;border-radius:14px;overflow:hidden;border:1px solid var(--rule2);max-width:480px;background:var(--bg2)}
-.st-shot img{display:block;width:100%;height:auto}
-
-/* APP PREVIEW */
-.preview{padding:80px 24px;text-align:center}
-.pg{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:32px}
-.phone-frame{width:200px;position:relative;flex-shrink:0}
-.phone-notch{width:80px;height:6px;border-radius:0 0 8px 8px;background:var(--bg);margin:0 auto;position:relative;z-index:2}
-.phone-screen{background:var(--bg1);border:1px solid var(--rule2);border-radius:24px;overflow:hidden;min-height:340px;position:relative}
-.phone-screen::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 70%,rgba(224,136,122,0.03) 100%);pointer-events:none;z-index:1}
-.phone-label{text-align:center;font-size:12px;font-weight:600;color:var(--tx2);margin-top:10px}
-
-/* WAITLIST */
-.waitlist{padding:100px 24px;text-align:center}
-.wf{display:flex;gap:8px;max-width:440px;margin:24px auto 0;flex-wrap:wrap;justify-content:center}
-.wf input{flex:1;min-width:200px;padding:14px 18px;border-radius:14px;border:1px solid var(--rule2);background:var(--bg2);color:var(--tx);font-size:14px;font-family:var(--fb);outline:none;transition:border-color .2s}
-.wf input:focus{border-color:var(--pbd)}
-.wf input::placeholder{color:var(--tx3)}
-.wn{font-size:11px;color:var(--tx3);margin-top:12px;max-width:360px;margin-left:auto;margin-right:auto;line-height:1.5}
-
-/* INSTALL NOTE */
 .note{margin-top:28px;padding:22px 24px;border-radius:18px;background:var(--lavbg);border:1px solid var(--lavbd);max-width:640px}
 .note h3{font-family:var(--fh);font-size:16px;font-weight:800;letter-spacing:-0.02em;margin-bottom:8px}
 .note p{font-size:13.5px;color:var(--tx2);line-height:1.65}
 .note p+p{margin-top:10px}
 .note strong{color:var(--tx);font-weight:600}
+.hw{display:flex;flex-direction:column;position:relative;margin-top:36px}
+.hw::before{content:'';position:absolute;left:23px;top:28px;bottom:28px;width:2px;background:linear-gradient(180deg,var(--p),var(--lav),var(--sage),var(--p))}
+.st{display:flex;gap:20px;align-items:flex-start;padding:20px 0}
+.sn{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-weight:800;font-size:16px;flex-shrink:0;z-index:1;background-color:var(--bg1)}
+.sn.c1{background-image:linear-gradient(var(--p2),var(--p2));border:1.5px solid var(--pbd);color:var(--p)}
+.sn.c2{background-image:linear-gradient(var(--lavbg),var(--lavbg));border:1.5px solid var(--lavbd);color:var(--lav)}
+.sn.c3{background-image:linear-gradient(var(--sagebg),var(--sagebg));border:1.5px solid var(--sagebd);color:var(--sage)}
+.st > div:last-child{min-width:0}
+.st h3{font-family:var(--fh);font-size:16px;font-weight:700;margin-bottom:4px;letter-spacing:-0.02em}
+.st p{font-size:13.5px;color:var(--tx2);line-height:1.6}
+.st-shot{margin-top:14px;border-radius:14px;overflow:hidden;border:1px solid var(--rule2);max-width:480px;background:var(--bg2)}
+.st-shot img{display:block;width:100%;height:auto}
 
-/* DOWNLOAD CARD */
+/* FAQ */
+.faq{margin-top:32px;border-top:1px solid var(--rule2)}
+.faq details{border-bottom:1px solid var(--rule2)}
+.faq summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 2px;font-family:var(--fh);font-size:17px;font-weight:700;letter-spacing:-0.02em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:'+';font-family:var(--fb);font-size:22px;font-weight:500;color:var(--p);transition:transform .25s;flex-shrink:0}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq summary:hover{color:var(--p)}
+.faq details p{font-size:14px;color:var(--tx2);line-height:1.7;padding:0 2px 22px;max-width:640px}
+
+/* DOWNLOAD */
 .dl-card{max-width:640px;margin:0 auto;text-align:center;background:var(--bg1);border:1px solid var(--pbd);border-radius:28px;padding:52px 44px 44px;position:relative;overflow:hidden}
-.dl-card::before{content:'';position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:420px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(224,136,122,0.12),transparent 70%);pointer-events:none}
+.dl-card::before{content:'';position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:420px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(224,136,122,0.14),transparent 70%);pointer-events:none}
 .dl-card .sec-title{margin-bottom:14px}
 .dl-lead{font-size:15px;color:var(--tx2);line-height:1.65;max-width:44ch;margin:0 auto}
+.dl-count{font-size:13px;font-weight:600;color:var(--tx2);margin-top:10px}
+.mobile-note{display:none;margin:18px auto 0;max-width:42ch;font-size:13px;line-height:1.55;color:var(--tx);background:var(--lavbg);border:1px solid var(--lavbd);border-radius:14px;padding:12px 14px}
+.is-mobile .mobile-note{display:block}
 .fz{margin:32px auto 0;padding-top:28px;border-top:1px solid var(--rule2)}
-.fz-line{font-family:var(--fh);font-size:clamp(20px,3.4vw,26px);font-weight:800;letter-spacing:-0.03em;line-height:1.25;color:var(--tx2)}
+.fz-line{font-family:var(--fh);font-size:clamp(21px,3.4vw,27px);font-weight:800;letter-spacing:-0.03em;line-height:1.25;color:var(--tx2)}
 .fz-line span{color:var(--p)}
 .fz-body{font-size:14px;color:var(--tx2);line-height:1.6;margin:10px auto 0;max-width:48ch}
 .fz-pills{list-style:none;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:18px}
 .fz-pills li{font-size:12px;font-weight:600;padding:7px 13px;border-radius:99px;background:var(--p2);border:1px solid var(--pbd);color:var(--p)}
-.dl-card .wf{margin-top:32px}
+.wf{display:flex;gap:8px;max-width:440px;margin:32px auto 0;flex-wrap:wrap;justify-content:center}
+.wf input{flex:1;min-width:200px;padding:14px 18px;border-radius:14px;border:1px solid var(--rule2);background:var(--bg2);color:var(--tx);font-size:16px;font-family:var(--fb);outline:none;transition:border-color .2s}
+.wf input:focus{border-color:var(--pbd)}
+.wf input::placeholder{color:var(--tx3)}
+.wn{font-size:11px;color:var(--tx3);margin-top:12px;line-height:1.5}
+.done{margin-top:32px}
+.done .ok{font-size:15px;color:var(--sage);font-weight:700;margin-bottom:8px}
+.done .hint{font-size:13px;color:var(--tx2);line-height:1.6;max-width:40ch;margin:0 auto 18px}
+.done .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.done .url{display:inline-block;font-size:13px;font-weight:600;color:var(--tx);background:var(--bg2);border:1px solid var(--rule2);border-radius:10px;padding:8px 12px;margin-bottom:16px}
 
 /* FOOTER */
-footer{padding:48px 24px 32px;border-top:1px solid var(--rule);max-width:960px;margin:0 auto}
-.ft{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:32px;margin-bottom:32px}
+footer{padding:44px 24px 32px;border-top:1px solid var(--rule);max-width:960px;margin:0 auto}
+.ft{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:28px;margin-bottom:28px}
 .ft-b .logo{margin-bottom:8px}
-.ft-b p{font-size:12px;color:var(--tx3);max-width:260px;line-height:1.6}
-.ft-ls{display:flex;gap:40px}
+.ft-b p{font-size:12px;color:var(--tx3);max-width:280px;line-height:1.6}
 .ft-c h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--tx3);margin-bottom:12px}
 .ft-c a{display:block;font-size:13px;color:var(--tx2);margin-bottom:8px;transition:color .2s}
 .ft-c a:hover{color:var(--p)}
-.ft-btm{text-align:center;padding-top:24px;border-top:1px solid var(--rule)}
+.ft-btm{text-align:center;padding-top:22px;border-top:1px solid var(--rule)}
 .ft-btm p{font-size:11px;color:var(--tx3)}
 
 @keyframes fu{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 @keyframes od{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(22px,-16px) scale(1.08)}66%{transform:translate(-14px,20px) scale(0.94)}}
 @keyframes shm{0%{left:-180%}100%{left:200%}}
+@keyframes blink{50%{opacity:0}}
+@keyframes glow{0%,100%{box-shadow:inset 0 0 0 2px var(--p),0 0 0 0 rgba(224,136,122,0)}50%{box-shadow:inset 0 0 0 2px var(--p),0 0 18px 2px rgba(224,136,122,0.35)}}
+@keyframes scrollup{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 .rv{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}.rv.v{opacity:1;transform:translateY(0)}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
 
-@media(max-width:860px){
-  .hero-inner{flex-direction:column;text-align:center}
-  .hero-copy{text-align:center}
-  .hero-cta{justify-content:center}
+@media(max-width:900px){
+  .hero-inner{flex-direction:column;text-align:center;gap:44px}
+  .hero-cta,.proof{justify-content:center}
   .hero-p{margin-left:auto;margin-right:auto}
+  .hero-copy,.hero-demo{flex:none;width:100%}
   .hero-demo-note{margin-left:auto;margin-right:auto;text-align:center}
 }
 @media(max-width:700px){
-  .hero{padding:64px 20px 56px}.sec{padding:80px 20px}
+  .hero{padding:56px 20px 64px}.sec{padding:80px 20px}.band{padding:72px 20px}
+  .hero-cta .btn-l{flex:1 1 100%}
   .ag{grid-template-columns:1fr}.after-card{padding:28px 20px}
-  .pg{gap:10px}.phone-frame{width:160px}.phone-screen{min-height:260px}
-  .ft{flex-direction:column}.ft-ls{gap:24px}
+  .fg{grid-template-columns:1fr}
   .dl-card{padding:40px 22px 32px;border-radius:22px}
   .wf{flex-direction:column}.wf input,.wf .btn-l{width:100%}
   .note{padding:18px}
+  .done .row .btn-l{flex:1 1 100%}
+  .ft{flex-direction:column}
 }
 </style>
 </head>
@@ -184,19 +229,21 @@ footer{padding:48px 24px 32px;border-top:1px solid var(--rule);max-width:960px;m
 
 <!-- HERO -->
 <section class="hero">
-  <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
+  <div class="orb o1"></div><div class="orb o2"></div>
   <div class="hero-inner">
     <div class="hero-copy">
-      <div class="hero-badge">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-        <span>Free tool for Grindr Web</span>
-      </div>
-      <h1><em>Profile</em><br>Hunter</h1>
-      <div class="tagline">We built it for ourselves. We're giving it to you.</div>
-      <p class="hero-p">A Chrome extension that adds a floating search panel to Grindr Web: highlight or filter grid profiles by name, find your favorites ★, auto-scroll the list. Nothing is automated on profiles, nothing is sent anywhere — it all stays in your browser.</p>
+      <div class="brand"><i><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7.5"/><path d="M21 21l-4.6-4.6"/></svg></i>Profile Hunter<small>for Grindr Web</small></div>
+      <h1>Find anyone on Grindr&nbsp;Web. <em>In&nbsp;seconds.</em></h1>
+      <p class="hero-p">Type a name or an emoji. Profile Hunter searches the grid, scrolls for you and keeps every match in a list — even the profiles Grindr has already wiped from the page.</p>
       <div class="hero-cta">
         <a href="#download" class="btn-l btn-p">Download for free</a>
-        <a href="#how" class="btn-l btn-g">See how it works</a>
+        <a href="#features" class="btn-l btn-g">See what it does</a>
+      </div>
+      <div class="proof">
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--sage)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Free</span>
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--sage)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>No data collected</span>
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--sage)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>2-minute install</span>
+        <span class="count" data-count hidden><b data-n>0</b>&nbsp;people already got it</span>
       </div>
     </div>
     <div class="hero-demo">
@@ -207,19 +254,57 @@ footer{padding:48px 24px 32px;border-top:1px solid var(--rule);max-width:960px;m
           <source src="https://kveq0vqcj8vsjdlf.public.blob.vercel-storage.com/profile-hunter/demo-hero-vdIqe0kbbTZsLutPu8VOvArQq7W1vh.mp4" type="video/mp4">
         </video>
       </div>
-      <p class="hero-demo-note">The real extension — search, favorites filter, hide mode, auto-scroll — running against a generated sample grid. Fictional names and stock/AI-generated photos: no real Grindr profiles were loaded or recorded.</p>
+      <p class="hero-demo-note">The real extension, running on a generated sample grid. Fictional names and stock/AI-generated photos: no real Grindr profiles were loaded or recorded.</p>
     </div>
   </div>
 </section>
 
+<!-- STATEMENT -->
+<section class="band">
+  <blockquote class="rv">Grindr Web forgets every profile you scroll&nbsp;past. <em><span>Profile Hunter</span> doesn't.</em></blockquote>
+  <p class="rv">We built it for ourselves. Now it's yours — for&nbsp;free.</p>
+</section>
+
 <!-- WHAT IT DOES -->
-<section id="features" class="sec">
+<section id="features" class="sec" style="padding-top:40px">
   <div class="sec-label rv" style="color:var(--sage)">What it does</div>
-  <h2 class="sec-title rv">Find a profile in seconds</h2>
-  <p class="sec-sub rv">Grindr Web clears a card's content once it scrolls off-screen. Profile Hunter remembers it for you.</p>
+  <h2 class="sec-title rv">Search smarter. Scroll&nbsp;less.</h2>
+  <p class="sec-sub rv">Two tools in one small floating panel, right on top of Grindr Web.</p>
   <div class="fg">
-    <div class="fc rv"><div class="fi" style="background:var(--p2);border:1px solid var(--pbd)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--p)" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div><h3>Search by name</h3><p>Type a name or emoji (e.g. 🚀) — and combine several of them in one go by separating them with a comma (e.g. <code>jay, mike</code>): a profile matches as soon as it contains at least one. Highlight matches or hide everything else.</p></div>
-    <div class="fc rv"><div class="fi" style="background:var(--sagebg);border:1px solid var(--sagebd)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--sage)" stroke-width="1.5" stroke-linecap="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div><h3>Auto-scroll</h3><p>Scrolls the grid at an adaptive pace, and can stop itself the moment a new match shows up.</p></div>
+    <div class="fc rv">
+      <div class="viz" aria-hidden="true">
+        <div class="vz-search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--tx3)" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7.5"/><path d="M21 21l-4.6-4.6"/></svg><span><b>jay</b>, <b>mike</b></span><i class="caret"></i></div>
+        <div class="vz-grid">
+          <div class="tile dim"></div><div class="tile hit"><span>Jay</span></div><div class="tile dim"></div><div class="tile dim"></div>
+          <div class="tile dim"></div><div class="tile dim"></div><div class="tile dim"></div><div class="tile hit"><span>Mike</span></div>
+        </div>
+      </div>
+      <div class="fc-body">
+        <h3>Search by name or emoji</h3>
+        <p>Combine several keywords with a comma — <code>jay, mike</code> finds both in a single pass. Highlight the matches, or hide everyone else.</p>
+      </div>
+    </div>
+    <div class="fc rv">
+      <div class="viz" aria-hidden="true">
+        <div class="vz-bar"><span><i class="dot"></i>Auto-scrolling…</span><span class="tog">Stop at next match ✓</span></div>
+        <div class="vz-scroll">
+          <div class="vz-track">
+            <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+            <div class="tile"></div><div class="tile hit"><span>Match</span></div><div class="tile"></div><div class="tile"></div>
+            <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+            <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+            <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+            <div class="tile"></div><div class="tile hit"><span>Match</span></div><div class="tile"></div><div class="tile"></div>
+            <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+            <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+          </div>
+        </div>
+      </div>
+      <div class="fc-body">
+        <h3>Auto-scroll</h3>
+        <p>It scrolls the grid for you, at a pace that adapts to how fast Grindr loads — and stops by itself the moment a new match appears.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -230,10 +315,10 @@ footer{padding:48px 24px 32px;border-top:1px solid var(--rule);max-width:960px;m
     <h2>Nothing clicked. Nothing collected.</h2>
     <p style="font-size:14px;color:var(--tx2);line-height:1.7">Profile Hunter never clicks a profile, favorites anyone or sends a message for you. It reads what's already on your screen — and helps you get through it faster.</p>
     <div class="ag">
-      <div class="ai"><span class="x">✕</span><div><strong>No network calls</strong><p>The source code (content.js) contains no fetch, no HTTP call — checkable by anyone.</p></div></div>
-      <div class="ai"><span class="ck">→</span><div><strong>Everything stays local</strong><p>Your searches and settings stay in Chrome's local storage, on your own device.</p></div></div>
-      <div class="ai"><span class="x">✕</span><div><strong>No distance estimation</strong><p>On purpose: we never try to infer the distance of a profile that chose to hide it.</p></div></div>
-      <div class="ai"><span class="ck">→</span><div><strong>Readable source code</strong><p>No minification. Open content.js in a text editor if you want to check for yourself.</p></div></div>
+      <div class="ai"><span class="x">✕</span><div><strong>No network calls</strong><p>The code contains no fetch, no HTTP request — checkable by anyone.</p></div></div>
+      <div class="ai"><span class="ck">→</span><div><strong>Everything stays local</strong><p>Your searches and settings live in Chrome's local storage, on your device.</p></div></div>
+      <div class="ai"><span class="x">✕</span><div><strong>No distance estimation</strong><p>On purpose: we never try to locate a profile that chose to hide its distance.</p></div></div>
+      <div class="ai"><span class="ck">→</span><div><strong>Readable source code</strong><p>No minification. Open content.js in any text editor and check for yourself.</p></div></div>
     </div>
   </div>
 </section>
@@ -241,7 +326,7 @@ footer{padding:48px 24px 32px;border-top:1px solid var(--rule);max-width:960px;m
 <!-- HOW TO INSTALL -->
 <section id="how" class="sec">
   <div class="sec-label rv" style="color:var(--lav)">Installation</div>
-  <h2 class="sec-title rv">Two minutes, developer mode</h2>
+  <h2 class="sec-title rv">Two minutes, developer&nbsp;mode</h2>
   <p class="sec-sub rv">Here's exactly what to click, screenshot by screenshot.</p>
   <div class="note rv">
     <h3>Why isn't it on the Chrome Web Store?</h3>
@@ -250,42 +335,74 @@ footer{padding:48px 24px 32px;border-top:1px solid var(--rule);max-width:960px;m
   </div>
   <div class="hw">
     <div class="st rv">
-      <div class="sn" style="background-image:linear-gradient(var(--p2),var(--p2));background-color:var(--bg1);border:1.5px solid var(--pbd);color:var(--p)">1</div>
+      <div class="sn c1">1</div>
       <div>
         <h3>Download and unzip</h3>
-        <p>Grab the .zip from the download section below and unzip it to a folder you'll remember — you'll need to point Chrome at that folder in step 3.</p>
+        <p>Grab the .zip from the download section below and unzip it to a folder you'll remember — you'll point Chrome at it in step 3.</p>
       </div>
     </div>
     <div class="st rv">
-      <div class="sn" style="background-image:linear-gradient(var(--lavbg),var(--lavbg));background-color:var(--bg1);border:1.5px solid var(--lavbd);color:var(--lav)">2</div>
+      <div class="sn c2">2</div>
       <div>
         <h3>Open chrome://extensions and turn on Developer mode</h3>
-        <p>Type <code>chrome://extensions</code> into Chrome's address bar and hit Enter. In the top-right corner, click the <strong>Developer mode</strong> toggle to switch it on (circled below) — three new buttons appear once it's on.</p>
-        <div class="st-shot"><img src="/api/profile-hunter-asset?file=install-1.png" alt="Chrome's chrome://extensions page with an arrow pointing at the Developer mode toggle in the top-right corner"></div>
+        <p>Type <code>chrome://extensions</code> in the address bar and hit Enter. Top-right, switch on <strong>Developer mode</strong> (circled below) — three new buttons appear.</p>
+        <div class="st-shot"><img src="/api/profile-hunter-asset?file=install-1.png" alt="Chrome's chrome://extensions page with an arrow pointing at the Developer mode toggle in the top-right corner" loading="lazy" width="680" height="460"></div>
       </div>
     </div>
     <div class="st rv">
-      <div class="sn" style="background-image:linear-gradient(var(--sagebg),var(--sagebg));background-color:var(--bg1);border:1.5px solid var(--sagebd);color:var(--sage)">3</div>
+      <div class="sn c3">3</div>
       <div>
         <h3>Click "Load unpacked"</h3>
-        <p>Click the <strong>Load unpacked</strong> button that just appeared in the top-left (circled below). A file picker opens — navigate to the folder you unzipped in step 1, the one that directly contains <code>manifest.json</code>, and select it (select the folder itself, not a file inside it).</p>
-        <div class="st-shot"><img src="/api/profile-hunter-asset?file=install-2.png" alt="Chrome's chrome://extensions page with an arrow pointing at the Load unpacked button"></div>
+        <p>Click <strong>Load unpacked</strong> (top-left, circled below), then select the unzipped folder — the one that directly contains <code>manifest.json</code>. Select the folder itself, not a file inside it.</p>
+        <div class="st-shot"><img src="/api/profile-hunter-asset?file=install-2.png" alt="Chrome's chrome://extensions page with an arrow pointing at the Load unpacked button" loading="lazy" width="680" height="460"></div>
       </div>
     </div>
     <div class="st rv">
-      <div class="sn" style="background-image:linear-gradient(var(--p2),var(--p2));background-color:var(--bg1);border:1.5px solid var(--pbd);color:var(--p)">4</div>
+      <div class="sn c1">4</div>
       <div>
         <h3>Confirm it's loaded and enabled</h3>
-        <p>A "Profile Hunter" card appears in your extensions list. Make sure its toggle (bottom-right of the card) is switched on and blue.</p>
+        <p>A "Profile Hunter" card appears in your extensions list. Make sure its toggle (bottom-right of the card) is on and blue.</p>
       </div>
     </div>
     <div class="st rv">
-      <div class="sn" style="background-image:linear-gradient(var(--lavbg),var(--lavbg));background-color:var(--bg1);border:1.5px solid var(--lavbd);color:var(--lav)">5</div>
+      <div class="sn c2">5</div>
       <div>
         <h3>Open Grindr Web</h3>
-        <p>Go to <code>web.grindr.com</code> (reload the tab if it was already open) — the "🔎 Profile Hunter" panel appears in the top-right corner automatically, ready to search.</p>
+        <p>Go to <code>web.grindr.com</code> (reload the tab if it was already open) — the "🔎 Profile Hunter" panel appears top-right, ready to search.</p>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="sec" style="padding-top:40px">
+  <div class="sec-label rv" style="color:var(--p)">FAQ</div>
+  <h2 class="sec-title rv">Before you install</h2>
+  <div class="faq rv">
+    <details>
+      <summary>Is it safe to install?</summary>
+      <p>It's about 27 KB of plain, readable JavaScript. It only asks Chrome for local storage, only runs on <code>web.grindr.com</code>, and makes no network requests — nothing leaves your browser. Open <code>content.js</code> in any text editor to check.</p>
+    </details>
+    <details>
+      <summary>Can it get my Grindr account in trouble?</summary>
+      <p>We can't promise anything: it's an unofficial tool, and Grindr's terms are strict about those. What we can say is what it does — it never acts on a profile (no clicks, no favorites, no messages); it only searches and scrolls the page you're already looking at. Use it at your own discretion.</p>
+    </details>
+    <details>
+      <summary>Does it work on my phone?</summary>
+      <p>No — Chrome extensions only run on a computer. Use it with Grindr Web (<code>web.grindr.com</code>) on desktop. On your phone, leave your email now and open this page later on your computer.</p>
+    </details>
+    <details>
+      <summary>Which browsers are supported?</summary>
+      <p>Google Chrome. Other Chromium-based browsers that let you load an unpacked extension — Brave, Edge, Arc — should work the same way. Not Safari or Firefox for now.</p>
+    </details>
+    <details>
+      <summary>Is it really free?</summary>
+      <p>Yes. No paid plan, no account. We ask for an email so we can tell you about updates — and about Fluidz, the app we're building next.</p>
+    </details>
+    <details>
+      <summary>How do I update it?</summary>
+      <p>We'll email you when a new version is out. Replace the folder, click ↻ on the extension's card in <code>chrome://extensions</code>, then reload Grindr Web. Your searches and shortcuts are kept.</p>
+    </details>
   </div>
 </section>
 
@@ -295,6 +412,8 @@ footer{padding:48px 24px 32px;border-top:1px solid var(--rule);max-width:960px;m
     <div class="sec-label" style="color:var(--p)">Download</div>
     <h2 class="sec-title">Get it free.</h2>
     <p class="dl-lead">Leave your email and the download unlocks right away. We'll only write for updates — and to introduce&nbsp;you&nbsp;to&nbsp;Fluidz.</p>
+    <p class="dl-count" data-count hidden>Join <b data-n>0</b> people who already got it.</p>
+    <p class="mobile-note">You're on your phone — Profile Hunter runs on Chrome for desktop. Leave your email now, then open this page on your computer to install it.</p>
 
     <div class="fz">
       <p class="fz-line">Grindr is where it starts.<br><span>Fluidz is what comes after.</span></p>
@@ -304,16 +423,26 @@ footer{padding:48px 24px 32px;border-top:1px solid var(--rule);max-width:960px;m
 
     <div id="ph-form-wrap">
       <form class="wf" onsubmit="handleDL(event)" novalidate>
-        <input type="email" placeholder="you@email.com" id="ph-e" autocomplete="email">
-        <button type="submit" class="btn-l btn-p">Unlock download</button>
+        <input type="email" placeholder="you@email.com" id="ph-e" autocomplete="email" inputmode="email">
+        <button type="submit" class="btn-l btn-p" id="ph-btn">Unlock download</button>
       </form>
       <p class="wn">No spam. Never sold. Unsubscribe anytime.</p>
       <p id="ph-m" style="font-size:13px;margin-top:14px;display:none;font-weight:600"></p>
     </div>
 
-    <div id="ph-dl-wrap" style="display:none;margin-top:32px">
-      <p style="font-size:14px;color:var(--sage);font-weight:700;margin-bottom:16px">Thanks! Your download is ready.</p>
-      <a href="/api/profile-hunter-download" download="profile-hunter.zip" class="btn-l btn-p" style="display:inline-block">Download the .zip</a>
+    <div id="ph-dl-wrap" class="done" style="display:none">
+      <p class="ok">Thanks! Your download is ready.</p>
+      <a href="/api/profile-hunter-download" download="profile-hunter.zip" class="btn-l btn-p">Download the .zip</a>
+    </div>
+
+    <div id="ph-mob-wrap" class="done" style="display:none">
+      <p class="ok">You're in. One last step.</p>
+      <p class="hint">Open this page on your computer to download and install Profile Hunter:</p>
+      <span class="url">fluidz.app/profile-hunter.html</span>
+      <div class="row">
+        <button type="button" class="btn-l btn-p" id="ph-share">Send it to myself</button>
+        <button type="button" class="btn-l btn-g" id="ph-copy">Copy link</button>
+      </div>
     </div>
   </div>
 </section>
@@ -322,30 +451,58 @@ footer{padding:48px 24px 32px;border-top:1px solid var(--rule);max-width:960px;m
 <footer>
   <div class="ft">
     <div class="ft-b"><div class="logo" style="font-size:18px">fluidz</div><p>Profile Hunter is a free, open-source side project by the Fluidz team. Paris, 2026.</p></div>
-    <div class="ft-ls">
-      <div class="ft-c"><h4>Profile Hunter</h4><a href="#features">Features</a><a href="#how">Install</a><a href="#download">Download</a></div>
-    </div>
+    <div class="ft-c"><h4>Profile Hunter</h4><a href="#features">Features</a><a href="#how">Install</a><a href="#faq">FAQ</a><a href="#download">Download</a></div>
   </div>
-  <div class="ft-btm"><p>© 2026 Fluidz · Profile Hunter</p></div>
+  <div class="ft-btm"><p>© 2026 Fluidz · Profile Hunter · Not affiliated with Grindr.</p></div>
 </footer>
 
 <script>
-const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('v');obs.unobserve(e.target)}})},{threshold:0.12})
-document.querySelectorAll('.rv').forEach(el=>obs.observe(el))
+const PAGE_URL = 'https://fluidz.app/profile-hunter.html'
+// Phones and tablets can't run Chrome extensions: switch the download block to "save it for your computer".
+const IS_MOBILE = window.matchMedia('(hover: none) and (pointer: coarse)').matches
+if (IS_MOBILE) {
+  document.documentElement.classList.add('is-mobile')
+  document.getElementById('ph-btn').textContent = 'Save it for my computer'
+}
 
-async function handleDL(e){
+const obs = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('v'); obs.unobserve(e.target) } }) }, { threshold: 0.12 })
+document.querySelectorAll('.rv').forEach(el => obs.observe(el))
+
+// Real counter: the number of people who actually unlocked the download (aggregate only).
+// Shown only once it's meaningful, and counts up when it scrolls into view.
+const COUNT_MIN_TO_SHOW = 50
+function animateCount(el, target) {
+  const start = performance.now(), dur = 1400
+  const fmt = n => n.toLocaleString('en-US')
+  const step = now => {
+    const t = Math.min(1, (now - start) / dur)
+    el.textContent = fmt(Math.round(target * (1 - Math.pow(1 - t, 3))))
+    if (t < 1) requestAnimationFrame(step)
+  }
+  requestAnimationFrame(step)
+}
+fetch('/api/profile-hunter-stats').then(r => r.json()).then(({ count }) => {
+  if (typeof count !== 'number' || count < COUNT_MIN_TO_SHOW) return
+  document.querySelectorAll('[data-count]').forEach(box => {
+    box.hidden = false
+    const n = box.querySelector('[data-n]')
+    const io = new IntersectionObserver(es => { if (es[0].isIntersecting) { animateCount(n, count); io.disconnect() } })
+    io.observe(box)
+  })
+}).catch(() => {})
+
+async function handleDL(e) {
   e.preventDefault()
   const emailEl = document.getElementById('ph-e')
   const email = emailEl.value.trim()
-  const btn = e.target.querySelector('button')
+  const btn = document.getElementById('ph-btn')
   const msg = document.getElementById('ph-m')
   msg.style.display = 'none'
 
-  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  if (!email || !emailRe.test(email)) {
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     msg.style.display = 'block'
     msg.style.color = '#F87171'
-    msg.textContent = "Please enter a valid email address."
+    msg.textContent = 'Please enter a valid email address.'
     emailEl.focus()
     return
   }
@@ -359,15 +516,25 @@ async function handleDL(e){
     })
     if (!res.ok) throw new Error('request_failed')
     document.getElementById('ph-form-wrap').style.display = 'none'
-    document.getElementById('ph-dl-wrap').style.display = 'block'
-    document.getElementById('ph-dl-wrap').classList.add('v')
+    document.getElementById(IS_MOBILE ? 'ph-mob-wrap' : 'ph-dl-wrap').style.display = 'block'
   } catch (err) {
     msg.style.display = 'block'
     msg.style.color = '#F87171'
-    msg.textContent = "Oops, please try again in a moment."
+    msg.textContent = 'Oops, please try again in a moment.'
     btn.disabled = false
   }
 }
+
+document.getElementById('ph-share').addEventListener('click', async () => {
+  if (navigator.share) {
+    try { await navigator.share({ title: 'Profile Hunter', text: 'Install Profile Hunter on my computer:', url: PAGE_URL }) } catch (_) {}
+  } else {
+    location.href = 'mailto:?subject=' + encodeURIComponent('Profile Hunter — install on my computer') + '&body=' + encodeURIComponent(PAGE_URL)
+  }
+})
+document.getElementById('ph-copy').addEventListener('click', async e => {
+  try { await navigator.clipboard.writeText(PAGE_URL); e.target.textContent = 'Copied ✓' } catch (_) { e.target.textContent = PAGE_URL }
+})
 </script>
 </body>
 </html>
