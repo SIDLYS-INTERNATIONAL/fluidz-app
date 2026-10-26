@@ -42,21 +42,35 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 24px;display:fl
 .sec-sub{font-size:15px;color:var(--tx2);line-height:1.7;max-width:520px}
 
 /* HERO */
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;padding:120px 24px 80px;overflow:hidden;background:url('https://images.unsplash.com/photo-1566737236500-c8ac43014a67?w=1920&q=80&auto=format') center/cover no-repeat}
-.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,4,10,0.82) 0%,rgba(5,4,10,0.70) 40%,rgba(5,4,10,0.92) 100%);pointer-events:none}
+.hero{display:flex;flex-direction:column;justify-content:center;position:relative;padding:150px 24px 100px;overflow:hidden;background:var(--bg)}
 .orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(60px);z-index:1}
 .o1{width:500px;height:500px;background:rgba(224,136,122,0.10);top:-120px;right:-160px;animation:od 11s ease-in-out infinite}
 .o2{width:420px;height:420px;background:rgba(144,128,186,0.07);bottom:-80px;left:-140px;animation:od 14s ease-in-out infinite reverse}
 .o3{width:280px;height:280px;background:rgba(107,168,136,0.05);top:35%;left:55%;animation:od 17s ease-in-out infinite}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:99px;border:1px solid var(--pbd);background:var(--p2);font-size:12px;font-weight:600;color:var(--p);margin-bottom:36px;animation:fu .6s ease both;z-index:2;position:relative}
+.hero-inner{display:flex;align-items:center;gap:56px;max-width:1180px;margin:0 auto;position:relative;z-index:2;width:100%}
+.hero-copy{flex:1 1 420px;min-width:300px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:99px;border:1px solid var(--pbd);background:var(--p2);font-size:12px;font-weight:600;color:var(--p);margin-bottom:28px;animation:fu .6s ease both}
 .hero-badge svg{opacity:0.7;position:relative;z-index:2}
-.hero h1{font-family:var(--fh);font-size:clamp(44px,9vw,78px);font-weight:800;letter-spacing:-0.05em;line-height:0.90;margin-bottom:16px;animation:fu .6s .1s ease both;max-width:760px;z-index:2;position:relative}
+.hero h1{font-family:var(--fh);font-size:clamp(40px,6vw,64px);font-weight:800;letter-spacing:-0.05em;line-height:0.95;margin-bottom:14px;animation:fu .6s .1s ease both}
 .hero h1 em{font-style:normal;color:var(--p);position:relative;text-shadow:0 0 60px rgba(224,136,122,0.3)}
 .hero h1 em::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--p);border-radius:2px;opacity:0.5}
-.tagline{font-family:var(--fh);font-size:clamp(16px,3vw,22px);font-weight:700;color:var(--tx2);letter-spacing:-0.03em;margin-bottom:28px;animation:fu .6s .15s ease both;z-index:2;position:relative}
+.tagline{font-family:var(--fh);font-size:clamp(15px,2vw,19px);font-weight:700;color:var(--tx2);letter-spacing:-0.03em;margin-bottom:22px;animation:fu .6s .15s ease both}
 .tagline span{color:var(--p)}
-.hero-p{font-size:clamp(14px,2vw,17px);color:var(--tx2);max-width:500px;line-height:1.65;margin-bottom:40px;animation:fu .6s .2s ease both;z-index:2;position:relative}
-.hero-cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;animation:fu .6s .3s ease both;z-index:2;position:relative}
+.hero-p{font-size:clamp(14px,2vw,16px);color:var(--tx2);max-width:460px;line-height:1.65;margin-bottom:34px;animation:fu .6s .2s ease both}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;animation:fu .6s .3s ease both}
+
+/* HERO DEMO (the live extension, front and center) */
+.hero-demo{flex:1 1 480px;min-width:300px;animation:fu .7s .25s ease both;position:relative}
+.hero-demo-glow{position:absolute;inset:-40px;background:radial-gradient(circle at 50% 40%,rgba(224,136,122,0.16),transparent 65%);pointer-events:none;z-index:0}
+.browser-frame{position:relative;z-index:1;border-radius:16px;overflow:hidden;border:1px solid var(--rule2);background:var(--bg1);box-shadow:0 30px 80px -20px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.03)}
+.browser-bar{display:flex;align-items:center;gap:6px;padding:10px 14px;background:var(--bg2);border-bottom:1px solid var(--rule)}
+.browser-bar i{width:9px;height:9px;border-radius:50%;background:var(--rule2);display:block}
+.browser-bar i:nth-child(1){background:#F87171}
+.browser-bar i:nth-child(2){background:#FBBF24}
+.browser-bar i:nth-child(3){background:#6BA888}
+.browser-url{margin-left:10px;font-size:11px;color:var(--tx3);background:var(--bg3);padding:3px 10px;border-radius:6px;font-family:var(--fb)}
+.browser-frame video{display:block;width:100%;height:auto;background:#0c0c10}
+.hero-demo-note{font-size:11px;color:var(--tx3);margin-top:14px;line-height:1.6;max-width:460px}
 .btn-l{padding:15px 36px;border-radius:16px;font-size:15px;font-weight:700;cursor:pointer;font-family:var(--fb);border:none;position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s}
 .btn-p{background:var(--p);color:#fff}.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(224,136,122,0.3)}
 .btn-p::after{content:'';position:absolute;top:0;left:-180%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.14),transparent);animation:shm 3s ease-in-out infinite}
@@ -99,11 +113,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 24px;display:fl
 .st p{font-size:13px;color:var(--tx2);line-height:1.6}
 .st-shot{margin-top:14px;border-radius:14px;overflow:hidden;border:1px solid var(--rule2);max-width:480px;background:var(--bg2)}
 .st-shot img{display:block;width:100%;height:auto}
-
-/* DEMO VIDEO */
-.demo-wrap{margin-top:40px;border-radius:20px;overflow:hidden;border:1px solid var(--rule2);background:var(--bg1);position:relative}
-.demo-wrap video{display:block;width:100%;height:auto}
-.demo-note{font-size:12px;color:var(--tx3);margin-top:12px;line-height:1.6;max-width:600px}
 
 /* APP PREVIEW */
 .preview{padding:80px 24px;text-align:center}
@@ -148,9 +157,16 @@ footer{padding:48px 24px 32px;border-top:1px solid var(--rule);max-width:960px;m
 @keyframes shm{0%{left:-180%}100%{left:200%}}
 .rv{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}.rv.v{opacity:1;transform:translateY(0)}
 
+@media(max-width:860px){
+  .hero-inner{flex-direction:column;text-align:center}
+  .hero-copy{text-align:center}
+  .hero-cta{justify-content:center}
+  .hero-p{margin-left:auto;margin-right:auto}
+  .hero-demo-note{margin-left:auto;margin-right:auto;text-align:center}
+}
 @media(max-width:700px){
   nav{padding:12px 16px}.nav-r{gap:8px}.nav-r a.hm{display:none}
-  .hero{padding:100px 20px 60px}.sec{padding:80px 20px}
+  .hero{padding:96px 20px 56px}.sec{padding:80px 20px}
   .ag{grid-template-columns:1fr}.after-card{padding:28px 20px}
   .pg{gap:10px}.phone-frame{width:160px}.phone-screen{min-height:260px}
   .ft{flex-direction:column}.ft-ls{gap:24px}
@@ -173,18 +189,32 @@ footer{padding:48px 24px 32px;border-top:1px solid var(--rule);max-width:960px;m
 </nav>
 
 <!-- HERO -->
-<section class="hero" style="min-height:80vh">
+<section class="hero">
   <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
-  <div class="hero-badge">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-    <span>Free tool for Grindr Web</span>
-  </div>
-  <h1><em>Profile</em><br>Hunter</h1>
-  <div class="tagline">We built it for ourselves. We're giving it to you.</div>
-  <p class="hero-p">A Chrome extension that adds a floating search panel to Grindr Web: highlight or filter grid profiles by name, find your favorites ★, auto-scroll the list. Nothing is automated on profiles, nothing is sent anywhere — it all stays in your browser.</p>
-  <div class="hero-cta">
-    <a href="#download" class="btn-l btn-p">Download for free</a>
-    <a href="#how" class="btn-l btn-g">See how it works</a>
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <div class="hero-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <span>Free tool for Grindr Web</span>
+      </div>
+      <h1><em>Profile</em><br>Hunter</h1>
+      <div class="tagline">We built it for ourselves. We're giving it to you.</div>
+      <p class="hero-p">A Chrome extension that adds a floating search panel to Grindr Web: highlight or filter grid profiles by name, find your favorites ★, auto-scroll the list. Nothing is automated on profiles, nothing is sent anywhere — it all stays in your browser.</p>
+      <div class="hero-cta">
+        <a href="#download" class="btn-l btn-p">Download for free</a>
+        <a href="#how" class="btn-l btn-g">See how it works</a>
+      </div>
+    </div>
+    <div class="hero-demo">
+      <div class="hero-demo-glow"></div>
+      <div class="browser-frame">
+        <div class="browser-bar"><i></i><i></i><i></i><div class="browser-url">web.grindr.com</div></div>
+        <video autoplay loop muted playsinline>
+          <source src="https://kveq0vqcj8vsjdlf.public.blob.vercel-storage.com/profile-hunter/demo-hero-vdIqe0kbbTZsLutPu8VOvArQq7W1vh.mp4" type="video/mp4">
+        </video>
+      </div>
+      <p class="hero-demo-note">The real extension — search, favorites filter, hide mode, auto-scroll — running against a generated sample grid. Fictional names and stock/AI-generated photos: no real Grindr profiles were loaded or recorded.</p>
+    </div>
   </div>
 </section>
 
@@ -261,19 +291,6 @@ footer{padding:48px 24px 32px;border-top:1px solid var(--rule);max-width:960px;m
       </div>
     </div>
   </div>
-</section>
-
-<!-- DEMO VIDEO -->
-<section class="sec" style="padding-top:0">
-  <div class="sec-label rv" style="color:var(--p)">See it in action</div>
-  <h2 class="sec-title rv">30 seconds, real extension</h2>
-  <p class="sec-sub rv">This is the actual Profile Hunter code running — search, favorites filter, hide mode, and auto-scroll — captured against a grid of placeholder profiles instead of real Grindr accounts.</p>
-  <div class="demo-wrap rv">
-    <video autoplay loop muted playsinline>
-      <source src="/api/profile-hunter-demo-video" type="video/mp4">
-    </video>
-  </div>
-  <p class="demo-note">Shown on a generated sample grid with fictional names and placeholder avatars — no real Grindr profiles were loaded or recorded to make this demo. On your own account, the panel works exactly the same way, directly on your real grid.</p>
 </section>
 
 <!-- DOWNLOAD / EMAIL GATE -->
