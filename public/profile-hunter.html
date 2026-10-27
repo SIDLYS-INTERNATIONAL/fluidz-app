@@ -100,6 +100,9 @@ p{text-wrap:pretty}
 .stage.zoom .co{opacity:1;transform:translate(0,-50%)}
 .stage.zoom .co:nth-child(1){transition-delay:.7s}.stage.zoom .co:nth-child(2){transition-delay:1.1s}.stage.zoom .co:nth-child(3){transition-delay:1.5s}.stage.zoom .co:nth-child(4){transition-delay:1.9s}
 .stage .co{transition-delay:0s}
+.play-btn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;border:none;background:rgba(224,136,122,.95);display:none;align-items:center;justify-content:center;z-index:3;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.45)}
+.play-btn svg{margin-left:3px}
+.stage.needs-tap .play-btn{display:flex}
 .hero-demo-note{font-size:11px;color:var(--tx3);margin-top:14px;line-height:1.6;max-width:480px}
 
 /* STATEMENT BAND */
@@ -266,7 +269,7 @@ footer{padding:44px 24px 32px;border-top:1px solid var(--rule);max-width:960px;m
       <div class="browser-frame">
         <div class="browser-bar"><i></i><i></i><i></i><div class="browser-url">web.grindr.com</div></div>
         <div class="stage" id="demo-stage">
-          <video id="demo-video" autoplay muted playsinline preload="auto">
+          <video id="demo-video" autoplay muted playsinline webkit-playsinline preload="auto" poster="/api/profile-hunter-asset?file=demo-poster.jpg">
             <source src="https://kveq0vqcj8vsjdlf.public.blob.vercel-storage.com/profile-hunter/demo-hero-vdIqe0kbbTZsLutPu8VOvArQq7W1vh.mp4" type="video/mp4">
           </video>
           <div class="callouts" aria-hidden="true">
@@ -275,6 +278,7 @@ footer{padding:44px 24px 32px;border-top:1px solid var(--rule);max-width:960px;m
             <div class="co" style="top:46%"><div>Auto-scroll<small>stops at the next match</small></div></div>
             <div class="co" style="top:71%"><div>Every match, kept in a list<small>click one to jump to it</small></div></div>
           </div>
+          <button type="button" class="play-btn" id="demo-play" aria-label="Play the demo"><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></button>
         </div>
       </div>
       <p class="hero-demo-note">The real extension, running on a generated sample grid. Fictional names and stock/AI-generated photos: no real Grindr profiles were loaded or recorded.</p>
@@ -369,7 +373,7 @@ footer{padding:44px 24px 32px;border-top:1px solid var(--rule);max-width:960px;m
       <div>
         <h3>Open chrome://extensions and turn on Developer mode</h3>
         <p>Type <code>chrome://extensions</code> in the address bar and hit Enter. Top-right, switch on <strong>Developer mode</strong> (circled below) — three new buttons appear.</p>
-        <div class="st-shot"><img src="/api/profile-hunter-asset?file=install-1.png" alt="Chrome's chrome://extensions page with an arrow pointing at the Developer mode toggle in the top-right corner" loading="lazy" width="680" height="460"></div>
+        <div class="st-shot"><img src="/api/profile-hunter-asset?file=install-1.png" alt="Chrome's chrome://extensions page with an arrow pointing at the Developer mode toggle in the top-right corner" loading="lazy" width="1180" height="260"></div>
       </div>
     </div>
     <div class="st rv">
@@ -377,7 +381,7 @@ footer{padding:44px 24px 32px;border-top:1px solid var(--rule);max-width:960px;m
       <div>
         <h3>Click "Load unpacked"</h3>
         <p>Click <strong>Load unpacked</strong> (top-left, circled below), then select the unzipped folder — the one that directly contains <code>manifest.json</code>. Select the folder itself, not a file inside it.</p>
-        <div class="st-shot"><img src="/api/profile-hunter-asset?file=install-2.png" alt="Chrome's chrome://extensions page with an arrow pointing at the Load unpacked button" loading="lazy" width="680" height="460"></div>
+        <div class="st-shot"><img src="/api/profile-hunter-asset?file=install-2.png" alt="Chrome's chrome://extensions page with an arrow pointing at the Load unpacked button" loading="lazy" width="1180" height="260"></div>
       </div>
     </div>
     <div class="st rv">
@@ -495,15 +499,29 @@ if (IS_MOBILE) {
   if (!v || !stage) return
   const ZOOM_AT = 5.7, HOLD = 4000, OUT = 800
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  let done = false
+  let done = false, holding = false
+  // Some phones refuse autoplay (iOS Low Power Mode, "Auto-Play Video Previews" off, data saver):
+  // keep trying on visibility / first touch, and show a tap-to-play button if it's still blocked.
+  v.muted = true
+  const tryPlay = () => {
+    if (holding) return
+    const p = v.play()
+    if (p && p.then) p.then(() => stage.classList.remove('needs-tap')).catch(() => stage.classList.add('needs-tap'))
+  }
+  document.getElementById('demo-play').addEventListener('click', tryPlay)
+  new IntersectionObserver(es => { if (es[0].isIntersecting && v.paused) tryPlay() }).observe(stage)
+  ;['touchstart', 'scroll'].forEach(ev => window.addEventListener(ev, () => { if (v.paused) tryPlay() }, { once: true, passive: true }))
+  setTimeout(() => { if (v.paused && !holding) stage.classList.add('needs-tap') }, 2500)
+  v.addEventListener('playing', () => stage.classList.remove('needs-tap'))
   const check = () => {
     if (!done && v.currentTime >= ZOOM_AT && !v.paused) {
       done = true
       if (reduce) return
+      holding = true
       v.pause()
       stage.classList.add('zoom')
       setTimeout(() => stage.classList.remove('zoom'), HOLD - OUT)
-      setTimeout(() => { v.play().catch(() => {}) }, HOLD)
+      setTimeout(() => { holding = false; tryPlay() }, HOLD)
     }
   }
   if ('requestVideoFrameCallback' in HTMLVideoElement.prototype) {
