@@ -14,6 +14,7 @@ const ALLOWED = {
   'install-2.png': 'image/png',
   'install-3.png': 'image/png',
   'og.png': 'image/png',
+  'demo-poster.jpg': 'image/jpeg',
 }
 
 export default async function handler(req, res) {
