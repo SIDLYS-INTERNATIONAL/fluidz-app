@@ -488,12 +488,12 @@ if (IS_MOBILE) {
   document.getElementById('ph-btn').textContent = 'Save it for my computer'
 }
 
-// Hero demo: play once, and when the search is done (~7.4s) pause for 4s, zooming on the
+// Hero demo: play once, and when the search is done (~5.7s) pause for 4s, zooming on the
 // extension panel with feature callouts, then zoom back out, resume, and loop.
 ;(function () {
   const v = document.getElementById('demo-video'), stage = document.getElementById('demo-stage')
   if (!v || !stage) return
-  const ZOOM_AT = 7.4, HOLD = 4000, OUT = 800
+  const ZOOM_AT = 5.7, HOLD = 4000, OUT = 800
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   let done = false
   const check = () => {
