@@ -29,7 +29,15 @@
     '.step i{width:20px;height:20px;border-radius:50%;background:var(--p2);color:var(--p);font-style:normal;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}',
     '.field{min-height:40px;background:var(--bg3);border:1px solid var(--pbd);border-radius:12px;padding:7px 10px;display:flex;align-items:center;flex-wrap:wrap;gap:6px;cursor:text}',
     '.chip{display:inline-flex;align-items:center;gap:4px;background:var(--p2);color:var(--p);font-size:13px;font-weight:700;border-radius:999px;padding:3px 6px 3px 10px;max-width:100%}',
-    '.chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}',
+    '.chip .ct{display:inline-flex;align-items:center;gap:4px;min-width:0;cursor:pointer;border-radius:999px}',
+    '.chip .ct span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}',
+    '.op{font-style:normal;font-weight:800;font-size:9px;letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:1px 5px;line-height:1.3;flex-shrink:0;display:inline-block}',
+    '.op.and{background:var(--p);color:var(--ink)}',
+    '.op.or{background:rgba(255,255,255,.08);color:var(--tx2)}',
+    '.orp{font-size:9px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--tx2);border:1px solid var(--rule2);border-radius:999px;padding:1px 6px;line-height:1.3}',
+    '.sum{font-size:11.5px;line-height:1.7;color:var(--tx2);margin-top:-4px}',
+    '.sum b{color:var(--tx);font-weight:700}',
+    '.sum .wait{font-style:normal;color:var(--tx3)}',
     '.chip button{color:var(--p);font-size:12px;display:flex;border-radius:50%}',
     '.field input{flex:1;min-width:90px;background:none;border:0;outline:0;color:var(--tx);font-size:13px;padding:2px 0}',
     '.field input::placeholder{color:var(--tx3)}',
@@ -52,7 +60,17 @@
     '.go.stop{background:var(--bg3);color:var(--p)}',
     '.help{display:flex;gap:6px;font-size:11px;line-height:1.45;color:var(--tx3)}',
     '.help .ic{font-size:12px;margin-top:2px}',
-    '.status{font-size:11px;font-weight:600;color:var(--lav);min-height:0}',
+    '.status{font-size:11px;font-weight:600;color:var(--lav);min-height:0;margin-top:-4px}',
+    '.speed{display:flex;flex-direction:column;gap:5px}',
+    '.speed .sr{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:12.5px;font-weight:600;color:var(--tx2)}',
+    '.speed .sr>span{margin-right:2px}',
+    '.speed .sr button{border-radius:999px;padding:4px 10px;font-size:11.5px;font-weight:800;background:rgba(255,255,255,.05);color:var(--tx2)}',
+    '.speed .sr button:hover{background:rgba(255,255,255,.09)}',
+    '.speed .sr button[aria-pressed=true]{background:var(--p);color:var(--ink)}',
+    '.speed .sh2{font-size:11px;line-height:1.4;color:var(--tx3)}',
+    '.speed .sh2.warn{color:var(--p)}',
+    '.help{flex-direction:column;gap:5px}',
+    '.help .hl{display:flex;gap:6px}',
     '.gauges{display:flex;gap:8px}',
     '.gauge{flex:1;background:rgba(255,255,255,.025);border-radius:12px;padding:8px 4px;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;min-width:0}',
     '.gauge .w{position:relative;width:58px;height:58px;display:flex;align-items:center;justify-content:center}',
@@ -90,6 +108,9 @@
     '.acts{display:flex;gap:8px;flex-wrap:wrap}',
     '.acts button,.acts a{border-radius:999px;padding:7px 12px;font-size:12px;font-weight:700;background:rgba(255,255,255,.07);color:var(--tx);text-decoration:none;display:inline-flex;align-items:center;gap:4px}',
     '.acts .p{background:var(--p);color:var(--ink);font-weight:800}',
+    '.card.chat{padding:12px 14px;gap:8px}',
+    '.card.chat p{font-size:11.5px;line-height:1.5;color:var(--tx2)}',
+    '.card.chat p.t{color:var(--tx3)}',
     '.card.note{border-color:var(--pbd);flex-direction:row;align-items:center;gap:12px}',
     '.card.note .av{width:40px;height:40px}',
     '.card.note .tx{flex:1;min-width:0}.card.note .tx b{display:block;font-size:13.5px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}',
@@ -124,6 +145,37 @@
     '.nogrid{font-size:12.5px;line-height:1.5;color:var(--tx2);padding:6px 2px}',
     '@media (prefers-reduced-motion:reduce){.tg,.tg i{transition:none}}'
   ].join('\n');
+
+  /* ---------- search syntax (shared with content.js) ----------
+     OR  = comma , full-width comma ， semicolon ; or bar |     AND = + or ＋     "quotes" (or “curly”) keep everything inside one term. */
+  var OR_SEP = ',，;|', QUOTE = /["“”]/;
+  function parseQuery(str) {
+    var groups = [], terms = [], cur = '', inQ = false, lastAnd = false;
+    function pushTerm() { var t = cur.trim(); cur = ''; if (t) terms.push(t) }
+    function pushGroup() { pushTerm(); if (terms.length) groups.push(terms); terms = [] }
+    str = String(str || '');
+    for (var i = 0; i < str.length; i++) {
+      var ch = str.charAt(i);
+      if (QUOTE.test(ch)) { inQ = !inQ; lastAnd = false; continue }
+      if (!inQ && (ch === '+' || ch === '＋')) { pushTerm(); lastAnd = true; continue }
+      if (!inQ && OR_SEP.indexOf(ch) >= 0) { pushGroup(); lastAnd = false; continue }
+      cur += ch; if (!/\s/.test(ch)) lastAnd = false;
+    }
+    var pending = lastAnd && !cur.trim(); pushGroup();
+    return { groups: groups, pending: pending };
+  }
+  // Splits typed text at OR separators (outside quotes): complete pieces become chips, `last` stays in the input.
+  function splitOr(str) {
+    var pieces = [], cur = '', inQ = false; str = String(str || '').replace(/＋/g, '+');
+    for (var i = 0; i < str.length; i++) {
+      var ch = str.charAt(i);
+      if (QUOTE.test(ch)) inQ = !inQ;
+      if (!inQ && OR_SEP.indexOf(ch) >= 0) { var p = cur.trim(); if (p) pieces.push(p); cur = ''; continue }
+      cur += ch;
+    }
+    return { pieces: pieces, last: pieces.length ? cur.replace(/^\s+/, '') : cur };
+  }
+  g.PNS_PARSE = { parse: parseQuery, splitOr: splitOr };
 
   function ic(name) {
     var inner = (g.PNS_ICONS || {})[name] || '';
@@ -170,24 +222,31 @@
     function mountSlot(parent, name) { slots[name] = h('div'); parent.appendChild(slots[name]) }
 
     /* ---------- builders ---------- */
+    function commitPieces(pieces) {
+      var gs = S.groups.slice();
+      pieces.forEach(function (p) { if (!/["“”]/.test(p)) p = p.replace(/\s*\+\s*$/, '').trim(); if (p && gs.indexOf(p) < 0) gs.push(p) });
+      gs = gs.slice(0, 12); S.groups = gs; input.value = ''; send({ a: 'draft', v: '' }); send({ a: 'groups', groups: gs });
+    }
     function commitDraft() {
-      var v = input.value.trim().replace(/,+$/, '').trim();
-      if (!v) return false;
-      var gs = S.groups.slice(); if (gs.indexOf(v) < 0) gs.push(v);
-      gs = gs.slice(0, 12); S.groups = gs; input.value = ''; send({ a: 'draft', v: '' }); send({ a: 'groups', groups: gs }); return true;
+      var pieces = splitOr(input.value + ',').pieces; // flush whatever is typed
+      if (!pieces.length) return false;
+      commitPieces(pieces); return true;
     }
     input.addEventListener('input', function () {
-      if (input.value.indexOf(',') >= 0) { var parts = input.value.split(','); var last = parts.pop(); input.value = parts.join(',') + (parts.length ? ',' : ''); commitDraft(); input.value = last; }
-      send({ a: 'draft', v: input.value });
+      if (/＋/.test(input.value)) input.value = input.value.replace(/＋/g, '+');
+      var sp = splitOr(input.value);
+      if (sp.pieces.length) { commitPieces(sp.pieces); input.value = sp.last }
+      send({ a: 'draft', v: input.value }); renderSummary();
     });
     input.addEventListener('keydown', function (e) {
       if (e.key === 'Enter') { e.preventDefault(); e.stopPropagation(); if (!commitDraft()) send({ a: e.shiftKey ? 'prev' : 'next' }); }
-      else if (e.key === 'Backspace' && !input.value && S.groups.length) { e.stopPropagation(); S.groups = S.groups.slice(0, -1); send({ a: 'groups', groups: S.groups }) }
+      else if (e.key === 'Backspace' && !input.value && S.groups.length) { e.stopPropagation(); S.groups = S.groups.slice(0, -1); send({ a: 'groups', groups: S.groups }); renderSummary() }
       else e.stopPropagation();
     });
     input.addEventListener('keyup', function (e) { e.stopPropagation() });
     input.addEventListener('keypress', function (e) { e.stopPropagation() });
-    input.addEventListener('blur', function () { if (input.value.trim()) commitDraft() });
+    var quiet = false; // true while update() re-parents the input: that fires a blur which must not commit the draft
+    input.addEventListener('blur', function () { if (!quiet && input.value.trim()) commitDraft() });
 
     function buildHeader() {
       var left = h('div', { cls: 'brand' },
@@ -206,15 +265,48 @@
       var tg = h('button', { type: 'button', cls: 'tg', attrs: { role: 'switch', 'aria-checked': on ? 'true' : 'false', 'aria-label': label }, on: { click: function () { send({ a: action }) } } }, h('i'));
       return tg;
     }
+    function opEl(kind) { return h('i', { cls: 'op ' + kind, text: T(kind === 'or' ? 'opOr' : 'opAnd') }) }
+    function chipBody(raw) { // "dom + top" -> dom [AND] top ; legacy chips holding a comma show a small OR
+      var gs = splitGroups(raw), out = [];
+      gs.forEach(function (terms, gi) {
+        if (gi) out.push(opEl('or'));
+        terms.forEach(function (t, ti) { if (ti) out.push(opEl('and')); out.push(h('span', { text: t })) });
+      });
+      return out.length ? out : [h('span', { text: raw })];
+    }
+    function splitGroups(raw) { return g.PNS_PARSE.parse(raw).groups }
+    function editChip(i) {
+      var raw = S.groups[i]; S.groups = S.groups.filter(function (_, j) { return j !== i });
+      send({ a: 'groups', groups: S.groups }); input.value = raw; send({ a: 'draft', v: raw }); input.focus(); renderSummary();
+    }
     function buildField() {
       var f = h('div', { cls: 'field', on: { click: function () { input.focus() } } });
       S.groups.forEach(function (gp, i) {
-        f.appendChild(h('span', { cls: 'chip' }, h('span', { text: gp }),
+        if (i) f.appendChild(h('span', { cls: 'orp', text: T('opOr') }));
+        var ct = h.apply(null, ['span', { cls: 'ct', title: T('chipEdit'), attrs: { role: 'button', tabindex: '0' }, on: { click: function (e) { e.stopPropagation(); editChip(i) }, keydown: function (e) { if (e.key === 'Enter') { e.stopPropagation(); e.preventDefault(); editChip(i) } } } }].concat(chipBody(gp)));
+        f.appendChild(h('span', { cls: 'chip' }, ct,
           h('button', { type: 'button', title: T('clearChip') + ': ' + gp, on: { click: function (e) { e.stopPropagation(); S.groups = S.groups.filter(function (_, j) { return j !== i }); send({ a: 'groups', groups: S.groups }) } } }, ic('x'))));
       });
       input.placeholder = S.groups.length ? '' : T('ph');
       f.appendChild(input);
       return f;
+    }
+    // One line under the field, built from the chips + what is being typed: "Looking for: dom AND top OR 🚀".
+    function renderSummary() {
+      var box = slots.sum; if (!box || !S) return;
+      var all = [], pend = false;
+      S.groups.forEach(function (c) { splitGroups(c).forEach(function (t) { all.push(t) }) });
+      var d = g.PNS_PARSE.parse(input.value); d.groups.forEach(function (t) { all.push(t) }); pend = d.pending;
+      var sig = lang + JSON.stringify([all, pend]); if (box.getAttribute('data-sig') === sig) return; box.setAttribute('data-sig', sig);
+      while (box.firstChild) box.removeChild(box.firstChild);
+      if (!all.length) { box.style.display = 'none'; return }
+      box.style.display = '';
+      box.appendChild(document.createTextNode(T('sumLbl') + ' '));
+      all.forEach(function (terms, gi) {
+        if (gi) { box.appendChild(document.createTextNode(' ')); box.appendChild(opEl('or')); box.appendChild(document.createTextNode(' ')) }
+        terms.forEach(function (t, ti) { if (ti) { box.appendChild(document.createTextNode(' ')); box.appendChild(opEl('and')); box.appendChild(document.createTextNode(' ')) } box.appendChild(h('b', { text: t })) });
+      });
+      if (pend) { box.appendChild(document.createTextNode(' ')); box.appendChild(opEl('and')); box.appendChild(h('em', { cls: 'wait', text: ' ' + T('sumWait') })) }
     }
     function buildSaved() {
       var w = h('div', { cls: 'saved' }, h('span', { text: T('saved') }));
@@ -230,9 +322,17 @@
     function buildGo() {
       var running = S.running, label = running ? T('pause') : (S.hasRun ? T('resume') : T('start'));
       var b = h('button', { type: 'button', cls: 'go' + (running ? ' stop' : ''), on: { click: function () { send({ a: 'toggle-scroll' }) } } }, ic(running ? 'pause' : 'play'), h('span', { text: label }));
-      var wrap = h('div', { attrs: { style: 'display:flex;flex-direction:column;gap:6px' } }, b);
-      if (S.status) wrap.appendChild(h('div', { cls: 'status', text: S.status, attrs: { role: 'status' } }));
-      return wrap;
+      return b;
+    }
+    function buildStatus() {
+      return S.status ? h('div', { cls: 'status', text: S.status, attrs: { role: 'status' } }) : h('div', { attrs: { style: 'display:none' } });
+    }
+    function buildSpeed() {
+      var gentle = S.speed !== 'fast';
+      function chip(v, label) { return h('button', { type: 'button', text: label, attrs: { 'aria-pressed': (S.speed === 'fast' ? v === 'fast' : v === 'gentle') ? 'true' : 'false' }, on: { click: function () { send({ a: 'speed', v: v }) } } }) }
+      return h('div', { cls: 'speed' },
+        h('div', { cls: 'sr', attrs: { role: 'group', 'aria-label': T('speedLbl') } }, h('span', { text: T('speedLbl') }), chip('gentle', T('speedGentle')), chip('fast', T('speedFast'))),
+        h('div', { cls: 'sh2' + (gentle ? '' : ' warn'), text: gentle ? T('speedGentleHint') : T('speedFastHint') }));
     }
     function ring(v, c, num, label, sm) {
       return h('div', { cls: 'gauge' }, h('div', { cls: 'w' }, h('div', { cls: 'ring', attrs: { style: '--v:' + v + ';--c:' + c } }), h('b', { cls: sm ? 'sm' : '', text: String(num), attrs: { style: '--c:' + c } })), h('small', { text: label }));
@@ -285,8 +385,12 @@
           h('h4', null, ic('flag'), h('span', { text: T('endTitle') })),
           h('p', { text: T('endText', { n: fmtN(S.end.scanned) }) }),
           h('div', { cls: 'acts' },
-            h('button', { type: 'button', cls: 'p', text: k ? T('endSee', { k: k }) : T('endSee0'), on: { click: function () { send({ a: 'end-see' }); scrollToResults() } } }),
-            h('a', { text: T('endMore'), attrs: { href: 'https://fluidz.app/profile-name-search?lang=' + lang + '#faq', target: '_blank', rel: 'noopener noreferrer' } }))));
+            h('button', { type: 'button', cls: 'p', text: k ? T('endSee', { k: k }) : T('endSee0'), on: { click: function () { send({ a: 'end-see' }); scrollToResults() } } }))));
+      }
+      if (S.chatNote) {
+        box.appendChild(h('div', { cls: 'card chat', attrs: { role: 'note' } },
+          h('p', { text: T('chatNote') }), h('p', { cls: 't', text: T('chatTip') }),
+          h('div', { cls: 'acts' }, h('button', { type: 'button', text: T('chatNoteOk'), on: { click: function () { send({ a: 'chat-note-ok' }) } } }))));
       }
       return box;
     }
@@ -326,8 +430,8 @@
       if (k === 'nogrid') { mountSlot(root, 'nogrid'); return }
       var p = h('div', { cls: 'panel' }); root.appendChild(p);
       mountSlot(p, 'hd');
-      mountSlot(p, 's1'); mountSlot(p, 'field'); mountSlot(p, 'tip'); mountSlot(p, 'saved'); mountSlot(p, 'fav');
-      p.appendChild(h('hr')); mountSlot(p, 's2'); mountSlot(p, 'go'); mountSlot(p, 'pause'); mountSlot(p, 'help'); mountSlot(p, 'gauges');
+      mountSlot(p, 's1'); mountSlot(p, 'field'); mountSlot(p, 'sum'); slots.sum.className = 'sum'; slots.sum.setAttribute('aria-live', 'polite'); mountSlot(p, 'tip'); mountSlot(p, 'saved'); mountSlot(p, 'fav');
+      p.appendChild(h('hr')); mountSlot(p, 's2'); mountSlot(p, 'go'); mountSlot(p, 'status'); mountSlot(p, 'speed'); mountSlot(p, 'pause'); mountSlot(p, 'help'); mountSlot(p, 'gauges');
       p.appendChild(h('hr')); mountSlot(p, 's3'); mountSlot(p, 'nav'); mountSlot(p, 'res');
       if (!side) mountSlot(p, 'drag');
     }
@@ -336,9 +440,12 @@
       S = state; lang = state.lang || 'en';
       var k = state.nogrid ? 'nogrid' : (state.view === 'welcome' ? 'welcome' : (state.collapsed && !side ? 'pill' : 'panel'));
       var hadFocus = root.getRootNode().activeElement === input;
+      quiet = true; try { updateBody(state, k, hadFocus) } finally { quiet = false }
+    }
+    function updateBody(state, k, hadFocus) {
       if (k !== kind) skeleton(k);
       var L = lang;
-      slot('cards', JSON.stringify([L, S.note, S.end]), buildCards);
+      slot('cards', JSON.stringify([L, S.note, S.end, !!S.chatNote]), buildCards);
       if (k === 'pill') { slot('pill', [L, S.found, S.running].join('|'), buildPill); return }
       if (k === 'welcome') { slot('welcome', [L, S.welcomeStep].join('|'), buildWelcome); return }
       if (k === 'nogrid') { slot('nogrid', L, function () { return h('div', { cls: 'panel nogrid' }, h('p', { text: T('spNo') }), h('div', { cls: 'acts' }, h('a', { cls: 'p', text: T('spOpen'), attrs: { href: 'https://web.grindr.com', target: '_blank', rel: 'noopener noreferrer' } }))) }); return }
@@ -346,18 +453,34 @@
       slot('s1', L, function () { return stepRow(1, T('s1')) });
       slot('field', L + JSON.stringify(S.groups), buildField);
       slot('tip', L, function () { return h('div', { cls: 'tip' }, ic('sparkles'), h('div', null, h('div', { text: T('tip1') }), h('div', { text: T('tip2') }))) });
+      renderSummary();
       slot('saved', L + JSON.stringify([S.saved, S.groups]), buildSaved);
       slot('fav', L + S.favOnly, function () { return h('div', { cls: 'row' }, h('span', { text: '★  ' + T('onlyFav') }), toggle(S.favOnly, T('onlyFav'), 'fav')) });
       slot('s2', L, function () { return stepRow(2, T('s2')) });
-      slot('go', [L, S.running, S.hasRun, S.status].join('|'), buildGo);
+      slot('go', [L, S.running, S.hasRun].join('|'), buildGo);
+      slot('status', S.status || '', buildStatus);
+      slot('speed', [L, S.speed].join('|'), buildSpeed);
       slot('pause', L + S.pauseEach, function () { return h('div', { cls: 'row' }, h('span', { text: T('pauseEach') }), toggle(S.pauseEach, T('pauseEach'), 'pause-each')) });
-      slot('help', L, function () { return h('div', { cls: 'help' }, ic('info'), h('span', { text: T('scrollHelp') })) });
+      slot('help', L, function () { return h('div', { cls: 'help' }, h('div', { cls: 'hl' }, ic('info'), h('span', { text: T('scrollHelp') })), h('div', { cls: 'hl' }, ic('info'), h('span', { text: T('scrollHelp2') }))) });
       slot('gauges', [L, S.scanned, S.found, S.favs].join('|'), buildGauges);
       slot('s3', L, function () { return stepRow(3, T('s3')) });
       slot('nav', [L, S.matches.length, S.current].join('|'), buildNav);
+      // The list is rebuilt whenever matches or the active row change: keep its scroll position, and only scroll (smoothly, inside the list)
+      // when the active row is out of view. Never jump back to the top.
+      var prevRes = slots.res, keepTop = prevRes ? prevRes.scrollTop : 0, curChanged = S.current !== lastCurrent; lastCurrent = S.current;
       slot('res', L + JSON.stringify([S.matches, S.current, S.groups.length, S.hasDraft, S.favOnly]), buildResults);
+      if (slots.res !== prevRes && prevRes && keepTop) slots.res.scrollTop = keepTop;
+      if (curChanged && S.current >= 0) keepActiveVisible();
       if (!side) slot('drag', L, function () { return h('div', { cls: 'dragbar', on: { pointerdown: function (e) { ctx.dragStart && ctx.dragStart(e) } } }, ic('grip-horizontal'), h('span', { text: T('drag') })) });
       if (hadFocus) input.focus();
+    }
+    var lastCurrent = -1;
+    function keepActiveVisible() {
+      var res = slots.res, row = res && res.querySelector && res.querySelector('.r.on'); if (!row) return;
+      if (side) { row.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); return } // side panel: the page itself scrolls
+      var rr = res.getBoundingClientRect(), r = row.getBoundingClientRect();
+      if (r.top < rr.top) res.scrollTo({ top: Math.max(0, res.scrollTop - (rr.top - r.top) - 4), behavior: 'smooth' });
+      else if (r.bottom > rr.bottom) res.scrollTo({ top: res.scrollTop + (r.bottom - rr.bottom) + 4, behavior: 'smooth' });
     }
     function scrollToResults() { var r = slots.res; if (r && r.scrollIntoView) r.scrollIntoView({ block: 'nearest', behavior: 'smooth' }) }
     return { update: update, root: root, focusInput: function () { input.focus() }, scrollToResults: scrollToResults, clearDraft: function () { input.value = '' } };
