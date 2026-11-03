@@ -14,6 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <script src="/labs/lang.js"></script>
+<script>(function(L,D){var d=D[L];if(!d)return;var t=window.LABS_I18N[L]=window.LABS_I18N[L]||{};for(var k in d)t[k]=d[k]})(window.LABS_LANG,{fr:{"sup.soon.t":"Les paiements ouvrent très bientôt.","sup.soon.p":"Laisse ton e-mail et on t’envoie le lien le jour où ils ouvrent — ta récompense t’attendra sur ton compte.","sup.soon.btn":"Laisser mon e-mail","sup.soon.me":"Préviens-moi par e-mail","sup.soon.ok":"Tu es sur la liste ✓ — on t’envoie le lien le jour où les paiements ouvrent."},es:{"sup.soon.t":"Los pagos abren muy pronto.","sup.soon.p":"Déjanos tu email y te mandamos el enlace el día que abran; tu recompensa te estará esperando en tu cuenta.","sup.soon.btn":"Dejar mi email","sup.soon.me":"Avísame por email","sup.soon.ok":"Estás en la lista ✓ — te mandamos el enlace el día que abran los pagos.","sup.t1.t":"Invita a un café a nuestros servidores","sup.t1.b2":"Una insignia de mecenas en tu cuenta","sup.t2.b2":"Tu nombre en el muro de mecenas — los robots lo conocerán"},pt:{"sup.soon.t":"Os pagamentos abrem em breve.","sup.soon.p":"Deixe seu e-mail e mandamos o link no dia em que abrirem — sua recompensa vai estar te esperando na sua conta.","sup.soon.btn":"Deixar meu e-mail","sup.soon.me":"Me avise por e-mail","sup.soon.ok":"Você está na lista ✓ — mandamos o link no dia em que os pagamentos abrirem.","sup.t2.b1":"Tudo do nível de US$ 10","sup.t3.b1":"Tudo do nível de US$ 20","sup.t4.b1":"Tudo do nível de US$ 50"},it:{"sup.soon.t":"I pagamenti aprono a breve.","sup.soon.p":"Lasciaci la tua email e ti mandiamo il link il giorno in cui aprono — la tua ricompensa ti aspetterà sul tuo account.","sup.soon.btn":"Lascia la tua email","sup.soon.me":"Avvisami via email","sup.soon.ok":"Sei in lista ✓ — ti mandiamo il link il giorno in cui aprono i pagamenti."},de:{"sup.soon.t":"Zahlungen starten sehr bald.","sup.soon.p":"Hinterlass deine E-Mail, und wir schicken dir den Link an dem Tag, an dem sie starten — deine Belohnung wartet dann in deinem Konto.","sup.soon.btn":"E-Mail hinterlassen","sup.soon.me":"Gib mir per E-Mail Bescheid","sup.soon.ok":"Du stehst auf der Liste ✓ — wir schicken dir den Link, sobald die Zahlungen starten.","sup.t4.b3":"„Gründungsmitglied“-Badge + was zum Angeben"}})</script>
 <link rel="stylesheet" href="/labs/site.css">
 <style>
 .hero.c{padding:84px 0 56px;text-align:center}
@@ -42,7 +43,11 @@
 .where .ico{font-size:22px;color:var(--p)}
 .fine{text-align:center;padding:44px 0 80px}
 .fine p{font-size:13.5px;color:var(--tx2);line-height:1.6;max-width:620px;margin:0 auto 10px}.fine p.f{font-size:13px;color:var(--tx3)}
-.soon{display:none;margin:22px auto 0;max-width:620px;padding:16px 20px;border-radius:16px;background:var(--lavbg);border:1px solid var(--lavbd);font-size:14px;color:var(--tx2);line-height:1.6;text-align:center}
+.soon{display:none;gap:14px;align-items:flex-start;margin:0 auto 34px;max-width:760px;padding:18px 22px;border-radius:18px;background:var(--lavbg);border:1px solid var(--lavbd);font-size:15px;color:var(--tx2);line-height:1.6;transition:box-shadow .3s}
+.soon>.ico{font-size:20px;color:var(--lav);margin-top:3px;flex-shrink:0}.soon b{color:var(--tx)}
+.soon.hl{box-shadow:0 0 0 3px var(--lav)}
+.soon-a{margin-top:12px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+#soon-me,#soon-ok{display:none}#soon-ok{color:var(--sage);font-weight:600;font-size:14px}
 @media(max-width:1000px){.tiers{grid-template-columns:1fr 1fr}}
 @media(max-width:720px){.tiers{grid-template-columns:1fr}.other form{border-radius:24px;padding:18px}}
 </style>
@@ -60,6 +65,8 @@
 
 <section class="sec" style="padding-top:40px" id="tiers">
   <div class="wrap">
+    <div class="soon" id="soon" role="status"><i data-ico="bell"></i><div><b data-i18n="sup.soon.t">Payments open very soon.</b> <span data-i18n="sup.soon.p">Leave your email and we’ll send you the link the day they open — your reward will be waiting on your account.</span>
+      <p class="soon-a"><button type="button" class="btn btn-p btn-s" id="soon-btn" data-i18n="sup.soon.btn">Leave my email</button><button type="button" class="btn btn-p btn-s" id="soon-me" data-i18n="sup.soon.me">Email me the day they open</button><span id="soon-ok" data-i18n="sup.soon.ok">You’re on the list ✓ — we’ll email you the link the day payments open.</span></p></div></div>
     <div class="tiers">
       <div class="tier t1"><div class="ti"><i data-ico="coffee"></i></div><div class="amt">$10</div><h3 data-i18n="sup.t1.t">Buy our servers a coffee</h3><p data-i18n="sup.t1.p">Keeps the servers awake and the sign-in emails flowing for a month.</p>
         <ul><li><i data-ico="check"></i><span data-i18n="sup.t1.b1">Our eternal gratitude</span></li><li><i data-ico="check"></i><span data-i18n="sup.t1.b2">A supporter badge on your account</span></li></ul>
@@ -75,7 +82,6 @@
         <button type="button" class="btn btn-p give" data-amt="100"><span data-i18n="sup.give">Give</span> $100</button></div>
     </div>
     <div class="other"><form id="other-f"><span data-i18n="sup.other">Another amount</span><span class="in">$<input type="number" id="other-amt" min="3" max="1000" step="1" value="35" aria-label="Amount"></span><button type="submit" class="btn btn-p btn-s" data-i18n="sup.give">Give</button></form></div>
-    <div class="soon" id="soon"><b data-i18n="sup.soon.t">Payments open very soon.</b> <span data-i18n="sup.soon.p">Sign in and we’ll email you your link the moment they do — with your reward waiting on your account.</span></div>
   </div>
 </section>
 
@@ -99,19 +105,32 @@
 <div id="site-foot"></div>
 <script src="/labs/site.js"></script>
 <script>
-/* Payments: paste one payment link per amount here (e.g. Stripe Payment Links). While a link is null the
-   page tells visitors payments open soon and offers a sign-in so we can email them the link. */
+/* Payments: paste one payment link per amount here (e.g. Stripe Payment Links). While every link is null the
+   page shows the "payments open very soon" banner; it records support_notify on the Fluidz ID so we can email the link. */
 window.LABS_PAY = { 10: null, 20: null, 50: null, 100: null, other: null }
 ;(function () {
-  var soon = document.getElementById('soon')
+  var soon = document.getElementById('soon'), $ = function (id) { return document.getElementById(id) }
+  var open = Object.keys(window.LABS_PAY).some(function (k) { return window.LABS_PAY[k] })
+  function paint() {
+    if (open) { soon.style.display = 'none'; return }
+    soon.style.display = 'flex'
+    var u = Labs.user(), done = !!(u && u.meta && u.meta.support_notify)
+    $('soon-btn').style.display = u ? 'none' : ''; $('soon-me').style.display = u && !done ? 'inline-flex' : 'none'; $('soon-ok').style.display = done ? 'inline' : 'none'
+  }
+  function mark() { return Labs.updateMeta({ support_notify: true }).then(function () { paint(); Labs.toast(Labs.t('sup.soon.ok')) }).catch(function () { Labs.toast(Labs.t('m.err.retry')) }) }
+  function ask() { if (Labs.user()) mark(); else { try { sessionStorage.setItem('sup_intent', '1') } catch (e) {} Labs.openSignIn({ source: 'support', onDone: mark }) } }
+  $('soon-btn').onclick = ask; $('soon-me').onclick = ask
   function go(amt) {
     var link = window.LABS_PAY[amt] || window.LABS_PAY.other
     if (link) { location.href = link + (link.indexOf('?') < 0 ? '?' : '&') + 'prefilled_email=' + encodeURIComponent((Labs.user() || {}).email || ''); return }
-    soon.style.display = 'block'; soon.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    if (!Labs.user()) setTimeout(function () { Labs.openSignIn({ source: 'support' }) }, 900)
+    soon.scrollIntoView({ behavior: 'smooth', block: 'center' }); soon.classList.add('hl'); setTimeout(function () { soon.classList.remove('hl') }, 1600)
+    var u = Labs.user(); if (!(u && u.meta && u.meta.support_notify)) setTimeout(ask, 700)
   }
   Array.prototype.forEach.call(document.querySelectorAll('.give'), function (b) { b.addEventListener('click', function () { go(b.getAttribute('data-amt')) }) })
-  document.getElementById('other-f').addEventListener('submit', function (e) { e.preventDefault(); go(String(Math.max(3, Math.min(1000, Number(document.getElementById('other-amt').value) || 35)))) })
+  $('other-f').addEventListener('submit', function (e) { e.preventDefault(); go(String(Math.max(3, Math.min(1000, Number($('other-amt').value) || 35)))) })
+  var pending = false; try { pending = sessionStorage.getItem('sup_intent') } catch (e) {}
+  if (pending && Labs.user()) { try { sessionStorage.removeItem('sup_intent') } catch (e) {} var u0 = Labs.user(); if (!(u0.meta && u0.meta.support_notify)) setTimeout(mark, 800) }
+  document.addEventListener('labs:auth', paint); paint()
 })()
 </script>
 </body>
