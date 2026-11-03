@@ -104,7 +104,7 @@ SCREENS[7] = function () {
     cls: 'edm',
     main: '<div class="ed-wrap"><div class="hd"><h1>' + esc(t('acp.p.blurone')) + '</h1><p class="lead" style="margin-bottom:8px">' + esc(t('acp.b.p')) + '</p></div>' +
       '<div class="stage" id="stage"></div><div class="tools">' +
-      '<div class="trow"><div class="seg" role="group" aria-label="Tool"><button type="button" data-act="tool" data-v="brush" aria-pressed="' + (ED.tool === 'brush') + '" data-fk="tb">' + ico('pen-line') + esc(t('acp.b.brush')) + '</button><button type="button" data-act="tool" data-v="circle" aria-pressed="' + (ED.tool === 'circle') + '" data-fk="tc">' + ico('circle') + esc(t('acp.b.circle')) + '</button></div>' +
+      '<div class="trow"><div class="seg" role="group" aria-label="' + esc(t('acp.b.tool')) + '"><button type="button" data-act="tool" data-v="brush" aria-pressed="' + (ED.tool === 'brush') + '" data-fk="tb">' + ico('pen-line') + esc(t('acp.b.brush')) + '</button><button type="button" data-act="tool" data-v="circle" aria-pressed="' + (ED.tool === 'circle') + '" data-fk="tc">' + ico('circle') + esc(t('acp.b.circle')) + '</button></div>' +
       '<button type="button" class="und" id="undo" data-act="undo"' + (ED.strokes.length ? '' : ' disabled') + '>' + ico('undo') + esc(t('acp.b.undo')) + '</button></div>' +
       '<label class="sz"><span>' + esc(t('acp.b.size')) + '</span><input type="range" id="size" min="2" max="22" step="1" value="' + ED.pct + '" data-fk="size"></label>' +
       '<div class="warn">' + ico('info') + '<span>' + esc(t('acp.b.warn')) + ' ' + esc(t('acp.b.crop')) + '</span></div></div></div>',

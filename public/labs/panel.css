@@ -81,7 +81,7 @@
 .pw .il{background:var(--bg2);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px}
 .pw .il .f{background:var(--bg3);border:1px solid var(--pbd);border-radius:12px;padding:8px 10px;display:flex;gap:6px;flex-wrap:wrap}
 .pw .il .f span{background:var(--p2);color:var(--p);font-size:13px;font-weight:700;border-radius:999px;padding:3px 10px}
-.pw .il small{font-family:var(--fm);font-size:11px;color:var(--tx2)}
+.pw .il small{font-family:var(--fm);font-size:11px;color:var(--tx2);white-space:pre-wrap}
 .pw p{font-size:13px;line-height:1.5;color:var(--tx2)}
 .pw .bot{display:flex;justify-content:space-between;align-items:center}
 .pw .dots{display:flex;align-items:center;gap:6px}.pw .dots i{width:6px;height:6px;border-radius:50%;background:var(--tx3)}.pw .dots i.on{width:18px;border-radius:3px;background:var(--p)}
