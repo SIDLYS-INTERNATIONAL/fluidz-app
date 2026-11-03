@@ -45,6 +45,9 @@ Some people report that the chat on Grindr Web disconnected after a long scan. W
 
 ## Changelog
 
+### 2.1.1
+- Fixed: `+` (AND) no longer turns into OR when the field loses focus or you press Enter right after typing it. `dom +` now waits for its second word instead of becoming a separate chip, and a chip followed by `+ top` becomes `dom + top`.
+
 ### 2.1.0
 - Gentler auto-scroll by default: smaller steps, about 2-3 s between steps with random jitter, waits for Grindr to finish loading before the next step, and a short cool-down break (about 8-10 s, with a countdown) every ~120-150 newly scanned profiles. End-of-grid detection adjusted to the new pace.
 - New **Scan speed** setting under the auto-scroll button: *Gentle* (recommended, default) or *Fast* (the old pace, may disconnect Grindr chat).
