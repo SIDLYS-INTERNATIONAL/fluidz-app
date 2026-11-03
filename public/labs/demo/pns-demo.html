@@ -32,7 +32,8 @@ body::before{display:none}
 .pf.focus .nm{opacity:0}
 #badge{position:absolute;left:20px;top:16px;z-index:5;font-family:var(--fm);font-size:11px;letter-spacing:1px;color:#E0887A;background:rgba(224,136,122,.12);border:1px solid rgba(224,136,122,.3);border-radius:999px;padding:6px 12px;backdrop-filter:blur(10px)}
 #veil{position:absolute;inset:0;background:rgba(5,4,10,.55);opacity:0;z-index:6;pointer-events:none}
-#dock{position:absolute;right:28px;top:36px;z-index:8;transform-origin:50% 50%}
+#dock{position:absolute;right:28px;top:22px;z-index:8;transform-origin:50% 50%}
+#dock .pn{gap:8px;padding:12px 14px}
 #dock .pn{box-shadow:0 30px 80px rgba(0,0,0,.7)}
 #dock .pn-help,#dock .pn-saved{display:none}
 .co{position:absolute;z-index:9;right:calc(100% + 16px);white-space:nowrap;background:#E0887A;color:#14090A;font-size:13px;font-weight:800;border-radius:999px;padding:5px 12px;opacity:0;transform:translateX(12px);transition:none}
@@ -47,47 +48,61 @@ body::before{display:none}
 <body>
 <div id="cam">
   <div id="grid"><div id="track"></div></div>
-  <div id="badge">SAMPLE GRID · FICTIONAL PROFILES</div>
+  <div id="badge" data-k="badge">SAMPLE GRID · FICTIONAL PROFILES</div>
   <div id="veil"></div>
   <div id="dock">
     <div class="pn">
-      <div class="pn-h"><div class="pn-brand"><span class="grip"><i data-ico="grip-vertical"></i></span><i class="drop"></i><div><b>Profile Name Search</b><small>by Fluidz Labs</small></div></div>
+      <div class="pn-h"><div class="pn-brand"><span class="grip"><i data-ico="grip-vertical"></i></span><i class="drop"></i><div><b>Profile Name Search</b><small data-k="by">by Fluidz Labs</small></div></div>
         <div class="pn-btns"><span class="b on"><i data-ico="lightbulb"></i></span><span class="b"><i data-ico="panel-right"></i></span><span class="b"><i data-ico="minus"></i></span><span class="b"><i data-ico="x"></i></span></div></div>
-      <div class="pn-step"><span class="n">1</span>Who are you looking for?</div>
+      <div class="pn-step"><span class="n">1</span><span data-k="s1">Who are you looking for?</span></div>
       <div class="pn-field" id="field"></div>
-      <div class="pn-tip"><i data-ico="sparkles"></i><span>Names, keywords or emojis: jay · dom top · 🚀<br>Comma = OR (jay, mike) · + = AND (dom + top)</span></div>
-      <div class="pn-row"><span>★&nbsp; Only my favorites</span><span class="tg on"><i></i></span></div>
+      <div class="pn-tip"><i data-ico="sparkles"></i><span><span data-k="tip1">Names, keywords or emojis: jay · dom top · 🚀</span><br><span data-k="tip2">Type a comma or press Enter for OR · use + for AND · "exact phrase"</span></span></div>
+      <div class="pn-row"><span>★&nbsp; <span data-k="onlyFav">Only my favorites</span></span><span class="tg on"><i></i></span></div>
       <hr>
-      <div class="pn-step"><span class="n">2</span>Let it scroll for you</div>
-      <div class="pn-go" id="go"><i data-ico="play"></i><span id="golbl">Start auto-scroll</span></div>
-      <div class="pn-row" id="pauserow"><span>Pause at each new match</span><span class="tg on"><i></i></span></div>
+      <div class="pn-step"><span class="n">2</span><span data-k="s2">Let it scroll for you</span></div>
+      <div class="pn-go" id="go"><i data-ico="play"></i><span id="golbl" data-k="start">Start auto-scroll</span></div>
+      <div class="pn-row" id="pauserow"><span data-k="pauseEach">Pause at each new match</span><span class="tg on"><i></i></span></div>
       <div class="pn-gauges">
-        <div class="gauge" id="g1" style="--c:#6BA888;--v:0"><div class="wrapn"><div class="ring"></div><b style="font-size:15px">0</b></div><small>profiles<br>scanned</small></div>
-        <div class="gauge" id="g2" style="--c:#E0887A;--v:0"><div class="wrapn"><div class="ring"></div><b>0</b></div><small>profiles<br>found</small></div>
-        <div class="gauge" id="g3" style="--c:#9080BA;--v:56"><div class="wrapn"><div class="ring"></div><b>5</b></div><small>already<br>favorites</small></div>
+        <div class="gauge" id="g1" style="--c:#6BA888;--v:0"><div class="wrapn"><div class="ring"></div><b style="font-size:15px">0</b></div><small data-k="gScanned">profiles scanned</small></div>
+        <div class="gauge" id="g2" style="--c:#E0887A;--v:0"><div class="wrapn"><div class="ring"></div><b>0</b></div><small data-k="gFound">profiles found</small></div>
+        <div class="gauge" id="g3" style="--c:#9080BA;--v:56"><div class="wrapn"><div class="ring"></div><b>5</b></div><small data-k="gFav">already favorites</small></div>
       </div>
       <hr>
-      <div class="pn-step"><span class="n">3</span>Click a match to find him on the grid</div>
-      <div class="pn-nav"><span class="pl"><i data-ico="chevron-left"></i>Previous</span><span class="c" id="cnt">0 / 0</span><span class="pl">Next<i data-ico="chevron-right"></i></span></div>
+      <div class="pn-step"><span class="n">3</span><span data-k="s3">Click a match to find him on the grid</span></div>
+      <div class="pn-nav"><span class="pl"><i data-ico="chevron-left"></i><span data-k="prev">Previous</span></span><span class="c" id="cnt">0 / 0</span><span class="pl"><span data-k="next">Next</span><i data-ico="chevron-right"></i></span></div>
       <div class="pn-res" id="res">
-        <div class="r" id="r1"><span class="av"></span><span class="tx"><b>Jay 🌴</b><small>On screen</small></span><span class="sh">Show on grid <i data-ico="locate-fixed"></i></span></div>
-        <div class="r" id="r2"><span class="av"></span><span class="tx"><b>Mike</b><small>On screen</small></span><span class="sh">Show on grid <i data-ico="locate-fixed"></i></span></div>
-        <div class="r" id="r3"><span class="av"></span><span class="tx"><b>jayden</b><small>Scrolled past — we’ll bring it back</small></span><span class="sh">Show on grid <i data-ico="locate-fixed"></i></span></div>
+        <div class="r" id="r1"><span class="av"></span><span class="tx"><b>TOP 🚀</b><small>On screen</small></span><span class="sh"><span data-k="show">Show on grid</span> <i data-ico="locate-fixed"></i></span></div>
+        <div class="r" id="r2"><span class="av"></span><span class="tx"><b>XXL</b><small>On screen</small></span><span class="sh"><span data-k="show">Show on grid</span> <i data-ico="locate-fixed"></i></span></div>
+        <div class="r" id="r3"><span class="av"></span><span class="tx"><b>vers top</b><small>Scrolled past — we’ll bring it back</small></span><span class="sh"><span data-k="show">Show on grid</span> <i data-ico="locate-fixed"></i></span></div>
       </div>
-      <div class="pn-drag"><i data-ico="grip-horizontal"></i>Drag to move</div>
+      <div class="pn-drag"><i data-ico="grip-horizontal"></i><span data-k="drag">Drag to move</span></div>
     </div>
-    <span class="co" id="co1">Several names</span><span class="co" id="co2">Pauses on each match</span><span class="co" id="co3">Counters</span><span class="co" id="co4">Click to open</span>
+    <span class="co" id="co1" data-k="co1">Several names</span><span class="co" id="co2" data-k="co2">Pauses on each match</span><span class="co" id="co3" data-k="co3">Counters</span><span class="co" id="co4" data-k="co4">Click to open</span>
   </div>
   <div id="cur"><svg viewBox="0 0 24 24"><path d="M4 3l16 7-7 2-3 7z"/></svg></div>
 </div>
+<script>
+/* Language: ?lang= (set by the parent page), else the parent page's language (same origin), else the saved site language, else English. */
+var PNS_DEMO_I18N = {"en":{"by":"by Fluidz Labs","s1":"Who are you looking for?","ph":"add a name…","tip1":"Names, keywords or emojis: jay · dom top · 🚀","tip2":"Type a comma or press Enter for OR · use + for AND · \"exact phrase\"","onlyFav":"Only my favorites","s2":"Let it scroll for you","start":"Start auto-scroll","pause":"Pause auto-scroll","resume":"Resume auto-scroll","pauseEach":"Pause at each new match","gScanned":"profiles scanned","gFound":"profiles found","gFav":"already favorites","s3":"Click a match to find him on the grid","prev":"Previous","next":"Next","show":"Show on grid","onScreen":"On screen","pastBack":"Scrolled past — we’ll bring it back","drag":"Drag to move","badge":"SAMPLE GRID · FICTIONAL PROFILES","co1":"Several names","co2":"Pauses on each match","co3":"Counters","co4":"Click to open","open":"Found on the grid — tap to open"},"fr":{"by":"par Fluidz Labs","s1":"Qui cherches-tu ?","ph":"ajoute un prénom…","tip1":"Prénoms, mots-clés ou emojis : jay · dom top · 🚀","tip2":"Tape une virgule ou appuie sur Entrée pour OU · utilise + pour ET · \"phrase exacte\"","onlyFav":"Seulement mes favoris","s2":"Laisse-le défiler à ta place","start":"Lancer le défilement auto","pause":"Mettre en pause","resume":"Reprendre le défilement","pauseEach":"Pause à chaque nouveau match","gScanned":"profils scannés","gFound":"profils trouvés","gFav":"déjà en favoris","s3":"Clique sur un match pour le retrouver dans la grille","prev":"Précédent","next":"Suivant","show":"Voir dans la grille","onScreen":"À l’écran","pastBack":"Déjà passé — on le ramène","drag":"Glisser pour déplacer","badge":"GRILLE D’EXEMPLE · PROFILS FICTIFS","co1":"Plusieurs prénoms","co2":"Pause à chaque match","co3":"Compteurs","co4":"Clique pour l’ouvrir","open":"Retrouvé dans la grille — touche pour ouvrir"},"es":{"by":"de Fluidz Labs","s1":"¿A quién buscas?","ph":"añade un nombre…","tip1":"Nombres, palabras clave o emojis: jay · dom top · 🚀","tip2":"Escribe una coma o pulsa Intro para O · usa + para Y · \"frase exacta\"","onlyFav":"Solo mis favoritos","s2":"Deja que se desplace por ti","start":"Iniciar desplazamiento auto","pause":"Pausar desplazamiento","resume":"Reanudar desplazamiento","pauseEach":"Pausar en cada coincidencia nueva","gScanned":"perfiles escaneados","gFound":"perfiles encontrados","gFav":"ya en favoritos","s3":"Pulsa una coincidencia para encontrarlo en la cuadrícula","prev":"Anterior","next":"Siguiente","show":"Ver en la cuadrícula","onScreen":"En pantalla","pastBack":"Ya pasó — lo traemos de vuelta","drag":"Arrastra para mover","badge":"CUADRÍCULA DE EJEMPLO · PERFILES FICTICIOS","co1":"Varios nombres","co2":"Pausa en cada coincidencia","co3":"Contadores","co4":"Pulsa para abrirlo","open":"Encontrado en la cuadrícula — toca para abrir"},"pt":{"by":"da Fluidz Labs","s1":"Quem você procura?","ph":"adicione um nome…","tip1":"Nomes, palavras-chave ou emojis: jay · dom top · 🚀","tip2":"Digite uma vírgula ou pressione Enter para OU · use + para E · \"frase exata\"","onlyFav":"Só meus favoritos","s2":"Deixe rolar por você","start":"Iniciar rolagem auto","pause":"Pausar rolagem","resume":"Retomar rolagem","pauseEach":"Pausar a cada novo match","gScanned":"perfis escaneados","gFound":"perfis encontrados","gFav":"já nos favoritos","s3":"Clique num match para achá-lo na grade","prev":"Anterior","next":"Próximo","show":"Ver na grade","onScreen":"Na tela","pastBack":"Já passou — vamos trazê-lo de volta","drag":"Arraste para mover","badge":"GRADE DE EXEMPLO · PERFIS FICTÍCIOS","co1":"Vários nomes","co2":"Pausa a cada match","co3":"Contadores","co4":"Clique para abrir","open":"Encontrado na grade — toque para abrir"},"it":{"by":"di Fluidz Labs","s1":"Chi stai cercando?","ph":"aggiungi un nome…","tip1":"Nomi, parole chiave o emoji: jay · dom top · 🚀","tip2":"Scrivi una virgola o premi Invio per O · usa + per E · \"frase esatta\"","onlyFav":"Solo i miei preferiti","s2":"Lascia che scorra al posto tuo","start":"Avvia scorrimento auto","pause":"Metti in pausa","resume":"Riprendi scorrimento","pauseEach":"Pausa a ogni nuovo match","gScanned":"profili scansionati","gFound":"profili trovati","gFav":"già nei preferiti","s3":"Tocca un match per trovarlo nella griglia","prev":"Precedente","next":"Successivo","show":"Mostra nella griglia","onScreen":"Sullo schermo","pastBack":"Già superato — lo riportiamo qui","drag":"Trascina per spostare","badge":"GRIGLIA DI ESEMPIO · PROFILI FITTIZI","co1":"Più nomi","co2":"Pausa a ogni match","co3":"Contatori","co4":"Clicca per aprirlo","open":"Trovato nella griglia — tocca per aprire"},"de":{"by":"von Fluidz Labs","s1":"Wen suchst du?","ph":"Namen hinzufügen…","tip1":"Namen, Stichwörter oder Emojis: jay · dom top · 🚀","tip2":"Tippe ein Komma oder drücke Enter für ODER · nutze + für UND · \"genaue Wortfolge\"","onlyFav":"Nur meine Favoriten","s2":"Lass es für dich scrollen","start":"Auto-Scrollen starten","pause":"Auto-Scrollen pausieren","resume":"Auto-Scrollen fortsetzen","pauseEach":"Bei jedem neuen Treffer pausieren","gScanned":"Profile gescannt","gFound":"Profile gefunden","gFav":"schon Favoriten","s3":"Tippe auf einen Treffer, um ihn im Raster zu finden","prev":"Zurück","next":"Weiter","show":"Im Raster zeigen","onScreen":"Auf dem Bildschirm","pastBack":"Schon vorbei — wir holen ihn zurück","drag":"Zum Verschieben ziehen","badge":"BEISPIEL-RASTER · FIKTIVE PROFILE","co1":"Mehrere Namen","co2":"Pausiert bei jedem Treffer","co3":"Zähler","co4":"Klicken zum Öffnen","open":"Im Raster gefunden — zum Öffnen tippen"}}
+var PNS_DEMO_LANG = (function () {
+  var ok = /^(en|fr|es|pt|it|de)$/, l = ''
+  try { l = new URLSearchParams(location.search).get('lang') || '' } catch (e) {}
+  if (!ok.test(l)) try { var P = window.parent; l = (P !== window && P.Labs && P.Labs.lang) ? P.Labs.lang() : (P !== window ? P.LABS_LANG : '') || '' } catch (e) { l = '' }
+  if (!ok.test(l)) try { l = localStorage.getItem('fluidz_lang') || '' } catch (e) { l = '' }
+  return ok.test(l) ? l : 'en'
+})()
+function T(k) { var d = PNS_DEMO_I18N[PNS_DEMO_LANG] || {}; return d[k] != null ? d[k] : ((PNS_DEMO_I18N.en || {})[k] != null ? PNS_DEMO_I18N.en[k] : k) }
+document.documentElement.lang = PNS_DEMO_LANG
+Array.prototype.forEach.call(document.querySelectorAll('[data-k]'), function (el) { el.textContent = T(el.getAttribute('data-k')) })
+</script>
 <script src="/labs/demo/icons-lite.js"></script>
 <script src="/labs/demo/faces.js"></script>
 <script>
 (function () {
   var FACES = window.PNS_FACES || []
   var COLS = 8, ROWH = 216, ROWS = 16, VIEW = 810 / ROWH
-  var pool = ['Alex', 'Sam', 'Leo', 'Hugo', 'Ken', 'Yann', 'Raf', 'Max', 'Joe', 'Theo', 'Nico', 'Luca', 'Eli', 'Tom', 'Ben', 'Axel', 'Noah', 'Marc', 'Paul', 'Remy', 'Ivan', 'Omar', 'Dan', 'Finn', 'Kai', 'Lou', 'Sacha', 'Tim', 'Vic', 'Zed', 'Adam', 'Bo', 'Cyril', 'Dario', 'Enzo', 'Gus', 'Hal', 'Igor', 'Jules', 'Kyle', 'Liam', 'Milo', 'Ned', 'Otto', 'Pip', 'Quin', 'Rio', 'Seb', 'Ty', 'Uri', 'Val', 'Walt', 'Xav', 'Yves', 'Zack', 'dom top', 'bear 🐻', 'vers', '🔥', 'Pierre', 'Karl', 'Matt', 'Hans', 'Dylan', 'Arno', 'Bastien', 'Cole']
-  var fixed = { 1: 'Jay 🌴', 8: 'Mike', 10: 'jayden', 83: 'jay_bcn', 89: 'Mikey', 94: 'Mike R.', 98: 'Jaylen', 109: 'mike82', 112: 'DJ Jay' }
+  var pool = ['Alex', 'Sam', 'Leo', 'Hugo', 'Ken', 'Yann', 'Raf', 'Max', 'Joe', 'Theo', 'Nico', 'Luca', 'Eli', 'Tom', 'Ben', 'Axel', 'Noah', 'Marc', 'Paul', 'Remy', 'Ivan', 'Omar', 'Dan', 'Finn', 'Kai', 'Lou', 'Sacha', 'Tim', 'Vic', 'Zed', 'Adam', 'Bo', 'Cyril', 'Dario', 'Enzo', 'Gus', 'Hal', 'Igor', 'Jules', 'Kyle', 'Liam', 'Milo', 'Ned', 'Otto', 'Pip', 'Quin', 'Rio', 'Seb', 'Ty', 'Uri', 'Val', 'Walt', 'Xav', 'Yves', 'Zack', 'Rafa', 'bear 🐻', 'vers', '🔥', 'Pierre', 'Karl', 'Matt', 'Hans', 'Dylan', 'Arno', 'Bastien', 'Cole']
+  var fixed = { 1: 'TOP 🚀', 8: 'XXL', 10: 'vers top', 83: 'Top here', 89: 'XXL bear', 94: 'Leo · top', 98: 'TOP dom', 109: 'xxl 25', 112: 'Max XXL' }
   var matches = Object.keys(fixed).map(Number).sort(function (a, b) { return a - b })
   var track = document.getElementById('track'), grid = document.getElementById('grid')
   track.style.height = ROWS * ROWH + 'px'
@@ -95,8 +110,8 @@ body::before{display:none}
   for (var i = 0; i < COLS * ROWS; i++) {
     var nm = fixed[i] || pool[(i * 7 + 3) % pool.length]
     var c = document.createElement('div'); c.className = 'pf'; c.style.setProperty('--h', (i * 47) % 360)
-    c.innerHTML = '<div class="im"></div><span class="dist">' + (((i * 13) % 90) / 10 + 0.1).toFixed(1) + ' km</span><span class="nm"></span><div class="open"><b></b>Found on the grid — tap to open</div>'
-    var ph = FACES[(i * 5 + 2) % FACES.length]; if (fixed[i]) ph = fixed[i] === 'Jay 🌴' ? FACES[1] : (fixed[i] === 'Mike' ? FACES[2] : FACES[(i * 3) % FACES.length]); var im = c.querySelector('.im'); im.className = 'im ph'; im.style.backgroundImage = 'url(' + ph + ')'
+    c.innerHTML = '<div class="im"></div><span class="dist">' + (((i * 13) % 90) / 10 + 0.1).toFixed(1) + ' km</span><span class="nm"></span><div class="open"><b></b>' + T('open') + '</div>'
+    var ph = FACES[(i * 5 + 2) % FACES.length]; if (fixed[i]) ph = fixed[i] === 'TOP 🚀' ? FACES[1] : (fixed[i] === 'XXL' ? FACES[2] : FACES[(i * 3) % FACES.length]); var im = c.querySelector('.im'); im.className = 'im ph'; im.style.backgroundImage = 'url(' + ph + ')'
     c.querySelector('.nm').textContent = nm; c.querySelector('.open b').textContent = nm
     track.appendChild(c); cards.push(c)
   }
@@ -135,19 +150,19 @@ body::before{display:none}
     var field = $('field'), chips = ''
     var typed = ''
     if (t < 0.2) typed = ''
-    else if (t < 0.7) typed = 'jay'.slice(0, Math.ceil((t - 0.2) / 0.5 * 3))
+    else if (t < 0.7) typed = 'top'.slice(0, Math.ceil((t - 0.2) / 0.5 * 3))
     else if (t < 1.0) typed = ''
-    else if (t < 1.5) typed = 'mike'.slice(0, Math.ceil((t - 1.0) / 0.5 * 4))
-    if (t >= 0.7) chips += '<span class="chip">jay <i class="ico"><svg><use href="/labs/icons.svg#x"/></svg></i></span>'
-    if (t >= 1.5) chips += '<span class="chip">mike <i class="ico"><svg><use href="/labs/icons.svg#x"/></svg></i></span>'
-    field.innerHTML = chips + (typed ? '<span class="typed">' + typed + '</span>' : '') + (t < 2 ? '<span class="caret"></span>' : '') + (t >= 1.5 || (!typed && t > 0.7) ? '<span class="ph">add a name…</span>' : '')
-    if (!chips && !typed) field.innerHTML = '<span class="caret"></span><span class="ph">add a name…</span>'
+    else if (t < 1.5) typed = 'xxl'.slice(0, Math.ceil((t - 1.0) / 0.5 * 3))
+    if (t >= 0.7) chips += '<span class="chip">top <i class="ico"><svg><use href="/labs/icons.svg#x"/></svg></i></span>'
+    if (t >= 1.5) chips += '<span class="chip">xxl <i class="ico"><svg><use href="/labs/icons.svg#x"/></svg></i></span>'
+    field.innerHTML = chips + (typed ? '<span class="typed">' + typed + '</span>' : '') + (t < 2 ? '<span class="caret"></span>' : '') + (t >= 1.5 || (!typed && t > 0.7) ? '<span class="ph">' + T('ph') + '</span>' : '')
+    if (!chips && !typed) field.innerHTML = '<span class="caret"></span><span class="ph">' + T('ph') + '</span>'
     // scroll button
     var running = (t >= 2 && t < 5.7) || t >= 12
     var go = $('go'), lbl = $('golbl'), ic = go.querySelector('use')
-    if (t < 2) { go.className = 'pn-go'; lbl.textContent = 'Start auto-scroll'; ic.setAttribute('href', '/labs/icons.svg#play') }
-    else if (running) { go.className = 'pn-go stop'; lbl.textContent = 'Stop auto-scroll'; ic.setAttribute('href', '/labs/icons.svg#pause') }
-    else { go.className = 'pn-go'; lbl.textContent = 'Resume'; ic.setAttribute('href', '/labs/icons.svg#play') }
+    if (t < 2) { go.className = 'pn-go'; lbl.textContent = T('start'); ic.setAttribute('href', '/labs/icons.svg#play') }
+    else if (running) { go.className = 'pn-go stop'; lbl.textContent = T('pause'); ic.setAttribute('href', '/labs/icons.svg#pause') }
+    else { go.className = 'pn-go'; lbl.textContent = T('resume'); ic.setAttribute('href', '/labs/icons.svg#play') }
     var scanned = Math.round(f * 106.667)
     setGauge('g1', started ? Math.min(100, scanned / 12) : 0, fmt(scanned))
     setGauge('g2', found * 11, String(found))
@@ -155,11 +170,11 @@ body::before{display:none}
     ;['r1', 'r2', 'r3'].forEach(function (id, k) {
       var el = $(id); el.style.display = found > k ? 'flex' : 'none'
       el.classList.toggle('on', k === 0 && t >= 10.6 && t < 12.2)
-      el.querySelector('small').textContent = k === 2 && !(t < 5.7) ? 'Scrolled past — we’ll bring it back' : 'On screen'
+      el.querySelector('small').textContent = k === 2 && !(t < 5.7) ? T('pastBack') : T('onScreen')
     })
-    $('r3').querySelector('small').textContent = (off > 1.6) ? 'Scrolled past — we’ll bring it back' : 'On screen'
-    $('r2').querySelector('small').textContent = (off > 1.6) ? 'Scrolled past — we’ll bring it back' : 'On screen'
-    $('r1').querySelector('small').textContent = (off > 1.0) ? 'Scrolled past — we’ll bring it back' : 'On screen'
+    $('r3').querySelector('small').textContent = (off > 1.6) ? T('pastBack') : T('onScreen')
+    $('r2').querySelector('small').textContent = (off > 1.6) ? T('pastBack') : T('onScreen')
+    $('r1').querySelector('small').textContent = (off > 1.0) ? T('pastBack') : T('onScreen')
     // zoom + callouts
     var z = zoom(t), dock = $('dock')
     dock.style.transform = 'scale(' + (1 + 0.07 * z) + ')'
