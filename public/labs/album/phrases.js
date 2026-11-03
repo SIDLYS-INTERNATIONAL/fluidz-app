@@ -41,7 +41,7 @@
     I('p1-02', [C, P], [
       'No shades, no cap. Your turn.',
       'Sans lunettes, sans casquette. À toi.',
-      'Sin lentes, sin gorra. Ahora tú.',
+      'Sin gafas, sin gorra. Ahora tú.',
       'Sem óculos, sem boné. Sua vez.',
       'Niente occhiali, niente cappellino. Ora tocca a te.',
       'Ohne Sonnenbrille, ohne Cap. Du bist dran.'
@@ -117,7 +117,7 @@
     I('p2-05', [P, W], [
       'A chat, a vibe… and if it clicks, things go off the rails fast.',
       'On papote, au feeling… et si ça accroche, ça dérape vite.',
-      'Una charla, buena onda… y si hay química, todo se descontrola rápido.',
+      'Una charla, buen rollo… y si hay química, todo se descontrola rápido.',
       'Um papo, uma vibe… e se rolar, a coisa foge do controle rápido.',
       'Due chiacchiere, feeling… e se scatta, si perde la testa in fretta.',
       'Ein Chat, ein Vibe … und wenn’s funkt, geht’s schnell zur Sache.'
@@ -154,13 +154,13 @@
     I('p4-01', [C, P, W], [
       'Nudes ahead. Keep swiping only if you want to see.',
       'Nudes à suivre. Continue à swiper seulement si tu as envie de voir.',
-      'Nudes a continuación. Sigue deslizando solo si quieres ver.',
-      'Nudes à frente. Continue deslizando só se quiser ver.',
+      'Nudes a la vista. Sigue deslizando solo si quieres ver.',
+      'Nudes a seguir. Continue deslizando só se quiser ver.',
       'Nudes in arrivo. Continua a scorrere solo se ti va di vedere.',
       'Nudes folgen. Wisch nur weiter, wenn du sehen willst.'
     ], {
-      split: S([['Nudes', 'ahead.'], ['Nudes', 'à suivre.'], ['Nudes', 'a continuación.'],
-        ['Nudes', 'à frente.'], ['Nudes', 'in arrivo.'], ['Nudes', 'folgen.']]),
+      split: S([['Nudes', 'ahead.'], ['Nudes', 'à suivre.'], ['Nudes', 'a la vista.'],
+        ['Nudes', 'a seguir.'], ['Nudes', 'in arrivo.'], ['Nudes', 'folgen.']]),
       small: L(['Keep swiping only if you want to see.',
         'Continue à swiper seulement si tu as envie de voir.',
         'Sigue deslizando solo si quieres ver.',
@@ -339,7 +339,7 @@
       'Un peu de taquinerie, ça aide beaucoup.',
       'Un poco de picardía ayuda mucho.',
       'Uma provocação leve ajuda muito.',
-      'Un po’ di battute fa sempre bene.',
+      'Qualche battuta fa sempre bene.',
       'Ein bisschen Geplänkel schadet nie.'
     ], { group: 'vibe' }),
     I('p5-17', [C, P], [
@@ -422,7 +422,7 @@
       'No “hi” with nothing else.',
       'Pas de « salut » tout seul.',
       'Nada de un «hola» solo.',
-      'Nada de «oi» e mais nada.',
+      'Nada de “oi” e mais nada.',
       'Niente «ciao» e basta.',
       'Kein einsames „Hi“.'
     ]),
