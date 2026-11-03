@@ -264,7 +264,7 @@
   function save() {
     if (!hasStore()) return;
     try {
-      var o = {}; o[CFG.KEY] = { groups: S.groups, favFilter: S.favFilter, pauseEach: S.pauseEach, saved: S.saved, lang: S.lang, welcomeDone: S.welcomeDone, collapsed: S.collapsed, pos: S.pos, speed: S.speed, chatNoteDismissed: S.chatNoteDismissed };
+      var o = {}; o[CFG.KEY] = { groups: S.groups, favFilter: S.favFilter, pauseEach: S.pauseEach, saved: S.saved, lang: S.lang, welcomeDone: S.welcomeDone, collapsed: S.collapsed, pos: S.pos, speed: S.speed, chatNoteDismissed: S.chatNoteDismissed, lastSide: !!S.lastSide };
       chrome.storage.local.set(o);
     } catch (e) { /* ignore */ }
   }
@@ -302,7 +302,11 @@
   // The toolbar icon (Show the floating panel) turns it back on. A side panel that is open keeps the observer alive.
   function suspend() { stopScroll(); S.closed = true; if (!S.sideOpen) stopObserving(); applyHostVisibility() }
   function resume() { S.closed = false; applyHostVisibility(); if (!observer) startObserving(); render(); flushNow() }
-  function applyHostVisibility() { if (host) host.style.display = (S.closed || S.sideOpen) ? 'none' : '' }
+  // The floating panel stays hidden while the side panel is open. If the side panel link drops without a goodbye (Chrome re-connects it
+  // on page navigations, e.g. when a profile opens), keep the floating panel hidden for a short grace period so it never flashes over Grindr.
+  var graceTimer = null;
+  function startGrace() { S.sideGrace = true; clearTimeout(graceTimer); graceTimer = setTimeout(function () { S.sideGrace = false; applyHostVisibility() }, 4000) }
+  function applyHostVisibility() { if (host) host.style.display = (S.closed || S.sideOpen || S.sideGrace) ? 'none' : '' }
   function clampPos() {
     if (!host) return;
     var r = host.getBoundingClientRect(), left = Math.min(Math.max(0, r.left), Math.max(0, innerWidth - 80)), top = Math.min(Math.max(0, r.top), Math.max(0, innerHeight - 40));
@@ -386,11 +390,17 @@
       });
       chrome.runtime.onConnect.addListener(function (p) {
         if (p.name !== 'pns-side') return;
-        port = p; S.sideOpen = true; applyHostVisibility(); if (!observer) { startObserving(); render() }
-        p.onMessage.addListener(function (m) { if (m && m.type === 'act' && m.a) act(m.a); else if (m && m.type === 'hello') { try { p.postMessage({ type: 'state', state: snapshot() }) } catch (e) { /* closed */ } } });
-        p.onDisconnect.addListener(function () { if (port === p) port = null; S.sideOpen = false; applyHostVisibility(); if (S.closed) { stopScroll(); stopObserving() } flushNow() });
+        port = p; S.sideOpen = true; S.sideGrace = false; clearTimeout(graceTimer); S.sideBye = false; applyHostVisibility(); if (!observer) { startObserving(); render() }
+        if (!S.lastSide) { S.lastSide = true; save() }
+        p.onMessage.addListener(function (m) { if (m && m.type === 'act' && m.a) act(m.a); else if (m && m.type === 'bye') S.sideBye = true; else if (m && m.type === 'hello') { try { p.postMessage({ type: 'state', state: snapshot() }) } catch (e) { /* closed */ } } });
+        p.onDisconnect.addListener(function () {
+          if (port === p) port = null; S.sideOpen = false;
+          if (S.sideBye) { S.sideBye = false; S.sideGrace = false; clearTimeout(graceTimer); if (S.lastSide) { S.lastSide = false; save() } } else if (!port) startGrace();
+          applyHostVisibility(); if (S.closed) { stopScroll(); stopObserving() } flushNow();
+        });
         try { p.postMessage({ type: 'state', state: snapshot() }) } catch (e) { /* closed */ }
       });
+      document.addEventListener('visibilitychange', function () { if (!document.hidden && S.lastSide && !S.sideOpen) startGrace() }); // coming back to this tab: the side panel re-links in a moment
       if (chrome.storage && chrome.storage.onChanged) chrome.storage.onChanged.addListener(function (ch, area) {
         if (area === 'local' && ch[CFG.KEY] && ch[CFG.KEY].newValue && ch[CFG.KEY].newValue.lang && ch[CFG.KEY].newValue.lang !== S.lang) { S.lang = ch[CFG.KEY].newValue.lang; publish() }
       });
@@ -407,6 +417,7 @@
       S.speed = s.speed === 'fast' ? 'fast' : 'gentle'; S.chatNoteDismissed = !!s.chatNoteDismissed;
       S.favFilter = ['all', 'fav', 'non'].indexOf(s.favFilter) >= 0 ? s.favFilter : (s.favOnly ? 'fav' : 'all'); S.pauseEach = s.pauseEach !== false; S.saved = Array.isArray(s.saved) ? s.saved.slice(0, CFG.MAX_SAVED) : [];
       S.lang = s.lang || window.PNS_GUESS_LANG(); S.welcomeDone = !!s.welcomeDone; S.showWelcome = !S.welcomeDone; S.collapsed = !!s.collapsed; S.pos = s.pos || null;
+      S.lastSide = !!s.lastSide; if (S.lastSide) startGrace(); // the side panel was open on the last visit: give it time to reconnect before showing the floating panel
       buildHost(); wire(); startObserving(); render(); flushNow();
       if (!s.lang) save();
     });
