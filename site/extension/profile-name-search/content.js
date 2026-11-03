@@ -36,7 +36,7 @@
   // Query syntax: comma / ; / | = OR, + = AND, "quotes" = exact phrase (spaces kept inside a term). Parsed in ui.js (PNS_PARSE).
   function effectiveGroups() { // chips + what is being typed; syntax parsed by PNS_PARSE (ui.js)
     var out = [];
-    S.groups.concat(S.draft.trim() ? [S.draft] : []).forEach(function (raw) {
+    window.PNS_PARSE.combine(S.groups, S.draft).forEach(function (raw) {
       window.PNS_PARSE.parse(raw).groups.forEach(function (terms) {
         var t = terms.map(function (x) { return norm(x.trim()) }).filter(Boolean); if (t.length) out.push(t);
       });
