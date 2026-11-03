@@ -33,12 +33,15 @@
   function rnd(a, b) { return a + Math.random() * (b - a) }
   function setCls(el, name, on) { if (el.classList.contains(name) !== on) el.classList.toggle(name, on) }
 
-  // Query syntax: comma = OR, + = AND, "quotes" = exact phrase (spaces kept inside a term).
-  function effectiveGroups() {
-    var g = S.groups.slice(); var d = S.draft.trim(); if (d) g.push(d);
-    return g.map(function (grp) {
-      return grp.split('+').map(function (t) { return norm(t.trim().replace(/^"+|"+$/g, '').trim()) }).filter(Boolean);
-    }).filter(function (a) { return a.length });
+  // Query syntax: comma / ; / | = OR, + = AND, "quotes" = exact phrase (spaces kept inside a term). Parsed in ui.js (PNS_PARSE).
+  function effectiveGroups() { // chips + what is being typed; syntax parsed by PNS_PARSE (ui.js)
+    var out = [];
+    S.groups.concat(S.draft.trim() ? [S.draft] : []).forEach(function (raw) {
+      window.PNS_PARSE.parse(raw).groups.forEach(function (terms) {
+        var t = terms.map(function (x) { return norm(x.trim()) }).filter(Boolean); if (t.length) out.push(t);
+      });
+    });
+    return out;
   }
   function hasQuery() { return effectiveGroups().length > 0 }
   function matchEntry(entry, groups) {
