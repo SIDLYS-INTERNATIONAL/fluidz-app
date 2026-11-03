@@ -48,10 +48,11 @@ SCREENS[1] = function () {
 };
 
 /* ---------------------------------------------------------------- screen 2 : vibe */
+var QM = { en: ['“', '”'], pt: ['“', '”'], fr: ['«\u00a0', '\u00a0»'], es: ['«', '»'], it: ['«', '»'], de: ['„', '“'] };
 SCREENS[2] = function () {
   var cards = ['playful', 'classy', 'warm'].map(function (k) {
     var on = S.tone === k, d = P.tones[k];
-    return '<button type="button" class="tone' + (on ? ' on' : '') + '" role="radio" aria-checked="' + on + '" data-act="tone" data-v="' + k + '" data-fk="t-' + k + '"><div class="nm"><span>' + esc(d.label[L]) + '</span>' + ico('circle-check') + '</div><div class="qt">“' + esc(d.sample[S.main]) + '”</div></button>';
+    return '<button type="button" class="tone' + (on ? ' on' : '') + '" role="radio" aria-checked="' + on + '" data-act="tone" data-v="' + k + '" data-fk="t-' + k + '"><div class="nm"><span>' + esc(d.label[L]) + '</span>' + ico('circle-check') + '</div><div class="qt">' + (QM[S.main] || QM.en)[0] + esc(d.sample[S.main]) + (QM[S.main] || QM.en)[1] + '</div></button>';
   }).join('');
   return {
     main: '<h1>' + esc(t('acp.v.h')) + '</h1><p class="lead">' + esc(t('acp.v.p')) + '</p><div role="radiogroup" aria-label="' + esc(t('acp.v.h')) + '">' + cards + '</div>',
@@ -205,4 +206,3 @@ function addFiles(files, start, replace) {
     if (bad) toast(t('acp.p.bad'));
   });
 }
-
