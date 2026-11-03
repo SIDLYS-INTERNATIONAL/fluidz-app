@@ -46,6 +46,9 @@ Some people report that the chat on Grindr Web disconnected after a long scan. W
 
 ## Changelog
 
+### 2.2.1
+- Fixed: with the side panel open, the floating panel no longer flashes over Grindr (and blocks your clicks) each time you open a profile. The side panel keeps its link to the page, and the floating panel only comes back after a short delay if the side panel really went away, or right away when you close the side panel yourself.
+
 ### 2.2.0
 - New tabs above the results: **All**, **Favorites** and **Not favorites**, each with its count. The tab filters everything: results, grid highlight, auto-scroll pauses and Previous/Next. *Not favorites* lets you skip the profiles you already favorited. Replaces the *Only my favorites* switch (your old setting carries over). All 6 languages.
 
