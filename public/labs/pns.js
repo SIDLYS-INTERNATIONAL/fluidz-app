@@ -1,4 +1,4 @@
-/* Profile Name Search page: demo player, copy button, e-mail-unlocked download. Needs /labs/site.js (window.Labs). */
+/* Profile Name Search page: copy button, e-mail-unlocked download. Needs /labs/site.js (window.Labs). */
 (function () {
   'use strict'
   var $ = function (s) { return document.getElementById(s) }
@@ -13,17 +13,6 @@
   })
   var t = Labs.t
   if (IS_MOBILE) { var b = $('dl-btn'); b.setAttribute('data-i18n', 'pns.dl.btn.mob'); b.textContent = t('pns.dl.btn.mob') }
-
-  /* demo video: autoplay when visible, tap-to-play when the phone blocks it */
-  var v = $('demo-video'), stage = $('stage')
-  if (v && stage) {
-    v.muted = true
-    var tryPlay = function () { var p = v.play(); if (p && p.then) p.then(function () { stage.classList.remove('needs-tap') }).catch(function () { stage.classList.add('needs-tap') }) }
-    $('demo-play').addEventListener('click', tryPlay)
-    new IntersectionObserver(function (es) { if (es[0].isIntersecting) { if (v.paused) tryPlay() } else if (!v.paused) v.pause() }, { threshold: 0.35 }).observe(stage)
-    ;['touchstart', 'scroll'].forEach(function (ev) { window.addEventListener(ev, function () { if (v.paused && stage.classList.contains('needs-tap')) tryPlay() }, { once: true, passive: true }) })
-    v.addEventListener('playing', function () { stage.classList.remove('needs-tap') })
-  }
 
   /* copy chrome://extensions */
   $('copy-ext').addEventListener('click', function (e) {

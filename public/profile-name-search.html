@@ -28,12 +28,10 @@
 /* demo */
 .demo{max-width:1200px;margin:0 auto}
 .stage{position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--rule2);background:#0a0910;aspect-ratio:16/9;box-shadow:0 30px 80px -30px rgba(0,0,0,.7)}
-.stage video{width:100%;height:100%;object-fit:cover;display:block}
-.stage .tap{display:none;position:absolute;inset:0;align-items:center;justify-content:center;background:rgba(5,4,10,.45);border:none;cursor:pointer}
-.stage.needs-tap .tap{display:flex}
-.tap span{width:72px;height:72px;border-radius:50%;background:var(--p);color:var(--ink);display:flex;align-items:center;justify-content:center;font-size:28px}
+.stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;background:#0a0910}
 .story{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:28px}
-.plan .im{aspect-ratio:16/9;border-radius:12px;border:1px solid var(--rule2);background:#111 center/cover no-repeat;margin-bottom:12px}
+.plan .im{position:relative;overflow:hidden;aspect-ratio:16/9;border-radius:12px;border:1px solid var(--rule2);background:#111;margin-bottom:12px}
+.plan .im iframe{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none}
 .plan .tm{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-family:var(--fm);font-size:11px;color:var(--tx3)}
 .plan .tm b{width:22px;height:22px;border-radius:50%;background:var(--p2);color:var(--p);display:flex;align-items:center;justify-content:center;font-family:var(--fb);font-size:11px;font-weight:800}
 .plan.hl .tm b{background:var(--p);color:var(--ink)}.plan.hl .im{border-color:var(--p)}
@@ -150,19 +148,15 @@
     </div>
     <div class="demo">
       <div class="stage" id="stage">
-        <video id="demo-video" muted playsinline webkit-playsinline loop preload="metadata" poster="/api/labs-asset?file=poster.jpg" aria-label="Profile Name Search demo">
-          <source src="/api/labs-asset?file=pns-demo.mp4" type="video/mp4">
-        </video>
-        <button type="button" class="tap" id="demo-play" aria-label="Play"><span><i data-ico="play"></i></span></button>
+        <iframe id="demo-frame" src="/labs/demo/pns-demo.html" title="Profile Name Search demo" loading="lazy" referrerpolicy="no-referrer"></iframe>
       </div>
       <div class="story">
-        <div class="plan"><div class="im" style="background-image:url(/api/labs-asset?file=plan-1.jpg)"></div><div class="tm"><b>1</b>0 – 2 s</div><h4 data-i18n="pns.plan1.t">Type the names</h4><p data-i18n="pns.plan1.p">“jay, mike” typed in the panel: two chips appear.</p></div>
-        <div class="plan"><div class="im" style="background-image:url(/api/labs-asset?file=plan-2.jpg)"></div><div class="tm"><b>2</b>2 – 5.7 s</div><h4 data-i18n="pns.plan2.t">Auto-scroll runs</h4><p data-i18n="pns.plan2.p">The grid loads by itself, matches light up in coral, counters climb.</p></div>
-        <div class="plan hl"><div class="im" style="background-image:url(/api/labs-asset?file=plan-3.jpg)"></div><div class="tm"><b>3</b>5.7 – 9.7 s</div><h4 data-i18n="pns.plan3.t">Pause &amp; zoom on the panel</h4><p data-i18n="pns.plan3.p">4 seconds zoomed on the panel, with callouts on each feature.</p></div>
-        <div class="plan"><div class="im" style="background-image:url(/api/labs-asset?file=plan-4.jpg)"></div><div class="tm"><b>4</b>9.7 – 12 s</div><h4 data-i18n="pns.plan4.t">Click “Show on grid”</h4><p data-i18n="pns.plan4.p">The grid jumps back to his card and highlights it — one tap on it opens his profile.</p></div>
-        <div class="plan"><div class="im" style="background-image:url(/api/labs-asset?file=plan-5.jpg)"></div><div class="tm"><b>5</b>12 – 15 s</div><h4 data-i18n="pns.plan5.t">Resume</h4><p data-i18n="pns.plan5.p">Scrolling continues down the grid, then loops.</p></div>
+        <div class="plan"><div class="im"><iframe src="/labs/demo/pns-demo.html?t=1.4" title="" tabindex="-1" aria-hidden="true" loading="lazy" referrerpolicy="no-referrer"></iframe></div><div class="tm"><b>1</b>0 – 2 s</div><h4 data-i18n="pns.plan1.t">Type the names</h4><p data-i18n="pns.plan1.p">“jay, mike” typed in the panel: two chips appear.</p></div>
+        <div class="plan"><div class="im"><iframe src="/labs/demo/pns-demo.html?t=4" title="" tabindex="-1" aria-hidden="true" loading="lazy" referrerpolicy="no-referrer"></iframe></div><div class="tm"><b>2</b>2 – 5.7 s</div><h4 data-i18n="pns.plan2.t">Auto-scroll runs</h4><p data-i18n="pns.plan2.p">The grid loads by itself, matches light up in coral, counters climb.</p></div>
+        <div class="plan hl"><div class="im"><iframe src="/labs/demo/pns-demo.html?t=7.5" title="" tabindex="-1" aria-hidden="true" loading="lazy" referrerpolicy="no-referrer"></iframe></div><div class="tm"><b>3</b>5.7 – 9.7 s</div><h4 data-i18n="pns.plan3.t">Pause &amp; zoom on the panel</h4><p data-i18n="pns.plan3.p">4 seconds zoomed on the panel, with callouts on each feature.</p></div>
+        <div class="plan"><div class="im"><iframe src="/labs/demo/pns-demo.html?t=11" title="" tabindex="-1" aria-hidden="true" loading="lazy" referrerpolicy="no-referrer"></iframe></div><div class="tm"><b>4</b>9.7 – 12 s</div><h4 data-i18n="pns.plan4.t">Click “Show on grid”</h4><p data-i18n="pns.plan4.p">The grid jumps back to his card and highlights it — one tap on it opens his profile.</p></div>
+        <div class="plan"><div class="im"><iframe src="/labs/demo/pns-demo.html?t=13.5" title="" tabindex="-1" aria-hidden="true" loading="lazy" referrerpolicy="no-referrer"></iframe></div><div class="tm"><b>5</b>12 – 15 s</div><h4 data-i18n="pns.plan5.t">Resume</h4><p data-i18n="pns.plan5.p">Scrolling continues down the grid, then loops.</p></div>
       </div>
-      <div class="player"><i data-ico="circle-play"></i><span data-i18n="pns.player">Plays on its own, silently, and loops. On phones that block autoplay, tap the ▶ button.</span></div>
     </div>
   </div>
 </section>
