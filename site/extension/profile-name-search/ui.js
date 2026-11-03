@@ -175,7 +175,13 @@
     }
     return { pieces: pieces, last: pieces.length ? cur.replace(/^\s+/, '') : cur };
   }
-  g.PNS_PARSE = { parse: parseQuery, splitOr: splitOr };
+  // Chips + the text being typed, as raw strings. A draft that starts with "+" continues the last chip ("dom" [Enter] "+ top" = dom AND top).
+  function combine(chips, draft) {
+    var out = (chips || []).slice(), d = String(draft || '');
+    if (d.trim()) { if (/^\s*[+＋]/.test(d) && out.length) out[out.length - 1] = out[out.length - 1] + ' ' + d.trim(); else out.push(d) }
+    return out;
+  }
+  g.PNS_PARSE = { parse: parseQuery, splitOr: splitOr, combine: combine };
 
   function ic(name) {
     var inner = (g.PNS_ICONS || {})[name] || '';
@@ -224,10 +230,15 @@
     /* ---------- builders ---------- */
     function commitPieces(pieces) {
       var gs = S.groups.slice();
-      pieces.forEach(function (p) { if (!/["“”]/.test(p)) p = p.replace(/\s*\+\s*$/, '').trim(); if (p && gs.indexOf(p) < 0) gs.push(p) });
+      pieces.forEach(function (p) {
+        if (!/["“”]/.test(p)) p = p.replace(/\s*\+\s*$/, '').trim();
+        if (/^\s*[+＋]/.test(p)) { p = p.replace(/^\s*[+＋]\s*/, '').trim(); if (p && gs.length) { gs[gs.length - 1] = gs[gs.length - 1] + ' + ' + p; return } } // "+ top" continues the previous chip (AND)
+        if (p && gs.indexOf(p) < 0) gs.push(p);
+      });
       gs = gs.slice(0, 12); S.groups = gs; input.value = ''; send({ a: 'draft', v: '' }); send({ a: 'groups', groups: gs });
     }
     function commitDraft() {
+      if (parseQuery(input.value).pending) return true; // "dom +" is waiting for its second word: keep it in the field (Enter/blur must not turn it into an OR chip)
       var pieces = splitOr(input.value + ',').pieces; // flush whatever is typed
       if (!pieces.length) return false;
       commitPieces(pieces); return true;
@@ -295,8 +306,8 @@
     function renderSummary() {
       var box = slots.sum; if (!box || !S) return;
       var all = [], pend = false;
-      S.groups.forEach(function (c) { splitGroups(c).forEach(function (t) { all.push(t) }) });
-      var d = g.PNS_PARSE.parse(input.value); d.groups.forEach(function (t) { all.push(t) }); pend = d.pending;
+      g.PNS_PARSE.combine(S.groups, input.value).forEach(function (c) { splitGroups(c).forEach(function (t) { all.push(t) }) });
+      pend = g.PNS_PARSE.parse(input.value).pending;
       var sig = lang + JSON.stringify([all, pend]); if (box.getAttribute('data-sig') === sig) return; box.setAttribute('data-sig', sig);
       while (box.firstChild) box.removeChild(box.firstChild);
       if (!all.length) { box.style.display = 'none'; return }
