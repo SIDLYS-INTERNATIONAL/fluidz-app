@@ -1,5 +1,2 @@
-A:\u003c
-B:\\u003c
-C:x y
-D:x y
-E:<\/code>
+"p2":"Envie d’essayer ? <a href=\"/album-creator/create\">Ouvre l’Album Creator</a> ou lis"
+"x":"aujourd’hui : ce"
