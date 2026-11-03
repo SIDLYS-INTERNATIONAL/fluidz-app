@@ -1,0 +1,1 @@
+document.querySelectorAll('[data-ico]').forEach(function (el) { el.classList.add('ico'); el.innerHTML = '<svg aria-hidden="true"><use href="/labs/icons.svg#' + el.getAttribute('data-ico') + '"/></svg>' })

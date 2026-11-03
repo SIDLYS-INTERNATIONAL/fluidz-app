@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Adult Album Creator — your private album, told like a story · Fluidz Labs</title>
+<meta name="description" content="Free tool by Fluidz Labs: turn your private album into a story — captions, an 18+ warning page and your rules, in 6 languages. Built on your phone: your photos never leave it.">
+<link rel="canonical" href="https://fluidz.app/album-creator">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#05040A">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Fluidz Labs">
+<meta property="og:url" content="https://fluidz.app/album-creator">
+<meta property="og:title" content="Adult Album Creator — your private album, told like a story">
+<meta property="og:description" content="Captions, an 18+ warning page and your rules, in 6 languages. Built on your phone — your photos never leave it.">
+<meta property="og:image" content="https://fluidz.app/og.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://fluidz.app/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&family=Cormorant+Garamond:wght@400;600&family=VT323&display=swap" rel="stylesheet">
+<script src="/labs/lang.js"></script>
+<link rel="stylesheet" href="/labs/site.css">
+<style>
+.hero-vis{height:500px;min-width:440px}
+.pg{position:absolute;border-radius:24px;border:1px solid var(--rule2);overflow:hidden;box-shadow:0 30px 70px -20px rgba(0,0,0,.7);display:flex;flex-direction:column;justify-content:flex-end;padding:18px;color:#F2ECE8}
+.pg.photo{left:0;top:70px;width:205px;height:380px;background:linear-gradient(160deg,#5A4E60,#1E1A1C);transform:rotate(-6deg);z-index:1}
+.pg.end{left:30%;top:20px;width:195px;height:390px;background:linear-gradient(170deg,#3A1A1C,#070608);transform:rotate(2deg);z-index:3;justify-content:center}
+.pg.alert{right:0;top:90px;width:175px;height:390px;background:linear-gradient(170deg,#3A1A1C,#070608);transform:rotate(7deg);z-index:2;justify-content:center;text-align:center;align-items:center}
+.cap{background:rgba(8,7,9,.66);border-radius:14px;padding:14px}
+.cap i{display:block;width:18px;height:2px;background:var(--p);margin-bottom:10px}
+.serif{font-family:'Cormorant Garamond',serif}
+.cap .serif{font-size:19px;font-weight:600;line-height:1.15}
+.cap small{display:block;font-size:9px;color:rgba(242,236,232,.6);margin-top:6px}
+.stamp{display:flex;align-items:center;gap:6px;font-family:'VT323',monospace;font-size:20px;color:#FF9A4D;margin-top:12px}
+.stamp i{width:7px;height:7px;border-radius:50%;background:#FF9A4D}
+.pg.end .serif{font-size:22px;font-weight:600;line-height:1.1}
+.pg.end .serif.o{color:var(--p);font-weight:400;margin-top:10px}
+.pg.end small{font-size:9.5px;color:rgba(242,236,232,.67);margin-top:16px;display:block}
+.pg.alert .b{font-family:var(--fm);font-size:9px;color:var(--p);margin-bottom:14px}
+.pg.alert .serif{font-size:34px;font-weight:600;line-height:1}.pg.alert .serif.o{color:var(--p);font-weight:400}
+.pg.alert small{font-size:10px;color:rgba(242,236,232,.7);margin-top:14px;line-height:1.4}
+.apps{background:var(--bg1);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:26px 0}
+.apps .wrap{display:flex;align-items:center;justify-content:center;gap:28px;flex-wrap:wrap}
+.apps span{font-size:14px;color:var(--tx3)}.apps b{font-family:var(--fh);font-size:20px;font-weight:700;color:var(--tx2)}
+.strip{display:grid;grid-template-columns:repeat(10,1fr);gap:12px;margin-top:8px}
+.th .pic{aspect-ratio:111/220;border-radius:12px;border:1px solid var(--rule2);background:linear-gradient(160deg,#5A4E60,#1E1A1C)}
+.th.alert .pic{background:#3A1A1C}.th.priv .pic{background:linear-gradient(160deg,#4A3036,#1E1A1C);border-color:var(--pbd)}.th.rules .pic{background:#120D14}
+.th b{display:block;font-size:12px;font-weight:700;margin-top:10px;color:var(--tx2)}.th.priv b{color:var(--p)}
+.langs{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.langs span{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--rule2);border-radius:999px;padding:0 18px;height:38px;font-size:14px;font-weight:600}
+.langs span b{font-family:var(--fm);font-size:12px;font-weight:800;color:var(--p)}
+.cta-state{display:none}
+@media(max-width:1000px){.hero-vis{height:520px;max-width:560px;margin:0 auto}.strip{grid-template-columns:repeat(5,1fr)}}
+@media(max-width:720px){.hero-vis{height:440px;min-width:0}.pg.photo{width:165px;height:320px;top:60px}.pg.end{width:160px;height:330px;left:28%}.pg.alert{width:150px;height:330px}.strip{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body data-nav="album" data-source="album-creator">
+<div id="site-nav"></div>
+
+<section class="hero glow-l">
+  <div class="wrap">
+    <div class="hero-copy">
+      <span class="eyebrow lav fu"><i></i><span data-i18n="alb.hero.eyebrow">ADULT ALBUM CREATOR · FREE · 18+</span></span>
+      <h1 class="fu2" data-i18n="alb.hero.h1">Your private album, told like a story.</h1>
+      <p class="hero-p fu3" data-i18n="alb.hero.p">Captions on your photos, an 18+ warning page and your rules — in 6 languages. Made on your phone in 5 minutes: your photos never leave it.</p>
+      <div class="hero-cta fu4">
+        <button type="button" class="btn btn-p" id="alb-cta" data-i18n="alb.hero.cta1">Get early access</button>
+        <a href="#example" class="btn btn-g"><span data-i18n="alb.hero.cta2">See an example</span> <i data-ico="arrow-down"></i></a>
+      </div>
+      <p class="wn fu4" id="alb-state" style="margin-top:14px;color:var(--sage);font-weight:600;display:none" data-i18n="alb.hero.listed">You’re on the list ✓ — we’ll email you the day it opens.</p>
+      <div class="gages fu4">
+        <span><i data-ico="check"></i><span data-i18n="alb.hero.g1">Photos never uploaded</span></span>
+        <span><i data-ico="check"></i><span data-i18n="alb.hero.g2">GPS &amp; hidden data removed</span></span>
+        <span><i data-ico="check"></i><span data-i18n="alb.hero.g3">Free with your Fluidz ID</span></span>
+      </div>
+    </div>
+    <div class="hero-vis fu2" aria-hidden="true">
+      <div class="pg photo"><div class="cap"><i></i><div class="serif">You wanted a face pic?</div><small>¿Querías verme la cara?</small></div><div class="stamp"><i></i>FLUIDZ · 14.10.26</div></div>
+      <div class="pg end"><div class="serif">Liked it?<br>Say it.</div><div class="serif o">Didn’t?<br>Say that too.</div><small>Respect, always · Talk first</small></div>
+      <div class="pg alert"><div class="b">● 18+ · NSFW</div><div class="serif">Nudes</div><div class="serif o">ahead.</div><small>Keep swiping only<br>if you want to see.</small></div>
+    </div>
+  </div>
+</section>
+
+<div class="apps"><div class="wrap"><span data-i18n="alb.apps">Works with private albums on</span><b>Grindr</b><b>Scruff</b><b>Romeo</b><b>Hornet</b><b>Jack’d</b><b>Sniffies</b></div></div>
+
+<section class="sec" id="how">
+  <div class="wrap">
+    <div class="sec-head center"><span class="eyebrow"><i></i><span data-i18n="alb.how.eyebrow">HOW IT WORKS</span></span><h2 class="h2" data-i18n="alb.how.h2">Four steps, five minutes.</h2></div>
+    <div class="grid g4">
+      <div class="card"><div class="num">1 <i data-ico="message-square"></i></div><h3 data-i18n="alb.h1.t">Answer a short quiz</h3><p data-i18n="alb.h1.p">Languages, vibe, what you’re into, your rules. Tap, don’t type.</p></div>
+      <div class="card"><div class="num">2 <i data-ico="pen-line"></i></div><h3 data-i18n="alb.h2.t">Get your captions</h3><p data-i18n="alb.h2.p">Written from your answers. Edit any line, or shuffle for another version.</p></div>
+      <div class="card"><div class="num">3 <i data-ico="images"></i></div><h3 data-i18n="alb.h3.t">Add your photos</h3><p data-i18n="alb.h3.p">3 normal, 5 private. The 18+ page and the last page are made for you.</p></div>
+      <div class="card"><div class="num">4 <i data-ico="download"></i></div><h3 data-i18n="alb.h4.t">Save to your camera roll</h3><p data-i18n="alb.h4.p">10 images in iPhone format, in the right order. Upload them to your private album.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec alt" id="example">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow lav"><i></i><span data-i18n="alb.ex.eyebrow">EXAMPLE</span></span><h2 class="h2" data-i18n="alb.ex.h2">One album, 10 pages.</h2><p class="lead" data-i18n="alb.ex.p">Normal photos first, then a warning page, then your private photos, and your rules at the end. Captions stay suggestive — never crude.</p></div>
+    <div class="strip">
+      <div class="th"><div class="pic"></div><b>1 · <span data-i18n="alb.ex.t1">Face</span></b></div>
+      <div class="th"><div class="pic"></div><b>2 · <span data-i18n="alb.ex.t2">Teasing</span></b></div>
+      <div class="th"><div class="pic"></div><b>3 · <span data-i18n="alb.ex.t3">Talk first</span></b></div>
+      <div class="th alert"><div class="pic"></div><b>4 · 18+</b></div>
+      <div class="th priv"><div class="pic"></div><b>5 · <span data-i18n="alb.ex.t5">Private</span></b></div>
+      <div class="th priv"><div class="pic"></div><b>6 · <span data-i18n="alb.ex.t5">Private</span></b></div>
+      <div class="th priv"><div class="pic"></div><b>7 · <span data-i18n="alb.ex.t5">Private</span></b></div>
+      <div class="th priv"><div class="pic"></div><b>8 · <span data-i18n="alb.ex.t5">Private</span></b></div>
+      <div class="th priv"><div class="pic"></div><b>9 · <span data-i18n="alb.ex.t5">Private</span></b></div>
+      <div class="th rules"><div class="pic"></div><b>10 · <span data-i18n="alb.ex.t10">Your rules</span></b></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="privacy">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow sage"><i></i><span data-i18n="alb.pv.eyebrow">PRIVATE BY DESIGN</span></span><h2 class="h2" data-i18n="alb.pv.h2">Your photos never leave your phone.</h2><p class="lead" data-i18n="alb.pv.p">Everything is made inside your browser. Nothing is uploaded, so there’s nothing to delete.</p></div>
+    <div class="grid g4">
+      <div class="pillar"><i data-ico="smartphone"></i><h3 data-i18n="alb.p1.t">Made on your phone</h3><p data-i18n="alb.p1.p">The images are built in your browser. No server ever sees them.</p></div>
+      <div class="pillar"><i data-ico="map-pin-off"></i><h3 data-i18n="alb.p2.t">GPS &amp; hidden data removed</h3><p data-i18n="alb.p2.p">Location, phone model and other hidden data are stripped before export.</p></div>
+      <div class="pillar"><i data-ico="droplets"></i><h3 data-i18n="alb.p3.t">Blur what you want</h3><p data-i18n="alb.p3.p">A tattoo, your face, a detail in the background — paint over it.</p></div>
+      <div class="pillar"><i data-ico="timer"></i><h3 data-i18n="alb.p4.t">The FLUIDZ stamp</h3><p data-i18n="alb.p4.p">A small date stamp shows when each photo was taken: proof it’s recent, nothing more. You can turn it off.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec alt" id="languages">
+  <div class="wrap center">
+    <span class="eyebrow"><i></i><span data-i18n="alb.lg.eyebrow">6 LANGUAGES</span></span>
+    <h2 class="h2" data-i18n="alb.lg.h2">Travelling? Speak their language too.</h2>
+    <p class="lead" style="margin-bottom:34px" data-i18n="alb.lg.p">Pick a main language, and add a second one in small under each caption so most of the guys around understand you.</p>
+    <div class="langs"><span><b>EN</b>English</span><span><b>FR</b>Français</span><span><b>ES</b>Español</span><span><b>PT</b>Português</span><span><b>IT</b>Italiano</span><span><b>DE</b>Deutsch</span></div>
+  </div>
+</section>
+
+<section class="sec" id="faq">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow lav"><i></i><span data-i18n="alb.faq.eyebrow">FAQ</span></span><h2 class="h2" data-i18n="alb.faq.h2">Questions we get a lot.</h2></div>
+    <div class="faq">
+      <details open><summary><span data-i18n="alb.f1.q">Are my photos uploaded anywhere?</span><i data-ico="chevron-down"></i></summary><p data-i18n="alb.f1.a">No. The album is built inside your browser, on your phone. Not even we can see your photos.</p></details>
+      <details><summary><span data-i18n="alb.f2.q">Is it really free?</span><i data-ico="chevron-down"></i></summary><p data-i18n="alb.f2.a">Yes. The Album Creator is a free Fluidz Labs tool: no watermark, no trial. You just need a free Fluidz ID (one email, no password), so you’re first in line the day it opens.</p></details>
+      <details><summary><span data-i18n="alb.f3.q">Which apps does it work with?</span><i data-ico="chevron-down"></i></summary><p data-i18n="alb.f3.a">Any app where you can keep a private album: Grindr, Scruff, Romeo, Hornet, Jack’d, Sniffies. You upload the finished images yourself, so it isn’t tied to one app.</p></details>
+      <details><summary><span data-i18n="alb.f4.q">Why the FLUIDZ stamp?</span><i data-ico="chevron-down"></i></summary><p data-i18n="alb.f4.a">A small date stamp shows when each photo was taken — proof the pictures are recent, nothing more. It’s on by default and you can turn it off.</p></details>
+      <details><summary><span data-i18n="alb.f5.q">Can I write my own captions?</span><i data-ico="chevron-down"></i></summary><p data-i18n="alb.f5.a">Yes. Captions are suggested from your quiz answers, but every line is editable, and you can shuffle for another version.</p></details>
+      <details><summary><span data-i18n="alb.f6.q">Any rules about nudity?</span><i data-ico="chevron-down"></i></summary><p data-i18n="alb.f6.a">You decide what goes in your album, and each app has its own rules — check them before you upload. The Album Creator is 18+ only, hosts nothing and shares nothing: it just builds images on your phone, with a warning page so nobody sees nudity by surprise.</p></details>
+    </div>
+  </div>
+</section>
+
+<div id="site-fz"></div>
+<div id="site-foot"></div>
+
+<script src="/labs/site.js"></script>
+<script>
+(function () {
+  var cta = document.getElementById('alb-cta'), st = document.getElementById('alb-state')
+  function listed() { var u = Labs.user(); return !!(u && u.meta && u.meta.interest_album_creator) }
+  function paint() { st.style.display = listed() ? 'block' : 'none'; cta.style.display = listed() ? 'none' : '' }
+  function join() { return Labs.updateMeta({ interest_album_creator: true }).then(function () { paint(); Labs.toast(Labs.t('alb.hero.listed')) }).catch(function () { Labs.toast(Labs.t('m.err.retry')) }) }
+  cta.addEventListener('click', function () { if (Labs.user()) join(); else { try { sessionStorage.setItem('alb_intent', '1') } catch (e) {} Labs.openSignIn({ source: 'album-creator', onDone: join }) } })
+  var pending = false; try { pending = sessionStorage.getItem('alb_intent') } catch (e) {}
+  if (pending && Labs.user() && !listed()) { try { sessionStorage.removeItem('alb_intent') } catch (e) {} setTimeout(join, 800) }
+  document.addEventListener('labs:auth', paint); paint()
+})()
+</script>
+</body>
+</html>

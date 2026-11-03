@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Profile Name Search — sample demo</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/labs/site.css">
+<link rel="stylesheet" href="/labs/panel.css">
+<style>
+html,body{width:100%;height:100%;overflow:hidden;background:#0c0b10}
+body::before{display:none}
+#cam{position:absolute;left:0;top:0;width:1440px;height:810px;transform-origin:0 0;overflow:hidden;background:#100f14}
+#track{position:absolute;left:0;top:0;width:1440px;will-change:transform}
+.pf{position:relative;float:left;width:180px;height:216px}
+.pf .im{position:absolute;inset:6px;border-radius:12px;overflow:hidden;background:linear-gradient(160deg,hsl(var(--h) 22% 30%),hsl(var(--h) 18% 14%));transition:opacity .3s,box-shadow .3s}
+.pf .im::before{content:'';position:absolute;left:50%;top:30%;width:56px;height:56px;margin-left:-28px;border-radius:50%;background:hsl(var(--h) 14% 42% / .75)}
+.pf .im::after{content:'';position:absolute;left:50%;top:62%;width:120px;height:110px;margin-left:-60px;border-radius:60px 60px 0 0;background:hsl(var(--h) 14% 38% / .75)}
+.pf .nm{position:absolute;left:14px;bottom:14px;font-size:12px;font-weight:700;color:#fff;background:rgba(0,0,0,.5);padding:3px 8px;border-radius:7px;z-index:2;max-width:150px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pf .dist{position:absolute;right:14px;top:14px;font-size:10px;color:rgba(255,255,255,.7);z-index:2;background:rgba(0,0,0,.35);padding:2px 6px;border-radius:6px}
+.dim .pf:not(.hit) .im{opacity:.5}
+.pf.hit .im{box-shadow:inset 0 0 0 2px #E0887A,0 0 0 1px #E0887A}
+.pf.hit .nm{background:#E0887A;color:#14090A}
+.pf.focus .im{box-shadow:inset 0 0 0 3px #E0887A,0 0 40px rgba(224,136,122,.5);transform:scale(1.03)}
+.pf .open{display:none;position:absolute;left:6px;right:6px;bottom:6px;z-index:3;padding:34px 12px 12px;border-radius:0 0 12px 12px;background:linear-gradient(transparent,rgba(0,0,0,.85));font-size:10.5px;color:rgba(255,255,255,.85)}
+.pf .open b{display:block;font-family:var(--fh);font-size:15px;color:#fff;margin-bottom:2px}
+.pf.focus .open{display:block}
+.pf.focus .nm{opacity:0}
+#badge{position:absolute;left:20px;top:16px;z-index:5;font-family:var(--fm);font-size:11px;letter-spacing:1px;color:#E0887A;background:rgba(224,136,122,.12);border:1px solid rgba(224,136,122,.3);border-radius:999px;padding:6px 12px;backdrop-filter:blur(10px)}
+#veil{position:absolute;inset:0;background:rgba(5,4,10,.55);opacity:0;z-index:6;pointer-events:none}
+#dock{position:absolute;right:28px;top:36px;z-index:8;transform-origin:50% 50%}
+#dock .pn{box-shadow:0 30px 80px rgba(0,0,0,.7)}
+#dock .pn-help,#dock .pn-saved{display:none}
+.co{position:absolute;z-index:9;right:calc(100% + 16px);white-space:nowrap;background:#E0887A;color:#14090A;font-size:13px;font-weight:800;border-radius:999px;padding:5px 12px;opacity:0;transform:translateX(12px);transition:none}
+.co::after{content:'';position:absolute;left:100%;top:50%;width:14px;height:2px;background:#E0887A}
+#cur{position:absolute;z-index:20;left:0;top:0;width:26px;height:26px;opacity:0;filter:drop-shadow(0 2px 6px rgba(0,0,0,.6))}
+#cur svg{width:26px;height:26px;fill:#fff;stroke:#111;stroke-width:1.5}
+.pn-go{transition:none}
+.pn-res .r{display:none}
+.pn-field .typed{font-size:13px;font-weight:600;color:var(--tx)}
+</style>
+</head>
+<body>
+<div id="cam">
+  <div id="grid"><div id="track"></div></div>
+  <div id="badge">SAMPLE GRID · FICTIONAL PROFILES</div>
+  <div id="veil"></div>
+  <div id="dock">
+    <div class="pn">
+      <div class="pn-h"><div class="pn-brand"><span class="grip"><i data-ico="grip-vertical"></i></span><i class="drop"></i><div><b>Profile Name Search</b><small>by Fluidz Labs</small></div></div>
+        <div class="pn-btns"><span class="b on"><i data-ico="lightbulb"></i></span><span class="b"><i data-ico="panel-right"></i></span><span class="b"><i data-ico="minus"></i></span><span class="b"><i data-ico="x"></i></span></div></div>
+      <div class="pn-step"><span class="n">1</span>Who are you looking for?</div>
+      <div class="pn-field" id="field"></div>
+      <div class="pn-tip"><i data-ico="sparkles"></i><span>Names, keywords or emojis: jay · dom top · 🚀<br>Comma = OR (jay, mike) · + = AND (dom + top)</span></div>
+      <div class="pn-row"><span>★&nbsp; Only my favorites</span><span class="tg on"><i></i></span></div>
+      <hr>
+      <div class="pn-step"><span class="n">2</span>Let it scroll for you</div>
+      <div class="pn-go" id="go"><i data-ico="play"></i><span id="golbl">Start auto-scroll</span></div>
+      <div class="pn-row" id="pauserow"><span>Pause at each new match</span><span class="tg on"><i></i></span></div>
+      <div class="pn-gauges">
+        <div class="gauge" id="g1" style="--c:#6BA888;--v:0"><div class="wrapn"><div class="ring"></div><b style="font-size:15px">0</b></div><small>profiles<br>scanned</small></div>
+        <div class="gauge" id="g2" style="--c:#E0887A;--v:0"><div class="wrapn"><div class="ring"></div><b>0</b></div><small>profiles<br>found</small></div>
+        <div class="gauge" id="g3" style="--c:#9080BA;--v:56"><div class="wrapn"><div class="ring"></div><b>5</b></div><small>already<br>favorites</small></div>
+      </div>
+      <hr>
+      <div class="pn-step"><span class="n">3</span>Click a match to find him on the grid</div>
+      <div class="pn-nav"><span class="pl"><i data-ico="chevron-left"></i>Previous</span><span class="c" id="cnt">0 / 0</span><span class="pl">Next<i data-ico="chevron-right"></i></span></div>
+      <div class="pn-res" id="res">
+        <div class="r" id="r1"><span class="av"></span><span class="tx"><b>Jay 🌴</b><small>On screen</small></span><span class="sh">Show on grid <i data-ico="locate-fixed"></i></span></div>
+        <div class="r" id="r2"><span class="av"></span><span class="tx"><b>Mike</b><small>On screen</small></span><span class="sh">Show on grid <i data-ico="locate-fixed"></i></span></div>
+        <div class="r" id="r3"><span class="av"></span><span class="tx"><b>jayden</b><small>Scrolled past — we’ll bring it back</small></span><span class="sh">Show on grid <i data-ico="locate-fixed"></i></span></div>
+      </div>
+      <div class="pn-drag"><i data-ico="grip-horizontal"></i>Drag to move</div>
+    </div>
+    <span class="co" id="co1">Several names</span><span class="co" id="co2">Pauses on each match</span><span class="co" id="co3">Counters</span><span class="co" id="co4">Click to open</span>
+  </div>
+  <div id="cur"><svg viewBox="0 0 24 24"><path d="M4 3l16 7-7 2-3 7z"/></svg></div>
+</div>
+<script src="/labs/demo/icons-lite.js"></script>
+<script>
+(function () {
+  var COLS = 8, ROWH = 216, ROWS = 16, VIEW = 810 / ROWH
+  var pool = ['Alex', 'Sam', 'Leo', 'Hugo', 'Ken', 'Yann', 'Raf', 'Max', 'Joe', 'Theo', 'Nico', 'Luca', 'Eli', 'Tom', 'Ben', 'Axel', 'Noah', 'Marc', 'Paul', 'Remy', 'Ivan', 'Omar', 'Dan', 'Finn', 'Kai', 'Lou', 'Sacha', 'Tim', 'Vic', 'Zed', 'Adam', 'Bo', 'Cyril', 'Dario', 'Enzo', 'Gus', 'Hal', 'Igor', 'Jules', 'Kyle', 'Liam', 'Milo', 'Ned', 'Otto', 'Pip', 'Quin', 'Rio', 'Seb', 'Ty', 'Uri', 'Val', 'Walt', 'Xav', 'Yves', 'Zack', 'dom top', 'bear 🐻', 'vers', '🔥', 'Pierre', 'Karl', 'Matt', 'Hans', 'Dylan', 'Arno', 'Bastien', 'Cole']
+  var fixed = { 1: 'Jay 🌴', 8: 'Mike', 10: 'jayden', 83: 'jay_bcn', 89: 'Mikey', 94: 'Mike R.', 98: 'Jaylen', 109: 'mike82', 112: 'DJ Jay' }
+  var matches = Object.keys(fixed).map(Number).sort(function (a, b) { return a - b })
+  var track = document.getElementById('track'), grid = document.getElementById('grid')
+  track.style.height = ROWS * ROWH + 'px'
+  var cards = []
+  for (var i = 0; i < COLS * ROWS; i++) {
+    var nm = fixed[i] || pool[(i * 7 + 3) % pool.length]
+    var c = document.createElement('div'); c.className = 'pf'; c.style.setProperty('--h', (i * 47) % 360)
+    c.innerHTML = '<div class="im"></div><span class="dist">' + (((i * 13) % 90) / 10 + 0.1).toFixed(1) + ' km</span><span class="nm"></span><div class="open"><b></b>Found on the grid — tap to open</div>'
+    c.querySelector('.nm').textContent = nm; c.querySelector('.open b').textContent = nm
+    track.appendChild(c); cards.push(c)
+  }
+  var $ = function (id) { return document.getElementById(id) }
+  var lerp = function (a, b, k) { return a + (b - a) * Math.max(0, Math.min(1, k)) }
+  var ease = function (k) { k = Math.max(0, Math.min(1, k)); return k * k * (3 - 2 * k) }
+  function frontier(t) { if (t < 2) return 0; if (t < 5.7) return 6 * (t - 2) / 3.7; if (t < 12.5) return 6; return 6 + 5.25 * Math.min(1, (t - 12.5) / 2.5) }
+  function offset(t) {
+    if (t < 5.7) return frontier(t)
+    if (t < 10.6) return 6
+    if (t < 11.4) return lerp(6, 0, ease((t - 10.6) / 0.8))
+    if (t < 12) return 0
+    if (t < 12.5) return lerp(0, 6, ease((t - 12) / 0.5))
+    return frontier(t)
+  }
+  var ZIN = 5.7, ZOUT = 9.7
+  function zoom(t) { if (t < ZIN || t > ZOUT + 0.4) return 0; if (t < ZIN + 0.4) return ease((t - ZIN) / 0.4); if (t > ZOUT) return 1 - ease((t - ZOUT) / 0.4); return 1 }
+  function setGauge(id, v, txt) { var g = $(id); g.style.setProperty('--v', v); g.querySelector('b').textContent = txt }
+  function fmt(n) { return n >= 1000 ? Math.floor(n / 1000) + ' ' + String(n % 1000).padStart(3, '0') : String(n) }
+  var curPos = function (x, y, o, press) { var c = $('cur'); c.style.opacity = o; c.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + (press ? 0.85 : 1) + ')' }
+  function rect(el) { var a = el.getBoundingClientRect(); var cam = $('cam').getBoundingClientRect(); var k = cam.width / 1440; return { x: (a.left - cam.left) / k, y: (a.top - cam.top) / k, w: a.width / k, h: a.height / k } }
+
+  window.setT = function (t) {
+    t = ((t % 15) + 15) % 15
+    var f = frontier(t), off = offset(t), started = t >= 2
+    track.style.transform = 'translateY(' + (-off * ROWH) + 'px)'
+    grid.classList.toggle('dim', started)
+    var found = 0
+    cards.forEach(function (c, i) {
+      var hit = started && fixed[i] != null && Math.floor(i / COLS) < f + VIEW
+      c.classList.toggle('hit', hit); if (hit) found++
+      c.classList.toggle('focus', i === 1 && t >= 11.4 && t < 12.2)
+    })
+    // typing
+    var field = $('field'), chips = ''
+    var typed = ''
+    if (t < 0.2) typed = ''
+    else if (t < 0.7) typed = 'jay'.slice(0, Math.ceil((t - 0.2) / 0.5 * 3))
+    else if (t < 1.0) typed = ''
+    else if (t < 1.5) typed = 'mike'.slice(0, Math.ceil((t - 1.0) / 0.5 * 4))
+    if (t >= 0.7) chips += '<span class="chip">jay <i class="ico"><svg><use href="/labs/icons.svg#x"/></svg></i></span>'
+    if (t >= 1.5) chips += '<span class="chip">mike <i class="ico"><svg><use href="/labs/icons.svg#x"/></svg></i></span>'
+    field.innerHTML = chips + (typed ? '<span class="typed">' + typed + '</span>' : '') + (t < 2 ? '<span class="caret"></span>' : '') + (t >= 1.5 || (!typed && t > 0.7) ? '<span class="ph">add a name…</span>' : '')
+    if (!chips && !typed) field.innerHTML = '<span class="caret"></span><span class="ph">add a name…</span>'
+    // scroll button
+    var running = (t >= 2 && t < 5.7) || t >= 12
+    var go = $('go'), lbl = $('golbl'), ic = go.querySelector('use')
+    if (t < 2) { go.className = 'pn-go'; lbl.textContent = 'Start auto-scroll'; ic.setAttribute('href', '/labs/icons.svg#play') }
+    else if (running) { go.className = 'pn-go stop'; lbl.textContent = 'Stop auto-scroll'; ic.setAttribute('href', '/labs/icons.svg#pause') }
+    else { go.className = 'pn-go'; lbl.textContent = 'Resume'; ic.setAttribute('href', '/labs/icons.svg#play') }
+    var scanned = Math.round(f * 106.667)
+    setGauge('g1', started ? Math.min(100, scanned / 12) : 0, fmt(scanned))
+    setGauge('g2', found * 11, String(found))
+    $('cnt').textContent = (found ? (t >= 10.6 && t < 12.2 ? 1 : 1) : 0) + ' / ' + found
+    ;['r1', 'r2', 'r3'].forEach(function (id, k) {
+      var el = $(id); el.style.display = found > k ? 'flex' : 'none'
+      el.classList.toggle('on', k === 0 && t >= 10.6 && t < 12.2)
+      el.querySelector('small').textContent = k === 2 && !(t < 5.7) ? 'Scrolled past — we’ll bring it back' : 'On screen'
+    })
+    $('r3').querySelector('small').textContent = (off > 1.6) ? 'Scrolled past — we’ll bring it back' : 'On screen'
+    $('r2').querySelector('small').textContent = (off > 1.6) ? 'Scrolled past — we’ll bring it back' : 'On screen'
+    $('r1').querySelector('small').textContent = (off > 1.0) ? 'Scrolled past — we’ll bring it back' : 'On screen'
+    // zoom + callouts
+    var z = zoom(t), dock = $('dock')
+    dock.style.transform = 'scale(' + (1 + 0.07 * z) + ')'
+    $('veil').style.opacity = z
+    var cos = [['co1', 'field', 6.0], ['co2', 'pauserow', 6.9], ['co3', 'g2', 7.8], ['co4', 'r1', 8.7]]
+    cos.forEach(function (c) {
+      var el = $(c[0]), tgt = $(c[1]), p = (t - c[2]) / 0.35, vis = t >= c[2] && t < ZOUT + 0.2 ? ease(p) : 0
+      var dr = dock.getBoundingClientRect(), tr = tgt.getBoundingClientRect(), k = $('cam').getBoundingClientRect().width / 1440
+      var sc = 1 + 0.07 * z
+      el.style.top = ((tr.top - dr.top) / k / sc + (tr.height / k / sc) / 2 - 14) + 'px'
+      el.style.opacity = vis; el.style.transform = 'translateX(' + (12 * (1 - vis)) + 'px)'
+    })
+    // cursor: appears 9.8, moves to Jay's "Show on grid", clicks 10.6, then to the card
+    var cur = 0, cx = 0, cy = 0, press = false
+    if (t >= 9.6 && t < 12.2) {
+      var sh = rect($('r1').querySelector('.sh')), tx = sh.x + sh.w * 0.6, ty = sh.y + sh.h * 0.5
+      var sx = 900, sy = 520
+      if (t < 10.5) { var k2 = ease((t - 9.6) / 0.9); cx = lerp(sx, tx, k2); cy = lerp(sy, ty, k2) }
+      else if (t < 11.4) { cx = tx; cy = ty; var k3 = ease((t - 11.0) / 0.4); if (t >= 11.0) { cx = lerp(tx, 330, k3); cy = lerp(ty, 150, k3) } }
+      else { cx = 330; cy = 150 }
+      press = t >= 10.55 && t < 10.7
+      cur = 1
+    }
+    curPos(cx, cy, cur, press)
+  }
+
+  function fit() { var k = Math.min(innerWidth / 1440, innerHeight / 810), cam = $('cam'); cam.style.transform = 'scale(' + k + ')'; cam.style.left = (innerWidth - 1440 * k) / 2 + 'px'; cam.style.top = (innerHeight - 810 * k) / 2 + 'px' }
+  addEventListener('resize', fit); fit()
+  var q = new URLSearchParams(location.search)
+  if (q.has('t')) setT(+q.get('t')); else { setT(0); if (!q.has('static')) { var t0 = performance.now(); (function tick(n) { setT((n - t0) / 1000); requestAnimationFrame(tick) })(t0) } }
+})()
+</script>
+</body>
+</html>

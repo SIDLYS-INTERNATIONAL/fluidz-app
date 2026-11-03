@@ -9,3 +9,5 @@ Disallow: /session/create
 Disallow: /ghost/
 
 Sitemap: https://fluidz-app.netlify.app/sitemap.xml
+
+Sitemap: https://fluidz.app/sitemap-labs.xml
