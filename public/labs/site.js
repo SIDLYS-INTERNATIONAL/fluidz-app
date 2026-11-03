@@ -56,7 +56,9 @@
 
   /* ---------- i18n ---------- */
   var DICT = window.LABS_I18N = window.LABS_I18N || {}
+  var XT = { 'nav.guides': { fr: 'Guides', es: 'Guías', pt: 'Guias', it: 'Guide', de: 'Ratgeber' } }
   function t(key, fallback) {
+    if (XT[key] && XT[key][LANG]) return XT[key][LANG]
     var d = DICT[LANG]
     if (d && d[key] != null) return d[key]
     return EN[key] != null ? EN[key] : (fallback != null ? fallback : key)
@@ -186,7 +188,7 @@
   function toolsMenu(cls) {
     return '<a href="/profile-name-search" class="' + cls + '" data-p="pns"><span data-i18n="nav.pns">Profile Name Search</span><em class="pill live" data-i18n="nav.t.live">Live</em></a>' +
       '<a href="/album-creator" class="' + cls + '" data-p="album"><span data-i18n="nav.album">Adult Album Creator</span><em class="pill new" data-i18n="nav.t.soon">Soon</em></a>' +
-      '<a href="/my-labs#safety" class="' + cls + '" data-p="safety"><span data-i18n="nav.safety">Hookup Safety Check</span><em class="pill beta" data-i18n="nav.t.beta">Beta</em></a>'
+      '<a href="/hookup-safety-check" class="' + cls + '" data-p="safety"><span data-i18n="nav.safety">Hookup Safety Check</span><em class="pill beta" data-i18n="nav.t.beta">Beta</em></a>'
   }
   function langList() { return LANGS.map(function (l) { return '<li data-l="' + l[0] + '" role="option"><span>' + l[1] + '</span><span class="code">' + l[0].toUpperCase() + '</span></li>' }).join('') }
   function buildNav() {
@@ -195,8 +197,8 @@
       '<nav class="links" aria-label="Main">' +
       '<a href="/" data-p="home" data-i18n="nav.labs">Labs</a>' +
       '<div class="dd" id="dd-tools"><button type="button" aria-haspopup="true" aria-expanded="false" data-p="tools"><span data-i18n="nav.tools">Tools</span>' + ico('chevron-down') + '</button><div class="dd-menu">' + toolsMenu('dd-item') + '</div></div>' +
-      '<a href="/#privacy" data-i18n="nav.privacy">Privacy</a>' +
-      '<a href="/#fluidz" data-i18n="nav.app">Fluidz app</a>' +
+      '<a href="/guides" data-p="guides" data-i18n="nav.guides">Guides</a>' +
+      '<a href="/about" data-p="about" data-i18n="nav.app">Fluidz app</a>' +
       '<a href="/support" class="heart" data-p="support">' + ico('heart') + '<span data-i18n="nav.support">Support us</span></a>' +
       '</nav>' +
       '<div class="nav-r">' +
@@ -207,7 +209,7 @@
       '<div class="drawer" id="drawer" hidden><div class="wrap">' +
       '<a href="/" data-p="home" data-i18n="nav.labs">Labs</a>' +
       '<p class="dr-h" data-i18n="nav.tools">Tools</p>' + toolsMenu('dr-item') +
-      '<a href="/#privacy" data-i18n="nav.privacy">Privacy</a><a href="/#fluidz" data-i18n="nav.app">Fluidz app</a>' +
+      '<a href="/guides" data-p="guides" data-i18n="nav.guides">Guides</a><a href="/about" data-p="about" data-i18n="nav.app">Fluidz app</a>' +
       '<a href="/support" class="heart" data-p="support">' + ico('heart') + '<span data-i18n="nav.support">Support us</span></a>' +
       '<div id="dr-acct"></div>' +
       '</div></div>'
@@ -215,7 +217,7 @@
   }
   function buildFooter() {
     var h = '<footer><div class="wrap"><div><div class="logo" style="font-size:18px;margin-bottom:8px"><i></i>fluidz <small>labs</small></div><p data-i18n="foot.p">' + EN['foot.p'] + '</p></div>' +
-      '<nav aria-label="Footer"><a href="/" data-i18n="nav.labs">Labs</a><a href="/profile-name-search">Profile Name Search</a><a href="/album-creator" data-i18n="nav.album">Adult Album Creator</a><a href="/support" data-i18n="nav.support">Support us</a><a href="/#privacy" data-i18n="nav.privacy">Privacy</a><a href="/my-labs" data-i18n="nav.mine">My tools</a></nav></div></footer>'
+      '<nav aria-label="Footer"><a href="/" data-i18n="nav.labs">Labs</a><a href="/profile-name-search">Profile Name Search</a><a href="/album-creator" data-i18n="nav.album">Adult Album Creator</a><a href="/hookup-safety-check" data-i18n="nav.safety">Hookup Safety Check</a><a href="/guides" data-i18n="nav.guides">Guides</a><a href="/about" data-i18n="nav.app">Fluidz app</a><a href="/support" data-i18n="nav.support">Support us</a><a href="/privacy" data-i18n="nav.privacy">Privacy</a><a href="/my-labs" data-i18n="nav.mine">My tools</a></nav></div></footer>'
     var slot = $('#site-foot'); if (slot) slot.outerHTML = h; else body.insertAdjacentHTML('beforeend', h)
   }
   function buildFz() {
@@ -269,7 +271,7 @@
     markActive(); renderFz()
   }
   function markActive() {
-    $$('.links a[data-p],.drawer a[data-p]').forEach(function (a) { a.classList.toggle('on', a.getAttribute('data-p') === PAGE) })
+    $$('.links a[data-p],.drawer a[data-p]').forEach(function (a) { a.classList.toggle('on', a.getAttribute('data-p') === PAGE || (a.getAttribute('data-p') === 'guides' && PAGE.indexOf('guide') === 0)) })
     var dd = $('#dd-tools > button'); if (dd) dd.classList.toggle('on', ['pns', 'album', 'safety'].indexOf(PAGE) >= 0)
     $$('.dd-item[data-p],.dr-item[data-p]').forEach(function (a) { a.classList.toggle('on', a.getAttribute('data-p') === PAGE) })
   }
