@@ -1,2 +1,5 @@
-"p2":"Envie d’essayer ? <a href=\"/album-creator/create\">Ouvre l’Album Creator</a> ou lis"
-"x":"aujourd’hui : ce"
+1:<a
+2:</a>
+3:x <a href
+4:<
+5:"<a
