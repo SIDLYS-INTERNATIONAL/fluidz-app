@@ -20,6 +20,7 @@ Works in Chrome 116+ and browsers built on it (Brave, Edge, Arc). Not Safari or 
 - **Scan speed**: *Gentle* (default, recommended) scrolls slower with a little random jitter, waits for Grindr to finish loading and takes a short break (about 8-10 s) every ~120-150 new profiles. *Fast* is the old v2.0 pace and may disconnect the Grindr chat.
 - **Turn off for now**: the × in the panel (or toolbar icon → *Turn off for now*) stops the scan and all page watching, so Grindr Web runs as if the extension were not there. Toolbar icon → *Show the floating panel* turns it back on.
 - **Show on grid**: scrolls to the profile and flashes it. If Grindr already unloaded the card, the panel scrolls back to where he was.
+- **All / Favorites / Not favorites**: three tabs above the results. *Not favorites* hides the profiles you already favorited, everywhere (results list, grid highlight, auto-scroll pauses, Previous/Next), so you can focus on new guys. *Favorites* works without a search too: it lists every favorite seen on the grid. The extension remembers your tab.
 - **Saved searches**: keep up to 3.
 - **Side panel**: toolbar icon → *Open in Chrome's side panel*. It sits next to the page and never covers the grid.
 - **Floating panel**: drag it by either handle, shrink it to a bubble, or close it (toolbar icon → *Show the floating panel*). Lost it? Toolbar icon → *Reset panel position*.
@@ -44,6 +45,9 @@ Some people report that the chat on Grindr Web disconnected after a long scan. W
 - Keep *Scan speed* on **Gentle** (default). Avoid **Fast** for long scans.
 
 ## Changelog
+
+### 2.2.0
+- New tabs above the results: **All**, **Favorites** and **Not favorites**, each with its count. The tab filters everything: results, grid highlight, auto-scroll pauses and Previous/Next. *Not favorites* lets you skip the profiles you already favorited. Replaces the *Only my favorites* switch (your old setting carries over). All 6 languages.
 
 ### 2.1.1
 - Fixed: `+` (AND) no longer turns into OR when the field loses focus or you press Enter right after typing it. `dom +` now waits for its second word instead of becoming a separate chip, and a chip followed by `+ top` becomes `dom + top`.
