@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Fluidz Labs — free tools for a better time on Grindr & co.</title>
-<meta name="description" content="Free experiments by Fluidz Labs: find a Grindr Web profile by name, turn your private album into a story, check a hookup's number with your friends. One free account. Nothing sensitive stored.">
+<meta name="description" content="Three free tools for Grindr &amp; co.: find a Grindr Web profile by name, make your private album, check a hookup's number with your friends. No ads. No account for the album or the extension.">
 <link rel="canonical" href="https://fluidz.app/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#05040A">
@@ -12,11 +12,11 @@
 <meta property="og:site_name" content="Fluidz Labs">
 <meta property="og:url" content="https://fluidz.app/">
 <meta property="og:title" content="Fluidz Labs — free tools for a better time on Grindr & co.">
-<meta property="og:description" content="Find a profile by name. Turn your private album into a story. Check a hookup's number with your friends before you go. Free, one account, nothing sensitive stored.">
+<meta property="og:description" content="Find a profile. Make your album. Check a number. Three free tools for Grindr &amp; co. — no ads, and your album photos never leave your phone.">
 <meta property="og:image" content="https://fluidz.app/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Fluidz Labs — free tools for a better time on Grindr & co.">
-<meta name="twitter:description" content="Find a profile by name. Turn your private album into a story. Check a hookup's number with your friends before you go.">
+<meta name="twitter:description" content="Find a profile. Make your album. Check a number. Three free tools for Grindr &amp; co.">
 <meta name="twitter:image" content="https://fluidz.app/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -26,52 +26,36 @@
 .orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(70px);z-index:0}
 .o1{width:560px;height:560px;background:rgba(224,136,122,0.12);top:-180px;right:-120px;animation:od 11s ease-in-out infinite}
 .o2{width:440px;height:440px;background:rgba(144,128,186,0.08);bottom:-120px;left:-160px;animation:od 14s ease-in-out infinite reverse}
-.hero .wrap{display:flex;align-items:center;gap:56px;position:relative;z-index:2}
-.hero-copy{flex:1 1 480px;min-width:0}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);grid-template-areas:"copy tiles" "foot tiles";column-gap:56px;row-gap:0;align-items:center;align-content:center;position:relative;z-index:2}
+.hero-copy{grid-area:copy;min-width:0;align-self:end}
+.hero-foot{grid-area:foot;min-width:0;align-self:start}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--fm);font-size:11px;font-weight:600;letter-spacing:1.2px;color:var(--p);background:var(--p2);border:1px solid var(--pbd);border-radius:999px;padding:6px 12px;margin-bottom:26px;animation:fu .6s ease both}
 .eyebrow i{width:6px;height:6px;border-radius:50%;background:var(--p)}
-.hero h1{font-family:var(--fh);font-size:clamp(42px,6.2vw,72px);font-weight:800;letter-spacing:-0.05em;line-height:0.98;margin-bottom:24px;animation:fu .6s .08s ease both}
-.hero h1 em{font-style:normal;color:var(--p)}
-.hero-p{font-size:clamp(15px,1.6vw,17.5px);color:var(--tx2);max-width:520px;line-height:1.65;margin-bottom:32px;animation:fu .6s .16s ease both}
-.hero-cta{display:flex;gap:12px;flex-wrap:wrap;animation:fu .6s .24s ease both}
-.gages{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:30px;font-size:14px;font-weight:500;color:var(--tx2);animation:fu .6s .32s ease both}
+.hero h1{font-family:var(--fh);font-size:clamp(38px,5.4vw,66px);font-weight:800;letter-spacing:-0.045em;line-height:1.02;margin-bottom:22px;animation:fu .6s .08s ease both}
+.hero h1 span{display:block}
+.hero h1 span:nth-child(3){color:var(--p)}
+.hero-p{font-size:clamp(15px,1.6vw,18px);color:var(--tx2);max-width:500px;line-height:1.6;margin-bottom:0;animation:fu .6s .16s ease both}
+.gages{display:flex;flex-direction:column;gap:10px;margin-top:30px;font-size:14px;font-weight:500;color:var(--tx2);animation:fu .6s .32s ease both}
 .gages span{display:inline-flex;align-items:center;gap:8px}
-.gages svg{flex-shrink:0}
-.hero-vis{flex:1 1 440px;min-width:0;position:relative;height:520px;animation:fu .8s .2s ease both}
-.phone{position:absolute;left:4%;top:40px;width:240px;height:460px;border-radius:38px;background:#0B0710;border:1px solid var(--rule2);box-shadow:0 40px 90px -20px rgba(0,0,0,.7),0 0 0 6px #110D1A;transform:rotate(-6deg);overflow:hidden;z-index:2}
-.phone .cov{position:absolute;inset:0;background:radial-gradient(120% 80% at 50% 110%,rgba(224,136,122,0.35),transparent 60%),linear-gradient(180deg,#140B10,#0B0710);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:28px 22px}
-.phone .badge{position:absolute;top:22px;left:50%;transform:translateX(-50%);font-family:var(--fm);font-size:10px;letter-spacing:1px;color:var(--p);background:var(--p2);border:1px solid var(--pbd);border-radius:999px;padding:5px 10px;white-space:nowrap}
-.phone .t1{font-family:var(--fh);font-weight:800;font-size:44px;letter-spacing:-0.04em;line-height:1}
-.phone .t2{font-family:var(--fh);font-weight:800;font-size:44px;letter-spacing:-0.04em;line-height:1;color:var(--p);font-style:italic}
-.phone .msg{margin-top:18px;font-size:12.5px;color:var(--tx2);line-height:1.5}
-.phone .stamp{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);font-family:var(--fm);font-size:9px;letter-spacing:1px;color:var(--tx3);white-space:nowrap}
-.phone .stamp b{color:var(--p);font-weight:600}
-.browser{position:absolute;right:0;top:0;width:min(420px,100%);border-radius:16px;overflow:hidden;border:1px solid var(--rule2);background:var(--bg1);box-shadow:0 30px 80px -20px rgba(0,0,0,0.65);transform:rotate(3deg);z-index:1}
-.bbar{display:flex;align-items:center;gap:6px;padding:10px 14px;background:var(--bg2);border-bottom:1px solid var(--rule)}
-.bbar i{width:9px;height:9px;border-radius:50%;display:block}
-.bbar i:nth-child(1){background:#F87171}.bbar i:nth-child(2){background:#FBBF24}.bbar i:nth-child(3){background:#6BA888}
-.burl{margin-left:10px;font-size:11px;color:var(--tx3);background:var(--bg3);padding:3px 10px;border-radius:6px}
-.bgrid{position:relative;padding:12px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;background:#0c0c10;height:280px;overflow:hidden}
-.tile{border-radius:10px;background:rgba(255,255,255,0.045);position:relative;min-height:80px;opacity:.45}
-.tile.hit{opacity:1;background:rgba(224,136,122,0.16);box-shadow:inset 0 0 0 2px var(--p)}
-.tile span{position:absolute;left:6px;bottom:6px;font-size:9px;font-weight:700;color:var(--tx);padding:2px 6px;border-radius:5px;background:rgba(0,0,0,.45)}
-.tile.hit span{background:var(--p);color:#14090A}
-.panel{position:absolute;right:12px;top:12px;width:170px;background:rgba(13,12,22,0.96);border:1px solid var(--pbd);border-radius:14px;padding:12px;font-size:10.5px;box-shadow:0 20px 40px rgba(0,0,0,.5)}
-.panel h5{font-family:var(--fh);font-size:11.5px;font-weight:800;margin-bottom:8px;display:flex;align-items:center;gap:6px}
-.panel .q{background:var(--bg3);border:1px solid var(--pbd);border-radius:8px;padding:6px 8px;font-family:var(--fm);font-size:10px;margin-bottom:8px}
-.panel .q b{color:var(--p);font-weight:600}
-.rings{display:flex;gap:6px;margin-bottom:8px}
-.ring{flex:1;text-align:center;font-size:9px;color:var(--tx2)}
-.ring b{display:flex;width:30px;height:30px;margin:0 auto 3px;border-radius:50%;border:2.5px solid var(--bg3);border-top-color:var(--p);align-items:center;justify-content:center;font-size:9px;color:var(--tx);font-weight:800}
-.ring:nth-child(2) b{border-top-color:var(--sage)}.ring:nth-child(3) b{border-top-color:var(--lav)}
-.res{display:flex;justify-content:space-between;align-items:center;padding:6px 7px;border-radius:7px;background:rgba(255,255,255,0.04);margin-top:4px}
-.res em{font-style:normal;color:var(--p);font-size:9.5px;font-weight:700}
-.hero-vis{height:520px}
-.phone .msg{display:block}
-.o1{top:-180px;right:-120px}
+.whatis{display:inline-flex;align-items:center;gap:6px;margin-top:24px;font-size:14px;font-weight:600;color:var(--tx2);border-bottom:1px solid var(--rule2);padding-bottom:2px;transition:color .2s,border-color .2s}
+.whatis:hover{color:var(--tx);border-color:var(--pbd)}
+.whatis:focus-visible{outline:2px solid var(--p);outline-offset:4px;border-radius:4px}
+.hero-tiles{grid-area:tiles;min-width:0;display:flex;flex-direction:column;gap:14px;animation:fu .7s .2s ease both}
+.ht{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:4px 16px;align-items:center;text-align:left;padding:20px 20px 20px 18px;border-radius:20px;background:var(--bg1);border:1px solid var(--rule2);transition:border-color .25s,transform .25s,background .25s}
+.ht:hover{border-color:var(--pbd);background:var(--bg2);transform:translateY(-2px)}
+.ht:focus-visible{outline:2px solid var(--p);outline-offset:3px;border-color:var(--pbd)}
+.ht .ti{grid-row:1 / span 3;align-self:start;width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.ht .nm{font-family:var(--fh);font-size:19px;font-weight:700;letter-spacing:-0.02em;line-height:1.2;min-width:0}
+.ht .go{grid-column:3;grid-row:1;justify-self:end;color:var(--p);font-size:18px;transition:transform .25s}
+.ht .jb{grid-column:2 / span 2;font-size:14px;color:var(--tx2);line-height:1.5;text-wrap:balance}
+.ht .meta{grid-column:2 / span 2;display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-top:6px}
+.ht .tg{font-family:var(--fm);font-size:10.5px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--tx3)}
+.ht:hover .go{transform:translateX(3px)}
+.ht.c1 .ti{background:var(--p2);color:var(--p)}.ht.c2 .ti{background:var(--lavbg);color:var(--lav)}.ht.c3 .ti{background:var(--sagebg);color:var(--sage)}
 .tools{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .tool{background:var(--bg1);border:1px solid var(--rule);border-radius:24px;padding:28px 26px 26px;display:flex;flex-direction:column;gap:14px;transition:border-color .3s,transform .3s;position:relative;overflow:hidden}
 .tool:hover{border-color:var(--pbd);transform:translateY(-3px)}
+.tool:focus-visible{outline:2px solid var(--p);outline-offset:3px}
 .tool .ti{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px}
 .tool .tag{font-family:var(--fm);font-size:10.5px;letter-spacing:1px;font-weight:600;color:var(--tx3)}
 .tool h3{font-family:var(--fh);font-size:22px;font-weight:700;letter-spacing:-0.02em}
@@ -80,12 +64,27 @@
 .tool.c1 .ti{background:var(--p2);color:var(--p)}.tool.c2 .ti{background:var(--lavbg);color:var(--lav)}.tool.c3 .ti{background:var(--sagebg);color:var(--sage)}
 .tool .pill{position:absolute;top:22px;right:22px}
 .pillar .ico{width:38px;height:38px;border-radius:12px;background:var(--sagebg);color:var(--sage);font-size:18px;margin-bottom:14px}
-@media(max-width:1000px){.tools{grid-template-columns:1fr 1fr}.hero-vis{height:480px;max-width:560px;margin:0 auto}}
+@media(max-width:1000px){
+  .tools{grid-template-columns:1fr 1fr}
+  .hero .wrap{display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"copy" "tiles" "foot";row-gap:0;text-align:center;max-width:640px}
+  .hero-copy,.hero-foot{align-self:auto}
+  .hero-p{margin-left:auto;margin-right:auto}
+  .hero-tiles{margin-top:32px}
+  .hero-foot{display:flex;flex-direction:column;align-items:center}
+  .gages{align-items:flex-start;text-align:left;margin-top:28px}
+}
 @media(max-width:720px){
   .tools{grid-template-columns:1fr}
-  .hero-vis{height:auto;display:flex;flex-direction:column;align-items:center;gap:22px}
-  .phone,.browser{position:relative;left:auto;right:auto;top:auto;transform:none}
-  .phone{width:220px;height:420px}.browser{width:100%}
+  .hero{padding:40px 0 56px}
+  .eyebrow{margin-bottom:20px}
+  .hero h1{font-size:clamp(30px,9vw,44px);margin-bottom:16px}
+  .hero-tiles{margin-top:26px;gap:10px}
+  .ht{padding:15px 14px 15px 14px;gap:2px 12px;border-radius:18px}
+  .ht .ti{width:42px;height:42px;font-size:19px;border-radius:12px}
+  .ht .nm{font-size:17px}
+  .ht .jb{font-size:13.5px;line-height:1.45}
+  .ht .tg{font-size:10px}
+  .gages{gap:8px;font-size:13.5px}
 }
 </style>
 </head>
@@ -97,44 +96,39 @@
   <div class="wrap">
     <div class="hero-copy">
       <span class="eyebrow fu"><i></i><span data-i18n="hero.eyebrow">FLUIDZ LABS · 100% FREE</span></span>
-      <h1 class="fu2" data-i18n-html="hero.h1">Free tools for a better time on <em>Grindr &amp; co.</em></h1>
-      <p class="hero-p fu3" data-i18n="hero.p">Find a profile by name. Turn your private album into a story. Check a hookup's number with your friends before you go. Free experiments by Fluidz Labs — the team building the app for what comes after Grindr.</p>
-      <div class="hero-cta fu4">
-        <a href="#tools" class="btn btn-p" data-i18n="hero.cta1">Explore the tools</a>
-        <a href="#fluidz" class="btn btn-g" data-i18n="hero.cta2">What is Fluidz?</a>
-      </div>
+      <h1 class="fu2"><span data-i18n="hero.h1a">Find a profile.</span> <span data-i18n="hero.h1b">Make your album.</span> <span data-i18n="hero.h1c">Check a number.</span></h1>
+      <p class="hero-p fu3" data-i18n="hero.p">Three free tools for Grindr &amp; co., by the team building the app for what comes after.</p>
+    </div>
+    <div class="hero-tiles">
+      <a href="/profile-name-search" class="ht c1">
+        <span class="ti"><i data-ico="search"></i></span>
+        <span class="nm">Profile Name Search</span>
+        <span class="go" aria-hidden="true"><i data-ico="arrow-right"></i></span>
+        <span class="jb" data-i18n="hero.t1.p">Search the Grindr Web grid by name, keyword or emoji</span>
+        <span class="meta"><em class="pill live" data-i18n="nav.t.live">Live</em><span class="tg" data-i18n="hero.t1.tag">Computer · Chrome</span></span>
+      </a>
+      <a href="/album-creator" class="ht c2">
+        <span class="ti"><i data-ico="images"></i></span>
+        <span class="nm">Adult Album Creator</span>
+        <span class="go" aria-hidden="true"><i data-ico="arrow-right"></i></span>
+        <span class="jb" data-i18n="hero.t2.p">Captions, an 18+ page and your rules on your photos</span>
+        <span class="meta"><em class="pill live" data-i18n="nav.t.live">Live</em><span class="tg" data-i18n="hero.t2.tag">Phone · no account</span></span>
+      </a>
+      <a href="/hookup-safety-check" class="ht c3">
+        <span class="ti"><i data-ico="shield-check"></i></span>
+        <span class="nm">Hookup Safety Check</span>
+        <span class="go" aria-hidden="true"><i data-ico="arrow-right"></i></span>
+        <span class="jb" data-i18n="hero.t3.p">Ask your circle about a number before you meet</span>
+        <span class="meta"><em class="pill beta" data-i18n="nav.t.beta">Beta</em><span class="tg" data-i18n="hero.t3.tag">Phone · invite only</span></span>
+      </a>
+    </div>
+    <div class="hero-foot">
       <div class="gages fu4">
-        <span><i data-ico="check"></i><span data-i18n="hero.g1">One free account for every tool</span></span>
-        <span><i data-ico="check"></i><span data-i18n="hero.g2">No data collected</span></span>
-        <span><i data-ico="check"></i><span data-i18n="hero.g3">Your photos never leave your phone</span></span>
+        <span><i data-ico="check"></i><span data-i18n="hero.g1">The album needs no account</span></span>
+        <span><i data-ico="check"></i><span data-i18n="hero.g2">Your album photos never leave your phone</span></span>
+        <span><i data-ico="check"></i><span data-i18n="hero.g3">Free, no ads</span></span>
       </div>
-    </div>
-    <div class="hero-vis fu2" aria-hidden="true">
-      <div class="browser">
-        <div class="bbar"><i></i><i></i><i></i><div class="burl">web.grindr.com</div></div>
-        <div class="bgrid">
-          <div class="tile"><span>Alex</span></div><div class="tile hit"><span>DOM TOP 🚀</span></div><div class="tile"><span>Sam</span></div><div class="tile"><span>Leo</span></div>
-          <div class="tile"><span>Mike</span></div><div class="tile"><span>Hugo</span></div><div class="tile hit"><span>top dom</span></div><div class="tile"><span>Ken</span></div>
-          <div class="tile"><span>Yann</span></div><div class="tile hit"><span>🚀 vers</span></div><div class="tile"><span>Jay</span></div><div class="tile"><span>Max</span></div>
-          <div class="panel">
-            <h5><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--p)" stroke-width="2.6" stroke-linecap="round"><circle cx="11" cy="11" r="7.5"/><path d="M21 21l-4.6-4.6"/></svg>Profile Name Search</h5>
-            <div class="q"><b>dom</b> + <b>top</b>, 🚀</div>
-            <div class="rings"><div class="ring"><b>1.2k</b>seen</div><div class="ring"><b>3</b>matches</div><div class="ring"><b>2</b>new</div></div>
-            <div class="res">DOM TOP 🚀 <em>Show ⌖</em></div>
-            <div class="res">top dom <em>Show ⌖</em></div>
-          </div>
-        </div>
-      </div>
-      <div class="phone">
-        <div class="cov">
-          <span class="badge">● 18+ · NSFW</span>
-          <div class="t1" data-i18n="phone.t1">Nudes</div>
-          <div class="t2" data-i18n="phone.t2">ahead.</div>
-          <p class="msg" data-i18n="phone.msg">Keep swiping only if you want to see.</p>
-          <span class="stamp"><b>FLUIDZ</b> · 2026-10-31 23:42</span>
-        </div>
-      </div>
-    </div>
+      <a href="/about" class="whatis fu4"><span data-i18n="hero.cta2">What is Fluidz?</span> <i data-ico="arrow-right"></i></a>
     </div>
   </div>
 </section>
@@ -143,7 +137,7 @@
   <div class="wrap">
     <span class="eyebrow rv"><i></i><span data-i18n="tools.eyebrow">The tools</span></span>
     <h2 class="h2 rv" data-i18n="tools.title">Three tools today. Fluidz comes next.</h2>
-    <p class="lead rv" style="margin-bottom:44px" data-i18n="tools.sub">Each one fixes a real annoyance of hookup apps. All free, one Fluidz account, nothing sensitive stored on our side.</p>
+    <p class="lead rv" style="margin-bottom:44px" data-i18n="tools.sub">Each one fixes a real annoyance of hookup apps. All free. The album needs no account, the extension only asks for your email, and nothing sensitive is stored on our side.</p>
     <div class="tools">
       <a href="/profile-name-search" class="tool c1 rv">
         <span class="pill live" data-i18n="tools.t1.pill">LIVE</span>
@@ -166,7 +160,7 @@
         <div class="ti"><i data-ico="shield-check"></i></div>
         <span class="tag" data-i18n="tools.t3.tag">MOBILE · PRIVATE BETA</span>
         <h3>Hookup Safety Check</h3>
-        <p data-i18n="tools.t3.p">Got a number from a new match? See if a friend in your circle already knows him — or vouches for him. Plus a meet-up check-in and a catfish photo check.</p>
+        <p data-i18n="tools.t3.p">Got a number from a new match? See if a friend in your circle already knows him — or vouches for him. Coming later: a check-in before the date and a catfish photo check.</p>
         <span class="act"><span data-i18n="tools.t3.cta">Ask for an invite</span> →</span>
       </a>
     </div>
@@ -179,9 +173,9 @@
     <h2 class="h2 rv" style="margin-bottom:44px" data-i18n="priv.title">We don't want your data. Really.</h2>
     <div class="grid g4">
       <div class="pillar rv"><i data-ico="smartphone"></i><h3 data-i18n="priv.p1.t">Your photos stay on your phone</h3><p data-i18n="priv.p1.p">The Album Creator builds every image inside your browser. Nothing is uploaded, so there is nothing to delete.</p></div>
-      <div class="pillar rv"><i data-ico="eye-off"></i><h3 data-i18n="priv.p2.t">No tracking, no password</h3><p data-i18n="priv.p2.p">No ad pixels, no password to leak. One email opens your Fluidz ID with a magic link — and only if you want it.</p></div>
+      <div class="pillar rv"><i data-ico="eye-off"></i><h3 data-i18n="priv.p2.t">No tracking, no password</h3><p data-i18n="priv.p2.p">No ad pixels, no analytics, no password to leak. Your Fluidz ID opens with a one-time link sent by email.</p></div>
       <div class="pillar rv"><i data-ico="file-code"></i><h3 data-i18n="priv.p3.t">Open, readable code</h3><p data-i18n="priv.p3.p">The extension is plain JavaScript with no network calls — anyone can check.</p></div>
-      <div class="pillar rv"><i data-ico="timer"></i><h3 data-i18n="priv.p4.t">Timestamped, not tracked</h3><p data-i18n="priv.p4.p">The small FLUIDZ stamp shows when a photo was taken — proof it's recent, nothing more.</p></div>
+      <div class="pillar rv"><i data-ico="timer"></i><h3 data-i18n="priv.p4.t">A date stamp, not tracking</h3><p data-i18n="priv.p4.p">The Album Creator can add a small FLUIDZ date stamp to show a photo is recent. You can turn it off.</p></div>
     </div>
   </div>
 </section>
