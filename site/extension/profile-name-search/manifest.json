@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Profile Name Search",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "Find any Grindr Web profile by name, keyword or emoji. It scrolls the grid for you and pauses on every match. Free, by Fluidz Labs.",
   "homepage_url": "https://fluidz.app/profile-name-search",
   "minimum_chrome_version": "116",

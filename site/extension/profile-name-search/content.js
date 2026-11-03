@@ -18,7 +18,7 @@
   };
 
   var S = {
-    groups: [], draft: '', favOnly: false, pauseEach: true, saved: [], lang: null,
+    groups: [], draft: '', favFilter: 'all', counts: { all: 0, fav: 0, non: 0 }, pauseEach: true, saved: [], lang: null,
     welcomeDone: false, welcomeStep: 1, showWelcome: false, collapsed: false, closed: false,
     speed: 'gentle', chatNote: false, chatNoteDismissed: false, breaking: false, breakBase: 0, breakAt: 135, statusVars: null, countTimer: null, lastFavAt: 0,
     running: false, hasRun: false, scrollContainer: null, scrollTimer: null, statusKey: '', note: null, end: null,
@@ -88,14 +88,17 @@
   }
 
   /* ---------- registry + matching ---------- */
+  // Tabs All / Favorites / Not favorites: the tab filters everything (results list, grid highlight, pauses, Previous/Next).
+  // With no search typed, only the Favorites tab lists something (all favorites seen on the grid).
   function computeMatches() {
-    var groups = effectiveGroups(), hasName = groups.length > 0;
-    if (!hasName && !S.favOnly) return [];
-    return Array.from(S.registry.values()).filter(function (e) {
-      if (hasName && !matchEntry(e, groups)) return false;
-      if (S.favOnly && e.favorite !== true) return false;
-      return true;
-    });
+    var groups = effectiveGroups(), hasName = groups.length > 0, f = S.favFilter;
+    var all = Array.from(S.registry.values());
+    var base = hasName ? all.filter(function (e) { return matchEntry(e, groups) }) : (f === 'fav' ? all : []);
+    var nFav = 0; base.forEach(function (e) { if (e.favorite === true) nFav++ });
+    S.counts = hasName ? { all: base.length, fav: nFav, non: base.length - nFav } : { all: 0, fav: nFav, non: 0 };
+    if (f === 'fav') return base.filter(function (e) { return e.favorite === true });
+    if (f === 'non') return base.filter(function (e) { return e.favorite !== true });
+    return base;
   }
 
   // Where this card sits in the scrollable grid, so we can scroll back to it if Grindr unloads it later.
@@ -121,7 +124,7 @@
 
     var matches = computeMatches(); S.matches = matches;
     if (S.current >= matches.length) S.current = matches.length - 1;
-    var ids = new Set(matches.map(function (m) { return m.id })), q = hasQuery() || S.favOnly;
+    var ids = new Set(matches.map(function (m) { return m.id })), q = hasQuery() || S.favFilter === 'fav';
     cells.forEach(function (cell) { // only touch a card's classes when they actually change (no needless style work on Grindr's page)
       var id = cell.dataset.gnfId, isMatch = q && !!id && ids.has(id);
       setCls(cell, 'gnf-hidden', false); setCls(cell, 'gnf-match', isMatch); setCls(cell, 'gnf-dim', q && !isMatch);
@@ -261,7 +264,7 @@
   function save() {
     if (!hasStore()) return;
     try {
-      var o = {}; o[CFG.KEY] = { groups: S.groups, favOnly: S.favOnly, pauseEach: S.pauseEach, saved: S.saved, lang: S.lang, welcomeDone: S.welcomeDone, collapsed: S.collapsed, pos: S.pos, speed: S.speed, chatNoteDismissed: S.chatNoteDismissed };
+      var o = {}; o[CFG.KEY] = { groups: S.groups, favFilter: S.favFilter, pauseEach: S.pauseEach, saved: S.saved, lang: S.lang, welcomeDone: S.welcomeDone, collapsed: S.collapsed, pos: S.pos, speed: S.speed, chatNoteDismissed: S.chatNoteDismissed };
       chrome.storage.local.set(o);
     } catch (e) { /* ignore */ }
   }
@@ -277,9 +280,9 @@
     var q = hasQuery();
     return {
       lang: S.lang || 'en', view: S.showWelcome ? 'welcome' : 'panel', welcomeStep: S.welcomeStep, collapsed: S.collapsed,
-      groups: S.groups.slice(), hasDraft: !!S.draft.trim(), favOnly: S.favOnly, pauseEach: S.pauseEach, saved: S.saved.slice(),
+      groups: S.groups.slice(), hasDraft: !!S.draft.trim(), favOnly: S.favFilter === 'fav', favFilter: S.favFilter, counts: S.counts, hasQuery: q, pauseEach: S.pauseEach, saved: S.saved.slice(),
       running: S.running, hasRun: S.hasRun, speed: S.speed, chatNote: S.chatNote && !S.chatNoteDismissed, status: S.statusKey ? T(S.statusKey, S.statusVars) : '',
-      scanned: S.registry.size, found: q || S.favOnly ? S.matches.length : 0, favs: S.matches.filter(function (m) { return m.favorite }).length,
+      scanned: S.registry.size, found: q ? S.counts.all : (S.favFilter === 'fav' ? S.counts.fav : 0), favs: S.counts.fav,
       matches: list, current: S.current, note: S.note, end: S.end
     };
   }
@@ -326,7 +329,10 @@
     switch (a.a) {
       case 'draft': S.draft = String(a.v || '').slice(0, 60); S.current = -1; S.end = null; render(); break;
       case 'groups': S.groups = (a.groups || []).map(function (s) { return String(s).slice(0, 60) }).slice(0, CFG.MAX_GROUPS); S.draft = ''; S.current = -1; S.end = null; S.note = null; S.notified = new Set(); if (ui) ui.clearDraft(); render(); save(); break;
-      case 'fav': S.favOnly = !S.favOnly; S.current = -1; render(); save(); break;
+      case 'fav': act({ a: 'favfilter', v: S.favFilter === 'fav' ? 'all' : 'fav' }); break;
+      case 'favfilter': // switching tabs must not make the scan stop on every match that was hidden until now
+        S.favFilter = ['all', 'fav', 'non'].indexOf(a.v) >= 0 ? a.v : 'all'; S.current = -1; S.note = null;
+        computeMatches().forEach(function (m) { S.notified.add(m.id) }); render(); save(); break;
       case 'pause-each': S.pauseEach = !S.pauseEach; publish(); save(); break;
       case 'toggle-scroll': if (S.running) { stopScroll(); publish() } else { S.note = null; startScroll() } break;
       case 'prev': go(-1); break;
@@ -399,7 +405,7 @@
       }
       S.groups = Array.isArray(s.groups) ? s.groups.slice(0, CFG.MAX_GROUPS) : [];
       S.speed = s.speed === 'fast' ? 'fast' : 'gentle'; S.chatNoteDismissed = !!s.chatNoteDismissed;
-      S.favOnly = !!s.favOnly; S.pauseEach = s.pauseEach !== false; S.saved = Array.isArray(s.saved) ? s.saved.slice(0, CFG.MAX_SAVED) : [];
+      S.favFilter = ['all', 'fav', 'non'].indexOf(s.favFilter) >= 0 ? s.favFilter : (s.favOnly ? 'fav' : 'all'); S.pauseEach = s.pauseEach !== false; S.saved = Array.isArray(s.saved) ? s.saved.slice(0, CFG.MAX_SAVED) : [];
       S.lang = s.lang || window.PNS_GUESS_LANG(); S.welcomeDone = !!s.welcomeDone; S.showWelcome = !S.welcomeDone; S.collapsed = !!s.collapsed; S.pos = s.pos || null;
       buildHost(); wire(); startObserving(); render(); flushNow();
       if (!s.lang) save();

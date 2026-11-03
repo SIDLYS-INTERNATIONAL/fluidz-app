@@ -68,6 +68,13 @@
     '.speed .sr button:hover{background:rgba(255,255,255,.09)}',
     '.speed .sr button[aria-pressed=true]{background:var(--p);color:var(--ink)}',
     '.speed .sh2{font-size:11px;line-height:1.4;color:var(--tx3)}',
+    '.ftabs{display:flex;gap:4px;padding:3px;border-radius:12px;background:rgba(255,255,255,.04)}',
+    '.ftabs button{flex:1 1 auto;min-width:0;display:inline-flex;align-items:center;justify-content:center;gap:5px;border-radius:9px;padding:6px 6px;font-size:11.5px;font-weight:800;color:var(--tx2);white-space:nowrap}',
+    '.ftabs button:hover{background:rgba(255,255,255,.07)}',
+    '.ftabs button[aria-selected=true]{background:var(--p);color:var(--ink)}',
+    '.ftabs button span{overflow:hidden;text-overflow:ellipsis}',
+    '.ftabs button i{font-style:normal;font-size:10.5px;font-weight:800;opacity:.75;font-variant-numeric:tabular-nums}',
+    '.ftabs .ic{width:12px;height:12px;flex-shrink:0}',
     '.speed .sh2.warn{color:var(--p)}',
     '.help{flex-direction:column;gap:5px}',
     '.help .hl{display:flex;gap:6px}',
@@ -357,6 +364,16 @@
         ring(vf, '#E0887A', fd, T('gFound')),
         ring(vv, '#9080BA', fv, T('gFav')));
     }
+    // All / Favorites / Not favorites. Counts only make sense once a search is typed (Favorites alone works without one).
+    function buildTabs() {
+      var c = S.counts || { all: 0, fav: 0, non: 0 }, f = S.favFilter || 'all', q = !!S.hasQuery;
+      function tab(v, label, n, icon) {
+        return h('button', { type: 'button', attrs: { role: 'tab', 'aria-selected': f === v ? 'true' : 'false', title: label }, on: { click: function () { if (f !== v) send({ a: 'favfilter', v: v }) } } },
+          icon ? ic(icon) : null, h('span', { text: label }), (q || v === 'fav') ? h('i', { text: String(n) }) : null);
+      }
+      return h('div', { cls: 'ftabs', attrs: { role: 'tablist', 'aria-label': T('tabsLbl') } },
+        tab('all', T('tabAll'), c.all), tab('fav', T('tabFav'), c.fav, 'star'), tab('non', T('tabNon'), c.non));
+    }
     function buildNav() {
       var n = S.matches.length;
       return h('div', { cls: 'nav' },
@@ -367,7 +384,11 @@
     function buildResults() {
       var box = h('div', { cls: 'res', attrs: { role: 'list' } });
       if (!S.matches.length) {
-        box.appendChild(h('div', { cls: 'empty', text: S.groups.length || S.hasDraft || S.favOnly ? T('noMatch') : T('empty') }));
+        var c = S.counts || {}, msg = T('empty');
+        if (S.favFilter === 'non' && c.all > 0) msg = T('emptyNon');
+        else if (S.favFilter === 'fav' && S.hasQuery && c.all > 0) msg = T('emptyFav');
+        else if (S.groups.length || S.hasDraft || S.favFilter === 'fav') msg = T('noMatch');
+        box.appendChild(h('div', { cls: 'empty', text: msg }));
         return box;
       }
       S.matches.forEach(function (m, i) {
@@ -441,9 +462,9 @@
       if (k === 'nogrid') { mountSlot(root, 'nogrid'); return }
       var p = h('div', { cls: 'panel' }); root.appendChild(p);
       mountSlot(p, 'hd');
-      mountSlot(p, 's1'); mountSlot(p, 'field'); mountSlot(p, 'sum'); slots.sum.className = 'sum'; slots.sum.setAttribute('aria-live', 'polite'); mountSlot(p, 'tip'); mountSlot(p, 'saved'); mountSlot(p, 'fav');
+      mountSlot(p, 's1'); mountSlot(p, 'field'); mountSlot(p, 'sum'); slots.sum.className = 'sum'; slots.sum.setAttribute('aria-live', 'polite'); mountSlot(p, 'tip'); mountSlot(p, 'saved');
       p.appendChild(h('hr')); mountSlot(p, 's2'); mountSlot(p, 'go'); mountSlot(p, 'status'); mountSlot(p, 'speed'); mountSlot(p, 'pause'); mountSlot(p, 'help'); mountSlot(p, 'gauges');
-      p.appendChild(h('hr')); mountSlot(p, 's3'); mountSlot(p, 'nav'); mountSlot(p, 'res');
+      p.appendChild(h('hr')); mountSlot(p, 's3'); mountSlot(p, 'ftabs'); mountSlot(p, 'nav'); mountSlot(p, 'res');
       if (!side) mountSlot(p, 'drag');
     }
 
@@ -466,7 +487,6 @@
       slot('tip', L, function () { return h('div', { cls: 'tip' }, ic('sparkles'), h('div', null, h('div', { text: T('tip1') }), h('div', { text: T('tip2') }))) });
       renderSummary();
       slot('saved', L + JSON.stringify([S.saved, S.groups]), buildSaved);
-      slot('fav', L + S.favOnly, function () { return h('div', { cls: 'row' }, h('span', { text: '★  ' + T('onlyFav') }), toggle(S.favOnly, T('onlyFav'), 'fav')) });
       slot('s2', L, function () { return stepRow(2, T('s2')) });
       slot('go', [L, S.running, S.hasRun].join('|'), buildGo);
       slot('status', S.status || '', buildStatus);
@@ -475,11 +495,12 @@
       slot('help', L, function () { return h('div', { cls: 'help' }, h('div', { cls: 'hl' }, ic('info'), h('span', { text: T('scrollHelp') })), h('div', { cls: 'hl' }, ic('info'), h('span', { text: T('scrollHelp2') }))) });
       slot('gauges', [L, S.scanned, S.found, S.favs].join('|'), buildGauges);
       slot('s3', L, function () { return stepRow(3, T('s3')) });
+      slot('ftabs', L + JSON.stringify([S.favFilter, S.counts, S.hasQuery]), buildTabs);
       slot('nav', [L, S.matches.length, S.current].join('|'), buildNav);
       // The list is rebuilt whenever matches or the active row change: keep its scroll position, and only scroll (smoothly, inside the list)
       // when the active row is out of view. Never jump back to the top.
       var prevRes = slots.res, keepTop = prevRes ? prevRes.scrollTop : 0, curChanged = S.current !== lastCurrent; lastCurrent = S.current;
-      slot('res', L + JSON.stringify([S.matches, S.current, S.groups.length, S.hasDraft, S.favOnly]), buildResults);
+      slot('res', L + JSON.stringify([S.matches, S.current, S.groups.length, S.hasDraft, S.favFilter, S.counts]), buildResults);
       if (slots.res !== prevRes && prevRes && keepTop) slots.res.scrollTop = keepTop;
       if (curChanged && S.current >= 0) keepActiveVisible();
       if (!side) slot('drag', L, function () { return h('div', { cls: 'dragbar', on: { pointerdown: function (e) { ctx.dragStart && ctx.dragStart(e) } } }, ic('grip-horizontal'), h('span', { text: T('drag') })) });
