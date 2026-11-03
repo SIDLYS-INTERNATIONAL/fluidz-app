@@ -17,6 +17,8 @@ Works in Chrome 116+ and browsers built on it (Brave, Edge, Arc). Not Safari or 
 
 - **Search**: type a name, a keyword or an emoji and press Enter. Each Enter adds a chip. Chips are combined with **OR**; inside a chip use **+** for **AND** (`dom + top`) and quotes for an exact phrase (`"dom top"`).
 - **Auto-scroll**: scrolls the grid to load more profiles and pauses on each new match (switch that off if you prefer it to keep going).
+- **Scan speed**: *Gentle* (default, recommended) scrolls slower with a little random jitter, waits for Grindr to finish loading and takes a short break (about 8-10 s) every ~120-150 new profiles. *Fast* is the old v2.0 pace and may disconnect the Grindr chat.
+- **Turn off for now**: the × in the panel (or toolbar icon → *Turn off for now*) stops the scan and all page watching, so Grindr Web runs as if the extension were not there. Toolbar icon → *Show the floating panel* turns it back on.
 - **Show on grid**: scrolls to the profile and flashes it. If Grindr already unloaded the card, the panel scrolls back to where he was.
 - **Saved searches**: keep up to 3.
 - **Side panel**: toolbar icon → *Open in Chrome's side panel*. It sits next to the page and never covers the grid.
@@ -33,7 +35,24 @@ Works in Chrome 116+ and browsers built on it (Brave, Edge, Arc). Not Safari or 
 
 Download the new zip, replace the old folder, then click ↻ on the extension's card in `chrome://extensions` and reload your Grindr tab. Settings are kept. If you used **Profile Hunter** before, your last search and shortcuts are carried over.
 
+## Grindr chat got disconnected?
+
+Some people report that the chat on Grindr Web disconnected after a long scan. We could not reproduce it ourselves and do not know the exact cause, so we cannot promise it is fixed. A long, fast scan loads thousands of profiles in minutes, which Grindr Web may not like. What helps:
+
+- Reload the Grindr tab (⌘R / Ctrl+R). You stay signed in.
+- For long chats, use the Grindr phone app, a Chrome window without the extension, or turn the extension off in `chrome://extensions` and reload.
+- Keep *Scan speed* on **Gentle** (default). Avoid **Fast** for long scans.
+
 ## Changelog
+
+### 2.1.0
+- Gentler auto-scroll by default: smaller steps, about 2-3 s between steps with random jitter, waits for Grindr to finish loading before the next step, and a short cool-down break (about 8-10 s, with a countdown) every ~120-150 newly scanned profiles. End-of-grid detection adjusted to the new pace.
+- New **Scan speed** setting under the auto-scroll button: *Gentle* (recommended, default) or *Fast* (the old pace, may disconnect Grindr chat).
+- Lighter page work: the page observer is throttled (slower while scanning) and limited to the profile grid when it is found.
+- The × now fully turns the extension off for now (scan, observer and timers stop). New *Turn off for now* button in the toolbar popup; *Show the floating panel* turns it back on.
+- Fixed: the results list no longer jumps back to the top after *Show on grid*, Previous/Next or when new matches arrive; the active row stays in view (floating and side panel).
+- End-of-grid banner now says the answer itself (more profiles = a higher Grindr plan) and no longer links to the website.
+- In-panel notice (all 6 languages) about the Grindr chat disconnecting after long scans, with what to do.
 
 ### 2.0.0
 - Renamed from *Profile Hunter* to **Profile Name Search**.
