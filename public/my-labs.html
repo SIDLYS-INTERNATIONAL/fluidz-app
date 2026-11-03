@@ -12,6 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <script src="/labs/lang.js"></script>
+<script>(function(L,D){var d=D[L];if(!d)return;var t=window.LABS_I18N[L]=window.LABS_I18N[L]||{};for(var k in d)t[k]=d[k]})(window.LABS_LANG,{fr:{"my.gate.in":"Ce que tu y trouves","my.gate.l1":"Tes outils au même endroit : télécharger Profile Name Search, ouvrir Adult Album Creator.","my.gate.l2":"Ta demande d’accès à la bêta de Hookup Safety Check.","my.gate.l3":"Tes choix d’e-mails : recevoir les nouvelles ou non, modifiable à tout moment.","my.gate.l4":"Supprimer ton compte : écris à <a href=\"mailto:hello@fluidz.app\">hello@fluidz.app</a>.","my.acct.del":"Supprimer ton compte","my.acct.del.s":"Écris à <a href=\"mailto:hello@fluidz.app\">hello@fluidz.app</a> depuis cette adresse et on supprime tout.","my.hsc.p":"Vérifie un numéro avec tes amis et leurs amis, porte-toi garant ou signale, ajoute des photos. Le check-in et la détection de catfish viendront plus tard. Bêta privée, sur invitation."},es:{"my.gate.in":"Qué encontrarás","my.gate.l1":"Tus herramientas en un solo sitio: descargar Profile Name Search, abrir Adult Album Creator.","my.gate.l2":"Tu solicitud de acceso a la beta de Hookup Safety Check.","my.gate.l3":"Tus preferencias de correo: novedades sí o no, cámbialo cuando quieras.","my.gate.l4":"Borrar tu cuenta: escribe a <a href=\"mailto:hello@fluidz.app\">hello@fluidz.app</a>.","my.acct.del":"Borrar tu cuenta","my.acct.del.s":"Escribe a <a href=\"mailto:hello@fluidz.app\">hello@fluidz.app</a> desde este correo y lo borramos todo.","my.hsc.p":"Comprueba un número con tus amigos y los amigos de tus amigos, avala o avisa, añade fotos. El check-in y la detección de catfish llegarán más adelante. Beta privada, por invitación."},pt:{"my.gate.in":"O que tem aqui","my.gate.l1":"Suas ferramentas num só lugar: baixar o Profile Name Search, abrir o Adult Album Creator.","my.gate.l2":"Seu pedido de acesso ao beta do Hookup Safety Check.","my.gate.l3":"Suas escolhas de e-mail: novidades ligadas ou desligadas, mude quando quiser.","my.gate.l4":"Apagar sua conta: escreva para <a href=\"mailto:hello@fluidz.app\">hello@fluidz.app</a>.","my.acct.del":"Apagar sua conta","my.acct.del.s":"Escreva para <a href=\"mailto:hello@fluidz.app\">hello@fluidz.app</a> a partir deste e-mail e apagamos tudo.","my.hsc.p":"Confira um número com seus amigos e os amigos deles, dê seu aval ou sinalize, adicione fotos. O check-in e a detecção de catfish vêm mais tarde. Beta privado, só por convite."},it:{"my.gate.in":"Cosa trovi","my.gate.l1":"I tuoi strumenti in un solo posto: scarica Profile Name Search, apri Adult Album Creator.","my.gate.l2":"La tua richiesta di accesso alla beta di Hookup Safety Check.","my.gate.l3":"Le tue scelte email: novità sì o no, cambi quando vuoi.","my.gate.l4":"Eliminare il tuo account: scrivi a <a href=\"mailto:hello@fluidz.app\">hello@fluidz.app</a>.","my.acct.del":"Eliminare il tuo account","my.acct.del.s":"Scrivi a <a href=\"mailto:hello@fluidz.app\">hello@fluidz.app</a> da questo indirizzo e cancelliamo tutto.","my.hsc.p":"Controlla un numero con i tuoi amici e i loro amici, garantisci o segnala, aggiungi foto. Il check-in e il controllo anti-catfish arriveranno più avanti. Beta privata, su invito."},de:{"my.gate.in":"Was drin ist","my.gate.l1":"Deine Tools an einem Ort: Profile Name Search herunterladen, Adult Album Creator öffnen.","my.gate.l2":"Deine Anfrage für die Beta von Hookup Safety Check.","my.gate.l3":"Deine E-Mail-Einstellungen: Neuigkeiten an oder aus, jederzeit änderbar.","my.gate.l4":"Konto löschen: Schreib an <a href=\"mailto:hello@fluidz.app\">hello@fluidz.app</a>.","my.acct.del":"Konto löschen","my.acct.del.s":"Schreib von dieser Adresse an <a href=\"mailto:hello@fluidz.app\">hello@fluidz.app</a>, und wir löschen alles.","my.hsc.p":"Prüfe eine Nummer mit deinen Freunden und deren Freunden, bürge oder warne, füge Fotos hinzu. Check-in und Catfish-Erkennung kommen später. Private Beta, nur auf Einladung."}})</script>
 <link rel="stylesheet" href="/labs/site.css">
 <style>
 .page{padding:64px 0 90px;position:relative}
@@ -25,6 +26,12 @@
 .gate .big{width:64px;height:64px;border-radius:50%;background:var(--p2);color:var(--p);font-size:30px;margin:0 auto 20px;display:flex;align-items:center;justify-content:center}
 .gate h1{font-family:var(--fh);font-size:32px;letter-spacing:-.03em;margin-bottom:12px}
 .gate p{color:var(--tx2);line-height:1.6;margin-bottom:24px}
+.inside{text-align:left;background:var(--bg);border:1px solid var(--rule2);border-radius:18px;padding:18px 20px;margin:0 0 26px}
+.gate .inside .in-h{font-family:var(--fm);font-size:11px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--tx3);margin-bottom:10px}
+.inside ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.inside li{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--tx2);line-height:1.5}
+.inside li .ico{color:var(--p);font-size:16px;margin-top:2px;flex-shrink:0}
+.inside a,.row small a{color:var(--p);font-weight:600;text-decoration:underline;text-underline-offset:3px}
 .tools3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .t{background:var(--bg1);border:1px solid var(--rule2);border-radius:24px;padding:26px;display:flex;flex-direction:column;gap:12px;position:relative;scroll-margin-top:90px}
 .t .ti{width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:21px}
@@ -51,6 +58,7 @@
 .sw[aria-pressed=true]{background:var(--p)}.sw[aria-pressed=true] i{transform:translateX(17px)}
 .loggedin{display:none}.loggedout{display:none}
 body.in .loggedin{display:block}body.out .loggedout{display:block}
+@media(max-width:720px){.gate{padding:36px 20px}.inside{padding:16px}}
 @media(max-width:1000px){.tools3{grid-template-columns:1fr}.acctgrid{grid-template-columns:1fr}}
 </style>
 </head>
@@ -64,6 +72,12 @@ body.in .loggedin{display:block}body.out .loggedout{display:block}
         <div class="big"><i data-ico="key-round"></i></div>
         <h1 data-i18n="my.gate.h1">Your Fluidz Labs space</h1>
         <p data-i18n="my.gate.p">Sign in with your email — no password — to open your tools, try them online and manage your free Fluidz ID.</p>
+        <div class="inside"><p class="in-h" data-i18n="my.gate.in">What’s inside</p><ul>
+          <li><i data-ico="layout-grid"></i><span data-i18n="my.gate.l1">Your tools in one place: download Profile Name Search, open Adult Album Creator.</span></li>
+          <li><i data-ico="shield-check"></i><span data-i18n="my.gate.l2">Your Hookup Safety Check beta request.</span></li>
+          <li><i data-ico="mail"></i><span data-i18n="my.gate.l3">Your email choices: news on or off, change anytime.</span></li>
+          <li><i data-ico="eraser"></i><span data-i18n-html="my.gate.l4">Want your account deleted? Write to <a href="mailto:hello@fluidz.app">hello@fluidz.app</a>.</span></li>
+        </ul></div>
         <button type="button" class="btn btn-p" id="gate-btn" data-i18n="my.gate.btn">Sign in with email</button>
       </div>
     </div>
@@ -84,7 +98,7 @@ body.in .loggedin{display:block}body.out .loggedout{display:block}
           <p data-i18n="my.alb.p">Turn your private album into a story, in your browser. Your photos never leave your device.</p>
           <div class="web"><i data-ico="smartphone"></i><a href="/album-creator/create" data-i18n="my.web.open">Open the web version</a></div></div>
         <div class="t c3" id="safety"><span class="pill beta" data-i18n="nav.t.beta">Beta</span><div class="ti"><i data-ico="shield-check"></i></div><h3>Hookup Safety Check</h3>
-          <p data-i18n="my.hsc.p">Check a number with the friends in your circle, share a meet-up check-in, spot catfish photos. Private beta, by invitation.</p>
+          <p data-i18n="my.hsc.p">Check a number with your friends and their friends, vouch or flag, add photos. Check-in and catfish detection come later. Private beta, by invitation.</p>
           <div class="web"><i data-ico="smartphone"></i><span data-i18n="my.web.soon">Web version: coming soon</span></div>
           <div class="acts" id="hsc-acts"></div></div>
       </div>
@@ -100,6 +114,7 @@ body.in .loggedin{display:block}body.out .loggedout{display:block}
         <div class="box"><h3 data-i18n="my.acct.h3">Your account</h3><p data-i18n="my.acct.p">One email, no password. The same Fluidz ID opens every tool — and the Fluidz app when it launches.</p>
           <div class="row"><span><span data-i18n="my.acct.mail">Email updates</span><small data-i18n="my.acct.mail.s">New Fluidz Labs tools and big updates. No spam, never sold.</small></span><button type="button" class="sw" id="sw-mkt" aria-pressed="false" aria-label="Email updates"><i></i></button></div>
           <div class="row"><span><span data-i18n="my.acct.app">Fluidz app waitlist</span><small data-i18n="my.acct.app.s">You’re in: your circle and your vouches will be waiting.</small></span><span class="pill live">✓</span></div>
+          <div class="row"><span><span data-i18n="my.acct.del">Delete your account</span><small data-i18n-html="my.acct.del.s">Write to <a href="mailto:hello@fluidz.app">hello@fluidz.app</a> from this address and we’ll delete everything.</small></span></div>
           <div class="row" style="border-bottom:none"><span></span><button type="button" class="btn btn-g btn-s" id="out" data-i18n="nav.signout">Sign out</button></div></div>
         <div class="box"><h3 data-i18n="my.sup.h3">Like what we do?</h3><p data-i18n="my.sup.p">Every Fluidz Labs tool is free. Servers, emails and the AI agents that build them are not — chip in if it saved your night.</p>
           <p style="margin-top:20px"><a class="btn btn-p btn-s" href="/support" data-i18n="my.sup.btn">See the ways to help</a></p></div>
