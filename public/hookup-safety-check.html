@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Hookup Safety Check — check a date’s number with your friends · Fluidz Labs</title>
+<meta name="description" content="Hookup Safety Check (private beta, invite-only): check a date’s number with a private circle of friends, vouch or flag, and add photos to recognise him. Free with your Fluidz ID.">
+<link rel="canonical" href="https://fluidz.app/hookup-safety-check">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#05040A">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Fluidz Labs">
+<meta property="og:url" content="https://fluidz.app/hookup-safety-check">
+<meta property="og:title" content="Hookup Safety Check — check a date’s number with your friends">
+<meta property="og:description" content="Hookup Safety Check (private beta, invite-only): check a date’s number with a private circle of friends, vouch or flag, and add photos to recognise him. Free with your Fluidz ID.">
+<meta property="og:image" content="https://fluidz.app/og.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://fluidz.app/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<script src="/labs/lang.js"></script>
+<script>(function(L,D){var d=D[L];if(!d)return;var t=window.LABS_I18N[L]=window.LABS_I18N[L]||{};for(var k in d)t[k]=d[k]})(window.LABS_LANG,{
+fr:{
+"title.safety":"Hookup Safety Check — vérifie le numéro d’un date avec tes amis · Fluidz Labs",
+"desc.safety":"Hookup Safety Check (bêta privée, sur invitation) : vérifie le numéro d’un date avec un cercle privé d’amis, recommande ou signale, et ajoute des photos pour le reconnaître. Gratuit avec ton Fluidz ID.",
+"saf.hero.eyebrow":"HOOKUP SAFETY CHECK · BÊTA · SUR INVITATION",
+"saf.hero.h1":"Vérifie le numéro d’un date avec tes amis avant d’y aller.",
+"saf.hero.p":"Un cercle privé d’amis qui peuvent te dire s’ils connaissent un numéro, se porter garants de lui ou le signaler. Ajoute une ou deux photos à un numéro pour le reconnaître. Pas de liste publique, pas d’inconnus.",
+"saf.hero.cta1":"Demander l’accès à la bêta",
+"saf.hero.cta2":"Comment ça marche",
+"saf.hero.listed":"Tu es sur la liste ✓ — on t’invitera quand ton cercle s’ouvrira.",
+"saf.hero.g1":"Cercle privé, aucune liste publique",
+"saf.hero.g2":"Gratuit avec ton Fluidz ID",
+"saf.hero.g3":"Tu choisis qui est dans ton cercle",
+"saf.v.circle":"Ton cercle",
+"saf.v.lbl":"Vérifier un numéro",
+"saf.v.r1":"2 amis le connaissent",
+"saf.v.r2":"1 l’a recommandé « safe »",
+"saf.v.chip":"2 photos ajoutées",
+"saf.v.ex":"Illustration — ce n’est pas un vrai numéro",
+"saf.how.eyebrow":"COMMENT ÇA MARCHE",
+"saf.how.h2":"Quatre étapes, un seul cercle.",
+"saf.h1.t":"Crée ton cercle",
+"saf.h1.p":"Invite les amis à qui tu ferais vraiment confiance pour ça. C’est ton cercle : c’est toi qui décides qui en fait partie.",
+"saf.h2.t":"Vérifie un numéro",
+"saf.h2.p":"Avant de te voir, saisis le numéro ou le nom et, si tu en as, ajoute une ou plusieurs photos de lui. Regarde si quelqu’un de ton cercle le connaît ou reconnaît son visage. Les photos restent dans ton cercle.",
+"saf.h3.t":"Recommande ou signale",
+"saf.h3.p":"Tu le connais ? Recommande-le « safe ». Mauvaise expérience ? Signale-le « sois prudent ». Ça reste dans ton cercle.",
+"saf.h4.t":"Ensuite : le check-in avant le date",
+"saf.h4.p":"Dis à ton cercle où tu vas avant de partir, pour que quelqu’un sache toujours où tu es.",
+"saf.pv.eyebrow":"PRIVÉ PAR CONCEPTION",
+"saf.pv.h2":"Ton cercle, tes règles.",
+"saf.pv.p":"Pas de base de données publique. Pas de liste noire publique. Juste des gens qui se connaissent.",
+"saf.p1.t":"Réservé au cercle",
+"saf.p1.p":"Ce que tu vérifies et ce que tu partages reste dans ton cercle. Il n’existe aucune liste publique de numéros à consulter.",
+"saf.p2.t":"Tu gardes la main",
+"saf.p2.p":"Tu décides qui rejoint ton cercle et ce que tu partages avec ces personnes.",
+"saf.p3.t":"Pour les amis, pas pour les inconnus",
+"saf.p3.p":"Les avis viennent de gens que tu connais, pas de comptes anonymes. Un signalement a donc du poids.",
+"saf.p4.t":"Un signalement modéré",
+"saf.p4.p":"Pour un problème sérieux, on prévoit un moyen de le signaler à Fluidz pour qu’il soit examiné de façon modérée.",
+"saf.who.eyebrow":"CE QUE C’EST (ET CE QUE ÇA N’EST PAS)",
+"saf.who.h2":"Un outil entre amis. Rien de plus.",
+"saf.is.t":"Ce que c’est",
+"saf.is.p":"Un outil privé pour que toi et tes amis veilliez les uns sur les autres avant de rencontrer quelqu’un d’une appli.",
+"saf.not.t":"Ce que ça n’est pas",
+"saf.not.p":"Ce n’est pas une appli de rencontre, ni une enquête de moralité, ni un substitut à ton propre jugement. Si quelque chose te semble bizarre, fie-toi à ça et laisse tomber.",
+"saf.who.note":"Hookup Safety Check n’est pas un service d’urgence. Si tu te sens en danger, appelle les secours de ton pays. Informations générales, pas de conseil médical ou juridique.",
+"saf.rg.eyebrow":"GUIDE ASSOCIÉ",
+"saf.rg.t":"Une checklist de sécurité pour les plans cul : avant, pendant et après",
+"saf.rg.p":"Une checklist pratique, sans jugement, pour rencontrer quelqu’un d’une appli : le vérifier, prévenir un ami, fixer tes limites, faire un check-in et prendre soin de toi ensuite.",
+"saf.rg.more":"Lire le guide",
+"saf.faq.eyebrow":"FAQ",
+"saf.faq.h2":"Les questions qu’on nous pose.",
+"saf.f1.q":"C’est gratuit ?",
+"saf.f1.a":"Oui. Hookup Safety Check est un outil gratuit de Fluidz Labs. Il te faut juste un Fluidz ID gratuit (un e-mail, pas de mot de passe).",
+"saf.f2.q":"Qui peut rejoindre la bêta ?",
+"saf.f2.a":"Pour l’instant, c’est sur invitation seulement. Demande l’accès avec ton Fluidz ID : on invitera les gens progressivement, et on ne peut pas encore promettre de date.",
+"saf.f3.q":"Est-ce que l’outil voit mes contacts ?",
+"saf.f3.a":"Il est pensé autour des numéros et des noms que tu choisis de vérifier, pas autour de ton répertoire. La bêta t’indiquera clairement ce dont elle a besoin avant que tu la rejoignes.",
+"saf.f4.q":"Mon numéro est-il visible par d’autres ?",
+"saf.f4.a":"Il n’y a aucune liste publique de numéros. Les informations restent dans les cercles, et tu choisis qui est dans le tien. La bêta précisera exactement ce que les membres d’un cercle peuvent voir avant que tu la rejoignes.",
+"saf.f5.q":"Et si un signalement est faux ?",
+"saf.f5.a":"Un signalement, c’est l’avis d’un ami, pas un verdict — et il reste dans le cercle. On le conçoit pour que tu puisses modifier ce que tu as laissé, et pour les problèmes sérieux, il y aura un moyen modéré de les signaler à Fluidz.",
+"saf.f6.q":"Avec quelles applis ça marche ?",
+"saf.f6.a":"Avec toutes. Il suffit d’un numéro ou d’un nom, donc ce n’est lié à aucune appli : Grindr, Scruff, Romeo, Hornet, Jack’d, Sniffies ou n’importe où ailleurs. Fluidz n’est affilié à aucune d’elles.",
+"saf.end.h2":"Prêt quand ton cercle le sera.",
+"saf.end.p":"Demande l’accès à la bêta et on t’écrira quand ton cercle pourra s’ouvrir.",
+"saf.end.my":"Voir sur Mes outils"
+},
+es:{
+"title.safety":"Hookup Safety Check — comprueba el número de una cita con tus amigos · Fluidz Labs",
+"desc.safety":"Hookup Safety Check (beta privada, solo por invitación): comprueba el número de una cita con un círculo privado de amigos, avala o avisa, y añade fotos para reconocerlo. Gratis con tu Fluidz ID.",
+"saf.hero.eyebrow":"HOOKUP SAFETY CHECK · BETA · SOLO POR INVITACIÓN",
+"saf.hero.h1":"Comprueba el número de una cita con tus amigos antes de ir.",
+"saf.hero.p":"Un círculo privado de amigos que pueden decirte si conocen un número, avalar a alguien o avisar sobre él. Añade una o dos fotos a un número para reconocerlo. Sin lista pública, sin desconocidos.",
+"saf.hero.cta1":"Pedir acceso a la beta",
+"saf.hero.cta2":"Cómo funciona",
+"saf.hero.listed":"Ya estás en la lista ✓ — te invitaremos cuando se abra tu círculo.",
+"saf.hero.g1":"Solo círculo, sin lista pública",
+"saf.hero.g2":"Gratis con tu Fluidz ID",
+"saf.hero.g3":"Tú decides quién está en tu círculo",
+"saf.v.circle":"Tu círculo",
+"saf.v.lbl":"Comprobar un número",
+"saf.v.r1":"2 amigos lo conocen",
+"saf.v.r2":"1 lo avaló como «safe»",
+"saf.v.chip":"2 fotos añadidas",
+"saf.v.ex":"Ilustración — no es un número real",
+"saf.how.eyebrow":"CÓMO FUNCIONA",
+"saf.how.h2":"Cuatro pasos, un círculo.",
+"saf.h1.t":"Crea tu círculo",
+"saf.h1.p":"Invita a los amigos en quienes confiarías de verdad para esto. Es tu círculo: tú eliges quién entra.",
+"saf.h2.t":"Comprueba un número",
+"saf.h2.p":"Antes de quedar, escribe el número o el nombre y, si las tienes, añade una o varias fotos suyas. Mira si alguien de tu círculo lo conoce o reconoce su cara. Las fotos se quedan dentro de tu círculo.",
+"saf.h3.t":"Avala o avisa",
+"saf.h3.p":"¿Lo conoces? Aválalo como «safe». ¿Tuviste una mala experiencia? Avisa con «ten cuidado». Todo se queda dentro de tu círculo.",
+"saf.h4.t":"Después: check-in antes de la cita",
+"saf.h4.p":"Cuéntale a tu círculo adónde vas antes de salir, para que alguien siempre sepa dónde estás.",
+"saf.pv.eyebrow":"PRIVADO POR DISEÑO",
+"saf.pv.h2":"Tu círculo, tus normas.",
+"saf.pv.p":"Sin base de datos pública. Sin lista negra pública. Solo gente que se conoce.",
+"saf.p1.t":"Solo dentro del círculo",
+"saf.p1.p":"Lo que compruebas y lo que compartes se queda en tu círculo. No existe ninguna lista pública de números donde buscar.",
+"saf.p2.t":"Tú tienes el control",
+"saf.p2.p":"Tú decides quién se une a tu círculo y qué compartes con esas personas.",
+"saf.p3.t":"Hecho para amigos, no para desconocidos",
+"saf.p3.p":"Las opiniones vienen de gente que conoces, no de cuentas anónimas. Por eso un aviso tiene peso.",
+"saf.p4.t":"Una forma moderada de denunciar",
+"saf.p4.p":"Para un problema serio, estamos pensando en una forma de comunicárselo a Fluidz para que se revise de manera moderada.",
+"saf.who.eyebrow":"QUÉ ES (Y QUÉ NO ES)",
+"saf.who.h2":"Una herramienta entre amigos. Nada más.",
+"saf.is.t":"Qué es",
+"saf.is.p":"Una herramienta privada para que tú y tus amigos os cuidéis antes de conocer a alguien de una app.",
+"saf.not.t":"Qué no es",
+"saf.not.p":"No es una app de citas, ni una comprobación de antecedentes, ni un sustituto de tu propio criterio. Si algo no te cuadra, hazte caso y déjalo estar.",
+"saf.who.note":"Hookup Safety Check no es un servicio de emergencias. Si te sientes en peligro, llama a los servicios de emergencia de tu país. Información general, no asesoramiento médico ni legal.",
+"saf.rg.eyebrow":"GUÍA RELACIONADA",
+"saf.rg.t":"Una lista de seguridad para quedar con alguien: antes, durante y después",
+"saf.rg.p":"Una lista práctica y sin juicios para quedar con alguien de una app: verifícalo, avisa a un amigo, pon tus límites, haz check-in y cuídate después.",
+"saf.rg.more":"Leer la guía",
+"saf.faq.eyebrow":"FAQ",
+"saf.faq.h2":"Preguntas que nos hacen mucho.",
+"saf.f1.q":"¿Es gratis?",
+"saf.f1.a":"Sí. Hookup Safety Check es una herramienta gratuita de Fluidz Labs. Solo necesitas un Fluidz ID gratis (un correo, sin contraseña).",
+"saf.f2.q":"¿Quién puede entrar en la beta?",
+"saf.f2.a":"Por ahora es solo por invitación. Pide acceso con tu Fluidz ID: iremos invitando a la gente poco a poco y todavía no podemos prometer una fecha.",
+"saf.f3.q":"¿Ve mis contactos?",
+"saf.f3.a":"Está pensada en torno a los números y nombres que tú eliges comprobar, no en torno a tu agenda. La beta te dirá con claridad qué necesita antes de que te unas.",
+"saf.f4.q":"¿Mi número es visible para otros?",
+"saf.f4.a":"No hay ninguna lista pública de números. La información se queda dentro de los círculos y tú eliges quién está en el tuyo. La beta detallará exactamente qué pueden ver los miembros de un círculo antes de que te unas.",
+"saf.f5.q":"¿Y si un aviso es erróneo?",
+"saf.f5.a":"Un aviso es la opinión de un amigo, no un veredicto, y se queda en el círculo. Lo estamos diseñando para que puedas cambiar lo que dejaste y, para los problemas serios, habrá una forma moderada de comunicárselo a Fluidz.",
+"saf.f6.q":"¿Con qué apps funciona?",
+"saf.f6.a":"Con cualquiera. Solo necesita un número o un nombre, así que no depende de una app: Grindr, Scruff, Romeo, Hornet, Jack’d, Sniffies o donde sea que conozcas gente. Fluidz no está afiliado a ninguna de ellas.",
+"saf.end.h2":"Listo cuando tu círculo lo esté.",
+"saf.end.p":"Pide acceso a la beta y te escribiremos cuando tu círculo pueda abrirse.",
+"saf.end.my":"Verlo en Mis herramientas"
+},
+pt:{
+"title.safety":"Hookup Safety Check — confira o número de um date com seus amigos · Fluidz Labs",
+"desc.safety":"Hookup Safety Check (beta privado, só por convite): confira o número de um date com um círculo privado de amigos, recomende ou sinalize, e adicione fotos para reconhecê-lo. Grátis com seu Fluidz ID.",
+"saf.hero.eyebrow":"HOOKUP SAFETY CHECK · BETA · SÓ POR CONVITE",
+"saf.hero.h1":"Confira o número de um date com seus amigos antes de ir.",
+"saf.hero.p":"Um círculo privado de amigos que podem te dizer se conhecem um número, recomendar alguém ou sinalizar. Adicione uma ou duas fotos a um número para reconhecê-lo. Sem lista pública, sem desconhecidos.",
+"saf.hero.cta1":"Pedir acesso ao beta",
+"saf.hero.cta2":"Como funciona",
+"saf.hero.listed":"Você está na lista ✓ — vamos te convidar quando seu círculo abrir.",
+"saf.hero.g1":"Só no círculo, sem lista pública",
+"saf.hero.g2":"Grátis com seu Fluidz ID",
+"saf.hero.g3":"Você decide quem está no seu círculo",
+"saf.v.circle":"Seu círculo",
+"saf.v.lbl":"Conferir um número",
+"saf.v.r1":"2 amigos o conhecem",
+"saf.v.r2":"1 recomendou como “safe”",
+"saf.v.chip":"2 fotos adicionadas",
+"saf.v.ex":"Ilustração — não é um número real",
+"saf.how.eyebrow":"COMO FUNCIONA",
+"saf.how.h2":"Quatro passos, um círculo.",
+"saf.h1.t":"Monte seu círculo",
+"saf.h1.p":"Convide os amigos em quem você realmente confiaria para isso. O círculo é seu: você escolhe quem entra.",
+"saf.h2.t":"Confira um número",
+"saf.h2.p":"Antes de se encontrar, digite o número ou o nome e, se tiver, adicione uma ou mais fotos dele. Veja se alguém do seu círculo o conhece ou reconhece o rosto. As fotos ficam só dentro do seu círculo.",
+"saf.h3.t":"Recomende ou sinalize",
+"saf.h3.p":"Conhece ele? Recomende como “safe”. Teve uma experiência ruim? Sinalize com “cuidado”. Tudo fica dentro do seu círculo.",
+"saf.h4.t":"Depois: check-in antes do date",
+"saf.h4.p":"Conte ao seu círculo para onde você vai antes de sair, para que alguém sempre saiba onde você está.",
+"saf.pv.eyebrow":"PRIVADO POR DESIGN",
+"saf.pv.h2":"Seu círculo, suas regras.",
+"saf.pv.p":"Sem banco de dados público. Sem lista negra pública. Só gente que se conhece.",
+"saf.p1.t":"Só dentro do círculo",
+"saf.p1.p":"O que você confere e o que você compartilha fica no seu círculo. Não existe nenhuma lista pública de números para pesquisar.",
+"saf.p2.t":"Você no controle",
+"saf.p2.p":"Você decide quem entra no seu círculo e o que compartilha com essas pessoas.",
+"saf.p3.t":"Feito para amigos, não para desconhecidos",
+"saf.p3.p":"As opiniões vêm de gente que você conhece, não de contas anônimas. Por isso uma sinalização tem peso.",
+"saf.p4.t":"Uma denúncia moderada",
+"saf.p4.p":"Para um problema sério, estamos planejando uma forma de relatar à Fluidz para que seja analisado de maneira moderada.",
+"saf.who.eyebrow":"O QUE É (E O QUE NÃO É)",
+"saf.who.h2":"Uma ferramenta entre amigos. Nada mais.",
+"saf.is.t":"O que é",
+"saf.is.p":"Uma ferramenta privada para você e seus amigos cuidarem uns dos outros antes de conhecer alguém de um app.",
+"saf.not.t":"O que não é",
+"saf.not.p":"Não é um app de namoro, nem uma checagem de antecedentes, nem um substituto para o seu próprio discernimento. Se algo parecer estranho, confie nisso e deixe pra lá.",
+"saf.who.note":"O Hookup Safety Check não é um serviço de emergência. Se você se sentir em perigo, ligue para os serviços de emergência do seu país. Informações gerais, não são aconselhamento médico nem jurídico.",
+"saf.rg.eyebrow":"GUIA RELACIONADO",
+"saf.rg.t":"Um checklist de segurança para encontros: antes, durante e depois",
+"saf.rg.p":"Um checklist prático e sem julgamentos para se encontrar com alguém de um app: confira a pessoa, avise um amigo, defina seus limites, faça check-in e cuide de você depois.",
+"saf.rg.more":"Ler o guia",
+"saf.faq.eyebrow":"FAQ",
+"saf.faq.h2":"Perguntas que recebemos muito.",
+"saf.f1.q":"É grátis?",
+"saf.f1.a":"Sim. O Hookup Safety Check é uma ferramenta gratuita do Fluidz Labs. Você só precisa de um Fluidz ID grátis (um e-mail, sem senha).",
+"saf.f2.q":"Quem pode entrar no beta?",
+"saf.f2.a":"Por enquanto é só por convite. Peça acesso com seu Fluidz ID: vamos convidar as pessoas aos poucos e ainda não podemos prometer uma data.",
+"saf.f3.q":"Ele vê meus contatos?",
+"saf.f3.a":"Ele foi pensado em torno dos números e nomes que você escolhe conferir, não da sua agenda. O beta vai dizer com clareza o que precisa antes de você entrar.",
+"saf.f4.q":"Meu número fica visível para outras pessoas?",
+"saf.f4.a":"Não existe lista pública de números. As informações ficam dentro dos círculos e você escolhe quem está no seu. O beta vai detalhar exatamente o que os membros de um círculo podem ver antes de você entrar.",
+"saf.f5.q":"E se uma sinalização estiver errada?",
+"saf.f5.a":"Uma sinalização é a opinião de um amigo, não um veredito — e fica dentro do círculo. Estamos projetando para que você possa mudar o que deixou e, para problemas sérios, haverá uma forma moderada de relatar à Fluidz.",
+"saf.f6.q":"Com quais apps funciona?",
+"saf.f6.a":"Com qualquer um. Só precisa de um número ou um nome, então não depende de um app: Grindr, Scruff, Romeo, Hornet, Jack’d, Sniffies ou onde mais você conhecer gente. A Fluidz não é afiliada a nenhum deles.",
+"saf.end.h2":"Pronto quando seu círculo estiver.",
+"saf.end.p":"Peça acesso ao beta e avisaremos quando seu círculo puder abrir.",
+"saf.end.my":"Ver em Minhas ferramentas"
+},
+it:{
+"title.safety":"Hookup Safety Check — controlla il numero di un date con i tuoi amici · Fluidz Labs",
+"desc.safety":"Hookup Safety Check (beta privata, solo su invito): controlla il numero di un date con una cerchia privata di amici, garantisci o segnala, e aggiungi foto per riconoscerlo. Gratis con il tuo Fluidz ID.",
+"saf.hero.eyebrow":"HOOKUP SAFETY CHECK · BETA · SOLO SU INVITO",
+"saf.hero.h1":"Controlla il numero di un date con i tuoi amici prima di andare.",
+"saf.hero.p":"Una cerchia privata di amici che possono dirti se conoscono un numero, garantire per qualcuno o segnalarlo. Aggiungi una o due foto a un numero per riconoscerlo. Nessuna lista pubblica, nessun estraneo.",
+"saf.hero.cta1":"Richiedi l’accesso alla beta",
+"saf.hero.cta2":"Come funziona",
+"saf.hero.listed":"Sei in lista ✓ — ti inviteremo quando la tua cerchia si aprirà.",
+"saf.hero.g1":"Solo cerchia, nessuna lista pubblica",
+"saf.hero.g2":"Gratis con il tuo Fluidz ID",
+"saf.hero.g3":"Decidi tu chi fa parte della tua cerchia",
+"saf.v.circle":"La tua cerchia",
+"saf.v.lbl":"Controlla un numero",
+"saf.v.r1":"2 amici lo conoscono",
+"saf.v.r2":"1 ha garantito “safe”",
+"saf.v.chip":"2 foto aggiunte",
+"saf.v.ex":"Illustrazione — non è un numero reale",
+"saf.how.eyebrow":"COME FUNZIONA",
+"saf.how.h2":"Quattro passi, una cerchia.",
+"saf.h1.t":"Crea la tua cerchia",
+"saf.h1.p":"Invita gli amici di cui ti fideresti davvero per questo. La cerchia è tua: scegli tu chi entra.",
+"saf.h2.t":"Controlla un numero",
+"saf.h2.p":"Prima di vedervi, inserisci il numero o il nome e, se le hai, aggiungi una o più sue foto. Guarda se qualcuno della tua cerchia lo conosce o ne riconosce il volto. Le foto restano dentro la tua cerchia.",
+"saf.h3.t":"Garantisci o segnala",
+"saf.h3.p":"Lo conosci? Garantisci “safe”. Brutta esperienza? Segnala “fai attenzione”. Tutto resta dentro la tua cerchia.",
+"saf.h4.t":"Dopo: check-in prima del date",
+"saf.h4.p":"Dì alla tua cerchia dove stai andando prima di uscire, così che qualcuno sappia sempre dove sei.",
+"saf.pv.eyebrow":"PRIVATO PER DESIGN",
+"saf.pv.h2":"La tua cerchia, le tue regole.",
+"saf.pv.p":"Nessun database pubblico. Nessuna lista nera pubblica. Solo persone che si conoscono.",
+"saf.p1.t":"Solo dentro la cerchia",
+"saf.p1.p":"Quello che controlli e quello che condividi resta nella tua cerchia. Non esiste nessuna lista pubblica di numeri da consultare.",
+"saf.p2.t":"Hai il controllo tu",
+"saf.p2.p":"Decidi tu chi entra nella tua cerchia e cosa condividi con queste persone.",
+"saf.p3.t":"Pensato per gli amici, non per gli sconosciuti",
+"saf.p3.p":"Le opinioni arrivano da persone che conosci, non da account anonimi. Per questo una segnalazione ha un peso.",
+"saf.p4.t":"Una segnalazione moderata",
+"saf.p4.p":"Per un problema serio stiamo pensando a un modo per segnalarlo a Fluidz, così che venga esaminato in modo moderato.",
+"saf.who.eyebrow":"COS’È (E COSA NON È)",
+"saf.who.h2":"Uno strumento tra amici. Niente di più.",
+"saf.is.t":"Cos’è",
+"saf.is.p":"Uno strumento privato per te e i tuoi amici, per guardarvi le spalle prima di incontrare qualcuno da un’app.",
+"saf.not.t":"Cosa non è",
+"saf.not.p":"Non è un’app di incontri, né un controllo dei precedenti, né un sostituto del tuo giudizio. Se qualcosa ti sembra strano, fidati di quella sensazione e lascia perdere.",
+"saf.who.note":"Hookup Safety Check non è un servizio di emergenza. Se ti senti in pericolo, chiama i soccorsi del tuo paese. Informazioni generali, non consulenza medica o legale.",
+"saf.rg.eyebrow":"GUIDA CORRELATA",
+"saf.rg.t":"Una checklist di sicurezza per gli incontri: prima, durante e dopo",
+"saf.rg.p":"Una checklist pratica e senza giudizio per incontrare qualcuno da un’app: verificalo, avvisa un amico, fissa i tuoi limiti, fai check-in e prenditi cura di te dopo.",
+"saf.rg.more":"Leggi la guida",
+"saf.faq.eyebrow":"FAQ",
+"saf.faq.h2":"Le domande che ci fanno spesso.",
+"saf.f1.q":"È gratis?",
+"saf.f1.a":"Sì. Hookup Safety Check è uno strumento gratuito di Fluidz Labs. Ti serve solo un Fluidz ID gratuito (un’email, nessuna password).",
+"saf.f2.q":"Chi può entrare nella beta?",
+"saf.f2.a":"Per ora è solo su invito. Richiedi l’accesso con il tuo Fluidz ID: inviteremo le persone gradualmente e non possiamo ancora promettere una data.",
+"saf.f3.q":"Vede i miei contatti?",
+"saf.f3.a":"È pensato attorno ai numeri e ai nomi che scegli di controllare, non attorno alla tua rubrica. La beta ti dirà chiaramente di cosa ha bisogno prima che tu entri.",
+"saf.f4.q":"Il mio numero è visibile ad altri?",
+"saf.f4.a":"Non esiste nessuna lista pubblica di numeri. Le informazioni restano dentro le cerchie e scegli tu chi c’è nella tua. La beta specificherà esattamente cosa possono vedere i membri di una cerchia prima che tu entri.",
+"saf.f5.q":"E se una segnalazione è sbagliata?",
+"saf.f5.a":"Una segnalazione è l’opinione di un amico, non un verdetto — e resta nella cerchia. Lo stiamo progettando in modo che tu possa modificare quello che hai lasciato e, per i problemi seri, ci sarà un modo moderato per segnalarli a Fluidz.",
+"saf.f6.q":"Con quali app funziona?",
+"saf.f6.a":"Con tutte. Gli bastano un numero o un nome, quindi non è legato a un’app: Grindr, Scruff, Romeo, Hornet, Jack’d, Sniffies o ovunque tu conosca persone. Fluidz non è affiliato a nessuna di esse.",
+"saf.end.h2":"Pronto quando lo sarà la tua cerchia.",
+"saf.end.p":"Richiedi l’accesso alla beta e ti scriveremo quando la tua cerchia potrà aprirsi.",
+"saf.end.my":"Vedilo in I miei strumenti"
+},
+de:{
+"title.safety":"Hookup Safety Check — prüfe die Nummer eines Dates mit deinen Freunden · Fluidz Labs",
+"desc.safety":"Hookup Safety Check (private Beta, nur mit Einladung): Prüfe die Nummer eines Dates mit einem privaten Freundeskreis, bürge oder melde, und füge Fotos hinzu, um ihn wiederzuerkennen. Kostenlos mit deiner Fluidz ID.",
+"saf.hero.eyebrow":"HOOKUP SAFETY CHECK · BETA · NUR MIT EINLADUNG",
+"saf.hero.h1":"Prüfe die Nummer eines Dates mit deinen Freunden, bevor du gehst.",
+"saf.hero.p":"Ein privater Freundeskreis, der dir sagen kann, ob er eine Nummer kennt, für jemanden bürgt oder ihn meldet. Füge einer Nummer ein, zwei Fotos hinzu, um ihn wiederzuerkennen. Keine öffentliche Liste, keine Fremden.",
+"saf.hero.cta1":"Beta-Zugang anfragen",
+"saf.hero.cta2":"So funktioniert’s",
+"saf.hero.listed":"Du stehst auf der Liste ✓ — wir laden dich ein, sobald sich dein Kreis öffnet.",
+"saf.hero.g1":"Nur im Kreis, keine öffentliche Liste",
+"saf.hero.g2":"Kostenlos mit deiner Fluidz ID",
+"saf.hero.g3":"Du entscheidest, wer in deinem Kreis ist",
+"saf.v.circle":"Dein Kreis",
+"saf.v.lbl":"Nummer prüfen",
+"saf.v.r1":"2 Freunde kennen ihn",
+"saf.v.r2":"1 hat für ihn als „safe“ gebürgt",
+"saf.v.chip":"2 Fotos hinzugefügt",
+"saf.v.ex":"Illustration — keine echte Nummer",
+"saf.how.eyebrow":"SO FUNKTIONIERT’S",
+"saf.how.h2":"Vier Schritte, ein Kreis.",
+"saf.h1.t":"Bilde deinen Kreis",
+"saf.h1.p":"Lade die Freunde ein, denen du dafür wirklich vertrauen würdest. Es ist dein Kreis: Du entscheidest, wer dazugehört.",
+"saf.h2.t":"Prüfe eine Nummer",
+"saf.h2.p":"Gib vor dem Treffen die Nummer oder den Namen ein und füge, wenn du hast, ein oder mehrere Fotos von ihm hinzu. Schau, ob jemand aus deinem Kreis ihn kennt oder das Gesicht erkennt. Die Fotos bleiben in deinem Kreis.",
+"saf.h3.t":"Bürge oder warne",
+"saf.h3.p":"Du kennst ihn? Bürge als „safe“. Schlechte Erfahrung gemacht? Warne mit „Vorsicht“. Alles bleibt in deinem Kreis.",
+"saf.h4.t":"Später: Check-in vor dem Date",
+"saf.h4.p":"Sag deinem Kreis, wohin du gehst, bevor du losziehst — damit immer jemand weiß, wo du bist.",
+"saf.pv.eyebrow":"PRIVAT BY DESIGN",
+"saf.pv.h2":"Dein Kreis, deine Regeln.",
+"saf.pv.p":"Keine öffentliche Datenbank. Keine öffentliche Schwarze Liste. Nur Menschen, die sich kennen.",
+"saf.p1.t":"Nur im Kreis",
+"saf.p1.p":"Was du prüfst und was du teilst, bleibt in deinem Kreis. Es gibt keine öffentliche Nummernliste, die man durchsuchen könnte.",
+"saf.p2.t":"Du behältst die Kontrolle",
+"saf.p2.p":"Du entscheidest, wer in deinen Kreis kommt und was du mit diesen Leuten teilst.",
+"saf.p3.t":"Für Freunde, nicht für Fremde",
+"saf.p3.p":"Die Einschätzungen kommen von Menschen, die du kennst, nicht von anonymen Accounts. Deshalb hat eine Warnung Gewicht.",
+"saf.p4.t":"Eine moderierte Meldung",
+"saf.p4.p":"Für ein ernstes Problem planen wir einen Weg, es Fluidz zu melden, damit es moderiert geprüft wird.",
+"saf.who.eyebrow":"WAS ES IST (UND WAS NICHT)",
+"saf.who.h2":"Ein Tool unter Freunden. Mehr nicht.",
+"saf.is.t":"Was es ist",
+"saf.is.p":"Ein privates Tool, mit dem du und deine Freunde aufeinander aufpasst, bevor ihr jemanden aus einer App trefft.",
+"saf.not.t":"Was es nicht ist",
+"saf.not.p":"Keine Dating-App, keine Hintergrundprüfung und kein Ersatz für dein eigenes Urteil. Wenn sich etwas komisch anfühlt, hör darauf und lass es sein.",
+"saf.who.note":"Hookup Safety Check ist kein Notfalldienst. Wenn du dich in Gefahr fühlst, ruf den Notruf deines Landes an. Allgemeine Informationen, keine medizinische oder rechtliche Beratung.",
+"saf.rg.eyebrow":"PASSENDER RATGEBER",
+"saf.rg.t":"Eine Sicherheits-Checkliste für Dates: davor, währenddessen und danach",
+"saf.rg.p":"Eine praktische Checkliste ohne erhobenen Zeigefinger für das Treffen mit jemandem aus einer App: ihn überprüfen, einem Freund Bescheid sagen, deine Grenzen setzen, einchecken und danach gut auf dich achten.",
+"saf.rg.more":"Ratgeber lesen",
+"saf.faq.eyebrow":"FAQ",
+"saf.faq.h2":"Fragen, die wir oft hören.",
+"saf.f1.q":"Ist es kostenlos?",
+"saf.f1.a":"Ja. Hookup Safety Check ist ein kostenloses Fluidz-Labs-Tool. Du brauchst nur eine kostenlose Fluidz ID (eine E-Mail, kein Passwort).",
+"saf.f2.q":"Wer kann an der Beta teilnehmen?",
+"saf.f2.a":"Vorerst nur mit Einladung. Frag den Zugang mit deiner Fluidz ID an: Wir laden die Leute nach und nach ein und können noch kein Datum versprechen.",
+"saf.f3.q":"Sieht das Tool meine Kontakte?",
+"saf.f3.a":"Es ist um die Nummern und Namen herum gebaut, die du selbst prüfen willst, nicht um dein Adressbuch. Die Beta sagt dir klar, was sie braucht, bevor du beitrittst.",
+"saf.f4.q":"Ist meine Nummer für andere sichtbar?",
+"saf.f4.a":"Es gibt keine öffentliche Nummernliste. Informationen bleiben in den Kreisen, und du bestimmst, wer in deinem ist. Die Beta legt genau offen, was Kreismitglieder sehen können, bevor du beitrittst.",
+"saf.f5.q":"Und wenn eine Warnung falsch ist?",
+"saf.f5.a":"Eine Warnung ist die Meinung eines Freundes, kein Urteil — und sie bleibt im Kreis. Wir bauen es so, dass du ändern kannst, was du hinterlassen hast, und für ernste Probleme gibt es einen moderierten Weg, sie Fluidz zu melden.",
+"saf.f6.q":"Mit welchen Apps funktioniert es?",
+"saf.f6.a":"Mit allen. Es braucht nur eine Nummer oder einen Namen und ist deshalb an keine App gebunden: Grindr, Scruff, Romeo, Hornet, Jack’d, Sniffies oder wo auch immer du Leute kennenlernst. Fluidz ist mit keiner davon verbunden.",
+"saf.end.h2":"Bereit, sobald dein Kreis es ist.",
+"saf.end.p":"Frag den Beta-Zugang an, und wir melden uns, sobald sich dein Kreis öffnen kann.",
+"saf.end.my":"In „Meine Tools“ ansehen"
+}
+})</script>
+<link rel="stylesheet" href="/labs/site.css">
+<style>
+.ph-ph{display:inline-flex}.ph-ph img{width:22px;height:22px;border-radius:50%;object-fit:cover;border:2px solid var(--bg1,#14111b);margin-right:-6px}.ph-ph+span{margin-left:10px}
+.hero.glow-s::before{content:'';position:absolute;inset:0;background:radial-gradient(60% 60% at 80% 30%,rgba(107,168,136,0.17),transparent 70%);pointer-events:none}
+.hero-vis{min-width:0;padding:8px 0}
+.ph{width:100%;max-width:330px;margin:0 auto;background:linear-gradient(170deg,var(--bg2),var(--bg1));border:1px solid var(--rule2);border-radius:34px;padding:22px 20px 20px;box-shadow:0 30px 70px -20px rgba(0,0,0,.75),0 0 0 6px rgba(255,255,255,.025);display:flex;flex-direction:column;gap:14px;text-align:left;position:relative}
+.ph::before{content:'';position:absolute;top:9px;left:50%;width:56px;height:5px;border-radius:99px;background:var(--rule2);transform:translateX(-50%)}
+.ph-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px;font-size:12px;font-weight:700;color:var(--tx2)}
+.ph-dots{display:flex}
+.ph-dots i{width:24px;height:24px;border-radius:50%;border:2px solid var(--bg2);margin-left:-7px;background:var(--lav)}
+.ph-dots i:first-child{margin-left:0}
+.ph-dots i:nth-child(2){background:var(--sage)}.ph-dots i:nth-child(3){background:var(--p)}.ph-dots i:nth-child(4){background:#C9B27A}.ph-dots i:nth-child(5){background:#6F8FB8}
+.ph-lbl{font-family:var(--fm);font-size:10.5px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--tx3);margin-bottom:-6px}
+.ph-field{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--bg);border:1px solid var(--sagebd);border-radius:14px;padding:13px 14px;font-family:var(--fm);font-size:15px;font-weight:600;color:var(--tx);letter-spacing:.3px;white-space:nowrap}
+.ph-field .ico{color:var(--sage);font-size:16px}
+.ph-res{background:var(--sagebg);border:1px solid var(--sagebd);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.ph-res .ph-ic{width:34px;height:34px;border-radius:50%;background:rgba(107,168,136,.18);color:var(--sage);font-size:18px;display:flex;align-items:center;justify-content:center;margin-bottom:4px}
+.ph-res b{font-family:var(--fh);font-size:21px;letter-spacing:-.02em;line-height:1.1}
+.ph-res span{font-size:13.5px;color:var(--sage);font-weight:600;display:inline-flex;align-items:center;gap:6px}
+.ph-chip{display:flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;border:1px solid var(--sagebd);background:var(--bg);padding:11px 14px;font-size:13px;font-weight:700;color:var(--tx)}
+.ph-chip .ico{color:var(--sage);font-size:15px}
+.ph small{font-size:11px;color:var(--tx3);text-align:center;line-height:1.4}
+.saf-state{display:none;margin-top:14px;color:var(--sage);font-weight:600;font-size:14px;line-height:1.5}
+.num,.card .ico{color:var(--sage)}.num .ico{color:var(--sage)}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.cmp .card h3{display:flex;align-items:center;gap:10px}
+.cmp .card h3 .ico{font-size:20px}
+.cmp .card.no .ico{color:var(--lav)}
+.rg{display:flex;flex-direction:row;align-items:center;gap:22px;margin-top:18px;padding:24px;border-color:var(--sagebd);background:var(--bg1)}
+.rg:hover{border-color:var(--sage)}
+.rg>.ico{font-size:28px;color:var(--sage);align-self:center}
+.rg .rg-b{display:flex;flex-direction:column;gap:8px;min-width:0}
+.rg .more{margin-top:4px}
+.rg .eyebrow{align-self:flex-start;margin-bottom:0}
+.sage-note{margin-top:22px}
+.endcta{text-align:center}
+.endcta .lead{margin:0 auto 26px}
+.endcta .hero-cta{justify-content:center}
+.endcta .saf-state{margin-top:0}
+@media(max-width:1000px){.hero-vis{padding:0}}
+@media(max-width:720px){.cmp{grid-template-columns:1fr}.rg{flex-direction:column;align-items:flex-start;gap:14px}.rg>.ico{align-self:flex-start}.ph{max-width:300px}.ph-field{font-size:14px}}
+</style>
+</head>
+<body data-nav="safety" data-source="hookup-safety">
+<div id="site-nav"></div>
+
+<section class="hero glow-s">
+  <div class="wrap">
+    <div class="hero-copy">
+      <span class="eyebrow sage fu"><i></i><span data-i18n="saf.hero.eyebrow">HOOKUP SAFETY CHECK · BETA · INVITE ONLY</span></span>
+      <h1 class="fu2" data-i18n="saf.hero.h1">Check a date’s number with your friends before you go.</h1>
+      <p class="hero-p fu3" data-i18n="saf.hero.p">A private circle of friends who can tell you if they know a number, vouch for someone or flag him. Add a photo or two to a number to recognise him. No public list, no strangers.</p>
+      <div class="hero-cta fu4">
+        <button type="button" class="btn btn-p saf-cta" data-i18n="saf.hero.cta1">Request beta access</button>
+        <a href="#how" class="btn btn-g"><span data-i18n="saf.hero.cta2">How it works</span> <i data-ico="arrow-down"></i></a>
+      </div>
+      <p class="saf-state fu4" role="status" data-i18n="saf.hero.listed">You’re on the list ✓ — we’ll invite you when your circle opens.</p>
+      <div class="gages fu4">
+        <span><i data-ico="check"></i><span data-i18n="saf.hero.g1">Circle-only, no public list</span></span>
+        <span><i data-ico="check"></i><span data-i18n="saf.hero.g2">Free with your Fluidz ID</span></span>
+        <span><i data-ico="check"></i><span data-i18n="saf.hero.g3">You decide who’s in your circle</span></span>
+      </div>
+    </div>
+    <div class="hero-vis fu2" aria-hidden="true">
+      <div class="ph">
+        <div class="ph-top"><span data-i18n="saf.v.circle">Your circle</span><span class="ph-dots"><i></i><i></i><i></i><i></i><i></i></span></div>
+        <div class="ph-lbl" data-i18n="saf.v.lbl">Check a number</div>
+        <div class="ph-field"><span>+33 6 •• •• •• 42</span><i data-ico="search"></i></div>
+        <div class="ph-res">
+          <div class="ph-ic"><i data-ico="users"></i></div>
+          <b data-i18n="saf.v.r1">2 friends know him</b>
+          <span><i data-ico="badge-check"></i><span data-i18n="saf.v.r2">1 vouched “safe”</span></span>
+        </div>
+        <div class="ph-chip"><span class="ph-ph"><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIfIiEmKzcvJik0KSEiMEExNDk7Pj4+JS5ESUM8SDc9Pjv/2wBDAQoLCw4NDhwQEBw7KCIoOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozv/wAARCAAsACwDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD0PRGzpsJ/2BVi91Cz06Dz726it484DSNjJ9B61U8P/NpcP+6K5TxDoqan44lk1IySWUFsjRoGIUHHP65J+tAHUWvirQb6ZYLbV7V5WOFjL7WJ9gcVqGvKtT0Dwm1pNcpAqqjbPMXfkOew9TXUHxdDYeH7FFkW61BrZCwYnAOOrH17460AdJe31vp8BmuZAi9h3Y+gFcndeLr152NsEii/hUruP4muVvPEF1f3he5l3OTjGOF+npR5/vQB0el+N57HRfMTwvrE/lqTuEa7MDk5bJxx7VMPGdjqF7GJtJvtOmlhEm67VPLOQMYIPf6c4rnv7ef+znN3aGOd/OQImFVQ6BQffvxXN3mq3Nx5KSuwW3iWKNcAYUDA6dfxoA9E1OaX+yd0LwnMofKhSvX9Kwr3Tbhi0joFY8n5l6+nWuGu4ZZkfyyjbxg5HbOc4pRdX/ypPIsiqQwyvQjpQB1MdjICSYwMnli4P8jVa/t7mC5KRy5GAcA5x7VW07ULJmlF7NJau53K0Y3Bz3HTg1bguY/KG1pAPdqAKrOZZ3Un7pwKz9RV0Xepzjt61ckYrftjvUk0ayAhhnigDIiZUt0YN1fg56ildlDknGPasee7ktL6SFArIrcBxnFaEEpuYWZlC+y5FAEd4Sj8cqPn47VNBqZt49i3Gxc5AIBpZECNx7daW30q1eLJVhyRgNQB/9k=" alt=""><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIfIiEmKzcvJik0KSEiMEExNDk7Pj4+JS5ESUM8SDc9Pjv/2wBDAQoLCw4NDhwQEBw7KCIoOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozv/wAARCAAsACwDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDyILmlC09OlWrRIkzJIVHpk1FzUqiFmP3T+VNaMitT7RbqCSfzGKpXE6O+Y42APqKAZUK03FTEcdMUw07ktFheOorb0K406JJReRgzK6SQMVB6HkH04rDLgdOals5Yluka4z5Ryr46gEYyPp1/CoaujWMrM9E1ODRL7yZmuUR5CMbFUEjrnPauR8SLpJ1CT7DdM6gKUXBwD0I/r+NFvKdFvd80qTI3McwAPHr7cVnavqMV3KWjYyOTy7ADA9BUxi7lzmrFaQDFQEc0olcjnBpC3NaJGLdxacDimHrTqZI9Z54wY0mYJ/dzx+VRBRyTQeooz8poAOgpKVqYetAH/9k=" alt=""></span><span data-i18n="saf.v.chip">2 photos added</span></div>
+        <small data-i18n="saf.v.ex">Illustration — not a real number</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="how">
+  <div class="wrap">
+    <div class="sec-head center"><span class="eyebrow sage"><i></i><span data-i18n="saf.how.eyebrow">HOW IT WORKS</span></span><h2 class="h2" data-i18n="saf.how.h2">Four steps, one circle.</h2></div>
+    <div class="grid g4">
+      <div class="card"><div class="num">1 <i data-ico="users"></i></div><h3 data-i18n="saf.h1.t">Make your circle</h3><p data-i18n="saf.h1.p">Invite the friends you’d actually trust with this. It’s your circle: you pick who’s in.</p></div>
+      <div class="card"><div class="num">2 <i data-ico="search"></i></div><h3 data-i18n="saf.h2.t">Check a number</h3><p data-i18n="saf.h2.p">Before you meet, enter the number or name and, if you have them, add one or more photos of him. See if anyone in your circle knows him or recognises the face. Photos stay inside your circle.</p></div>
+      <div class="card"><div class="num">3 <i data-ico="badge-check"></i></div><h3 data-i18n="saf.h3.t">Vouch or flag</h3><p data-i18n="saf.h3.p">Know him? Vouch “safe”. Had a bad time? Flag “be careful”. It all stays inside your circle.</p></div>
+      <div class="card"><div class="num">4 <i data-ico="bell"></i></div><h3 data-i18n="saf.h4.t">Next: check in before the date</h3><p data-i18n="saf.h4.p">Tell your circle where you’re headed before you go, so someone always knows where you are.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec alt" id="private">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow sage"><i></i><span data-i18n="saf.pv.eyebrow">PRIVATE BY DESIGN</span></span><h2 class="h2" data-i18n="saf.pv.h2">Your circle, your rules.</h2><p class="lead" data-i18n="saf.pv.p">No public database. No public blacklist. Just people who know each other.</p></div>
+    <div class="grid g4">
+      <div class="pillar"><i data-ico="lock"></i><h3 data-i18n="saf.p1.t">Circle-only</h3><p data-i18n="saf.p1.p">What you check and what you share stays inside your circle. There is no public list of numbers to search.</p></div>
+      <div class="pillar"><i data-ico="hand"></i><h3 data-i18n="saf.p2.t">You stay in control</h3><p data-i18n="saf.p2.p">You decide who joins your circle and what you share with them.</p></div>
+      <div class="pillar"><i data-ico="users"></i><h3 data-i18n="saf.p3.t">Built for friends, not strangers</h3><p data-i18n="saf.p3.p">Opinions come from people you know, not from anonymous accounts, so a flag actually means something.</p></div>
+      <div class="pillar"><i data-ico="flag"></i><h3 data-i18n="saf.p4.t">A moderated way to report</h3><p data-i18n="saf.p4.p">For a serious problem, we’re planning a way to report it to Fluidz for a moderated review.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="who">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow lav"><i></i><span data-i18n="saf.who.eyebrow">WHAT IT IS (AND ISN’T)</span></span><h2 class="h2" data-i18n="saf.who.h2">A friends’ tool. Nothing more.</h2></div>
+    <div class="cmp">
+      <div class="card"><h3><i data-ico="circle-check"></i><span data-i18n="saf.is.t">What it is</span></h3><p data-i18n="saf.is.p">A private tool for you and your friends to look out for each other before meeting someone from an app.</p></div>
+      <div class="card no"><h3><i data-ico="info"></i><span data-i18n="saf.not.t">What it isn’t</span></h3><p data-i18n="saf.not.p">Not a dating app. Not a background check. Not a substitute for your own judgement — if something feels off, trust that and skip it.</p></div>
+    </div>
+    <a class="card rg" href="/guides/hookup-safety-checklist">
+      <i data-ico="shield-check"></i>
+      <div class="rg-b">
+        <span class="eyebrow lav"><i></i><span data-i18n="saf.rg.eyebrow">RELATED GUIDE</span></span>
+        <h3 data-i18n="saf.rg.t">A hookup safety checklist: before, during and after</h3>
+        <p data-i18n="saf.rg.p">A practical, non-judgy checklist for meeting someone from an app: verify him, tell a friend, set your limits, check in, and look after yourself afterwards.</p>
+        <span class="more"><span data-i18n="saf.rg.more">Read the guide</span> →</span>
+      </div>
+    </a>
+    <div class="note sage-note"><i data-ico="info"></i><span data-i18n="saf.who.note">Hookup Safety Check is not an emergency service. If you feel in danger, contact your local emergency services. General information, not medical or legal advice.</span></div>
+  </div>
+</section>
+
+<section class="sec alt" id="faq">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow sage"><i></i><span data-i18n="saf.faq.eyebrow">FAQ</span></span><h2 class="h2" data-i18n="saf.faq.h2">Questions we get a lot.</h2></div>
+    <div class="faq">
+      <details open><summary><span data-i18n="saf.f1.q">Is it free?</span><i data-ico="chevron-down"></i></summary><p data-i18n="saf.f1.a">Yes. Hookup Safety Check is a free Fluidz Labs tool. You just need a free Fluidz ID (one email, no password).</p></details>
+      <details><summary><span data-i18n="saf.f2.q">Who can join the beta?</span><i data-ico="chevron-down"></i></summary><p data-i18n="saf.f2.a">For now it’s invite-only. Request access with your Fluidz ID and we’ll invite people gradually; we can’t promise a date yet.</p></details>
+      <details><summary><span data-i18n="saf.f3.q">Does it see my contacts?</span><i data-ico="chevron-down"></i></summary><p data-i18n="saf.f3.a">It’s built around the numbers and names you choose to check, not around your address book. The beta will tell you clearly what it needs before you join.</p></details>
+      <details><summary><span data-i18n="saf.f4.q">Is my number visible to others?</span><i data-ico="chevron-down"></i></summary><p data-i18n="saf.f4.a">There is no public list of numbers. Information stays inside circles, and you choose who is in yours. The beta will spell out exactly what circle members can see before you join.</p></details>
+      <details><summary><span data-i18n="saf.f5.q">What happens if a flag is wrong?</span><i data-ico="chevron-down"></i></summary><p data-i18n="saf.f5.a">A flag is a friend’s opinion, not a verdict — and it stays inside the circle. We’re designing it so you can change what you left, and for serious problems there will be a moderated way to report to Fluidz.</p></details>
+      <details><summary><span data-i18n="saf.f6.q">Which apps does it work with?</span><i data-ico="chevron-down"></i></summary><p data-i18n="saf.f6.a">Any of them. It only needs a number or a name, so it isn’t tied to one app: Grindr, Scruff, Romeo, Hornet, Jack’d, Sniffies or anywhere else you meet people. Fluidz isn’t affiliated with any of them.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="sec endcta" id="join">
+  <div class="wrap">
+    <h2 class="h2" data-i18n="saf.end.h2">Ready when your circle is.</h2>
+    <p class="lead" data-i18n="saf.end.p">Request beta access and we’ll write when your circle can open.</p>
+    <div class="hero-cta">
+      <button type="button" class="btn btn-p saf-cta" data-i18n="saf.hero.cta1">Request beta access</button>
+      <a href="/my-labs#safety" class="btn btn-g"><span data-i18n="saf.end.my">See it on My tools</span> <i data-ico="arrow-right"></i></a>
+    </div>
+    <p class="saf-state" role="status" data-i18n="saf.hero.listed">You’re on the list ✓ — we’ll invite you when your circle opens.</p>
+  </div>
+</section>
+
+<div id="site-fz"></div>
+<div id="site-foot"></div>
+
+<script src="/labs/site.js"></script>
+<script>
+(function () {
+  var ctas = Array.prototype.slice.call(document.querySelectorAll('.saf-cta')), sts = Array.prototype.slice.call(document.querySelectorAll('.saf-state'))
+  function listed() { var u = Labs.user(); return !!(u && u.meta && u.meta.beta_safety_requested) }
+  function paint() { var l = listed(); sts.forEach(function (s) { s.style.display = l ? 'block' : 'none' }); ctas.forEach(function (c) { c.style.display = l ? 'none' : '' }) }
+  function join() { return Labs.updateMeta({ beta_safety_requested: true }).then(function () { paint(); Labs.toast(Labs.t('saf.hero.listed')) }).catch(function () { Labs.toast(Labs.t('m.err.retry')) }) }
+  ctas.forEach(function (cta) { cta.addEventListener('click', function () { if (Labs.user()) join(); else { try { sessionStorage.setItem('saf_intent', '1') } catch (e) {} Labs.openSignIn({ source: 'hookup-safety', onDone: join }) } }) })
+  var pending = false; try { pending = sessionStorage.getItem('saf_intent') } catch (e) {}
+  if (pending && Labs.user() && !listed()) { try { sessionStorage.removeItem('saf_intent') } catch (e) {} setTimeout(join, 800) }
+  document.addEventListener('labs:auth', paint); paint()
+})()
+</script>
+</body>
+</html>

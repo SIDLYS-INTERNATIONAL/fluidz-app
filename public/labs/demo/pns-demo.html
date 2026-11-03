@@ -16,6 +16,8 @@ body::before{display:none}
 #track{position:absolute;left:0;top:0;width:1440px;will-change:transform}
 .pf{position:relative;float:left;width:180px;height:216px}
 .pf .im{position:absolute;inset:6px;border-radius:12px;overflow:hidden;background:linear-gradient(160deg,hsl(var(--h) 22% 30%),hsl(var(--h) 18% 14%));transition:opacity .3s,box-shadow .3s}
+.pn-res .av{background-size:cover!important;background-position:center 20%!important}
+.pf .im.ph{background-size:cover;background-position:center}.pf .im.ph::before,.pf .im.ph::after{display:none}
 .pf .im::before{content:'';position:absolute;left:50%;top:30%;width:56px;height:56px;margin-left:-28px;border-radius:50%;background:hsl(var(--h) 14% 42% / .75)}
 .pf .im::after{content:'';position:absolute;left:50%;top:62%;width:120px;height:110px;margin-left:-60px;border-radius:60px 60px 0 0;background:hsl(var(--h) 14% 38% / .75)}
 .pf .nm{position:absolute;left:14px;bottom:14px;font-size:12px;font-weight:700;color:#fff;background:rgba(0,0,0,.5);padding:3px 8px;border-radius:7px;z-index:2;max-width:150px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -79,8 +81,10 @@ body::before{display:none}
   <div id="cur"><svg viewBox="0 0 24 24"><path d="M4 3l16 7-7 2-3 7z"/></svg></div>
 </div>
 <script src="/labs/demo/icons-lite.js"></script>
+<script src="/labs/demo/faces.js"></script>
 <script>
 (function () {
+  var FACES = window.PNS_FACES || []
   var COLS = 8, ROWH = 216, ROWS = 16, VIEW = 810 / ROWH
   var pool = ['Alex', 'Sam', 'Leo', 'Hugo', 'Ken', 'Yann', 'Raf', 'Max', 'Joe', 'Theo', 'Nico', 'Luca', 'Eli', 'Tom', 'Ben', 'Axel', 'Noah', 'Marc', 'Paul', 'Remy', 'Ivan', 'Omar', 'Dan', 'Finn', 'Kai', 'Lou', 'Sacha', 'Tim', 'Vic', 'Zed', 'Adam', 'Bo', 'Cyril', 'Dario', 'Enzo', 'Gus', 'Hal', 'Igor', 'Jules', 'Kyle', 'Liam', 'Milo', 'Ned', 'Otto', 'Pip', 'Quin', 'Rio', 'Seb', 'Ty', 'Uri', 'Val', 'Walt', 'Xav', 'Yves', 'Zack', 'dom top', 'bear 🐻', 'vers', '🔥', 'Pierre', 'Karl', 'Matt', 'Hans', 'Dylan', 'Arno', 'Bastien', 'Cole']
   var fixed = { 1: 'Jay 🌴', 8: 'Mike', 10: 'jayden', 83: 'jay_bcn', 89: 'Mikey', 94: 'Mike R.', 98: 'Jaylen', 109: 'mike82', 112: 'DJ Jay' }
@@ -92,9 +96,11 @@ body::before{display:none}
     var nm = fixed[i] || pool[(i * 7 + 3) % pool.length]
     var c = document.createElement('div'); c.className = 'pf'; c.style.setProperty('--h', (i * 47) % 360)
     c.innerHTML = '<div class="im"></div><span class="dist">' + (((i * 13) % 90) / 10 + 0.1).toFixed(1) + ' km</span><span class="nm"></span><div class="open"><b></b>Found on the grid — tap to open</div>'
+    var ph = FACES[(i * 5 + 2) % FACES.length]; if (fixed[i]) ph = fixed[i] === 'Jay 🌴' ? FACES[1] : (fixed[i] === 'Mike' ? FACES[2] : FACES[(i * 3) % FACES.length]); var im = c.querySelector('.im'); im.className = 'im ph'; im.style.backgroundImage = 'url(' + ph + ')'
     c.querySelector('.nm').textContent = nm; c.querySelector('.open b').textContent = nm
     track.appendChild(c); cards.push(c)
   }
+  ;[['r1', 1], ['r2', 2], ['r3', 6]].forEach(function (a) { document.querySelector('#' + a[0] + ' .av').style.backgroundImage = 'url(' + FACES[a[1]] + ')' })
   var $ = function (id) { return document.getElementById(id) }
   var lerp = function (a, b, k) { return a + (b - a) * Math.max(0, Math.min(1, k)) }
   var ease = function (k) { k = Math.max(0, Math.min(1, k)); return k * k * (3 - 2 * k) }
