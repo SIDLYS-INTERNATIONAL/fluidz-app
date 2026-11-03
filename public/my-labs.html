@@ -37,6 +37,7 @@
 .t .ok{font-size:13px;font-weight:700;color:var(--sage);display:flex;gap:6px;align-items:center}
 .web{font-size:12px;color:var(--tx3);display:flex;gap:6px;align-items:center}
 .web .ico{font-size:13px}
+.web a{color:var(--p);font-weight:600;text-decoration:underline;text-underline-offset:3px}
 .sandbox{margin-top:54px}
 .sandbox .frame{margin-top:22px;border:1px solid var(--rule2);border-radius:20px;overflow:hidden;aspect-ratio:16/9;background:#0c0b10}
 .sandbox iframe{width:100%;height:100%;border:0;display:block}
@@ -79,10 +80,9 @@ body.in .loggedin{display:block}body.out .loggedout{display:block}
           <div class="acts"><a class="btn btn-p btn-s" href="/api/profile-hunter-download" download="profile-name-search.zip"><i data-ico="download"></i><span data-i18n="my.pns.dl">Download the .zip</span></a>
           <a class="btn btn-g btn-s" href="/profile-name-search#install" data-i18n="my.pns.guide">Install guide</a>
           <a class="btn btn-g btn-s" href="#try" data-i18n="my.pns.try">Try it online</a></div></div>
-        <div class="t c2" id="album"><span class="pill new" data-i18n="nav.t.soon">Soon</span><div class="ti"><i data-ico="images"></i></div><h3>Adult Album Creator</h3>
-          <p data-i18n="my.alb.p">Turn your private album into a story, on your phone. The web version opens first to people on the list.</p>
-          <div class="web"><i data-ico="smartphone"></i><span data-i18n="my.web.soon">Web version: coming soon</span></div>
-          <div class="acts" id="alb-acts"></div></div>
+        <div class="t c2" id="album"><span class="pill live" data-i18n="nav.t.live">Live</span><div class="ti"><i data-ico="images"></i></div><h3>Adult Album Creator</h3>
+          <p data-i18n="my.alb.p">Turn your private album into a story, in your browser. Your photos never leave your device.</p>
+          <div class="web"><i data-ico="smartphone"></i><a href="/album-creator/create" data-i18n="my.web.open">Open the web version</a></div></div>
         <div class="t c3" id="safety"><span class="pill beta" data-i18n="nav.t.beta">Beta</span><div class="ti"><i data-ico="shield-check"></i></div><h3>Hookup Safety Check</h3>
           <p data-i18n="my.hsc.p">Check a number with the friends in your circle, share a meet-up check-in, spot catfish photos. Private beta, by invitation.</p>
           <div class="web"><i data-ico="smartphone"></i><span data-i18n="my.web.soon">Web version: coming soon</span></div>
@@ -92,7 +92,7 @@ body.in .loggedin{display:block}body.out .loggedout{display:block}
       <div class="sandbox" id="try">
         <span class="eyebrow"><i></i><span data-i18n="my.try.eyebrow">TRY IT ONLINE</span></span>
         <h2 class="h2" data-i18n="my.try.h2">Profile Name Search, on a sample grid.</h2>
-        <p class="lead" data-i18n="my.try.p">Watch the extension work on fictional profiles before you install it. The web versions of Album Creator and Hookup Safety Check will appear here as soon as they open.</p>
+        <p class="lead" data-i18n="my.try.p">Watch the extension work on fictional profiles before you install it. The web version of Hookup Safety Check will appear here as soon as it opens.</p>
         <div class="frame"><iframe src="/labs/demo/pns-demo.html" title="Profile Name Search demo" loading="lazy"></iframe></div>
       </div>
 
@@ -113,7 +113,7 @@ body.in .loggedin{display:block}body.out .loggedout{display:block}
 <script>
 Labs.en({ 'my.listed': 'You’re on the list ✓', 'my.notify': 'Notify me when it opens', 'my.invite': 'Request a beta invite', 'my.invited': 'Invite requested ✓ — we’ll email you', 'my.saved': 'Saved ✓' })
 /* Tool registry: when a web version exists, set webUrl and the card shows an "Open web version" button. */
-var TOOLS = { album: { flag: 'interest_album_creator', webUrl: null, act: 'alb-acts', on: 'my.listed', off: 'my.notify' }, safety: { flag: 'beta_safety_requested', webUrl: null, act: 'hsc-acts', on: 'my.invited', off: 'my.invite' } }
+var TOOLS = { safety: { flag: 'beta_safety_requested', webUrl: null, act: 'hsc-acts', on: 'my.invited', off: 'my.invite' } }
 function paint() {
   var u = Labs.user(); document.body.classList.toggle('in', !!u); document.body.classList.toggle('out', !u)
   if (!u) return
