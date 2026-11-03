@@ -189,7 +189,7 @@
   /* ---------- chrome: nav, drawer, footer, fz block, modal, toast ---------- */
   function toolsMenu(cls) {
     return '<a href="/profile-name-search" class="' + cls + '" data-p="pns"><span data-i18n="nav.pns">Profile Name Search</span><em class="pill live" data-i18n="nav.t.live">Live</em></a>' +
-      '<a href="/album-creator" class="' + cls + '" data-p="album"><span data-i18n="nav.album">Adult Album Creator</span><em class="pill new" data-i18n="nav.t.soon">Soon</em></a>' +
+      '<a href="/album-creator" class="' + cls + '" data-p="album"><span data-i18n="nav.album">Adult Album Creator</span><em class="pill live" data-i18n="nav.t.live">Live</em></a>' +
       '<a href="/hookup-safety-check" class="' + cls + '" data-p="safety"><span data-i18n="nav.safety">Hookup Safety Check</span><em class="pill beta" data-i18n="nav.t.beta">Beta</em></a>'
   }
   function langList() { return LANGS.map(function (l) { return '<li data-l="' + l[0] + '" role="option"><span>' + l[1] + '</span><span class="code">' + l[0].toUpperCase() + '</span></li>' }).join('') }

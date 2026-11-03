@@ -13,6 +13,14 @@
       "destination": "/album-creator.html"
     },
     {
+      "source": "/album-creator/create",
+      "destination": "/album-creator/create.html"
+    },
+    {
+      "source": "/preview/safety",
+      "destination": "/preview/safety.html"
+    },
+    {
       "source": "/support",
       "destination": "/support.html"
     },

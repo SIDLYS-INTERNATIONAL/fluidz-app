@@ -24,6 +24,14 @@
     <xhtml:link rel="alternate" hreflang="it" href="https://fluidz.app/album-creator?lang=it"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://fluidz.app/album-creator?lang=de"/>
   </url>
+  <url><loc>https://fluidz.app/album-creator/create</loc><changefreq>weekly</changefreq><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fluidz.app/album-creator/create?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://fluidz.app/album-creator/create?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://fluidz.app/album-creator/create?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://fluidz.app/album-creator/create?lang=pt"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://fluidz.app/album-creator/create?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fluidz.app/album-creator/create?lang=de"/>
+  </url>
   <url><loc>https://fluidz.app/hookup-safety-check</loc><changefreq>weekly</changefreq><priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://fluidz.app/hookup-safety-check?lang=en"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://fluidz.app/hookup-safety-check?lang=fr"/>
