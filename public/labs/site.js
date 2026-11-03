@@ -18,7 +18,7 @@
   /* ---------- English strings owned by the shared chrome ---------- */
   var EN = {
     'nav.labs': 'Labs', 'nav.tools': 'Tools', 'nav.pns': 'Profile Name Search', 'nav.album': 'Adult Album Creator', 'nav.safety': 'Hookup Safety Check',
-    'nav.privacy': 'Privacy', 'nav.app': 'Fluidz app', 'nav.support': 'Support us', 'nav.signin': 'Sign in', 'nav.cta': 'Get your Fluidz ID',
+    'nav.privacy': 'Privacy', 'nav.legal': 'Legal notice', 'nav.terms': 'Terms', 'nav.app': 'Fluidz app', 'nav.support': 'Support us', 'nav.signin': 'Sign in', 'nav.cta': 'Get your Fluidz ID',
     'nav.mine': 'My tools', 'nav.signout': 'Sign out', 'nav.menu': 'Menu', 'nav.signedin': 'Signed in as',
     'nav.t.live': 'Live', 'nav.t.soon': 'Soon', 'nav.t.beta': 'Beta',
     'm.title': 'One account for every Fluidz Labs tool',
@@ -56,7 +56,9 @@
 
   /* ---------- i18n ---------- */
   var DICT = window.LABS_I18N = window.LABS_I18N || {}
-  var XT = { 'nav.guides': { fr: 'Guides', es: 'Guías', pt: 'Guias', it: 'Guide', de: 'Ratgeber' } }
+  var XT = { 'nav.guides': { fr: 'Guides', es: 'Guías', pt: 'Guias', it: 'Guide', de: 'Ratgeber' },
+    'nav.legal': { fr: 'Mentions légales', es: 'Aviso legal', pt: 'Aviso legal', it: 'Note legali', de: 'Rechtliche Hinweise' },
+    'nav.terms': { fr: 'CGU', es: 'Condiciones de uso', pt: 'Termos de uso', it: 'Condizioni d’uso', de: 'Nutzungsbedingungen' } }
   function t(key, fallback) {
     if (XT[key] && XT[key][LANG]) return XT[key][LANG]
     var d = DICT[LANG]
@@ -217,7 +219,7 @@
   }
   function buildFooter() {
     var h = '<footer><div class="wrap"><div><div class="logo" style="font-size:18px;margin-bottom:8px"><i></i>fluidz <small>labs</small></div><p data-i18n="foot.p">' + EN['foot.p'] + '</p></div>' +
-      '<nav aria-label="Footer"><a href="/" data-i18n="nav.labs">Labs</a><a href="/profile-name-search">Profile Name Search</a><a href="/album-creator" data-i18n="nav.album">Adult Album Creator</a><a href="/hookup-safety-check" data-i18n="nav.safety">Hookup Safety Check</a><a href="/guides" data-i18n="nav.guides">Guides</a><a href="/about" data-i18n="nav.app">Fluidz app</a><a href="/support" data-i18n="nav.support">Support us</a><a href="/privacy" data-i18n="nav.privacy">Privacy</a><a href="/my-labs" data-i18n="nav.mine">My tools</a></nav></div></footer>'
+      '<nav aria-label="Footer"><a href="/" data-i18n="nav.labs">Labs</a><a href="/profile-name-search">Profile Name Search</a><a href="/album-creator" data-i18n="nav.album">Adult Album Creator</a><a href="/hookup-safety-check" data-i18n="nav.safety">Hookup Safety Check</a><a href="/guides" data-i18n="nav.guides">Guides</a><a href="/about" data-i18n="nav.app">Fluidz app</a><a href="/support" data-i18n="nav.support">Support us</a><a href="/privacy" data-i18n="nav.privacy">Privacy</a><a href="/legal-notice" data-i18n="nav.legal">Legal notice</a><a href="/terms" data-i18n="nav.terms">Terms</a><a href="/my-labs" data-i18n="nav.mine">My tools</a></nav></div></footer>'
     var slot = $('#site-foot'); if (slot) slot.outerHTML = h; else body.insertAdjacentHTML('beforeend', h)
   }
   function buildFz() {

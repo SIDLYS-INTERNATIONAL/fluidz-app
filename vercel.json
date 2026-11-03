@@ -33,6 +33,14 @@
       "destination": "/privacy.html"
     },
     {
+      "source": "/legal-notice",
+      "destination": "/legal-notice.html"
+    },
+    {
+      "source": "/terms",
+      "destination": "/terms.html"
+    },
+    {
       "source": "/guides",
       "destination": "/guides.html"
     },
