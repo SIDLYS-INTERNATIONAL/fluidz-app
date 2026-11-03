@@ -28,6 +28,10 @@
     });
   }
   chrome.tabs.onActivated.addListener(function () { if (port) { try { port.disconnect() } catch (e) { /* ignore */ } port = null } connect() });
-  chrome.tabs.onUpdated.addListener(function (id, info) { if (id === tabId && info.status === 'complete') { if (port) { try { port.disconnect() } catch (e) { /* ignore */ } port = null } setTimeout(connect, 1500) } });
+  // Reconnect only when the link is really gone (a real page load drops it by itself). Cutting a healthy link on every "complete" event
+  // made the floating panel flash over Grindr each time a profile opened.
+  chrome.tabs.onUpdated.addListener(function (id, info) { if (id === tabId && info.status === 'complete' && !port) setTimeout(function () { if (!port) connect() }, 1500) });
+  // Tell the page this is a deliberate close, so the floating panel can come back at once.
+  window.addEventListener('pagehide', function () { if (port) { try { port.postMessage({ type: 'bye' }) } catch (e) { /* closed */ } } });
   chrome.storage.local.get(['pns_state_v1'], function (r) { var s = r && r.pns_state_v1; if (s && s.lang) lang = s.lang; connect() });
 })();
