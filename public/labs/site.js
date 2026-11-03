@@ -18,22 +18,23 @@
   /* ---------- English strings owned by the shared chrome ---------- */
   var EN = {
     'nav.labs': 'Labs', 'nav.tools': 'Tools', 'nav.pns': 'Profile Name Search', 'nav.album': 'Adult Album Creator', 'nav.safety': 'Hookup Safety Check',
-    'nav.privacy': 'Privacy', 'nav.legal': 'Legal notice', 'nav.terms': 'Terms', 'nav.app': 'Fluidz app', 'nav.support': 'Support us', 'nav.signin': 'Sign in', 'nav.cta': 'Get your Fluidz ID',
+    'nav.privacy': 'Privacy', 'nav.legal': 'Legal notice', 'nav.terms': 'Terms', 'nav.about': 'About', 'nav.support': 'Support us', 'nav.signin': 'Sign in',
     'nav.mine': 'My tools', 'nav.signout': 'Sign out', 'nav.menu': 'Menu', 'nav.signedin': 'Signed in as',
     'nav.t.live': 'Live', 'nav.t.soon': 'Soon', 'nav.t.beta': 'Beta',
-    'm.title': 'One account for every Fluidz Labs tool',
-    'm.p': 'Profile Name Search, Album Creator and Hookup Safety Check — on the web, installed on your phone, and in the Fluidz app when it launches.',
+    'aria.main': 'Main', 'aria.lang': 'Language', 'aria.footer': 'Footer', 'aria.close': 'Close', 'aria.code': 'Code', 'aria.account': 'Account',
+    'm.title': 'Sign in or create your Fluidz ID',
+    'm.p': 'A free account, no password. Useful for the Safety Check beta and for news — the album and the extension work without it.',
     'm.email': 'Email', 'm.ph': 'your@email.com', 'm.btn': 'Email me a sign-in link', 'm.optin': 'Keep me posted about new Fluidz Labs tools (no spam)',
-    'm.wa': 'WhatsApp sign-in coming later', 'm.legal': 'No password. We never sell your email. Your photos are never stored.',
+    'm.wa': 'WhatsApp sign-in coming later', 'm.legal': 'We never sell your email. Unsubscribe from news anytime.',
     'm.sent.t': 'Check your inbox', 'm.sent.p': 'We sent a sign-in link to', 'm.sent.p2': 'Open it on this device — it signs you in to every Fluidz Labs tool.',
     'm.code': 'Opening it on another device? Type the 6-digit code from the email instead.', 'm.code.btn': 'Confirm code', 'm.resend': 'Resend the link', 'm.resent': 'Sent again ✓',
     'm.err.invalid': 'Please enter a valid email address.', 'm.err.retry': 'Oops, please try again in a moment.',
     'm.err.code': 'That code didn’t work. Check it, or ask for a new one.', 'm.err.expired': 'This link has expired — enter your email again to get a new one.',
     'toast.in': 'You’re signed in as', 'toast.out': 'You’re signed out.',
     'fz.l1': 'Grindr is where it starts.', 'fz.l2': '<b>Fluidz</b> is what comes after.',
-    'fz.p': 'We’re building the after-Grindr app, made for the queer community. Your Fluidz Labs account comes with you: your circle and your vouches are waiting the day the app launches.',
+    'fz.p': 'We’re building the after-Grindr app, made for the queer community. Your Fluidz ID comes with you when the app launches.',
     'fz.a1': 'Group sessions', 'fz.a2': 'One-to-one meets', 'fz.a3': 'Your rules first', 'fz.a4': 'Reputation-based trust',
-    'fz.cta': 'Get my Fluidz ID', 'fz.note': 'One email, no password. It opens your free Fluidz ID and keeps you posted on Fluidz Labs tools. No spam. Never sold. Unsubscribe anytime.',
+    'fz.cta': 'Get my Fluidz ID', 'fz.note': 'A free account, no password. Useful for the Safety Check beta and for news — the album and the extension work without it. No spam, never sold, unsubscribe anytime.',
     'fz.sent.t': 'Check your inbox ✉️', 'fz.sent.p': 'We sent your sign-in link to', 'fz.sent.n': 'Nothing after a minute? Check your spam or Promotions tab — or', 'fz.sent.r': 'send it again',
     'fz.wel.t': 'Welcome to Fluidz Labs 👋', 'fz.wel.p': 'Your Fluidz ID is ready. The same email signs you in to every tool — and to Fluidz, the day it launches.',
     'fz.in.btn': 'Open my tools',
@@ -196,22 +197,20 @@
   function buildNav() {
     var h = '<header class="nav"><div class="wrap">' +
       '<a href="/" class="logo" aria-label="Fluidz Labs"><i></i>fluidz <small>labs</small></a>' +
-      '<nav class="links" aria-label="Main">' +
-      '<a href="/" data-p="home" data-i18n="nav.labs">Labs</a>' +
+      '<nav class="links" aria-label="Main" data-i18n-aria="aria.main">' +
       '<div class="dd" id="dd-tools"><button type="button" aria-haspopup="true" aria-expanded="false" data-p="tools"><span data-i18n="nav.tools">Tools</span>' + ico('chevron-down') + '</button><div class="dd-menu">' + toolsMenu('dd-item') + '</div></div>' +
       '<a href="/guides" data-p="guides" data-i18n="nav.guides">Guides</a>' +
-      '<a href="/about" data-p="about" data-i18n="nav.app">Fluidz app</a>' +
+      '<a href="/about" data-p="about" data-i18n="nav.about">About</a>' +
       '<a href="/support" class="heart" data-p="support">' + ico('heart') + '<span data-i18n="nav.support">Support us</span></a>' +
       '</nav>' +
       '<div class="nav-r">' +
-      '<div class="lang" id="lang"><button type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Language">' + ico('globe') + '<span class="lang-cur">EN</span>' + ico('chevron-down') + '</button><ul role="listbox">' + langList() + '</ul></div>' +
+      '<div class="lang" id="lang"><button type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Language" data-i18n-aria="aria.lang">' + ico('globe') + '<span class="lang-cur">EN</span>' + ico('chevron-down') + '</button><ul role="listbox">' + langList() + '</ul></div>' +
       '<span id="acct-slot"></span>' +
       '<button type="button" class="burger" id="burger" aria-label="Menu" aria-expanded="false" data-i18n-aria="nav.menu">' + ico('menu') + '</button>' +
       '</div></div></header>' +
       '<div class="drawer" id="drawer" hidden><div class="wrap">' +
-      '<a href="/" data-p="home" data-i18n="nav.labs">Labs</a>' +
       '<p class="dr-h" data-i18n="nav.tools">Tools</p>' + toolsMenu('dr-item') +
-      '<a href="/guides" data-p="guides" data-i18n="nav.guides">Guides</a><a href="/about" data-p="about" data-i18n="nav.app">Fluidz app</a>' +
+      '<a href="/guides" data-p="guides" data-i18n="nav.guides">Guides</a><a href="/about" data-p="about" data-i18n="nav.about">About</a>' +
       '<a href="/support" class="heart" data-p="support">' + ico('heart') + '<span data-i18n="nav.support">Support us</span></a>' +
       '<div id="dr-acct"></div>' +
       '</div></div>'
@@ -219,16 +218,18 @@
   }
   function buildFooter() {
     var h = '<footer><div class="wrap"><div><div class="logo" style="font-size:18px;margin-bottom:8px"><i></i>fluidz <small>labs</small></div><p data-i18n="foot.p">' + EN['foot.p'] + '</p></div>' +
-      '<nav aria-label="Footer"><a href="/" data-i18n="nav.labs">Labs</a><a href="/profile-name-search">Profile Name Search</a><a href="/album-creator" data-i18n="nav.album">Adult Album Creator</a><a href="/hookup-safety-check" data-i18n="nav.safety">Hookup Safety Check</a><a href="/guides" data-i18n="nav.guides">Guides</a><a href="/about" data-i18n="nav.app">Fluidz app</a><a href="/support" data-i18n="nav.support">Support us</a><a href="/privacy" data-i18n="nav.privacy">Privacy</a><a href="/legal-notice" data-i18n="nav.legal">Legal notice</a><a href="/terms" data-i18n="nav.terms">Terms</a><a href="/my-labs" data-i18n="nav.mine">My tools</a></nav></div></footer>'
+      '<nav aria-label="Footer" data-i18n-aria="aria.footer"><a href="/" data-i18n="nav.labs">Labs</a><a href="/profile-name-search">Profile Name Search</a><a href="/album-creator" data-i18n="nav.album">Adult Album Creator</a><a href="/hookup-safety-check" data-i18n="nav.safety">Hookup Safety Check</a><a href="/guides" data-i18n="nav.guides">Guides</a><a href="/about" data-i18n="nav.about">About</a><a href="/support" data-i18n="nav.support">Support us</a><a href="/privacy" data-i18n="nav.privacy">Privacy</a><a href="/legal-notice" data-i18n="nav.legal">Legal notice</a><a href="/terms" data-i18n="nav.terms">Terms</a><a href="/my-labs" data-i18n="nav.mine">My tools</a></nav></div></footer>'
     var slot = $('#site-foot'); if (slot) slot.outerHTML = h; else body.insertAdjacentHTML('beforeend', h)
   }
   function buildFz() {
     var slot = $('#site-fz'); if (!slot) return
+    // The Fluidz pitch lives on Home and About only; elsewhere the slot renders nothing.
+    if (PAGE !== 'home' && PAGE !== 'about') { slot.parentNode.removeChild(slot); return }
     slot.outerHTML = '<section id="fluidz" class="sec fz"><div class="wrap"><div class="logo"><i></i>fluidz</div>' +
       '<h2 class="rv"><span data-i18n="fz.l1">' + EN['fz.l1'] + '</span><span class="l2" data-i18n-html="fz.l2">' + EN['fz.l2'] + '</span></h2>' +
       '<p class="p rv" data-i18n="fz.p">' + EN['fz.p'] + '</p>' +
       '<ul class="atouts"><li data-i18n="fz.a1">' + EN['fz.a1'] + '</li><li data-i18n="fz.a2">' + EN['fz.a2'] + '</li><li data-i18n="fz.a3">' + EN['fz.a3'] + '</li><li data-i18n="fz.a4">' + EN['fz.a4'] + '</li></ul>' +
-      '<div id="fz-form"><form class="wf" id="fz-wf" novalidate><input type="email" id="fz-em" data-i18n-ph="m.ph" placeholder="your@email.com" autocomplete="email" inputmode="email" aria-label="Email"><button type="submit" class="btn btn-p" id="fz-sub" data-i18n="fz.cta">' + EN['fz.cta'] + '</button></form>' +
+      '<div id="fz-form"><form class="wf" id="fz-wf" novalidate><input type="email" id="fz-em" data-i18n-ph="m.ph" placeholder="your@email.com" autocomplete="email" inputmode="email" aria-label="Email" data-i18n-aria="m.email"><button type="submit" class="btn btn-p" id="fz-sub" data-i18n="fz.cta">' + EN['fz.cta'] + '</button></form>' +
       '<p class="wn" data-i18n="fz.note">' + EN['fz.note'] + '</p><p class="msg" id="fz-m"></p></div>' +
       '<div class="done" id="fz-sent"><p class="ok" data-i18n="fz.sent.t">' + EN['fz.sent.t'] + '</p><p class="hint"><span data-i18n="fz.sent.p">' + EN['fz.sent.p'] + '</span> <b id="fz-to"></b>.</p>' +
       '<p class="wn"><span data-i18n="fz.sent.n">' + EN['fz.sent.n'] + '</span> <button type="button" class="linkbtn" id="fz-resend" data-i18n="fz.sent.r">' + EN['fz.sent.r'] + '</button>.</p></div>' +
@@ -238,7 +239,7 @@
   function buildModal() {
     body.insertAdjacentHTML('beforeend',
       '<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="m-title"><div class="box">' +
-      '<div class="top"><div class="logo" style="font-size:20px"><i></i>fluidz <small>labs</small></div><button type="button" class="x" id="m-x" aria-label="Close">' + ico('x') + '</button></div>' +
+      '<div class="top"><div class="logo" style="font-size:20px"><i></i>fluidz <small>labs</small></div><button type="button" class="x" id="m-x" aria-label="Close" data-i18n-aria="aria.close">' + ico('x') + '</button></div>' +
       '<div id="m-form"><h2 id="m-title" data-i18n="m.title">' + EN['m.title'] + '</h2><p class="p" data-i18n="m.p">' + EN['m.p'] + '</p>' +
       '<form id="m-f" novalidate><label for="m-em" data-i18n="m.email">Email</label><input class="field" type="email" id="m-em" data-i18n-ph="m.ph" placeholder="your@email.com" autocomplete="email" inputmode="email">' +
       '<label class="chk"><input type="checkbox" id="m-opt"><span data-i18n="m.optin">' + EN['m.optin'] + '</span></label>' +
@@ -247,7 +248,7 @@
       '<div class="sent" id="m-sent"><div class="big">' + ico('mail-check') + '</div><h2 data-i18n="m.sent.t">' + EN['m.sent.t'] + '</h2>' +
       '<p class="p"><span data-i18n="m.sent.p">' + EN['m.sent.p'] + '</span> <b id="m-to"></b>. <span data-i18n="m.sent.p2">' + EN['m.sent.p2'] + '</span></p>' +
       '<p class="p small" data-i18n="m.code">' + EN['m.code'] + '</p>' +
-      '<form id="m-cf" novalidate><input class="field code" id="m-code" inputmode="numeric" autocomplete="one-time-code" maxlength="8" placeholder="000000" aria-label="Code"><p class="msg" id="m-cm"></p><button type="submit" class="btn btn-g" data-i18n="m.code.btn">' + EN['m.code.btn'] + '</button></form>' +
+      '<form id="m-cf" novalidate><input class="field code" id="m-code" inputmode="numeric" autocomplete="one-time-code" maxlength="8" placeholder="000000" aria-label="Code" data-i18n-aria="aria.code"><p class="msg" id="m-cm"></p><button type="submit" class="btn btn-g" data-i18n="m.code.btn">' + EN['m.code.btn'] + '</button></form>' +
       '<button type="button" class="btn btn-g" id="m-resend" data-i18n="m.resend">' + EN['m.resend'] + '</button></div>' +
       '</div></div><div class="toast" id="toast" role="status" aria-live="polite"></div>')
   }
@@ -258,13 +259,12 @@
     var u = user(), slot = $('#acct-slot'), dr = $('#dr-acct')
     if (!slot || !dr) return
     if (!u) {
-      slot.innerHTML = '<button type="button" class="signin" id="nav-signin" data-i18n="nav.signin">' + t('nav.signin') + '</button><button type="button" class="btn btn-p btn-s nav-cta" id="nav-cta" data-i18n="nav.cta">' + t('nav.cta') + '</button>'
-      dr.innerHTML = '<button type="button" class="btn btn-p" id="dr-signin" data-i18n="nav.signin">' + t('nav.signin') + '</button>'
+      slot.innerHTML = '<button type="button" class="signin" id="nav-signin" data-i18n="nav.signin">' + t('nav.signin') + '</button>'
+      dr.innerHTML = '<button type="button" class="btn btn-g" id="dr-signin" data-i18n="nav.signin">' + t('nav.signin') + '</button>'
       $('#nav-signin').onclick = function () { openSignIn() }
-      $('#nav-cta').onclick = function () { var f = $('#fluidz'); if (f && PAGE !== 'mine') f.scrollIntoView({ behavior: 'smooth' }); else openSignIn() }
       $('#dr-signin').onclick = function () { closeDrawer(); openSignIn() }
     } else {
-      slot.innerHTML = '<div class="dd acct" id="dd-acct"><button type="button" class="avatar" aria-haspopup="true" aria-expanded="false" aria-label="Account">' + esc(initial(u)) + '</button>' +
+      slot.innerHTML = '<div class="dd acct" id="dd-acct"><button type="button" class="avatar" aria-haspopup="true" aria-expanded="false" aria-label="' + esc(t('aria.account')) + '" data-i18n-aria="aria.account">' + esc(initial(u)) + '</button>' +
         '<div class="dd-menu right"><p class="who"><span data-i18n="nav.signedin">' + t('nav.signedin') + '</span><b>' + esc(u.email) + '</b></p><a class="dd-item" href="/my-labs"><span data-i18n="nav.mine">' + t('nav.mine') + '</span></a><button type="button" class="dd-item" id="nav-out"><span data-i18n="nav.signout">' + t('nav.signout') + '</span></button></div></div>'
       dr.innerHTML = '<p class="who"><span data-i18n="nav.signedin">' + t('nav.signedin') + '</span> <b>' + esc(u.email) + '</b></p><a class="btn btn-p" href="/my-labs" data-i18n="nav.mine">' + t('nav.mine') + '</a> <button type="button" class="btn btn-g" id="dr-out" data-i18n="nav.signout">' + t('nav.signout') + '</button>'
       $('#nav-out').onclick = signOut; $('#dr-out').onclick = function () { closeDrawer(); signOut() }
@@ -285,7 +285,7 @@
   function closeMenus() { $$('.dd.open,.lang.open').forEach(function (x) { x.classList.remove('open') }); $$('.dd > button,.lang > button').forEach(function (b) { b.setAttribute('aria-expanded', 'false') }) }
   function closeDrawer() { var d = $('#drawer'), b = $('#burger'); if (!d) return; d.hidden = true; body.classList.remove('drawer-open'); b.setAttribute('aria-expanded', 'false') }
 
-  /* ---------- "Fluidz" block (shared by Home, Profile Name Search, Album Creator) ---------- */
+  /* ---------- "Fluidz" block (Home and About only) ---------- */
   var fzShown = ''
   function fzShow(id) { fzShown = id; ;['fz-form', 'fz-sent', 'fz-welcome'].forEach(function (x) { var el = $('#' + x); if (el) el.style.display = x === id ? 'block' : 'none' }) }
   var fzEmail = ''
