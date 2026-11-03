@@ -1,7 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://fluidz.app/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://fluidz.app/profile-name-search</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://fluidz.app/album-creator</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://fluidz.app/support</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url><loc>https://fluidz.app/</loc><changefreq>weekly</changefreq><priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fluidz.app/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://fluidz.app/?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://fluidz.app/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://fluidz.app/?lang=pt"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://fluidz.app/?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fluidz.app/?lang=de"/>
+  </url>
+  <url><loc>https://fluidz.app/profile-name-search</loc><changefreq>weekly</changefreq><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fluidz.app/profile-name-search?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://fluidz.app/profile-name-search?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://fluidz.app/profile-name-search?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://fluidz.app/profile-name-search?lang=pt"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://fluidz.app/profile-name-search?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fluidz.app/profile-name-search?lang=de"/>
+  </url>
+  <url><loc>https://fluidz.app/album-creator</loc><changefreq>weekly</changefreq><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fluidz.app/album-creator?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://fluidz.app/album-creator?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://fluidz.app/album-creator?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://fluidz.app/album-creator?lang=pt"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://fluidz.app/album-creator?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fluidz.app/album-creator?lang=de"/>
+  </url>
+  <url><loc>https://fluidz.app/hookup-safety-check</loc><changefreq>weekly</changefreq><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fluidz.app/hookup-safety-check?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://fluidz.app/hookup-safety-check?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://fluidz.app/hookup-safety-check?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://fluidz.app/hookup-safety-check?lang=pt"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://fluidz.app/hookup-safety-check?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fluidz.app/hookup-safety-check?lang=de"/>
+  </url>
+  <url><loc>https://fluidz.app/guides</loc><changefreq>weekly</changefreq><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fluidz.app/guides?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://fluidz.app/guides?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://fluidz.app/guides?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://fluidz.app/guides?lang=pt"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://fluidz.app/guides?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fluidz.app/guides?lang=de"/>
+  </url>
+  <url><loc>https://fluidz.app/guides/how-to-search-grindr-profiles-by-name</loc><changefreq>weekly</changefreq><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fluidz.app/guides/how-to-search-grindr-profiles-by-name?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://fluidz.app/guides/how-to-search-grindr-profiles-by-name?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://fluidz.app/guides/how-to-search-grindr-profiles-by-name?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://fluidz.app/guides/how-to-search-grindr-profiles-by-name?lang=pt"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://fluidz.app/guides/how-to-search-grindr-profiles-by-name?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fluidz.app/guides/how-to-search-grindr-profiles-by-name?lang=de"/>
+  </url>
+  <url><loc>https://fluidz.app/guides/strip-gps-from-photos-before-sharing</loc><changefreq>weekly</changefreq><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fluidz.app/guides/strip-gps-from-photos-before-sharing?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://fluidz.app/guides/strip-gps-from-photos-before-sharing?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://fluidz.app/guides/strip-gps-from-photos-before-sharing?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://fluidz.app/guides/strip-gps-from-photos-before-sharing?lang=pt"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://fluidz.app/guides/strip-gps-from-photos-before-sharing?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fluidz.app/guides/strip-gps-from-photos-before-sharing?lang=de"/>
+  </url>
+  <url><loc>https://fluidz.app/guides/hookup-safety-checklist</loc><changefreq>weekly</changefreq><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fluidz.app/guides/hookup-safety-checklist?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://fluidz.app/guides/hookup-safety-checklist?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://fluidz.app/guides/hookup-safety-checklist?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://fluidz.app/guides/hookup-safety-checklist?lang=pt"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://fluidz.app/guides/hookup-safety-checklist?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fluidz.app/guides/hookup-safety-checklist?lang=de"/>
+  </url>
+  <url><loc>https://fluidz.app/about</loc><changefreq>weekly</changefreq><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fluidz.app/about?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://fluidz.app/about?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://fluidz.app/about?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://fluidz.app/about?lang=pt"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://fluidz.app/about?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fluidz.app/about?lang=de"/>
+  </url>
+  <url><loc>https://fluidz.app/support</loc><changefreq>weekly</changefreq><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fluidz.app/support?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://fluidz.app/support?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://fluidz.app/support?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://fluidz.app/support?lang=pt"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://fluidz.app/support?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fluidz.app/support?lang=de"/>
+  </url>
+  <url><loc>https://fluidz.app/privacy</loc><changefreq>weekly</changefreq><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fluidz.app/privacy?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://fluidz.app/privacy?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://fluidz.app/privacy?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://fluidz.app/privacy?lang=pt"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://fluidz.app/privacy?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fluidz.app/privacy?lang=de"/>
+  </url>
 </urlset>

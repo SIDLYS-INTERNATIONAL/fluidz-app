@@ -1,29 +1,102 @@
 {
   "rewrites": [
-    { "source": "/join/:code", "destination": "/api/join?code=:code" },
-    { "source": "/profile-name-search", "destination": "/profile-name-search.html" },
-    { "source": "/album-creator", "destination": "/album-creator.html" },
-    { "source": "/support", "destination": "/support.html" },
-    { "source": "/my-labs", "destination": "/my-labs.html" },
-    { "source": "/(.*)", "destination": "/app.html" }
-  ],
-  "redirects": [
-    { "source": "/profile-hunter", "destination": "/profile-name-search", "permanent": true },
-    { "source": "/profile-hunter.html", "destination": "/profile-name-search", "permanent": true },
-    { "source": "/labs", "destination": "/", "permanent": false },
-    { "source": "/tools", "destination": "/#tools", "permanent": false },
-    { "source": "/my-tools", "destination": "/my-labs", "permanent": false }
+    {
+      "source": "/join/:code",
+      "destination": "/api/join?code=:code"
+    },
+    {
+      "source": "/profile-name-search",
+      "destination": "/profile-name-search.html"
+    },
+    {
+      "source": "/album-creator",
+      "destination": "/album-creator.html"
+    },
+    {
+      "source": "/support",
+      "destination": "/support.html"
+    },
+    {
+      "source": "/my-labs",
+      "destination": "/my-labs.html"
+    },
+    {
+      "source": "/hookup-safety-check",
+      "destination": "/hookup-safety-check.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/about.html"
+    },
+    {
+      "source": "/privacy",
+      "destination": "/privacy.html"
+    },
+    {
+      "source": "/guides",
+      "destination": "/guides.html"
+    },
+    {
+      "source": "/guides/:slug",
+      "destination": "/guides/:slug.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/app.html"
+    }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
-        { "key": "X-XSS-Protection", "value": "1; mode=block" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
       ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/profile-hunter",
+      "destination": "/profile-name-search",
+      "permanent": true
+    },
+    {
+      "source": "/profile-hunter.html",
+      "destination": "/profile-name-search",
+      "permanent": true
+    },
+    {
+      "source": "/labs",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/tools",
+      "destination": "/#tools",
+      "permanent": false
+    },
+    {
+      "source": "/my-tools",
+      "destination": "/my-labs",
+      "permanent": false
     }
   ]
 }
