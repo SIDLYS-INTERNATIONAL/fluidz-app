@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' blob: data:; connect-src 'none'; worker-src 'self' blob:; form-action 'none'; base-uri 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Create your album · Adult Album Creator · Fluidz Labs</title>
+<meta name="description" content="Build your private album as a story: captions, an 18+ warning page and your rules, in 6 languages. Made on your phone — your photos are never uploaded.">
+<link rel="canonical" href="https://fluidz.app/album-creator/create">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#05040A">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Fluidz Labs">
+<meta property="og:url" content="https://fluidz.app/album-creator/create">
+<meta property="og:title" content="Create your album — Adult Album Creator">
+<meta property="og:description" content="Captions, an 18+ warning page and your rules, in 6 languages. Built on your phone — your photos never leave it.">
+<meta property="og:image" content="https://fluidz.app/og.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://fluidz.app/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&family=Cormorant+Garamond:wght@400;600&family=VT323&display=swap" rel="stylesheet">
+<script src="/labs/lang.js"></script>
+<link rel="stylesheet" href="/labs/album/app.css">
+</head>
+<body>
+<div class="app" id="app">
+<header class="top" id="top"></header>
+<div class="prog" id="prog"><i></i></div>
+<main class="main" id="main"></main>
+<div class="foot" id="foot"></div>
+<div id="ov"></div>
+<div class="toast" id="toast" aria-live="polite"></div>
+<input type="file" id="fin" accept="image/*" hidden>
+</div>
+<noscript><p>This tool needs JavaScript to build your album on your phone.</p></noscript>
+<script src="/labs/album/phrases.js"></script>
+<script src="/labs/album/engine.js"></script>
+<script src="/labs/album/app-i18n.js"></script>
+<script src="/labs/album/app-core.js"></script>
+<script src="/labs/album/app-ui.js"></script>
+<script src="/labs/album/app-flow.js"></script>
+</body>
+</html>
