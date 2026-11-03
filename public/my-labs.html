@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>My tools — your Fluidz Labs space</title>
+<meta name="description" content="Your Fluidz Labs space: open and test the tools online, manage your free Fluidz ID.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://fluidz.app/my-labs">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#05040A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<script src="/labs/lang.js"></script>
+<link rel="stylesheet" href="/labs/site.css">
+<style>
+.page{padding:64px 0 90px;position:relative}
+.page::before{content:'';position:absolute;inset:0;background:radial-gradient(50% 40% at 70% 0%,rgba(144,128,186,.14),transparent 70%);pointer-events:none}
+.page .wrap{position:relative}
+.hello{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:38px}
+.hello h1{font-family:var(--fh);font-size:clamp(34px,4.6vw,52px);font-weight:700;letter-spacing:-.04em;line-height:1.05}
+.hello h1 em{font-style:normal;color:var(--p)}
+.hello p{color:var(--tx2);margin-top:8px;font-size:15px;word-break:break-all}
+.gate{max-width:560px;margin:30px auto;text-align:center;background:var(--bg1);border:1px solid var(--pbd);border-radius:28px;padding:48px 34px}
+.gate .big{width:64px;height:64px;border-radius:50%;background:var(--p2);color:var(--p);font-size:30px;margin:0 auto 20px;display:flex;align-items:center;justify-content:center}
+.gate h1{font-family:var(--fh);font-size:32px;letter-spacing:-.03em;margin-bottom:12px}
+.gate p{color:var(--tx2);line-height:1.6;margin-bottom:24px}
+.tools3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.t{background:var(--bg1);border:1px solid var(--rule2);border-radius:24px;padding:26px;display:flex;flex-direction:column;gap:12px;position:relative;scroll-margin-top:90px}
+.t .ti{width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:21px}
+.t.c1 .ti{background:var(--p2);color:var(--p)}.t.c2 .ti{background:var(--lavbg);color:var(--lav)}.t.c3 .ti{background:var(--sagebg);color:var(--sage)}
+.t h3{font-family:var(--fh);font-size:21px;font-weight:700;letter-spacing:-.02em}
+.t p{font-size:14px;color:var(--tx2);line-height:1.6}
+.t .pill{position:absolute;top:22px;right:22px}
+.t .acts{display:flex;flex-direction:column;gap:8px;margin-top:auto;padding-top:8px}
+.t .acts .btn{width:100%}
+.t .ok{font-size:13px;font-weight:700;color:var(--sage);display:flex;gap:6px;align-items:center}
+.web{font-size:12px;color:var(--tx3);display:flex;gap:6px;align-items:center}
+.web .ico{font-size:13px}
+.sandbox{margin-top:54px}
+.sandbox .frame{margin-top:22px;border:1px solid var(--rule2);border-radius:20px;overflow:hidden;aspect-ratio:16/9;background:#0c0b10}
+.sandbox iframe{width:100%;height:100%;border:0;display:block}
+.acctgrid{margin-top:54px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.box{background:var(--bg1);border:1px solid var(--rule2);border-radius:22px;padding:26px}
+.box h3{font-family:var(--fh);font-size:20px;margin-bottom:6px}.box p{font-size:14px;color:var(--tx2);line-height:1.55}
+.row{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 0;border-top:1px solid var(--rule);margin-top:14px;font-size:14px;font-weight:600}
+.row small{display:block;font-weight:400;color:var(--tx3);font-size:12.5px;margin-top:3px;line-height:1.4}
+.sw{width:40px;height:23px;border-radius:999px;background:var(--bg3);border:none;padding:2px;display:flex;cursor:pointer;flex-shrink:0;transition:background .2s}
+.sw i{width:19px;height:19px;border-radius:50%;background:#fff;display:block;transition:transform .2s}
+.sw[aria-pressed=true]{background:var(--p)}.sw[aria-pressed=true] i{transform:translateX(17px)}
+.loggedin{display:none}.loggedout{display:none}
+body.in .loggedin{display:block}body.out .loggedout{display:block}
+@media(max-width:1000px){.tools3{grid-template-columns:1fr}.acctgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body data-nav="mine" data-source="labs-home">
+<div id="site-nav"></div>
+
+<main class="page">
+  <div class="wrap">
+    <div class="loggedout">
+      <div class="gate">
+        <div class="big"><i data-ico="key-round"></i></div>
+        <h1 data-i18n="my.gate.h1">Your Fluidz Labs space</h1>
+        <p data-i18n="my.gate.p">Sign in with your email — no password — to open your tools, try them online and manage your free Fluidz ID.</p>
+        <button type="button" class="btn btn-p" id="gate-btn" data-i18n="my.gate.btn">Sign in with email</button>
+      </div>
+    </div>
+
+    <div class="loggedin">
+      <div class="hello">
+        <div><span class="eyebrow sage"><i></i><span data-i18n="my.eyebrow">YOUR FLUIDZ ID</span></span><h1><span data-i18n="my.hello">Hi 👋</span> <em id="who-name"></em></h1><p id="who-mail"></p></div>
+        <a class="btn btn-g" href="/support"><i data-ico="heart"></i><span data-i18n="nav.support">Support us</span></a>
+      </div>
+
+      <div class="tools3" id="tools">
+        <div class="t c1" id="pns"><span class="pill live" data-i18n="nav.t.live">Live</span><div class="ti"><i data-ico="search"></i></div><h3>Profile Name Search</h3>
+          <p data-i18n="my.pns.p">Chrome extension for Grindr Web: search by name, keyword or emoji and let it scroll the grid for you.</p>
+          <div class="acts"><a class="btn btn-p btn-s" href="/api/profile-hunter-download" download="profile-name-search.zip"><i data-ico="download"></i><span data-i18n="my.pns.dl">Download the .zip</span></a>
+          <a class="btn btn-g btn-s" href="/profile-name-search#install" data-i18n="my.pns.guide">Install guide</a>
+          <a class="btn btn-g btn-s" href="#try" data-i18n="my.pns.try">Try it online</a></div></div>
+        <div class="t c2" id="album"><span class="pill new" data-i18n="nav.t.soon">Soon</span><div class="ti"><i data-ico="images"></i></div><h3>Adult Album Creator</h3>
+          <p data-i18n="my.alb.p">Turn your private album into a story, on your phone. The web version opens first to people on the list.</p>
+          <div class="web"><i data-ico="smartphone"></i><span data-i18n="my.web.soon">Web version: coming soon</span></div>
+          <div class="acts" id="alb-acts"></div></div>
+        <div class="t c3" id="safety"><span class="pill beta" data-i18n="nav.t.beta">Beta</span><div class="ti"><i data-ico="shield-check"></i></div><h3>Hookup Safety Check</h3>
+          <p data-i18n="my.hsc.p">Check a number with the friends in your circle, share a meet-up check-in, spot catfish photos. Private beta, by invitation.</p>
+          <div class="web"><i data-ico="smartphone"></i><span data-i18n="my.web.soon">Web version: coming soon</span></div>
+          <div class="acts" id="hsc-acts"></div></div>
+      </div>
+
+      <div class="sandbox" id="try">
+        <span class="eyebrow"><i></i><span data-i18n="my.try.eyebrow">TRY IT ONLINE</span></span>
+        <h2 class="h2" data-i18n="my.try.h2">Profile Name Search, on a sample grid.</h2>
+        <p class="lead" data-i18n="my.try.p">Watch the extension work on fictional profiles before you install it. The web versions of Album Creator and Hookup Safety Check will appear here as soon as they open.</p>
+        <div class="frame"><iframe src="/labs/demo/pns-demo.html" title="Profile Name Search demo" loading="lazy"></iframe></div>
+      </div>
+
+      <div class="acctgrid">
+        <div class="box"><h3 data-i18n="my.acct.h3">Your account</h3><p data-i18n="my.acct.p">One email, no password. The same Fluidz ID opens every tool — and the Fluidz app when it launches.</p>
+          <div class="row"><span><span data-i18n="my.acct.mail">Email updates</span><small data-i18n="my.acct.mail.s">New Fluidz Labs tools and big updates. No spam, never sold.</small></span><button type="button" class="sw" id="sw-mkt" aria-pressed="false" aria-label="Email updates"><i></i></button></div>
+          <div class="row"><span><span data-i18n="my.acct.app">Fluidz app waitlist</span><small data-i18n="my.acct.app.s">You’re in: your circle and your vouches will be waiting.</small></span><span class="pill live">✓</span></div>
+          <div class="row" style="border-bottom:none"><span></span><button type="button" class="btn btn-g btn-s" id="out" data-i18n="nav.signout">Sign out</button></div></div>
+        <div class="box"><h3 data-i18n="my.sup.h3">Like what we do?</h3><p data-i18n="my.sup.p">Every Fluidz Labs tool is free. Servers, emails and the AI agents that build them are not — chip in if it saved your night.</p>
+          <p style="margin-top:20px"><a class="btn btn-p btn-s" href="/support" data-i18n="my.sup.btn">See the ways to help</a></p></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="site-foot"></div>
+<script src="/labs/site.js"></script>
+<script>
+Labs.en({ 'my.listed': 'You’re on the list ✓', 'my.notify': 'Notify me when it opens', 'my.invite': 'Request a beta invite', 'my.invited': 'Invite requested ✓ — we’ll email you', 'my.saved': 'Saved ✓' })
+/* Tool registry: when a web version exists, set webUrl and the card shows an "Open web version" button. */
+var TOOLS = { album: { flag: 'interest_album_creator', webUrl: null, act: 'alb-acts', on: 'my.listed', off: 'my.notify' }, safety: { flag: 'beta_safety_requested', webUrl: null, act: 'hsc-acts', on: 'my.invited', off: 'my.invite' } }
+function paint() {
+  var u = Labs.user(); document.body.classList.toggle('in', !!u); document.body.classList.toggle('out', !u)
+  if (!u) return
+  var n = (u.email || '').split('@')[0]
+  document.getElementById('who-name').textContent = n; document.getElementById('who-mail').textContent = u.email
+  document.getElementById('sw-mkt').setAttribute('aria-pressed', u.meta.marketing_opt_in === false ? 'false' : (u.meta.marketing_opt_in ? 'true' : 'false'))
+  Object.keys(TOOLS).forEach(function (k) {
+    var T = TOOLS[k], box = document.getElementById(T.act), on = !!u.meta[T.flag], html = ''
+    if (T.webUrl) html += '<a class="btn btn-p btn-s" href="' + T.webUrl + '">' + Labs.t('my.open') + '</a>'
+    else html += on ? '<span class="ok">' + Labs.ico('check') + ' ' + Labs.t(T.on) + '</span>' : '<button type="button" class="btn btn-p btn-s" data-k="' + k + '">' + Labs.t(T.off) + '</button>'
+    box.innerHTML = html
+  })
+  document.querySelectorAll('#tools button[data-k]').forEach(function (b) {
+    b.onclick = function () { var d = {}; d[TOOLS[b.getAttribute('data-k')].flag] = true; b.disabled = true; Labs.updateMeta(d).then(function () { paint(); Labs.toast(Labs.t('my.saved')) }).catch(function () { b.disabled = false; Labs.toast(Labs.t('m.err.retry')) }) }
+  })
+}
+document.getElementById('gate-btn').onclick = function () { Labs.openSignIn({ source: 'labs-home' }) }
+document.getElementById('out').onclick = function () { Labs.signOut() }
+document.getElementById('sw-mkt').onclick = function (e) { var b = e.currentTarget, v = b.getAttribute('aria-pressed') !== 'true'; b.setAttribute('aria-pressed', v); Labs.updateMeta({ marketing_opt_in: v, marketing_opt_in_at: new Date().toISOString() }).then(function () { Labs.toast(Labs.t('my.saved')) }).catch(function () {}) }
+document.addEventListener('labs:auth', paint); document.addEventListener('labs:lang', paint)
+paint()
+if (location.hash && document.getElementById(location.hash.slice(1))) setTimeout(function () { var e = document.getElementById(location.hash.slice(1)); e && e.scrollIntoView() }, 400)
+Labs.en({ 'my.open': 'Open web version' })
+</script>
+</body>
+</html>
