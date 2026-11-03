@@ -258,7 +258,7 @@
     function ring(v, c, num, label, sm) {
       return h('div', { cls: 'gauge' }, h('div', { cls: 'w' }, h('div', { cls: 'ring', attrs: { style: '--v:' + v + ';--c:' + c } }), h('b', { cls: sm ? 'sm' : '', text: String(num), attrs: { style: '--c:' + c } })), h('small', { text: label }));
     }
-    function fmtN(n) { try { return n.toLocaleString(lang === 'en' ? 'en-US' : lang).replace(/ | /g, ' ') } catch (e) { return String(n) } }
+    function fmtN(n) { try { return n.toLocaleString(lang === 'en' ? 'en-US' : lang).replace(/ | /g, ' ') } catch (e) { return String(n) } }
     function buildGauges() {
       var sc = S.scanned, fd = S.found, fv = S.favs;
       var vf = fd > 0 && sc > 0 ? Math.max(8, Math.min(100, fd / sc * 100)) : 0, vv = fd > 0 ? fv / fd * 100 : 0;
