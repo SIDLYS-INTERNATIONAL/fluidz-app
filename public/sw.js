@@ -1,5 +1,5 @@
-const CACHE_NAME = 'fluidz-static-v2'
-const PRECACHE = ['/', '/manifest.json', '/icons/icon-192.svg']
+const CACHE_NAME = 'fluidz-static-v3'
+const PRECACHE = ['/app.html', '/manifest.json', '/icons/icon-192.svg']
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -54,6 +54,6 @@ self.addEventListener('fetch', (event) => {
         caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone))
         return res
       })
-      .catch(() => caches.match(event.request).then((cached) => cached || caches.match('/')))
+      .catch(() => caches.match(event.request).then((cached) => cached || caches.match('/app.html')))
   )
 })
