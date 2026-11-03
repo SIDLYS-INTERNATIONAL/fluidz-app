@@ -1,0 +1,26 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Profile Name Search</title>
+<style>
+*{box-sizing:border-box;margin:0}
+body{width:300px;background:#0D0C16;color:#EDE8F5;font:13px/1.35 "Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;padding:14px;-webkit-font-smoothing:antialiased}
+.h{display:flex;align-items:center;gap:8px;margin-bottom:12px}.d{width:12px;height:12px;border-radius:50%;background:linear-gradient(135deg,#E0887A,#9080BA)}
+.h b{font-size:14px}.h small{display:block;font-size:10px;color:rgba(237,232,245,.4);font-weight:600}
+button,a{display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:0;border-radius:12px;background:rgba(255,255,255,.05);color:#EDE8F5;font:inherit;font-weight:700;padding:10px 12px;margin-bottom:8px;cursor:pointer;text-decoration:none}
+button:hover,a:hover{background:rgba(255,255,255,.1)}
+button.p{background:#E0887A;color:#14090A;font-weight:800}
+button:focus-visible,a:focus-visible{outline:2px solid #E0887A;outline-offset:2px}
+.lg{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:6px;font-size:11.5px;font-weight:600;color:rgba(237,232,245,.4)}
+.lg button{display:inline-block;width:auto;margin:0;padding:4px 8px;font-size:11px;font-weight:800;border-radius:999px;text-align:center}
+.lg button.on{background:#E0887A;color:#14090A}
+.more{font-size:11.5px;font-weight:600;color:rgba(237,232,245,.56);background:none;padding:6px 2px;margin:4px 0 0}
+</style></head>
+<body>
+<div class="h"><span class="d"></span><div><b>Profile Name Search</b><small id="by"></small></div></div>
+<button class="p" id="side"></button>
+<button id="show"></button>
+<button id="reset"></button>
+<a id="home" href="https://web.grindr.com" target="_blank" rel="noopener noreferrer"></a>
+<div class="lg"><span id="lgl"></span><span id="langs" style="display:contents"></span></div>
+<a class="more" id="more" href="https://fluidz.app/profile-name-search" target="_blank" rel="noopener noreferrer"></a>
+<script src="i18n.js"></script><script src="popup.js"></script>
+</body></html>

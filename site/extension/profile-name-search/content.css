@@ -1,0 +1,24 @@
+/* Profile Name Search — styles applied to Grindr's own grid cards. The panel itself lives in a shadow root (ui.js). */
+div[role="gridcell"].gnf-match {
+  outline: 3px solid #E0887A !important;
+  outline-offset: -3px;
+  position: relative;
+  z-index: 10;
+}
+div[role="gridcell"].gnf-dim {
+  opacity: 0.12;
+  filter: grayscale(1);
+  transition: opacity 0.15s ease;
+}
+div[role="gridcell"].gnf-pulse {
+  animation: gnf-pulse 1.6s ease;
+}
+@keyframes gnf-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(224, 136, 122, 0.9); }
+  70% { box-shadow: 0 0 0 16px rgba(224, 136, 122, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(224, 136, 122, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  div[role="gridcell"].gnf-pulse { animation: none; box-shadow: 0 0 0 4px rgba(224, 136, 122, 0.9); }
+  div[role="gridcell"].gnf-dim { transition: none; }
+}
