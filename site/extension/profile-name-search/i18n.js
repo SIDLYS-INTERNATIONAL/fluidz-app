@@ -4,7 +4,8 @@
     en: {
       by: 'by Fluidz Labs', tips: 'Tips', side: 'Open in Chrome’s side panel', floatBack: 'Back to the floating panel', min: 'Minimize', max: 'Expand', close: 'Turn off for now (the toolbar icon brings it back)',
       s1: 'Who are you looking for?', ph: 'add a name…', clearChip: 'Remove',
-      tip1: 'Names, keywords or emojis: jay · dom top · 🚀', tip2: 'Comma = OR (jay, mike) · + = AND (dom + top) · "exact phrase"',
+      tip1: 'Names, keywords or emojis: jay · dom top · 🚀', tip2: 'Type a comma or press Enter for OR · use + for AND · "exact phrase"',
+      sumLbl: 'Looking for:', opOr: 'OR', opAnd: 'AND', sumWait: 'waiting for the next word…', chipEdit: 'Click to edit',
       saved: 'Saved:', save: '+ Save this search', saveFull: 'Up to 3 saved searches — remove one first.', unsave: 'Remove this saved search',
       onlyFav: 'Only my favorites',
       s2: 'Let it scroll for you', start: 'Start auto-scroll', pause: 'Pause auto-scroll', resume: 'Resume auto-scroll',
@@ -35,7 +36,8 @@
     fr: {
       by: 'par Fluidz Labs', tips: 'Astuces', side: 'Ouvrir dans le panneau latéral de Chrome', floatBack: 'Revenir au panneau flottant', min: 'Réduire', max: 'Agrandir', close: 'Désactiver pour l’instant (l’icône de la barre d’outils la réactive)',
       s1: 'Qui cherches-tu ?', ph: 'ajoute un prénom…', clearChip: 'Retirer',
-      tip1: 'Prénoms, mots-clés ou emojis : jay · dom top · 🚀', tip2: 'Virgule = OU (jay, mike) · + = ET (dom + top) · "phrase exacte"',
+      tip1: 'Prénoms, mots-clés ou emojis : jay · dom top · 🚀', tip2: 'Tape une virgule ou appuie sur Entrée pour OU · utilise + pour ET · "phrase exacte"',
+      sumLbl: 'Je cherche :', opOr: 'OU', opAnd: 'ET', sumWait: 'en attente du mot suivant…', chipEdit: 'Clique pour modifier',
       saved: 'Enregistrées :', save: '+ Enregistrer cette recherche', saveFull: '3 recherches enregistrées maximum — retires-en une d’abord.', unsave: 'Retirer cette recherche',
       onlyFav: 'Seulement mes favoris',
       s2: 'Laisse-le défiler à ta place', start: 'Lancer le défilement auto', pause: 'Mettre en pause', resume: 'Reprendre le défilement',
@@ -66,7 +68,8 @@
     es: {
       by: 'de Fluidz Labs', tips: 'Consejos', side: 'Abrir en el panel lateral de Chrome', floatBack: 'Volver al panel flotante', min: 'Minimizar', max: 'Ampliar', close: 'Desactivar por ahora (el icono de la barra de herramientas la reactiva)',
       s1: '¿A quién buscas?', ph: 'añade un nombre…', clearChip: 'Quitar',
-      tip1: 'Nombres, palabras clave o emojis: jay · dom top · 🚀', tip2: 'Coma = O (jay, mike) · + = Y (dom + top) · "frase exacta"',
+      tip1: 'Nombres, palabras clave o emojis: jay · dom top · 🚀', tip2: 'Escribe una coma o pulsa Intro para O · usa + para Y · "frase exacta"',
+      sumLbl: 'Buscando:', opOr: 'O', opAnd: 'Y', sumWait: 'esperando la siguiente palabra…', chipEdit: 'Pulsa para editar',
       saved: 'Guardadas:', save: '+ Guardar esta búsqueda', saveFull: 'Máximo 3 búsquedas guardadas — quita una primero.', unsave: 'Quitar esta búsqueda',
       onlyFav: 'Solo mis favoritos',
       s2: 'Deja que se desplace por ti', start: 'Iniciar desplazamiento auto', pause: 'Pausar desplazamiento', resume: 'Reanudar desplazamiento',
@@ -97,7 +100,8 @@
     pt: {
       by: 'da Fluidz Labs', tips: 'Dicas', side: 'Abrir no painel lateral do Chrome', floatBack: 'Voltar ao painel flutuante', min: 'Minimizar', max: 'Expandir', close: 'Desativar por enquanto (o ícone da barra de ferramentas reativa)',
       s1: 'Quem você procura?', ph: 'adicione um nome…', clearChip: 'Remover',
-      tip1: 'Nomes, palavras-chave ou emojis: jay · dom top · 🚀', tip2: 'Vírgula = OU (jay, mike) · + = E (dom + top) · "frase exata"',
+      tip1: 'Nomes, palavras-chave ou emojis: jay · dom top · 🚀', tip2: 'Digite uma vírgula ou pressione Enter para OU · use + para E · "frase exata"',
+      sumLbl: 'Procurando:', opOr: 'OU', opAnd: 'E', sumWait: 'aguardando a próxima palavra…', chipEdit: 'Clique para editar',
       saved: 'Salvas:', save: '+ Salvar esta busca', saveFull: 'No máximo 3 buscas salvas — remova uma antes.', unsave: 'Remover esta busca',
       onlyFav: 'Só meus favoritos',
       s2: 'Deixe rolar por você', start: 'Iniciar rolagem auto', pause: 'Pausar rolagem', resume: 'Retomar rolagem',
@@ -128,7 +132,8 @@
     it: {
       by: 'di Fluidz Labs', tips: 'Consigli', side: 'Apri nel pannello laterale di Chrome', floatBack: 'Torna al pannello flottante', min: 'Riduci', max: 'Espandi', close: 'Disattiva per ora (l’icona nella barra degli strumenti la riattiva)',
       s1: 'Chi stai cercando?', ph: 'aggiungi un nome…', clearChip: 'Rimuovi',
-      tip1: 'Nomi, parole chiave o emoji: jay · dom top · 🚀', tip2: 'Virgola = O (jay, mike) · + = E (dom + top) · "frase esatta"',
+      tip1: 'Nomi, parole chiave o emoji: jay · dom top · 🚀', tip2: 'Scrivi una virgola o premi Invio per O · usa + per E · "frase esatta"',
+      sumLbl: 'Cerchi:', opOr: 'O', opAnd: 'E', sumWait: 'in attesa della parola successiva…', chipEdit: 'Clicca per modificare',
       saved: 'Salvate:', save: '+ Salva questa ricerca', saveFull: 'Al massimo 3 ricerche salvate — rimuovine una prima.', unsave: 'Rimuovi questa ricerca',
       onlyFav: 'Solo i miei preferiti',
       s2: 'Lascia che scorra al posto tuo', start: 'Avvia scorrimento auto', pause: 'Metti in pausa', resume: 'Riprendi scorrimento',
@@ -159,7 +164,8 @@
     de: {
       by: 'von Fluidz Labs', tips: 'Tipps', side: 'Im Seitenbereich von Chrome öffnen', floatBack: 'Zurück zum schwebenden Panel', min: 'Minimieren', max: 'Vergrößern', close: 'Vorerst ausschalten (das Symbol in der Symbolleiste schaltet es wieder ein)',
       s1: 'Wen suchst du?', ph: 'Namen hinzufügen…', clearChip: 'Entfernen',
-      tip1: 'Namen, Stichwörter oder Emojis: jay · dom top · 🚀', tip2: 'Komma = ODER (jay, mike) · + = UND (dom + top) · "genaue Wortfolge"',
+      tip1: 'Namen, Stichwörter oder Emojis: jay · dom top · 🚀', tip2: 'Tippe ein Komma oder drücke Enter für ODER · nutze + für UND · "genaue Wortfolge"',
+      sumLbl: 'Gesucht:', opOr: 'ODER', opAnd: 'UND', sumWait: 'wartet auf das nächste Wort…', chipEdit: 'Zum Bearbeiten klicken',
       saved: 'Gespeichert:', save: '+ Suche speichern', saveFull: 'Höchstens 3 gespeicherte Suchen — entferne zuerst eine.', unsave: 'Diese Suche entfernen',
       onlyFav: 'Nur meine Favoriten',
       s2: 'Lass es für dich scrollen', start: 'Auto-Scrollen starten', pause: 'Auto-Scrollen pausieren', resume: 'Auto-Scrollen fortsetzen',
