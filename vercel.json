@@ -1,10 +1,6 @@
 {
   "rewrites": [
     {
-      "source": "/join/:code",
-      "destination": "/api/join?code=:code"
-    },
-    {
       "source": "/profile-name-search",
       "destination": "/profile-name-search.html"
     },
@@ -55,10 +51,6 @@
     {
       "source": "/guides/:slug",
       "destination": "/guides/:slug.html"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/app.html"
     }
   ],
   "headers": [
@@ -112,6 +104,51 @@
     {
       "source": "/my-tools",
       "destination": "/my-labs",
+      "permanent": false
+    },
+    {
+      "source": "/join/:code",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/landing",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/login",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/signup",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/explore",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/pro",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/pro.html",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/app",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/app.html",
+      "destination": "/",
       "permanent": false
     }
   ]
