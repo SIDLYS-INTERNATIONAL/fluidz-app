@@ -8,16 +8,8 @@ export default defineConfig({
   server: { host: true },
   build: {
     rollupOptions: {
-      // index.html = Fluidz Labs home (static). app.html = the V1 React app (kept reachable, to be rebuilt).
-      input: { labs: resolve(__dirname, 'index.html'), app: resolve(__dirname, 'app.html') },
-      output: {
-        manualChunks: {
-          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
-          'vendor-supabase': ['@supabase/supabase-js'],
-          'vendor-i18n': ['i18next', 'react-i18next'],
-          'vendor-icons': ['lucide-react'],
-        },
-      },
+      // index.html = Fluidz Labs home (static). The old V1 React app is retired from the build (source stays in src/ for reference).
+      input: { labs: resolve(__dirname, 'index.html') },
     },
   },
 })
