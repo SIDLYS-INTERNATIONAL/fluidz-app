@@ -51,6 +51,7 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=1"><\/script>')}
 <header class="top">
   <div class="wrap top-in">
     <a href="/" class="logo" aria-label="Fluidz Labs"><i aria-hidden="true"></i>Fluidz<small>Labs</small></a>
+    <nav class="top-nav" aria-label="Sections"><a href="#what" data-i18n="nav.features">Features</a><a href="#how" data-i18n="nav.install">Install guide</a><a href="#faq" data-i18n="nav.faq">FAQ</a></nav>
     <div class="top-r">
       <div class="lsel">
         <button type="button" class="lsel-b" id="lang" aria-haspopup="listbox" aria-expanded="false" aria-controls="lang-menu"><svg class="fl" aria-hidden="true"><use href="#fl-en"/></svg><span class="lsel-c" data-lang-code>EN</span><svg class="ic lsel-ch" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></button>
@@ -104,26 +105,58 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=1"><\/script>')}
 
 <section class="sec" id="what">
   <div class="wrap">
-    <div class="head center">
-      <p class="eyebrow"><i aria-hidden="true"></i><span data-i18n="ben.eyebrow">What it does</span></p>
-      <h2 data-i18n="l.feat.h2">Everything to find him, fast.</h2>
+    <div class="head">
+      <p class="eyebrow"><i aria-hidden="true"></i><span data-i18n="l.sA.eb">Search</span></p>
+      <h2 data-i18n="l.sA.h2">Search like on Google.</h2>
     </div>
-    <div class="shots lp-shots">
-      <figure class="shot"><img src="/labs/img/pns3-blocks-en.webp" data-src-fr="/labs/img/pns3-blocks-fr.webp" width="600" height="500" loading="lazy" decoding="async" alt="The panel with its three numbered steps: Search, Scan, Results" data-i18n-alt="v3.blocks.alt"><figcaption><b data-i18n="v3.blocks.t">Three clear steps</b><span data-i18n="l.f.blocks.p">Search, Scan, Results: one step open at a time.</span></figcaption></figure>
-      <figure class="shot"><img src="/labs/img/pns3-tabs-en.webp" data-src-fr="/labs/img/pns3-tabs-fr.webp" width="600" height="500" loading="lazy" decoding="async" alt="The results with the All, Favorites and Not favorites tabs" data-i18n-alt="l.f.tabs.alt"><figcaption><b data-i18n="ben.2.t">Skip who you already favorited</b><span data-i18n="l.f.tabs.p">All, Favorites, Not favorites: the list follows the tab.</span></figcaption></figure>
-      <figure class="shot"><img src="/labs/img/pns3-outline-en.webp" data-src-fr="/labs/img/pns3-outline-fr.webp" width="600" height="400" loading="lazy" decoding="async" alt="A sample grid where the matches have a coral outline, next to the results" data-i18n-alt="v3.outline.alt"><figcaption><b data-i18n="v3.outline.t">Matches outlined on the grid</b><span data-i18n="l.f.outline.p">A coral outline marks every match on Grindr’s own grid.</span></figcaption></figure>
-      <figure class="shot"><img src="/labs/img/pns3-pause-en.webp" data-src-fr="/labs/img/pns3-pause-fr.webp" width="600" height="500" loading="lazy" decoding="async" alt="The scroll paused on a new match, with Show and Resume buttons" data-i18n-alt="l.f.pause.alt"><figcaption><b data-i18n="l.f.pause.t">Pauses on every match</b><span data-i18n="l.f.pause.p">The scroll stops on a match: show him on the grid, or resume.</span></figcaption></figure>
-      <figure class="shot"><img src="/labs/img/pns3-editor-en.webp" data-src-fr="/labs/img/pns3-editor-fr.webp" width="600" height="500" loading="lazy" decoding="async" alt="The search editor with three criteria: Name (jay, jayden, jey), Role (top, vers top) and Size (XXL, XL)" data-i18n-alt="v3.editor.alt"><figcaption><b data-i18n="v3.editor.t">Search editor</b><span data-i18n="l.f.editor.p">Synonyms, AND, exclusions: big searches, no syntax to learn.</span></figcaption></figure>
-      <figure class="shot"><img src="/labs/img/pns3-folders-en.webp" data-src-fr="/labs/img/pns3-folders-fr.webp" width="600" height="500" loading="lazy" decoding="async" alt="Saved searches sorted into folders, with a pinned search" data-i18n-alt="v3.folders.alt"><figcaption><b data-i18n="v3.folders.t">Unlimited saved searches</b><span data-i18n="l.f.folders.p">Name them, pin them, sort them into folders.</span></figcaption></figure>
-      <figure class="shot"><img src="/labs/img/pns3-journal-en.webp" data-src-fr="/labs/img/pns3-journal-fr.webp" width="600" height="490" loading="lazy" decoding="async" alt="The scan journal: three scans with their date, number of results and status" data-i18n-alt="v3.journal.alt"><figcaption><b data-i18n="v3.journal.t">Scan journal</b><span data-i18n="l.f.journal.p">Your last 20 scans, kept 30 days on your computer only.</span></figcaption></figure>
-      <figure class="shot"><img src="/labs/img/pns3-compare-en.webp" data-src-fr="/labs/img/pns3-compare-fr.webp" width="600" height="500" loading="lazy" decoding="async" alt="Two scans compared: new in B, gone since A, in both" data-i18n-alt="v3.compare.alt"><figcaption><b data-i18n="v3.compare.t">Compare two scans</b><span data-i18n="l.f.compare.p">See who is new and who is gone since last time.</span></figcaption></figure>
+    <div class="frow">
+      <figure class="shot frow-shot"><img src="/labs/img/pns3-editor-en.webp" data-src-fr="/labs/img/pns3-editor-fr.webp" width="600" height="500" loading="lazy" decoding="async" alt="The search editor with three criteria: Role (top, dom, active), Pos (vers, vers top) and Size (XXL, XL)" data-i18n-alt="v3.editor.alt"></figure>
+      <div class="frow-copy">
+        <h3 data-i18n="v3.editor.t">Search editor</h3><p class="frow-p" data-i18n="l.f.editor.p">Synonyms, AND, exclusions: big searches, no syntax to learn.</p>
+        <ul class="flist"><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg><span data-i18n="l.a.1">Synonyms: (top, dom, active) finds any of them</span></li><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg><span data-i18n="l.a.2">AND and exclusions: TOP + XXL -sub</span></li><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg><span data-i18n="l.a.3">“Whole word” switch on every word</span></li></ul>
+      </div>
     </div>
+    <div class="mini"><figure class="shot"><img src="/labs/img/pns3-folders-en.webp" data-src-fr="/labs/img/pns3-folders-fr.webp" width="600" height="500" loading="lazy" decoding="async" alt="Saved searches sorted into folders, with a pinned search" data-i18n-alt="v3.folders.alt"><figcaption><b data-i18n="v3.folders.t">Unlimited saved searches</b><span data-i18n="l.f.folders.p">Name them, pin them, sort them into folders.</span></figcaption></figure></figure><figure class="shot"><img src="/labs/img/pns3-blocks-en.webp" data-src-fr="/labs/img/pns3-blocks-fr.webp" width="600" height="500" loading="lazy" decoding="async" alt="The panel with its three numbered steps: Search, Scan, Results" data-i18n-alt="v3.blocks.alt"><figcaption><b data-i18n="v3.blocks.t">Three clear steps</b><span data-i18n="l.f.blocks.p">Search, Scan, Results: one step open at a time.</span></figcaption></figure></figure></div>
+  </div>
+</section>
+
+<section class="sec alt" id="scan">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow"><i aria-hidden="true"></i><span data-i18n="l.sB.eb">Scan</span></p>
+      <h2 data-i18n="l.sB.h2">It scrolls, you watch.</h2>
+    </div>
+    <div class="frow rev">
+      <figure class="shot frow-shot"><img src="/labs/img/pns3-outline-en.webp" data-src-fr="/labs/img/pns3-outline-fr.webp" width="600" height="400" loading="lazy" decoding="async" alt="A sample grid where the matches have a coral outline, next to the results" data-i18n-alt="v3.outline.alt"></figure>
+      <div class="frow-copy">
+        <h3 data-i18n="v3.outline.t">Matches outlined on the grid</h3><p class="frow-p" data-i18n="l.f.outline.p">A coral outline marks every match on Grindr’s own grid.</p>
+        <ul class="flist"><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg><span data-i18n="l.b.1">Gentle speed, 30-minute limit by default</span></li><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg><span data-i18n="l.b.2">Pause on every match — your choice</span></li><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg><span data-i18n="l.b.3">Resume if Grindr crashes or empties the grid</span></li></ul>
+      </div>
+    </div>
+    <div class="mini"><figure class="shot"><img src="/labs/img/pns3-pause-en.webp" data-src-fr="/labs/img/pns3-pause-fr.webp" width="600" height="500" loading="lazy" decoding="async" alt="The scroll paused on a new match, with Show and Resume buttons" data-i18n-alt="l.f.pause.alt"><figcaption><b data-i18n="l.f.pause.t">Pauses on every match</b><span data-i18n="l.f.pause.p">The scroll stops on a match: show him on the grid, or resume.</span></figcaption></figure></figure><figure class="shot"><img src="/labs/img/pns3-tabs-en.webp" data-src-fr="/labs/img/pns3-tabs-fr.webp" width="600" height="500" loading="lazy" decoding="async" alt="The results with the All, Favorites and Not favorites tabs" data-i18n-alt="l.f.tabs.alt"><figcaption><b data-i18n="ben.2.t">Skip who you already favorited</b><span data-i18n="l.f.tabs.p">All, Favorites, Not favorites: the list follows the tab.</span></figcaption></figure></figure></div>
+  </div>
+</section>
+
+<section class="sec" id="find">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow"><i aria-hidden="true"></i><span data-i18n="l.sC.eb">Find again</span></p>
+      <h2 data-i18n="l.sC.h2">Nobody gets lost anymore.</h2>
+    </div>
+    <div class="frow">
+      <figure class="shot frow-shot"><img src="/labs/img/pns3-journal-en.webp" data-src-fr="/labs/img/pns3-journal-fr.webp" width="600" height="490" loading="lazy" decoding="async" alt="The scan journal: three scans with their date, number of results and status" data-i18n-alt="v3.journal.alt"></figure>
+      <div class="frow-copy">
+        <h3 data-i18n="v3.journal.t">Scan journal</h3><p class="frow-p" data-i18n="l.f.journal.p">Your last 20 scans, kept 30 days on your computer only.</p>
+        <ul class="flist"><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg><span data-i18n="l.c.1">Find again by photo id, then by name</span></li><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg><span data-i18n="l.c.2">Compare two scans: new, gone, in both</span></li><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg><span data-i18n="l.c.3">To review / Ignore marks, on your computer only</span></li></ul>
+      </div>
+    </div>
+    <div class="mini one"><figure class="shot"><img src="/labs/img/pns3-compare-en.webp" data-src-fr="/labs/img/pns3-compare-fr.webp" width="600" height="500" loading="lazy" decoding="async" alt="Two scans compared: new in B, gone since A, in both" data-i18n-alt="v3.compare.alt"><figcaption><b data-i18n="v3.compare.t">Compare two scans</b><span data-i18n="l.f.compare.p">See who is new and who is gone since last time.</span></figcaption></figure></figure></div>
     <p class="shots-note" data-i18n="v3.note">Real screenshots on a generated sample grid: fictional names, no real Grindr profile.</p>
     <details class="fold">
       <summary><span data-i18n="v3.all">Everything in 3.0</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary>
       <ul class="v3list">
         <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#layout-grid"/></svg><div><h4 data-i18n="v3.f1.t">Three numbered steps</h4><p data-i18n="v3.f1.p">Search, Scan, Results — one open at a time, with a one-line summary on the others. An empty result offers two ways forward.</p></div></li>
-        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#text-cursor-input"/></svg><div><h4 data-i18n="v3.f2.t">Synonyms, AND, exclusions</h4><p data-i18n="v3.f2.p">(jay, jayden) + TOP finds either name with TOP. -XXL leaves XXL out. “Whole word” makes top skip laptop; by default a word matches anywhere.</p></div></li>
+        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#text-cursor-input"/></svg><div><h4 data-i18n="v3.f2.t">Synonyms, AND, exclusions</h4><p data-i18n="v3.f2.p">(top, dom, active) + XXL finds any of the three with XXL. -sub leaves sub out. “Whole word” makes top skip laptop; by default a word matches anywhere.</p></div></li>
         <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#folder-down"/></svg><div><h4 data-i18n="v3.f3.t">Saved searches in folders</h4><p data-i18n="v3.f3.p">Unlimited, in collapsible folders, combinable with each other. Your 2.x searches move over by themselves.</p></div></li>
         <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#scroll-text"/></svg><div><h4 data-i18n="v3.f4.t">Scan journal & Find again</h4><p data-i18n="v3.f4.p">20 scans kept 30 days, on your computer only. Find again looks for the same photo id, then the same name: a lead, not a guarantee.</p></div></li>
         <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#refresh-cw"/></svg><div><h4 data-i18n="v3.f5.t">Compare & new since last time</h4><p data-i18n="v3.f5.p">Compare two scans, count who is new since last time, and hide the ones you already saw.</p></div></li>
@@ -252,7 +285,7 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=1"><\/script>')}
           <p data-i18n="use.p">On your first visit to Grindr Web, a 4-step welcome walks you through it, starting with “Get your grid ready”. ⚙ → Replay the tour shows it again anytime.</p>
           <ol class="fa-l">
             <li><b data-i18n="how.3.t">Open Grindr Web, filter, then search</b> <span data-i18n-html="how.3.p">Open <a href="https://web.grindr.com" target="_blank" rel="noopener">web.grindr.com</a> in grid view and apply your Grindr filters first (position, age, favorites, online…). The panel appears: type what you’re looking for and start.</span></li>
-            <li><b data-i18n="use.1.t">Type names, keywords or emojis</b> <span data-i18n="use.1.p">“jay”, “TOP”, “🚀”… Combine them: a comma (OR), a + (AND), -word to leave a word out, (a, b) for synonyms. See the examples below, or press ? in the panel.</span></li>
+            <li><b data-i18n="use.1.t">Type names, keywords or emojis</b> <span data-i18n="use.1.p">“TOP”, “DOM”, “🚀”… Combine them: a comma (OR), a + (AND), -word to leave a word out, (a, b) for synonyms. See the examples below, or press ? in the panel.</span></li>
             <li><b data-i18n="use.2.t">Start auto-scroll and let it load</b> <span data-i18n="use.2.p">It scrolls the grid for you and loads new profiles. Leave it running: the counters show how many profiles were scanned and found.</span> <span data-i18n="use.2.n">Scan speed: Gentle (the default) takes short breaks to keep Grindr Web happy. Fast is the old pace and can disconnect Grindr Web’s chat.</span></li>
             <li><b data-i18n="use.3.t">Pause, check, resume</b> <span data-i18n="use.3.p">Pause anytime (or let it pause on each match) to look at the profiles found, then press Resume to continue down the grid.</span></li>
             <li><b data-i18n="use.4.t">The end of the grid</b> <span data-i18n="use.4.p">When it stops, you’ve seen every profile Grindr shows you: that’s the limit of your Grindr plan, not of the extension. For more profiles, upgrade your Grindr plan.</span></li>
@@ -265,13 +298,13 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=1"><\/script>')}
         <div class="fa">
           <p data-i18n="g.p">It searches the name shown on each profile card — so names, keywords and emojis all work. Upper or lower case doesn’t matter.</p>
           <ul class="ex">
-            <li><code>Jay</code><em data-i18n="g.1.l">A name</em><span data-i18n="g.1.e">Every profile whose name contains “jay”: Jay, Jayden, jay_bcn…</span></li>
-            <li><code>dom top</code><em data-i18n="g.2.l">A keyword</em><span data-i18n="g.2.e">Many guys put tags in their name: DOM TOP, vers, bear… Search them like a name.</span></li>
+            <li><code>sub</code><em data-i18n="g.1.l">A word</em><span data-i18n="g.1.e">Every profile whose name contains “sub”: Sub, SUBBY, sub_bcn…</span></li>
+            <li><code>dom top</code><em data-i18n="g.2.l">Tags in names</em><span data-i18n="g.2.e">Many guys put tags in their name: DOM TOP, vers, bear… Search them like a name.</span></li>
             <li><code>🚀</code><em data-i18n="g.3.l">An emoji</em><span data-i18n="g.3.e">🚀, 🌴, 😈… emojis in names work too.</span></li>
             <li><code>top, xxl</code><em data-i18n="g.4.l">OR — comma</em><span data-i18n="g.4.e">Either one: profiles with TOP or XXL in their name, in one pass.</span></li>
             <li><code>dom + top</code><em data-i18n="g.5.l">AND — plus</em><span data-i18n="g.5.e">Both words, any order: “DOM TOP 🚀” and “top dom” match, “dom” alone doesn’t.</span></li>
             <li><code>"dom top"</code><em data-i18n="g.6.l">Exact phrase</em><span data-i18n="g.6.e">Only these words, in this order.</span></li>
-            <li><code>(jay, jayden) + TOP</code><em data-i18n="g.7.l">Synonyms</em><span data-i18n="g.7.e">Jay or Jayden, and TOP somewhere in the name.</span></li>
+            <li><code>(top, dom, active) + XXL</code><em data-i18n="g.7.l">Synonyms</em><span data-i18n="g.7.e">top, dom or active, and XXL somewhere in the name.</span></li>
             <li><code>TOP -XXL</code><em data-i18n="g.8.l">Leave out — minus</em><span data-i18n="g.8.e">TOP, but never with XXL.</span></li>
             <li><code>=top</code><em data-i18n="g.9.l">Whole word</em><span data-i18n="g.9.e">“top” as a word: “laptop” doesn’t match. The editor has the same switch on each word.</span></li>
           </ul>
