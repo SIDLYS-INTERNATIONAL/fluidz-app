@@ -11,14 +11,14 @@ const check = (n, ok, info) => { if (ok) passes++; else fails++; console.log((ok
 const eq = (a, b) => JSON.stringify(a) === JSON.stringify(b)
 
 // ---- 2.x syntax must keep its meaning (cases from the 2.1.x regression test) ----
-const NAMES = ['DOM TOP 🚀', 'dom bottom', 'top guy', 'Jay', 'mike', 'Jayden dom top', '🚀 rocket', 'José', 'Jose B', 'Dom  Top', 'vers', 'Mike & Jay', 'domtop', 'top dom', 'c++ dev', 'Zoë, 25', 'bear']
+const NAMES = ['DOM TOP 🚀', 'dom bottom', 'top guy', 'Kai', 'rob', 'Kaiden dom top', '🚀 rocket', 'José', 'Jose B', 'Dom  Top', 'vers', 'Rob & Kai', 'domtop', 'top dom', 'c++ dev', 'Zoë, 25', 'bear']
 const norm = s => String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
 const ref = groups => NAMES.filter(n => groups.some(g => g.every(t => norm(n).includes(norm(t)))))
 const OLD = [
   ['dom + top', [['dom', 'top']]], ['dom+top', [['dom', 'top']]], ['dom +top', [['dom', 'top']]], ['dom＋top', [['dom', 'top']]],
-  ['jay, mike', [['jay'], ['mike']]], ['jay,mike', [['jay'], ['mike']]], ['jay，mike', [['jay'], ['mike']]], ['jay; mike', [['jay'], ['mike']]], ['jay | mike', [['jay'], ['mike']]], ['jay|mike', [['jay'], ['mike']]],
+  ['kai, rob', [['kai'], ['rob']]], ['kai,rob', [['kai'], ['rob']]], ['kai，rob', [['kai'], ['rob']]], ['kai; rob', [['kai'], ['rob']]], ['kai | rob', [['kai'], ['rob']]], ['kai|rob', [['kai'], ['rob']]],
   ['dom + top, 🚀', [['dom', 'top'], ['🚀']]], ['dom + top + 🚀', [['dom', 'top', '🚀']]], ['"dom top"', [['dom top']]], ['"c++"', [['c++']]], ['"dom top" + 🚀', [['dom top', '🚀']]],
-  ['JOSE', [['jose']]], ['josé', [['jose']]], ['zoe, jay', [['zoe'], ['jay']]], ['dom +', [['dom']]], ['dom + ', [['dom']]], ['jay,', [['jay']]],
+  ['JOSE', [['jose']]], ['josé', [['jose']]], ['zoe, kai', [['zoe'], ['kai']]], ['dom +', [['dom']]], ['dom + ', [['dom']]], ['kai,', [['kai']]],
 ]
 for (const [text, groups] of OLD) {
   const q = C.parse(text).q, c = C.compile(q)
@@ -26,40 +26,40 @@ for (const [text, groups] of OLD) {
   check(`2.x syntax "${text}"`, eq(got, want) && want.length > 0, JSON.stringify(got) + ' vs ' + JSON.stringify(want))
 }
 check('"dom +" is pending', C.parse('dom +').pending && !C.parse('dom + top').pending)
-check('old chips joined ", " (2.x saved search) keep OR/AND', eq(NAMES.filter(C.compile(C.parse(['dom + top', 'jay'].join(', ')).q).test), ref([['dom', 'top'], ['jay']])))
+check('old chips joined ", " (2.x saved search) keep OR/AND', eq(NAMES.filter(C.compile(C.parse(['dom + top', 'kai'].join(', ')).q).test), ref([['dom', 'top'], ['kai']])))
 
 // ---- new syntax ----
-const P = ['Jay TOP', 'Jayden XXL top', 'Jay XXL', 'Mike TOP', 'jey top xxl', 'laptop Jay', 'Leo']
+const P = ['Kai TOP', 'Kaiden XXL top', 'Kai XXL', 'Rob TOP', 'kei top xxl', 'laptop Kai', 'Leo']
 const m = (txt, list = P) => list.filter(C.compile(C.parse(txt).q).test)
-check('criteria (jay, jayden) + (top)', eq(m('(jay, jayden) + (top)'), ['Jay TOP', 'Jayden XXL top', 'laptop Jay']))
-check('three criteria with synonyms', eq(m('(jay, jey) + (top) + (xxl)'), ['Jayden XXL top', 'jey top xxl']))
-check('exclusion: TOP -XXL', eq(m('TOP -XXL'), ['Jay TOP', 'Mike TOP', 'laptop Jay']))
-check('exclusion inside criteria: (jay) + top -xxl', eq(m('(jay) + top -xxl'), ['Jay TOP', 'laptop Jay']))
-check('exclusion only: -jay', eq(m('-jay'), ['Mike TOP', 'jey top xxl', 'Leo']))
-check('whole word: =top skips "laptop"', eq(m('jay + =top'), ['Jay TOP', 'Jayden XXL top']))
+check('criteria (kai, kaiden) + (top)', eq(m('(kai, kaiden) + (top)'), ['Kai TOP', 'Kaiden XXL top', 'laptop Kai']))
+check('three criteria with synonyms', eq(m('(kai, kei) + (top) + (xxl)'), ['Kaiden XXL top', 'kei top xxl']))
+check('exclusion: TOP -XXL', eq(m('TOP -XXL'), ['Kai TOP', 'Rob TOP', 'laptop Kai']))
+check('exclusion inside criteria: (kai) + top -xxl', eq(m('(kai) + top -xxl'), ['Kai TOP', 'laptop Kai']))
+check('exclusion only: -kai', eq(m('-kai'), ['Rob TOP', 'kei top xxl', 'Leo']))
+check('whole word: =top skips "laptop"', eq(m('kai + =top'), ['Kai TOP', 'Kaiden XXL top']))
 check('whole word works with emoji neighbour', C.hasWord(norm('🚀top🚀'), 'top') && !C.hasWord('laptops', 'top'))
 check('named criterion: Size: (XL, XXL)', (() => { const q = C.parse('Size: (XL, XXL) + top').q; return q.groups[0].items[0].name === 'Size' && q.groups[0].items[0].terms.length === 2 && q.groups[0].items[1].terms[0].t === 'top' })())
-check('unclosed parenthesis while typing still works', eq(m('(jay, jayden'), ['Jay TOP', 'Jayden XXL top', 'Jay XXL', 'laptop Jay']))
+check('unclosed parenthesis while typing still works', eq(m('(kai, kaiden'), ['Kai TOP', 'Kaiden XXL top', 'Kai XXL', 'laptop Kai']))
 check('hyphenated names are not exclusions', eq(C.parse('jean-luc').q.groups[0].items[0].terms[0].t, 'jean-luc') && C.parse('jean-luc').q.exclude.length === 0)
 check('quoted minus is literal', C.parse('"TOP -XXL"').q.exclude.length === 0)
-check('"jay, mike" becomes ONE criterion with 2 synonyms', C.parse('jay, mike').q.groups.length === 1 && C.parse('jay, mike').q.groups[0].items[0].terms.length === 2)
+check('"kai, rob" becomes ONE criterion with 2 synonyms', C.parse('kai, rob').q.groups.length === 1 && C.parse('kai, rob').q.groups[0].items[0].terms.length === 2)
 check('empty text -> empty query', C.isEmpty(C.parse('  ').q) && !C.compile(C.parse('').q).active)
 
 // ---- serialize round trip ----
-const RT = ['jay, mike', 'dom + top, 🚀', '(jay, jayden) + TOP', 'Size: (XL, XXL) + =top', 'TOP -XXL', '"c++" + "a, b"', '-jay -mike', '(jay, jey) + (top) + (xxl)']
+const RT = ['kai, rob', 'dom + top, 🚀', '(kai, kaiden) + TOP', 'Size: (XL, XXL) + =top', 'TOP -XXL', '"c++" + "a, b"', '-kai -rob', '(kai, kei) + (top) + (xxl)']
 for (const t of RT) { const q1 = C.parse(t).q, s = C.serialize(q1), q2 = C.parse(s).q; check(`round trip "${t}" -> "${s}"`, C.sig(q1) === C.sig(q2), JSON.stringify([q1, q2])) }
 
 // ---- saved searches reused as blocks ----
-const saved = { a: { q: C.parse('(jay, jayden) + top').q }, b: { q: C.parse('xxl').q }, loop: { q: { groups: [{ items: [{ ref: 'loop2' }] }], exclude: [] } }, loop2: { q: { groups: [{ items: [{ ref: 'loop' }] }], exclude: [] } } }
+const saved = { a: { q: C.parse('(kai, kaiden) + top').q }, b: { q: C.parse('xxl').q }, loop: { q: { groups: [{ items: [{ ref: 'loop2' }] }], exclude: [] } }, loop2: { q: { groups: [{ items: [{ ref: 'loop' }] }], exclude: [] } } }
 const get = id => saved[id]
 const comb = (q, list = P) => list.filter(C.compile(q, get).test)
-check('saved A AND saved B', eq(comb({ groups: [{ items: [{ ref: 'a' }, { ref: 'b' }] }] }), ['Jayden XXL top']))
-check('saved A OR saved B', eq(comb({ groups: [{ items: [{ ref: 'a' }] }, { items: [{ ref: 'b' }] }] }), ['Jay TOP', 'Jayden XXL top', 'Jay XXL', 'jey top xxl', 'laptop Jay']))
-check('@name syntax resolves a saved search', (() => { const q = C.parse('@"Plan A" + xxl', n => n === 'Plan A' ? 'a' : null).q; return comb(q).join() === 'Jayden XXL top' })())
+check('saved A AND saved B', eq(comb({ groups: [{ items: [{ ref: 'a' }, { ref: 'b' }] }] }), ['Kaiden XXL top']))
+check('saved A OR saved B', eq(comb({ groups: [{ items: [{ ref: 'a' }] }, { items: [{ ref: 'b' }] }] }), ['Kai TOP', 'Kaiden XXL top', 'Kai XXL', 'kei top xxl', 'laptop Kai']))
+check('@name syntax resolves a saved search', (() => { const q = C.parse('@"Plan A" + xxl', n => n === 'Plan A' ? 'a' : null).q; return comb(q).join() === 'Kaiden XXL top' })())
 check('reference loop does not hang', comb({ groups: [{ items: [{ ref: 'loop' }] }] }).length === 0)
-check('missing reference reported', C.compile({ groups: [{ items: [{ ref: 'zzz' }, { name: '', terms: [{ t: 'jay' }] }] }] }, get).missing === 1)
+check('missing reference reported', C.compile({ groups: [{ items: [{ ref: 'zzz' }, { name: '', terms: [{ t: 'kai' }] }] }] }, get).missing === 1)
 check('serialize writes @name with current name', C.serialize({ groups: [{ items: [{ ref: 'a' }, { name: '', terms: [{ t: 'top' }] }] }] }, id => id === 'a' ? 'Plan A' : '') === '@"Plan A" + top')
-check('summary lines: one per criterion + exclusions', (() => { const l = C.summary(C.parse('Who: (jay, jey) + top -xxl').q); return l.length === 3 && l[0].label === 'Who' && l[2].kind === 'x' })())
+check('summary lines: one per criterion + exclusions', (() => { const l = C.summary(C.parse('Who: (kai, kei) + top -xxl').q); return l.length === 3 && l[0].label === 'Who' && l[2].kind === 'x' })())
 
 // ---- journal ----
 const now = Date.UTC(2026, 10, 4)
@@ -71,7 +71,7 @@ check('journal keeps 20 newest scans, drops > 30 days', j.scans.length === 20 &&
 const sc = JR.newScan('z', C.parse('top').q, 'top', now)
 check('addResults dedupes and counts new', JR.addResults(sc, [{ id: 'a', name: 'A' }, { id: 'b', name: 'B' }, { id: 'a', name: 'A2', favorite: true }], now) === 2 && sc.res.length === 2 && sc.res[0].name === 'A2' && sc.res[0].fav)
 check('thumb kept as https link only', (() => { const s = JR.newScan('t', {}, '', now); JR.addResults(s, [{ id: 'x', name: 'X', thumb: 'data:image/png;base64,AAAA' }], now); return s.res[0].thumb === '' })())
-const A = { res: [{ id: 'img:1', name: 'Jay' }, { id: 'img:2', name: 'Mike' }, { id: 'img:3', name: 'Leo' }] }, B = { res: [{ id: 'img:1', name: 'Jay' }, { id: 'img:9', name: 'Mike' }, { id: 'img:4', name: 'Sam' }] }
+const A = { res: [{ id: 'img:1', name: 'Kai' }, { id: 'img:2', name: 'Rob' }, { id: 'img:3', name: 'Leo' }] }, B = { res: [{ id: 'img:1', name: 'Kai' }, { id: 'img:9', name: 'Rob' }, { id: 'img:4', name: 'Sam' }] }
 const cmp = JR.compare(A, B)
 check('compare: new / gone / both (id first, then name)', cmp.added.map(r => r.name).join() === 'Sam' && cmp.gone.map(r => r.name).join() === 'Leo' && cmp.both === 2)
 check('seenIds excludes the current scan', (() => { const jj = { scans: [{ id: 'a', res: [{ id: '1' }] }, { id: 'b', res: [{ id: '2' }] }] }; const s = JR.seenIds(jj, 'b'); return s.has('1') && !s.has('2') })())
@@ -80,24 +80,24 @@ check('findAgain: by name as a lead, counts homonyms', (() => { const r = JR.fin
 check('findAgain: nothing', JR.findAgain({ id: 'img:7', name: 'Z' }, []).how === null)
 
 // ---- migration ----
-const v1 = { groups: ['dom + top', 'jay'], saved: ['TOP, XXL', 'jay + XXL', 'mike'], lang: 'fr', welcomeDone: true, speed: 'fast', pauseEach: false, favFilter: 'non', pos: { left: '10px', top: '20px' }, lastSide: true }
+const v1 = { groups: ['dom + top', 'kai'], saved: ['TOP, XXL', 'kai + XXL', 'rob'], lang: 'fr', welcomeDone: true, speed: 'fast', pauseEach: false, favFilter: 'non', pos: { left: '10px', top: '20px' }, lastSide: true }
 const mg = ST.migrate(null, v1, null, now)
 check('migration 2.x: 3 saved searches kept, in default folder', mg.migrated && mg.state.searches.length === 3 && mg.state.searches.every(s => s.folder === 'f0'))
-check('migration 2.x: saved search meaning unchanged', eq(NAMES.filter(C.compile(mg.state.searches[1].q).test), ref([['jay', 'xxl']])) && eq(['TOP x', 'XXL y', 'z'].filter(C.compile(mg.state.searches[0].q).test), ['TOP x', 'XXL y']))
-check('migration 2.x: active chips become active search', eq(NAMES.filter(C.compile(mg.state.q).test), ref([['dom', 'top'], ['jay']])))
+check('migration 2.x: saved search meaning unchanged', eq(NAMES.filter(C.compile(mg.state.searches[1].q).test), ref([['kai', 'xxl']])) && eq(['TOP x', 'XXL y', 'z'].filter(C.compile(mg.state.searches[0].q).test), ['TOP x', 'XXL y']))
+check('migration 2.x: active chips become active search', eq(NAMES.filter(C.compile(mg.state.q).test), ref([['dom', 'top'], ['kai']])))
 check('migration 2.x: settings kept (lang, speed, pause, tab, position, side)', mg.state.settings.lang === 'fr' && mg.state.settings.speed === 'fast' && mg.state.settings.pauseEach === false && mg.state.settings.favFilter === 'non' && mg.state.settings.pos.left === '10px' && mg.state.settings.lastSide)
 check('migration 2.x: "kept" notice + What\'s new pending', mg.state.notice === 'kept' && mg.state.settings.whatsNew === '' && mg.state.settings.welcomeDone)
 check('migration 2.x: favOnly:true -> Favorites tab', ST.migrate(null, { favOnly: true, welcomeDone: true }, null, now).state.settings.favFilter === 'fav')
 check('migration 2.x: pause default stays ON', ST.migrate(null, { welcomeDone: true }, null, now).state.settings.pauseEach === true)
-check('migration Profile Hunter', (() => { const r = ST.migrate(null, null, { query: 'jay, mike', quickFilters: ['top'] }, now); return r.state.searches.length === 1 && r.state.q.groups.length === 1 })())
+check('migration Profile Hunter', (() => { const r = ST.migrate(null, null, { query: 'kai, rob', quickFilters: ['top'] }, now); return r.state.searches.length === 1 && r.state.q.groups.length === 1 })())
 check('fresh install: welcome, no What\'s new, no notice', (() => { const r = ST.migrate(null, null, null, now).state; return !r.settings.welcomeDone && r.settings.whatsNew === '3.0.0' && !r.notice && r.settings.pauseEach && r.settings.outline })())
 check('v3 data is used as is (no re-migration)', (() => { const r = ST.migrate(Object.assign(ST.defaults(), { searches: [{ id: 'k', name: 'K', folder: 'f0', q: C.parse('x').q }] }), v1, null, now); return !r.migrated && r.state.searches.length === 1 })())
 check('sanitize: unknown folder -> default, bad search dropped', (() => { const r = ST.sanitize({ schema: 3, searches: [{ id: 'a', name: 'A', folder: 'nope', q: C.parse('x').q }, { id: 'b', q: {} }] }); return r.searches.length === 1 && r.searches[0].folder === 'f0' })())
 
 // ---- backup ----
 const state = ST.migrate(null, v1, null, now).state
-state.folders.push({ id: 'f1', name: 'Week-end', open: true }); state.searches.push({ id: 's9', name: 'Plan', folder: 'f1', q: C.parse('(jay, jey) + top').q, created: now })
-state.marks['img:1'] = { m: 'review', name: 'Jay', thumb: '', t: now }; state.lock = ST.makeLock('1234')
+state.folders.push({ id: 'f1', name: 'Week-end', open: true }); state.searches.push({ id: 's9', name: 'Plan', folder: 'f1', q: C.parse('(kai, kei) + top').q, created: now })
+state.marks['img:1'] = { m: 'review', name: 'Kai', thumb: '', t: now }; state.lock = ST.makeLock('1234')
 const jj = { scans: [JR.newScan('j1', C.parse('top').q, 'top', now)] }
 const file = JSON.stringify(ST.makeBackup(state, jj, '3.0.0', now))
 check('backup has app, format 1, never the PIN', /"format":1/.test(file) && /"app":"profile-name-search"/.test(file) && !/hash|salt/.test(file))

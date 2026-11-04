@@ -2,7 +2,7 @@
    Same checks; only the selectors changed (results now live in block ③, the scan button in block ②, the field has a ✕).
    Run: node scripts/pns-tests/legacy.test.cjs */
 const { chromium, mk, check, done } = require('./harness.cjs')
-const NAMES = ['TOP 🚀', 'top guy', 'Jay', 'vers top', 'XXL', 'dom top', 'Mike', 'top dom', 'bear', 'Top here', 'Leo', 'xxl bear']
+const NAMES = ['TOP 🚀', 'top guy', 'Kai', 'vers top', 'XXL', 'dom top', 'Rob', 'top dom', 'bear', 'Top here', 'Leo', 'xxl bear']
 const FAVS = [0, 3, 7] // TOP 🚀, vers top, top dom are favorites
 async function block(e, n) { const open = await e.$('section.blk.on').getAttribute('data-block').catch(() => null); if (open !== String(n)) { await e.$('.bh[data-b="' + n + '"]').click(); await e.run(300) } }
 async function st(e) { await block(e, 3); return e.sh(r => ({ tabs: [...r.querySelectorAll('.ftabs button')].map(b => b.textContent.replace(/\s+/g, ' ').trim() + (b.getAttribute('aria-selected') === 'true' ? '*' : '')), res: [...r.querySelectorAll('.res .r .tx b')].map(b => b.textContent), empty: (r.querySelector('.res .empty') || {}).textContent || '', grid: [...document.querySelectorAll('[role=gridcell].gnf-match p')].map(p => p.textContent) })) }

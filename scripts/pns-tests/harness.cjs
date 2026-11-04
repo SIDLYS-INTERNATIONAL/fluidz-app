@@ -39,7 +39,7 @@ const INIT = (cfg) => `(() => {
     Object.defineProperty(sc, 'scrollTop', { configurable: true, get() { return d.get.call(this) }, set(v) { const before = d.get.call(this); d.set.call(this, v); if (d.get.call(this) !== before) window.__steps++ } });
     function add(k) { if (window.__crashed) return; for (let i = 0; i < k && n < cfg.total; i++, n++) {
       const c = document.createElement('div'); c.setAttribute('role', 'gridcell');
-      const name = cfg.names ? cfg.names[n % cfg.names.length] + (cfg.names.length < cfg.total && n >= cfg.names.length ? ' ' + n : '') : (n === cfg.targetAt ? 'Target Jay' : 'user' + n);
+      const name = cfg.names ? cfg.names[n % cfg.names.length] + (cfg.names.length < cfg.total && n >= cfg.names.length ? ' ' + n : '') : (n === cfg.targetAt ? 'Target DOM' : 'user' + n);
       const img = 'https://x.test/' + (n + 100000).toString(16).padStart(24, 'a') + '.jpg';
       c.innerHTML = '<img alt="photo of user ' + name + '" src="' + img + '"><p>' + name + '</p>'; if (cfg.favs && cfg.favs.indexOf(n) >= 0) c.innerHTML += '<svg viewBox="0 0 16 16"><path d="M8,1L5.7,5.6L1,6.3L4.5,9.6L3.7,14.5L8,12.2L12.3,14.5L11.5,9.6L15,6.3L10.3,5.6z"/></svg>'; grid.appendChild(c) } }
     add(cfg.first);

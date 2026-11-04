@@ -2,8 +2,8 @@
    neutral avatars; test words TOP and XXL. Usage: node scripts/pns-tests/screenshots.cjs <out dir> */
 const { chromium, mk } = require('./harness.cjs')
 const OUT = process.argv[2] || '/tmp/claude-0/work/fav/v3'
-const FIRST = ['Jay', 'Mike', 'Leo', 'Sam', 'Noah', 'Eli', 'Theo', 'Max', 'Hugo', 'Adam', 'Lucas', 'Tom', 'Ben', 'Nico', 'Alex', 'Paul', 'Jayden', 'Liam']
-const TAGS = [' TOP', '', ' XXL', '', ' 🚀', '', ' top', '', '', ' TOP XXL', '', '']
+const FIRST = ['Leo', 'Sam', 'Noah', 'Eli', 'Theo', 'Max', 'Hugo', 'Adam', 'Lucas', 'Tom', 'Ben', 'Nico', 'Alex', 'Paul', 'Liam', 'Enzo', 'Karim', 'Mehdi', 'Yanis', 'Diego', 'Rafael', 'Kenji', 'Omar', 'Jules', 'Marco']
+const TAGS = [' TOP', '', ' XXL', ' DOM', ' 🚀', ' sub', ' top', ' FIST', '', ' TOP XXL', ' vers DOM XL', ' bttm 🔥']
 const NAMES = []; for (let i = 0; i < 5000; i++) NAMES.push(FIRST[i % FIRST.length] + TAGS[i % TAGS.length])
 const FAVS = [0, 9, 21, 45, 60]
 const T0 = 1_762_250_000_000
@@ -15,7 +15,7 @@ const JOURNAL = { scans: [
   { id: 'j2', t0: T0 - 26 * 3600e3, t1: T0 - 25.7 * 3600e3, q: q('top'), qText: 'top', n: 515, end: 'cap', res: res([0, 6, 9, 12, 18, 33, 45], T0 - 25.8 * 3600e3) },
   { id: 'j1', t0: T0 - 50 * 3600e3, t1: T0 - 49.8 * 3600e3, q: q('xxl'), qText: 'xxl', n: 230, end: 'stopped', res: res([2, 9, 14, 21], T0 - 49.9 * 3600e3) }] }
 const SEARCHES = [
-  { id: 's1', name: 'Jay + TOP', folder: 'f0', pinned: true, q: { groups: [{ items: [{ name: 'Name', terms: [{ t: 'jay', w: false }, { t: 'jayden', w: false }] }, { name: '', terms: [{ t: 'top', w: false }] }] }], exclude: [] }, created: T0 },
+  { id: 's1', name: 'DOM + XXL', folder: 'f0', pinned: true, q: { groups: [{ items: [{ name: 'Role', terms: [{ t: 'top', w: false }, { t: 'dom', w: false }] }, { name: '', terms: [{ t: 'xxl', w: false }] }] }], exclude: [] }, created: T0 },
   { id: 's2', name: 'XXL', folder: 'f1', pinned: false, q: q('xxl'), created: T0 },
   { id: 's3', name: 'Rocket', folder: 'f1', pinned: false, q: q('🚀'), created: T0 },
   { id: 's4', name: 'Leo or Noah', folder: 'f0', pinned: false, q: { groups: [{ items: [{ name: '', terms: [{ t: 'leo' }, { t: 'noah' }] }] }], exclude: [] }, created: T0 }]
@@ -34,11 +34,11 @@ const grid = (lang, extra, m) => ({ total: 300, first: 45, batch: 45, latency: 3
     let e
     // welcome step 1 + What's new
     e = await mk(b, grid(lang, null, { pns_v3: { schema: 3, settings: { lang } } }), opts); await shot(e, '01-welcome-step1-prepare-your-grid'); await e.ctx.close()
-    e = await mk(b, grid(lang, null, { pns_state_v1: { groups: ['top'], saved: ['TOP, XXL', 'jay + top', '🚀'], lang, welcomeDone: true } }), opts); await shot(e, '02-whats-new'); await e.ctx.close()
+    e = await mk(b, grid(lang, null, { pns_state_v1: { groups: ['top'], saved: ['TOP, XXL', 'dom + fist', '🚀'], lang, welcomeDone: true } }), opts); await shot(e, '02-whats-new'); await e.ctx.close()
     // ① search with active search summary
     e = await mk(b, grid(lang), opts)
     await shot(e, '03-panel-3-blocks-start')
-    await search(e, 'Name: (jay, jayden) + top -xxl'); await B(e, 1); await e.page.locator('#pns-host .field input').blur(); await shot(e, '04-block1-search-active-search-summary')
+    await search(e, 'Role: (top, dom) + XXL -sub'); await B(e, 1); await e.page.locator('#pns-host .field input').blur(); await shot(e, '04-block1-search-active-search-summary')
     // ③ results with tabs
     await search(e, 'top'); await B(e, 3); await shot(e, '06-block3-results-tabs')
     // grid with coral outline (page + panel)
@@ -53,9 +53,9 @@ const grid = (lang, extra, m) => ({ total: 300, first: 45, batch: 45, latency: 3
     await search(e, 'xxl'); await B(e, 2); await e.$('.go').click(); await e.run(9000); await shot(e, '05-block2-scan-running')
     // crash banner
     await e.page.evaluate(() => window.__crash()); await e.run(12000); await shot(e, '15-resume-banner-after-crash'); await e.ctx.close()
-    // editor (neutral example: names + TOP + XXL)
+    // editor (neutral example: keywords TOP + vers + XXL)
     e = await mk(b, grid(lang), opts)
-    await search(e, 'Name: (jay, jayden, jey) + Role: (top, vers top) + Size: (XXL, XL)'); await B(e, 1); await e.$('.act .top button').click(); await e.run(700)
+    await search(e, 'Role: (top, dom, active) + Pos: (vers, vers top) + Size: (XXL, XL)'); await B(e, 1); await e.$('.act .top button').click(); await e.run(700)
     await shot(e, '08-search-editor-criteria')
     await e.$('.ovh .back').click(); await e.run(200)
     await e.$('.links button').nth(1).click(); await e.run(400); await shot(e, '09-saved-searches-folders')

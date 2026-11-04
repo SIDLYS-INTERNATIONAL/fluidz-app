@@ -66,12 +66,12 @@ async function stopScan(e) { await block(e, 2); if (/Pause/.test(await e.$('.go'
 
   // ---------- find again by name (thumbnail changed) and nothing found ----------
   const now = 1_762_250_000_000
-  const jr = { scans: [{ id: 'jx', t0: now - 3600e3, t1: now - 3500e3, q: { groups: [{ items: [{ name: '', terms: [{ t: 'jay', w: false }] }] }], exclude: [] }, qText: 'jay', n: 50, end: 'stopped', res: [
-    { id: 'img:ffffffffffffffffffffffff', name: 'Jay TOP', thumb: 'https://x.test/ffffffffffffffffffffffff.jpg', fav: false, t: now - 3550e3 },
+  const jr = { scans: [{ id: 'jx', t0: now - 3600e3, t1: now - 3500e3, q: { groups: [{ items: [{ name: '', terms: [{ t: 'dom', w: false }] }] }], exclude: [] }, qText: 'dom', n: 50, end: 'stopped', res: [
+    { id: 'img:ffffffffffffffffffffffff', name: 'DOM TOP', thumb: 'https://x.test/ffffffffffffffffffffffff.jpg', fav: false, t: now - 3550e3 },
     { id: 'img:eeeeeeeeeeeeeeeeeeeeeeee', name: 'Nobody', thumb: '', fav: true, t: now - 3550e3 }] }] }
-  e = await mk(b, { total: 12, first: 12, batch: 0, latency: 100, names: ['Jay TOP', 'Mike', 'Leo'], mem: Object.assign(v3(), { pns_journal_v1: jr }) }, { quiet: true })
+  e = await mk(b, { total: 12, first: 12, batch: 0, latency: 100, names: ['DOM TOP', 'Bear', 'Leo'], mem: Object.assign(v3(), { pns_journal_v1: jr }) }, { quiet: true })
   await adv(e, 2); await e.$('.ov .it .tx').first().click(); await e.run(300)
-  await e.$('.ov .it:has-text("Jay TOP") button').click(); await e.run(1500)
+  await e.$('.ov .it:has-text("DOM TOP") button').click(); await e.run(1500)
   check('find again by name: honest "check it is really him" + homonyms count', await e.sh(r => /Check it’s really him/.test(r.querySelector('.ov .card').textContent) && /other/.test(r.querySelector('.ov .card').textContent)))
   await e.$('.ov .card button').last().click(); await e.run(300)
   await e.$('.ov .it:has-text("Nobody") button').click(); await e.run(500)
@@ -128,7 +128,7 @@ async function stopScan(e) { await block(e, 2); if (/Pause/.test(await e.$('.go'
   check('reload after an unfinished scan → "Your last scan was interrupted"', (await cardTitles(e)).some(t => /interrupted/.test(t)))
   await e.$('.card:has-text("interrupted") button.p').click(); await e.run(4000)
   m = await e.mem()
-  check('Resume restores its search and continues the same entry', m.pns_v3.q.groups[0].items[0].terms[0].t === 'jay' && m.pns_journal_v1.scans[0].id === 'jx' && m.pns_journal_v1.scans[0].end === 'running')
+  check('Resume restores its search and continues the same entry', m.pns_v3.q.groups[0].items[0].terms[0].t === 'dom' && m.pns_journal_v1.scans[0].id === 'jx' && m.pns_journal_v1.scans[0].end === 'running')
   await e.ctx.close()
 
   // ---------- other tab + keyboard shortcuts ----------
@@ -151,7 +151,7 @@ async function stopScan(e) { await block(e, 2); if (/Pause/.test(await e.$('.go'
   await e.ctx.close()
 
   // ---------- migration from 2.x + What's new + kept notice ----------
-  const old = { pns_state_v1: { groups: ['top'], saved: ['TOP, XXL', 'jay + top', 'mike'], lang: 'en', welcomeDone: true, favFilter: 'non', speed: 'gentle', pauseEach: true } }
+  const old = { pns_state_v1: { groups: ['top'], saved: ['TOP, XXL', 'dom + top', 'bear'], lang: 'en', welcomeDone: true, favFilter: 'non', speed: 'gentle', pauseEach: true } }
   e = await mk(b, Object.assign({}, big, { mem: old }), { quiet: true })
   check('2.x user sees "What’s new" once', await e.sh(r => !!r.querySelector('[data-whatsnew]')))
   check('"Your searches were kept" shown', await e.sh(r => /Your searches were kept/.test(r.querySelector('[data-whatsnew]').textContent) && /3 saved/.test(r.querySelector('[data-whatsnew]').textContent)))

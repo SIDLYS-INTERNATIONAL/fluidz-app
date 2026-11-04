@@ -27,13 +27,13 @@ The search works on Grindr's **grid view**, after Grindr's own filters (position
 
 | Type | Means |
 |---|---|
-| `jay, mike` | jay OR mike (`;` `\|` and `，` work too) |
+| `top, dom` | top OR dom (`;` `\|` and `，` work too) |
 | `TOP + XXL` | TOP AND XXL |
-| `(jay, jayden) + TOP` | one criterion with synonyms AND another one |
+| `(top, dom, active) + XXL` | one criterion with synonyms AND another one |
 | `Size: (XL, XXL)` | a named criterion |
-| `TOP -XXL` | TOP but not XXL |
+| `TOP -sub` | TOP but not sub |
 | `"vers top"` | exact phrase (any symbol inside is literal) |
-| `=top` | whole word only (`top`, not `laptop`). Default is *contains*. |
+| `=sub` | whole word only (`sub`, not `subway`). Default is *contains*. |
 | `@"My search"` | reuse a saved search as a block |
 
 Accents and capitals are ignored. Searches typed in 2.x keep exactly the same meaning.
@@ -132,7 +132,7 @@ Some people report that the chat on Grindr Web disconnected after a long scan. W
 - Lighter page work: the page observer is throttled (slower while scanning) and limited to the profile grid when it is found.
 - The × now fully turns the extension off for now (scan, observer and timers stop). New *Turn off for now* button in the toolbar popup; *Show the floating panel* turns it back on.
 - Fixed: the results list no longer jumps back to the top after *Show on grid*, Previous/Next or when new matches arrive; the active row stays in view (floating and side panel).
-- Search field made unmistakable: a visible OR pill between chips, a coral AND badge inside a chip (`dom + top`), and a live line under the field ("Looking for: dom AND top OR jay", with a hint while a trailing `+` waits for the next word). A comma, `;`, `|` or Enter start a new OR chip, `+`/`＋` is AND, quotes keep a phrase (even `"c++"`) as one term. A pasted list like `jay, mike; dom + top` is split into chips. Click a chip's text to edit it (× still removes it).
+- Search field made unmistakable: a visible OR pill between chips, a coral AND badge inside a chip (`dom + top`), and a live line under the field ("Looking for: dom AND top OR xxl", with a hint while a trailing `+` waits for the next word). A comma, `;`, `|` or Enter start a new OR chip, `+`/`＋` is AND, quotes keep a phrase (even `"c++"`) as one term. A pasted list like `top, dom; dom + xxl` is split into chips. Click a chip's text to edit it (× still removes it).
 - End-of-grid banner now says the answer itself (more profiles = a higher Grindr plan) and no longer links to the website.
 - In-panel notice (all 6 languages) about the Grindr chat disconnecting after long scans, with what to do.
 

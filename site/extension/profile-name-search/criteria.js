@@ -12,13 +12,13 @@
      Term   = { t: 'top', w: false }      w = whole word only. Default is "contains" (substring).
 
    The text syntax (what you type in the field)
-     jay, mike            comma (or ; | ，) = OR
+     top, dom             comma (or ; | ，) = OR
      dom + top            + (or ＋) = AND
-     (jay, jayden) + TOP  parentheses = one criterion with synonyms
+     (top, dom, active) + XXL  parentheses = one criterion with synonyms
      Size: (XL, XXL)      optional criterion name before the parentheses
-     TOP -XXL             a word starting with - is excluded
+     TOP -sub             a word starting with - is excluded
      "dom top"            quotes keep a phrase (and any symbol) as one term
-     =top                 whole word only ("top" but not "laptop")
+     =sub                 whole word only ("sub" but not "subway")
      @"My search"         reuse a saved search by its name
    Accents and case are ignored everywhere. */
 (function (g) {
@@ -44,7 +44,7 @@
     });
     return out.slice(0, LIMITS.terms);
   }
-  // Drops empty parts, applies the size limits, and merges "jay, mike" (several one-word alternatives) into one criterion.
+  // Drops empty parts, applies the size limits, and merges "top, dom" (several one-word alternatives) into one criterion.
   function clean(q) {
     q = q && typeof q === 'object' ? q : {};
     var groups = [];
@@ -99,7 +99,7 @@
     var pending = /\+\s*$/.test(src);
     var q = emptyQuery();
 
-    // A term may carry exclusions: "TOP -XXL" -> TOP, and XXL excluded. "-XXL" alone is only an exclusion.
+    // A term may carry exclusions: "TOP -sub" -> TOP, and sub excluded. "-sub" alone is only an exclusion.
     function readTerms(raw, into) {
       var pieces = String(raw).trim().split(/\s+-(?=\S)/);
       pieces.forEach(function (p, i) {
@@ -224,7 +224,7 @@
     if (q.exclude.length) lines.push({ kind: 'x', label: '', terms: q.exclude });
     return lines;
   }
-  // Short one-line text (journal, collapsed block header): "jay · mike + TOP".
+  // Short one-line text (journal, collapsed block header): "top · dom + XXL".
   function shortText(q, nameOf, max) {
     q = clean(q); max = max || 80;
     var s = q.groups.map(function (gr) {

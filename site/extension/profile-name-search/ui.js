@@ -312,7 +312,7 @@
 
     // "?" syntax help: clickable examples insert themselves in the field
     function ovHelp() {
-      var ex = [['jay, mike', T('hxOr')], ['TOP + XXL', T('hxAnd')], ['(jay, jayden) + TOP', T('hxCrit')], ['TOP -XXL', T('hxNot')], ['"vers top"', T('hxPhrase')], ['=top', T('hxWhole')]];
+      var ex = [['top, dom', T('hxOr')], ['TOP + XXL', T('hxAnd')], ['(top, dom, active) + XXL', T('hxCrit')], ['TOP -sub', T('hxNot')], ['"vers top"', T('hxPhrase')], ['=sub', T('hxWhole')]];
       var sugg = ['TOP', 'XXL', 'vers', '🚀', '🔥', 'new'];
       return ovWrap(T('helpT'), [
         sec(T('hExamples'), ex.map(function (e) { return h('button', { type: 'button', cls: 'ex', on: { click: function () { insertText(e[0], true) } } }, document.createTextNode(e[0]), h('span', { text: e[1] })) })),
@@ -609,7 +609,7 @@
       g.PNS_LANGS.forEach(function (l) { langs.appendChild(h('button', { type: 'button', cls: l[0] === lang ? 'on' : '', text: l[1], title: l[2], on: { click: function () { send({ a: 'lang', l: l[0] }) } } })) });
       var il = h('div', { cls: 'il' });
       if (n === 1) { il.appendChild(h('div', { cls: 'f' }, h('span', { cls: 'g', text: T('w1f1') }), h('span', { cls: 'g', text: T('w1f2') }), h('span', { cls: 'g', text: T('w1f3') }))); var gr = h('div', { cls: 'grid' }); for (var k = 0; k < 8; k++) gr.appendChild(h('i')); il.appendChild(gr); il.appendChild(h('small', { text: T('w1s') })) }
-      else if (n === 2) { il.appendChild(h('div', { cls: 'f' }, h('span', { text: 'jay, mike' }), h('span', { text: 'TOP + XXL' }), h('span', { text: '🚀' }))); il.appendChild(h('small', { text: T('w2s') })) }
+      else if (n === 2) { il.appendChild(h('div', { cls: 'f' }, h('span', { text: 'top, dom' }), h('span', { text: 'TOP + XXL' }), h('span', { text: '🚀' }))); il.appendChild(h('small', { text: T('w2s') })) }
       else if (n === 3) { il.appendChild(h('div', { cls: 'big', text: T('w3s') })); il.appendChild(h('small', { text: '1 200 · 9 · 5' })) }
       else { il.appendChild(h('div', { cls: 'big', text: T('w4s') })); il.appendChild(h('small', { text: T('pastBack') })) }
       var dots = h('div', { cls: 'dots' }); for (var i = 1; i <= 4; i++) dots.appendChild(h('i', { cls: i === n ? 'on' : '' }));
