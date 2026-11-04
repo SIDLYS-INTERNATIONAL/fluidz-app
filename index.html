@@ -77,7 +77,6 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=1"><\/script>')}
       <p class="eyebrow"><i aria-hidden="true"></i><span data-i18n="l.hero.eyebrow">Free Chrome extension · version 3.0</span></p>
       <h1 data-i18n="hero.h1">Find a Grindr profile by name, in seconds.</h1>
       <p class="hero-sub" data-i18n="l.hero.sub">Type a name or a keyword. It scrolls your Grindr Web grid and outlines every match.</p>
-      <div class="gc" id="download" data-form="hero" tabindex="-1"></div>
       <ul class="chips" aria-label="Highlights" data-i18n-aria="strip.aria">
         <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#badge-check"/></svg><span data-i18n="trust.1">Free</span></li>
         <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#wifi-off"/></svg><span data-i18n="trust.2">Sends nothing anywhere</span></li>
@@ -94,14 +93,12 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=1"><\/script>')}
     <li><span class="beat-n" aria-hidden="true">2</span><span data-i18n="l.demo.2">It scrolls the grid for you</span></li>
     <li><span class="beat-n" aria-hidden="true">3</span><span data-i18n="l.demo.3">Every match, outlined in coral</span></li>
   </ol>
-</section>
-
-<section class="band">
-  <div class="wrap band-in">
-    <h2 class="band-h" data-i18n="l.cta1.h">Try it on your own grid.</h2>
-    <div class="band-cta"><a href="#download" class="btn btn-p btn-l" data-goto-form data-i18n="l.cta.btn">Get the extension — free</a><span class="band-sub" data-i18n="l.cta.sub">A one-time link by e-mail, installed in two minutes.</span></div>
+  <div class="wrap hero-form">
+    <h2 class="hero-form-h" data-i18n="l.cta1.h">Try it on your own grid.</h2>
+    <div class="gc" id="download" data-form="hero" tabindex="-1"></div>
   </div>
 </section>
+
 
 <section class="sec" id="new">
   <div class="wrap">
@@ -185,7 +182,7 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=1"><\/script>')}
 </section>
 
 <section class="sec" id="privacy">
-  <div class="wrap pv">
+  <div class="wrap pv pv-one">
     <div class="pv-copy">
       <p class="eyebrow sage"><i aria-hidden="true"></i><span data-i18n="tr.eyebrow">Why you can trust it</span></p>
       <h2 class="pv-h" data-i18n="priv.h2">It reads your screen. It tells nobody.</h2>
@@ -197,9 +194,8 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=1"><\/script>')}
         <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#map-pin-off"/></svg><span data-i18n="priv.5.t">Respects hidden distance</span></li>
         <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#file-code"/></svg><span data-i18n="priv.4.t">Readable code</span></li>
       </ul>
-      <p class="privnote"><span data-i18n="priv.mail">Your e-mail is used to send you the link, and for news only if you tick the box. Never sold, never shared.</span> <span data-i18n-html="priv.more"><a href="/privacy">Read the privacy policy</a></span></p>
+      <p class="privnote"><span data-i18n-html="priv.more"><a href="/privacy">Read the privacy policy</a></span></p>
     </div>
-    <figure class="shot pv-shot"><img src="/labs/img/pns3-mydata-en.webp" data-src-fr="/labs/img/pns3-mydata-fr.webp" width="600" height="500" loading="lazy" decoding="async" alt="The My data screen: what is stored, only on this computer, with backup and erase buttons" data-i18n-alt="l.priv.alt"></figure>
   </div>
 </section>
 
