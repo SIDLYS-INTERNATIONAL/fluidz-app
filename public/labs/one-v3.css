@@ -1,0 +1,39 @@
+/* Fluidz — Profile Name Search 3.0 additions to the single page. Loaded after one.css; adds new classes only
+   (no rule of one.css is changed). Same tokens: peach #E0887A, Bricolage Grotesque + Plus Jakarta Sans, dark backgrounds. */
+
+/* "What changed in 3.0": real screenshots of the panel */
+.sec.v3{background:linear-gradient(180deg,var(--bg) 0,var(--bg1) 18%,var(--bg1) 82%,var(--bg) 100%)}
+.shots{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}
+.shot{min-width:0;margin:0;display:flex;flex-direction:column;gap:14px}
+.shot img{display:block;width:100%;height:auto;aspect-ratio:6/5;object-fit:cover;object-position:top;border-radius:18px;border:1px solid var(--rule2);background:var(--bg2);box-shadow:0 24px 60px -28px rgba(0,0,0,.9)}
+.shot figcaption b{display:block;font-family:var(--fh);font-size:18px;font-weight:800;letter-spacing:-.02em;line-height:1.2;margin-bottom:4px}
+.shot figcaption span{display:block;font-size:14px;line-height:1.55;color:var(--mut)}
+.shots-note{margin-top:22px;font-size:13px;color:var(--dim)}
+.v3h{font-family:var(--fh);font-size:26px;font-weight:800;letter-spacing:-.025em;margin:64px 0 26px}
+.v3list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 44px}
+.v3list li{display:flex;gap:16px;align-items:flex-start;min-width:0}
+.v3list .ic{font-size:24px;color:var(--p);margin-top:3px}
+.v3list h4{font-family:var(--fh);font-size:18px;font-weight:800;letter-spacing:-.02em;line-height:1.25;margin-bottom:4px}
+.v3list p{font-size:14.5px;line-height:1.55;color:var(--mut);overflow-wrap:anywhere}
+
+/* "Search by keywords" card: four syntax rows fit in the same 150px box */
+.card .vis.q4{gap:6px;padding:10px 16px}
+.card .vis.q4 .qrow code{padding:3px 12px;font-size:13px}
+
+/* install steps: one picture per step */
+.ishot{display:block;width:100%;max-width:520px;height:auto;margin-top:16px;border-radius:14px;border:1px solid var(--rule2);box-shadow:0 20px 50px -26px rgba(0,0,0,.9)}
+.upd-n{margin-top:12px;font-size:14px;line-height:1.55;color:var(--mut)}
+
+@media(max-width:1020px){
+  .shots{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .v3list{grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:640px){
+  /* phones: the screenshots become a swipeable row (inside the page width, no page overflow) */
+  .shots{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;margin:0 -18px;padding:0 18px 10px;scroll-padding:0 18px;scrollbar-width:none}
+  .shots::-webkit-scrollbar{display:none}
+  .shot{flex:0 0 78%;scroll-snap-align:start}
+  .shot figcaption b{font-size:17px}
+  .v3h{font-size:22px;margin:44px 0 20px}
+  .ishot{margin-top:14px;border-radius:12px}
+}
