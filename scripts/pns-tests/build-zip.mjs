@@ -7,7 +7,7 @@ import { tmpdir } from 'os'
 import { fileURLToPath } from 'url'
 const repo = join(dirname(fileURLToPath(import.meta.url)), '../..')
 const api = readFileSync(join(repo, 'api/profile-name-search-download.js'), 'utf8')
-const body = api.slice(api.indexOf("const ROOT"), api.indexOf("const SUPABASE_URL"))
+const body = api.slice(api.indexOf("const BASENAME"), api.indexOf("const SUPABASE_URL"))
 const tmp = mkdtempSync(join(tmpdir(), 'pnszip-'))
 writeFileSync(join(tmp, 'z.mjs'), "import { readdirSync, readFileSync } from 'fs'\nimport { join } from 'path'\nimport { deflateRawSync } from 'zlib'\n" + body + "\nexport { buildZip }\n")
 const { buildZip } = await import(join(tmp, 'z.mjs'))

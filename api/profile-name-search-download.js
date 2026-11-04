@@ -8,6 +8,7 @@
 import { readdirSync, readFileSync } from 'fs'
 import { join } from 'path'
 import { deflateRawSync } from 'zlib'
+import { notifyOwner, when } from '../server/notify.js'
 
 const BASENAME = 'Fluidz-Profile-Name-Search'
 let cached = null
@@ -97,18 +98,22 @@ const SUPABASE_KEY = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_
 // The zip is only served to a signed-in Fluidz account: the visitor gets there through
 // the magic link e-mailed by /api/labs-signup. Token verified against Supabase Auth;
 // if Supabase cannot be reached we refuse (never serve unverified).
+// Returns { email, lang } for a valid session, or null.
 async function verifiedUser(req) {
   const m = /^Bearer\s+([A-Za-z0-9._~+/=-]{20,4096})$/.exec(String(req.headers.authorization || '').trim())
-  if (!m) return false
+  if (!m) return null
   try {
     const r = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
       headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${m[1]}` },
       signal: AbortSignal.timeout(5000),
     })
-    return r.status === 200
+    if (r.status !== 200) return null
+    let u = {}
+    try { u = await r.json() } catch { u = {} }
+    return { email: String(u?.email || ''), lang: String(u?.user_metadata?.signup_lang || '') }
   } catch (e) {
     console.error('profile-name-search download: auth check failed', e?.name || 'error')
-    return false
+    return null
   }
 }
 
@@ -123,7 +128,8 @@ export default async function handler(req, res) {
     res.setHeader('Allow', 'GET, HEAD, OPTIONS')
     return res.status(405).json({ error: 'method_not_allowed' })
   }
-  if (!(await verifiedUser(req))) return res.status(401).json({ error: 'login_required' })
+  const user = await verifiedUser(req)
+  if (!user) return res.status(401).json({ error: 'login_required' })
   try {
     if (!cached) cached = buildZip()
   } catch (e) {
@@ -134,5 +140,10 @@ export default async function handler(req, res) {
   res.setHeader('Content-Disposition', `attachment; filename="${cachedName}"`)
   res.setHeader('Content-Length', String(cached.length))
   if (req.method === 'HEAD') return res.status(200).end()
-  return res.status(200).send(cached)
+  res.status(200).send(cached)
+  // Owner notification (after the answer; never blocks the download)
+  await notifyOwner(`Nouveau téléchargement · ${cachedName}`, [
+    ['E-mail', user.email], ['Langue', user.lang], ['Fichier', cachedName], ['Quand', when()],
+    ['Navigateur', String(req.headers['user-agent'] || '').slice(0, 160)],
+  ])
 }
