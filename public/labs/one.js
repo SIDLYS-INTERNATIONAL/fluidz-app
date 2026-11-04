@@ -80,6 +80,7 @@
     langUI()
     forms.forEach(function (f) { f.refreshText() })
     setDemo()
+    setAnims()
   }
   function setLang(l) {
     if (LANGS.indexOf(l) < 0) l = 'en'
@@ -369,6 +370,17 @@
   }
   function startDemo() { if (!$('#stage')) return; demoOn = true; setDemo() }
 
+  /* ---------- feature animations: each iframe[data-anim] loads once it is near the viewport, in the current language ---------- */
+  function animSrc(f) { return f.getAttribute('data-anim') + '?lang=' + LANG + (mq('(prefers-reduced-motion: reduce)') ? '&static' : '') }
+  function setAnims() { $$('iframe[data-anim][data-on]').forEach(function (f) { var src = animSrc(f); if (f.getAttribute('src') !== src) f.setAttribute('src', src) }) }
+  function startAnims() {
+    var fs = $$('iframe[data-anim]'); if (!fs.length) return
+    var on = function (f) { f.setAttribute('data-on', '1'); f.setAttribute('src', animSrc(f)) }
+    if (!('IntersectionObserver' in window)) { fs.forEach(on); return }
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { on(e.target); io.unobserve(e.target) } }) }, { rootMargin: '400px 0px' })
+    fs.forEach(function (f) { io.observe(f) })
+  }
+
   /* ---------- social row ---------- */
   function renderSocial() {
     var box = $('#follow-l'), n = 0; if (!box) return
@@ -388,7 +400,7 @@
   var hero = forms.filter(function (f) { return f.name === 'hero' })[0]
   applyLang()
   langInit()
-  renderSocial(); startDemo()
+  renderSocial(); startDemo(); startAnims()
 
   var cpy = $('#copy-ext')
   if (cpy) cpy.addEventListener('click', function () {

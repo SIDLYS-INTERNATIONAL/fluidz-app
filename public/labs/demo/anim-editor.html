@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Profile Name Search 3.0 - search editor</title>
+<meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Search editor, 9 s loop. Colours and layout from pns-demo.html; 800x600, scaled to fit. */
+:root{--m:rgba(237,232,245,.56);--d:rgba(237,232,245,.32);--b:rgba(255,255,255,.09);--c:#E0887A}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;background:#0c0b10;font-family:"Plus Jakarta Sans",system-ui,sans-serif;color:#EDE8F5}
+#cam{position:absolute;left:0;top:0;width:800px;height:600px;transform-origin:0 0;overflow:hidden;background:#0d0c16;border-radius:16px;box-shadow:inset 0 0 0 1px var(--b)}
+.hd{position:absolute;left:0;top:0;right:0;height:64px;padding:0 18px 0 22px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:11px}.drop{width:17px;height:17px;border-radius:50%;background:linear-gradient(135deg,#E0887A,#9080BA)}
+.brand b{display:block;font-size:20px;font-weight:700;line-height:1.1}.brand small{display:block;font-size:13px;font-weight:600;color:var(--d)}
+.btns{display:flex;gap:6px}.btns i,.oh .back,.lab .x,.go{display:flex;align-items:center;justify-content:center}.btns i{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.04);color:var(--m)}
+.ic{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+#body{position:absolute;left:22px;right:22px;top:66px;display:flex;flex-direction:column;gap:10px}
+.oh{display:flex;align-items:center;gap:12px;height:42px}.oh .back{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);color:var(--m)}.oh b{font-size:22px;font-weight:700}
+.hint{font-size:15px;color:var(--m);line-height:1.4}
+.crit{border:1px solid var(--b);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:10px;background:rgba(255,255,255,.025)}
+.lab{display:flex;align-items:center;gap:8px}
+.field{flex:1;height:42px;background:#1D1B2E;border:1px solid rgba(224,136,122,.28);border-radius:12px;padding:0 14px;display:flex;align-items:center;font-size:17px;font-weight:700}
+.lab .x{width:34px;height:34px;color:rgba(237,232,245,.4)}
+.chips{display:flex;align-items:center;gap:8px;height:38px}
+.chip{display:inline-flex;align-items:center;gap:9px;height:38px;padding:0 15px;border-radius:999px;background:rgba(224,136,122,.14);color:#E0887A;font-size:16px;font-weight:700;white-space:nowrap;opacity:0}
+.chip .xx{width:12px;height:12px;opacity:.75}
+.chip.no{background:rgba(226,96,96,.13);color:#E98080}
+.chip .eq{display:none;width:20px;height:20px;border-radius:6px;background:#E0887A;color:#14090A;font-size:13px;font-weight:800;align-items:center;justify-content:center;margin:0 -2px 0 -5px}
+.chip u{text-decoration:none}.chip.eq .eq{display:inline-flex}.chip.eq u{text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:2px}
+.slot{height:38px;padding:0 15px;border-radius:999px;border:1px dashed rgba(255,255,255,.2);color:var(--d);font-size:16px;font-weight:600;display:inline-flex;align-items:center;min-width:104px}
+.slot.ty{color:#EDE8F5;border-color:rgba(224,136,122,.5)}
+.caret{display:inline-block;width:1.5px;height:17px;background:#E0887A;vertical-align:middle}
+.sep{display:flex;align-items:center;gap:14px;height:22px}.sep i{flex:1;height:1px;background:var(--b)}.sep span{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--d)}
+.wo{display:flex;align-items:center;gap:14px;height:52px;border:1px solid var(--b);border-radius:16px;padding:0 12px 0 16px;background:rgba(255,255,255,.025)}.wo .wl{font-size:16px;font-weight:700;color:var(--m)}
+#foot{position:absolute;left:22px;right:22px;bottom:0;height:108px;border-top:1px solid rgba(255,255,255,.07);padding-top:12px;display:flex;flex-direction:column;gap:10px}
+.pv{display:flex;align-items:center;gap:10px;height:22px;white-space:nowrap}
+.pv .pl{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--d)}
+.lines{font-size:15px;color:var(--m);font-weight:600}.lines .tm{color:#E0887A;font-weight:700}
+.lines .c{font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--d);margin:0 7px}.lines .d{margin:0 5px;color:var(--d)}
+.row{display:flex;gap:8px;align-items:center}.lk{border-radius:999px;padding:0 20px;height:42px;display:flex;align-items:center;font-size:15px;font-weight:700;background:rgba(255,255,255,.05);color:var(--m)}
+.go{flex:1;height:44px;border-radius:12px;background:#E0887A;color:#14090A;font-size:16px;font-weight:800;gap:8px;margin-left:6px}
+#tip{position:absolute;left:0;top:0;z-index:10;opacity:0;display:flex;align-items:center;gap:9px;padding:7px 11px 7px 8px;border-radius:10px;background:#1D1B2E;border:1px solid rgba(255,255,255,.12);box-shadow:0 10px 30px rgba(0,0,0,.55);font-size:13px;font-weight:700;white-space:nowrap;color:#EDE8F5}
+.tg{width:30px;height:18px;border-radius:999px;background:rgba(255,255,255,.16);position:relative;flex-shrink:0}.tg i{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff}
+.tg.on{background:#E0887A}.tg.on i{left:14px;background:#14090A}
+#cur{position:absolute;z-index:20;left:0;top:0;width:26px;height:26px;opacity:0;filter:drop-shadow(0 2px 5px rgba(0,0,0,.6))}
+#cur svg{width:26px;height:26px;fill:#fff;stroke:#111;stroke-width:1.5}
+</style>
+</head>
+<body>
+<div id="cam">
+  <div class="hd"><div class="brand"><i class="drop"></i><div><b>Profile Name Search</b><small data-k="byFluidz"></small></div></div>
+    <div class="btns"><i><svg class="ic" viewBox="0 0 24 24"><path d="M20 7h-9M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg></i><i><svg class="ic"><use href="/labs/icons.svg#panel-right"/></svg></i><i><svg class="ic"><use href="/labs/icons.svg#minus"/></svg></i><i><svg class="ic"><use href="/labs/icons.svg#x"/></svg></i></div></div>
+  <div id="body">
+    <div class="oh"><span class="back"><svg class="ic"><use href="/labs/icons.svg#chevron-left"/></svg></span><b data-k="title"></b></div>
+    <div class="hint" data-k="hint"></div>
+    <div class="crit"><div class="lab"><div class="field" data-k="role"></div><span class="x"><svg class="ic"><use href="/labs/icons.svg#x"/></svg></span></div>
+      <div class="chips" id="g0"><span class="chip" id="p0"><i class="eq">=</i><u>top</u><svg class="ic xx"><use href="/labs/icons.svg#x"/></svg></span><span class="chip" id="p1"><u>dom</u><svg class="ic xx"><use href="/labs/icons.svg#x"/></svg></span><span class="chip" id="p2"><u>active</u><svg class="ic xx"><use href="/labs/icons.svg#x"/></svg></span><span class="slot" id="s0"></span></div></div>
+    <div class="sep" id="sep"><i></i><span data-k="andAlso"></span><i></i></div>
+    <div class="crit" id="c2"><div class="lab"><div class="field" data-k="size"></div><span class="x"><svg class="ic"><use href="/labs/icons.svg#x"/></svg></span></div>
+      <div class="chips" id="g1"><span class="chip" id="p3"><u>XXL</u><svg class="ic xx"><use href="/labs/icons.svg#x"/></svg></span><span class="chip" id="p4"><u>XL</u><svg class="ic xx"><use href="/labs/icons.svg#x"/></svg></span><span class="slot" id="s1"></span></div></div>
+    <div class="wo" id="wo"><span class="wl" data-k="without"></span><div class="chips" id="g2"><span class="chip no" id="p5"><u>sub</u><svg class="ic xx"><use href="/labs/icons.svg#x"/></svg></span><span class="slot" id="s2"></span></div></div>
+  </div>
+  <div id="foot">
+    <div class="pv"><span class="pl" data-k="preview"></span><span class="lines" id="lines"></span></div>
+    <div class="row"><span class="lk" data-k="cancel"></span><span class="lk" data-k="save"></span><span class="go" id="go"><svg class="ic"><use href="/labs/icons.svg#search"/></svg><span data-k="search"></span></span></div>
+  </div>
+  <div id="tip"><span class="tg" id="tg"><i></i></span><span data-k="whole"></span></div>
+  <div id="cur"><svg viewBox="0 0 24 24"><path d="M4 3l16 7-7 2-3 7z"/></svg></div>
+</div>
+<script>
+var I = {"en":{"byFluidz":"by Fluidz","title":"Search editor","hint":"Each criterion is a list of synonyms (one is enough). All of them must match.","role":"Role","size":"Size","addWord":"+ word","andAlso":"and also","without":"Without","whole":"whole word","preview":"Preview","cancel":"Cancel","save":"Save","search":"Search"},
+"fr":{"byFluidz":"par Fluidz","title":"Éditeur de recherche","hint":"Chaque critère est une liste de synonymes (un seul suffit). Tous doivent correspondre.","role":"Rôle","size":"Taille","addWord":"+ mot","andAlso":"et aussi","without":"Sans","whole":"mot entier","preview":"Aperçu","cancel":"Annuler","save":"Enregistrer","search":"Chercher"},
+"es":{"byFluidz":"por Fluidz","title":"Editor de búsqueda","hint":"Cada criterio es una lista de sinónimos (basta con uno). Todos deben cumplirse.","role":"Rol","size":"Tamaño","addWord":"+ palabra","andAlso":"y también","without":"Sin","whole":"palabra entera","preview":"Vista previa","cancel":"Cancelar","save":"Guardar","search":"Buscar"},
+"pt":{"byFluidz":"por Fluidz","title":"Editor de pesquisa","hint":"Cada critério é uma lista de sinónimos (um basta). Todos têm de corresponder.","role":"Papel","size":"Tamanho","addWord":"+ palavra","andAlso":"e também","without":"Sem","whole":"palavra inteira","preview":"Pré-visualização","cancel":"Cancelar","save":"Guardar","search":"Pesquisar"},
+"it":{"byFluidz":"di Fluidz","title":"Editor di ricerca","hint":"Ogni criterio è un elenco di sinonimi (ne basta uno). Tutti devono corrispondere.","role":"Ruolo","size":"Taglia","addWord":"+ parola","andAlso":"e anche","without":"Senza","whole":"parola intera","preview":"Anteprima","cancel":"Annulla","save":"Salva","search":"Cerca"},
+"de":{"byFluidz":"von Fluidz","title":"Such-Editor","hint":"Jedes Kriterium ist eine Synonymliste (eines genügt). Alle müssen zutreffen.","role":"Rolle","size":"Größe","addWord":"+ Wort","andAlso":"und auch","without":"Ohne","whole":"ganzes Wort","preview":"Vorschau","cancel":"Abbrechen","save":"Speichern","search":"Suchen"}}
+var L = (function () {
+  var ok = /^(en|fr|es|pt|it|de)$/, l = ''
+  try { l = new URLSearchParams(location.search).get('lang') || '' } catch (e) {}
+  if (!ok.test(l)) try { var P = window.parent; l = P !== window ? (P.ONE_LANG || '') : '' } catch (e) { l = '' }
+  return ok.test(l) ? l : 'en'
+})()
+function T(k, v) { var s = (I[L] || {})[k]; if (s == null) s = I.en[k]; if (v) for (var n in v) s = s.split('{' + n + '}').join(v[n]); return s }
+document.documentElement.lang = L
+document.querySelectorAll('[data-k]').forEach(function (el) { el.textContent = T(el.getAttribute('data-k')) })
+;(function () {
+  var $ = function (id) { return document.getElementById(id) }
+  var LOOP = 9, W = 800, H = 600
+  var clamp = function (k) { return Math.max(0, Math.min(1, k)) }
+  var ease = function (k) { k = clamp(k); return k * k * (3 - 2 * k) }
+  var lerp = function (a, b, k) { return a + (b - a) * clamp(k) }
+  var back = function (k) { k = clamp(k); var c = 1.7; return 1 + (c + 1) * Math.pow(k - 1, 3) + c * Math.pow(k - 1, 2) }
+  // only touch the DOM when a value changes
+  var S = function (el, p, v) { var m = el._s || (el._s = {}); if (m[p] !== v) { m[p] = v; el.style[p] = v } }
+  var C = function (el, c, on) { var m = el._c || (el._c = {}); on = !!on; if (m[c] !== on) { m[c] = on; el.classList.toggle(c, on) } }
+  var X = function (el, h) { if (el._h !== h) { el._h = h; el.innerHTML = h } }
+  // chips: [element, group, pop time, word]
+  var CH = [[$('p0'), 0, 0.9, 'top'], [$('p1'), 0, 1.5, 'dom'], [$('p2'), 0, 2.1, 'active'], [$('p3'), 1, 3.5, 'XXL'], [$('p4'), 1, 4.0, 'XL'], [$('p5'), 2, 4.7, 'sub']]
+  var SLOT = [$('s0'), $('s1'), $('s2')], TYPE = 0.42
+  var body = $('body'), foot = $('foot'), sep = $('sep'), c2 = $('c2'), wo = $('wo'), tip = $('tip'), tg = $('tg'), go = $('go'), cur = $('cur'), cam = $('cam')
+  function target(el, fx, fy) { var a = el.getBoundingClientRect(), c = cam.getBoundingClientRect(), k = c.width / W; return [(a.left - c.left) / k + a.width / k * fx, (a.top - c.top) / k + a.height / k * fy] }
+  function slide(el, k, dy) { S(el, 'opacity', k); S(el, 'transform', 'translateY(' + (1 - k) * dy + 'px)') }
+  function lines() {
+    var tm = function (x) { return '<span class="tm">' + x + '</span>' }, c = function (k) { return '<span class="c">' + T(k) + '</span>' }, d = '<span class="d">\u00b7</span>'
+    return tm('=top') + d + tm('dom') + d + tm('active') + c('andAlso') + tm('XXL') + d + tm('XL') + c('without') + tm('sub')
+  }
+  window.setT = function (t) {
+    t = ((t % LOOP) + LOOP) % LOOP
+    // fade out at the end of the loop, fade in at the start
+    var fo = t < 0.3 ? ease(t / 0.3) : (t > 8.6 ? 1 - ease((t - 8.6) / 0.3) : 1)
+    S(body, 'opacity', fo); S(tip, 'opacity', fo * (t >= 5.7 && t < 6.6 ? ease((t - 5.7) / 0.2) : 0))
+    // chips pop in; the slot types the next word just before
+    var typing = ['', '', '']
+    CH.forEach(function (ch) {
+      var el = ch[0], k = (t - ch[2]) / 0.32
+      if (k <= 0) { S(el, 'display', 'none'); if (t >= ch[2] - TYPE && !typing[ch[1]]) typing[ch[1]] = ch[3].slice(0, Math.ceil((t - ch[2] + TYPE) / TYPE * ch[3].length)) }
+      else { S(el, 'display', ''); S(el, 'opacity', clamp(k * 2.5)); S(el, 'transform', 'scale(' + lerp(0.6, 1, back(k)) + ')') }
+    })
+    typing.forEach(function (w, i) { var el = SLOT[i]; C(el, 'ty', !!w); X(el, w ? w + '<span class="caret"></span>' : T('addWord')) })
+    // second criterion, "without" row
+    slide(sep, ease((t - 2.4) / 0.4), -10); slide(c2, ease((t - 2.7) / 0.45), 14); slide(wo, ease((t - 4.2) / 0.4), 14)
+    // hover "top": the whole-word toggle, then the = badge
+    C(tg, 'on', t >= 6.0); C($('p0'), 'eq', t >= 6.05)
+    if (t >= 5.6 && t < 6.7) { var p = target($('p0'), 0.5, 1); S(tip, 'transform', 'translate(' + (p[0] - 14) + 'px,' + (p[1] + 10) + 'px)') }
+    // preview + buttons
+    slide(foot, fo * ease((t - 6.4) / 0.5), 12); X($('lines'), lines())
+    var pr = clamp((t - 8.1) / 0.6)
+    S(go, 'boxShadow', pr > 0 && pr < 1 ? '0 0 0 ' + pr * 16 + 'px rgba(224,136,122,' + (1 - pr) * 0.55 + ')' : 'none')
+    S(go, 'transform', t >= 8.1 && t < 8.3 ? 'scale(0.97)' : 'none')
+    // cursor: to the chip "top" (5.2-5.7), click the toggle (6.0), to Search (7.6-8.1), click (8.1)
+    var o = 0, x = 0, y = 0
+    if (t >= 5.2 && t < 8.8) {
+      var p1 = target($('p0'), 0.5, 0.62), p2 = t >= 7.6 ? target(go, 0.5, 0.55) : p1
+      if (t < 5.7) { var k1 = ease((t - 5.2) / 0.5); x = lerp(560, p1[0], k1); y = lerp(560, p1[1], k1) }
+      else if (t < 7.6) { x = p1[0]; y = p1[1] }
+      else if (t < 8.1) { var k2 = ease((t - 7.6) / 0.5); x = lerp(p1[0], p2[0], k2); y = lerp(p1[1], p2[1], k2) }
+      else { x = p2[0]; y = p2[1] }
+      o = t < 5.45 ? (t - 5.2) / 0.25 : (t > 8.5 ? 1 - (t - 8.5) / 0.3 : 1)
+      var dn = (t >= 6.0 && t < 6.15) || (t >= 8.1 && t < 8.25)
+      S(cur, 'transform', 'translate(' + x + 'px,' + y + 'px) scale(' + (dn ? 0.82 : 1) + ')')
+    }
+    S(cur, 'opacity', clamp(o))
+  }
+  function fit() { var k = Math.min(innerWidth / W, innerHeight / H), c = cam.style; c.transform = 'scale(' + k + ')'; c.left = (innerWidth - W * k) / 2 + 'px'; c.top = (innerHeight - H * k) / 2 + 'px' }
+  addEventListener('resize', fit); fit()
+  var q = new URLSearchParams(location.search), reduce = false
+  try { reduce = matchMedia('(prefers-reduced-motion: reduce)').matches } catch (e) {}
+  // ?t= / ?static / reduced motion: a still frame
+  if (q.has('t')) setT(+q.get('t')); else if (reduce || q.has('static')) setT(7); else { setT(0); var t0 = performance.now(); (function tick(now) { setT((now - t0) / 1000); requestAnimationFrame(tick) })(t0) }
+})()
+</script>
+</body>
+</html>
