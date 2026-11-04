@@ -1,4 +1,4 @@
-/* Fluidz — single product page (Profile Name Search): language, e-mail funnel, magic-link return, download.
+/* Fluidz — one page for Profile Name Search: language, e-mail form, magic-link return, download.
    No analytics, no cookies. localStorage only for the language, the session and remembered utm values. */
 (function () {
   'use strict'
@@ -7,18 +7,16 @@
   var $$ = function (s, r) { return Array.prototype.slice.call((r || D).querySelectorAll(s)) }
 
   /* ---------- config ---------- */
-  // Social accounts: fill a URL (https://...) to show it in the "Follow Fluidz" row. Empty = nothing is shown.
+  // Social accounts: put an https:// URL to show it in the footer. Empty = nothing is shown.
   var SOCIAL = { x: '', snapchat: '', instagram: '', bluesky: '', telegram: '' }
   var SOCIAL_NAMES = { x: 'X', snapchat: 'Snapchat', instagram: 'Instagram', bluesky: 'Bluesky', telegram: 'Telegram' }
   var SB_URL = 'https://kxbrfjqxufvskcxmliak.supabase.co'
   var SB_KEY = 'sb_publishable_G2j2f4to4L6nkp75L1fVAA_qrAJUL7h' // public (browser) key
   var SESSION_KEY = 'fluidz_labs_session'
-  var SOURCE = 'pns-home'
   var REDIRECT = 'https://fluidz.app/?welcome=1#download'
   var COOLDOWN = 30
   var LANGS = ['en', 'fr', 'es', 'pt', 'it', 'de']
 
-  /* ---------- storage (always guarded) ---------- */
   function lsGet(k) { try { return localStorage.getItem(k) } catch (e) { return null } }
   function lsSet(k, v) { try { localStorage.setItem(k, v) } catch (e) {} }
   function lsDel(k) { try { localStorage.removeItem(k) } catch (e) {} }
@@ -29,61 +27,53 @@
     'err.invalid': 'Please enter a valid e-mail address.',
     'err.limit': 'Too many requests right now. Try again in a few minutes.',
     'err.net': 'Couldn’t reach the server. Check your connection and try again.',
+    'f.sending': 'Sending…',
     'sent.resend.in': 'Send it again in {n}s',
     'sent.resent': 'Sent again. Check your inbox.',
     'exp.t': 'That link has expired or was already used. Enter your e-mail to get a new one.',
     'exp.session': 'Your session has ended. Enter your e-mail to get a new link.',
     'ready.loading': 'Preparing…',
     'ready.done': 'Download started. Unzip it, then follow the steps below.',
-    'ready.err': 'The download didn’t work. Try again in a moment.',
-    'how.copied': 'Copied',
-    'f.sending': 'Sending…'
+    'ready.err': 'The download didn’t work. Try again in a moment.'
   }
-  function collectEN() {
-    $$('[data-i18n]').forEach(function (el) { var k = el.getAttribute('data-i18n'); if (EN[k] == null) EN[k] = el.textContent })
-    $$('[data-i18n-html]').forEach(function (el) { var k = el.getAttribute('data-i18n-html'); if (EN[k] == null) EN[k] = el.innerHTML })
-    ;['ph:placeholder', 'aria:aria-label', 'title:title'].forEach(function (p) {
-      var a = p.split(':')
-      $$('[data-i18n-' + a[0] + ']').forEach(function (el) { var k = el.getAttribute('data-i18n-' + a[0]); if (EN[k] == null) EN[k] = el.getAttribute(a[1]) })
-    })
-    EN['meta.title'] = D.title
-    EN['meta.desc'] = ($('meta[name="description"]') || {}).content || ''
-  }
-  function dict() { return (window.ONE_I18N || {})[LANG] || {} }
+  var ATTRS = [['ph', 'placeholder'], ['aria', 'aria-label']]
+  $$('[data-i18n]').forEach(function (el) { EN[el.getAttribute('data-i18n')] = el.textContent })
+  $$('[data-i18n-html]').forEach(function (el) { EN[el.getAttribute('data-i18n-html')] = el.innerHTML })
+  ATTRS.forEach(function (a) { $$('[data-i18n-' + a[0] + ']').forEach(function (el) { EN[el.getAttribute('data-i18n-' + a[0])] = el.getAttribute(a[1]) }) })
+  EN['meta.title'] = D.title
+  EN['meta.desc'] = $('meta[name="description"]').content
+
   function t(k, v) {
-    var s = dict()[k]; if (s == null) s = EN[k]; if (s == null) return k
+    var s = ((window.ONE_I18N || {})[LANG] || {})[k]; if (s == null) s = EN[k]; if (s == null) return k
     if (v) for (var n in v) s = s.replace('{' + n + '}', v[n])
     return s
   }
-  function setMeta(sel, attr, val) { var el = $(sel); if (el) el.setAttribute(attr, val) }
   function applyLang() {
     D.documentElement.lang = LANG
     $$('[data-i18n]').forEach(function (el) { el.textContent = t(el.getAttribute('data-i18n')) })
     $$('[data-i18n-html]').forEach(function (el) { el.innerHTML = t(el.getAttribute('data-i18n-html')) })
-    $$('[data-i18n-ph]').forEach(function (el) { el.setAttribute('placeholder', t(el.getAttribute('data-i18n-ph'))) })
-    $$('[data-i18n-aria]').forEach(function (el) { el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria'))) })
-    $$('[data-i18n-title]').forEach(function (el) { el.setAttribute('title', t(el.getAttribute('data-i18n-title'))) })
+    ATTRS.forEach(function (a) { $$('[data-i18n-' + a[0] + ']').forEach(function (el) { el.setAttribute(a[1], t(el.getAttribute('data-i18n-' + a[0]))) }) })
     D.title = t('meta.title')
-    setMeta('meta[name="description"]', 'content', t('meta.desc'))
-    setMeta('meta[property="og:title"]', 'content', t('meta.title')); setMeta('meta[name="twitter:title"]', 'content', t('meta.title'))
-    setMeta('meta[property="og:description"]', 'content', t('meta.desc')); setMeta('meta[name="twitter:description"]', 'content', t('meta.desc'))
-    var sel = $('#lang'); if (sel) sel.value = LANG
-    forms.forEach(function (f) { f.refreshText() })
-    setDemo()
+    $$('meta[property="og:title"],meta[name="twitter:title"]').forEach(function (m) { m.content = t('meta.title') })
+    $$('meta[name="description"],meta[property="og:description"],meta[name="twitter:description"]').forEach(function (m) { m.content = t('meta.desc') })
+    $('#lang').value = LANG
+    if (busy) label('f.sending')
+    tick()
+    if (noticeKey) notice.textContent = t(noticeKey)
+    whoEl.textContent = who()
   }
   function setLang(l) {
     if (LANGS.indexOf(l) < 0) l = 'en'
     var done = function () { LANG = l; window.ONE_LANG = l; lsSet('fluidz_lang', l); applyLang() }
     if (l === 'en' || (window.ONE_I18N || {})[l]) return done()
     var s = D.createElement('script')
-    s.src = '/labs/' + (l === 'it' || l === 'de' ? 'one-i18n-2.js' : 'one-i18n.js') + '?v=1'
+    s.src = '/labs/' + (l === 'it' || l === 'de' ? 'one-i18n-2.js' : 'one-i18n.js') + '?v=2'
     s.onload = done; s.onerror = done; D.head.appendChild(s)
   }
 
-  /* ---------- phone detection (Chrome extensions can't run on phones) ---------- */
+  /* ---------- phone (Chrome extensions don't run on phones) ---------- */
   function mq(q) { try { return matchMedia(q).matches } catch (e) { return false } }
-  function isPhone() { return mq('(hover: none) and (pointer: coarse)') || mq('(max-width: 760px)') }
-  function updPhone() { D.documentElement.classList.toggle('is-phone', isPhone()) }
+  function updPhone() { D.documentElement.classList.toggle('is-phone', mq('(hover: none) and (pointer: coarse)') || mq('(max-width: 760px)')) }
   updPhone()
   try { matchMedia('(max-width: 760px)').addEventListener('change', updPhone) } catch (e) {}
 
@@ -99,39 +89,33 @@
   /* ---------- session (Supabase REST, no SDK) ---------- */
   function jwt(tok) { try { var p = tok.split('.')[1].replace(/-/g, '+').replace(/_/g, '/'); return JSON.parse(decodeURIComponent(escape(atob(p)))) } catch (e) { return {} } }
   function readSession() { try { return JSON.parse(lsGet(SESSION_KEY) || 'null') } catch (e) { return null } }
-  function saveSession(s) { lsSet(SESSION_KEY, JSON.stringify(s)); return s }
-  function sbApi(path, body) {
-    return fetch(SB_URL + path, { method: 'POST', headers: { apikey: SB_KEY, 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
-  }
   function storeTokens(j) {
     var prev = readSession() || {}, c = jwt(j.access_token)
-    var user = j.user || prev.user || { email: c.email, user_metadata: c.user_metadata || {} }
-    return saveSession({ access_token: j.access_token, refresh_token: j.refresh_token || prev.refresh_token, expires_at: Date.now() + 1000 * Number(j.expires_in || 3600), user: user })
+    var s = { access_token: j.access_token, refresh_token: j.refresh_token || prev.refresh_token, expires_at: Date.now() + 1000 * Number(j.expires_in || 3600), user: j.user || prev.user || { email: c.email } }
+    lsSet(SESSION_KEY, JSON.stringify(s)); return s
   }
   function session() {
     var s = readSession()
-    if (!s || !s.access_token) return null
-    if (!s.refresh_token && s.expires_at < Date.now()) return null
+    if (!s || !s.access_token || (!s.refresh_token && s.expires_at < Date.now())) return null
     return s
   }
-  function who() { var s = session(); if (!s) return ''; var c = jwt(s.access_token), u = s.user || {}; return u.email || c.email || '' }
+  function who() { var s = session(); return s ? ((s.user || {}).email || jwt(s.access_token).email || '') : '' }
   async function refresh() {
     var s = readSession(); if (!s || !s.refresh_token) { lsDel(SESSION_KEY); return null }
     try {
-      var r = await sbApi('/auth/v1/token?grant_type=refresh_token', { refresh_token: s.refresh_token })
+      var r = await fetch(SB_URL + '/auth/v1/token?grant_type=refresh_token', { method: 'POST', headers: { apikey: SB_KEY, 'Content-Type': 'application/json' }, body: JSON.stringify({ refresh_token: s.refresh_token }) })
       if (!r.ok) { lsDel(SESSION_KEY); return null }
       return storeTokens(await r.json())
     } catch (e) { return s }
   }
   async function ensureFresh() {
     var s = readSession(); if (!s || !s.access_token) return null
-    if (s.expires_at - Date.now() > 120000) return s
-    return refresh()
+    return s.expires_at - Date.now() > 120000 ? s : refresh()
   }
 
   // Back from the e-mail link: Supabase puts the session (or an error) in the URL hash.
   var returned = { ok: false, error: '' }
-  ;(function captureReturn() {
+  ;(function () {
     var h = location.hash || ''
     var g = function (k) { var m = h.match(new RegExp('[#&]' + k + '=([^&]*)')); try { return m ? decodeURIComponent(m[1]) : '' } catch (e) { return m ? m[1] : '' } }
     var at = g('access_token'), er = g('error')
@@ -141,203 +125,125 @@
     try { history.replaceState(null, '', location.pathname + location.search.replace(/([?&])welcome=1&?/, '$1').replace(/[?&]$/, '') + '#download') } catch (e) {}
   })()
 
-  /* ---------- signup ---------- */
-  async function signup(email, marketing) {
+  /* ---------- form ---------- */
+  var card = $('#download'), form = $('form', card), input = $('#em'), box = $('input[name=marketing]', card)
+  var hp = $('input[name=website]', card), btn = $('button[type=submit]', form), btnLabel = $('span', btn)
+  var notice = $('[data-notice]', card), resendBtn = $('[data-resend]', card), whoEl = $('[data-who]', card)
+  var panels = {}; $$('[data-panel]', card).forEach(function (p) { panels[p.getAttribute('data-panel')] = p })
+  var state = 'form', busy = false, email = '', marketing = false, cool = 0, timer = null, noticeKey = null
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+  async function signup(addr, mk) {
     var res = await fetch('/api/labs-signup', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email, source: SOURCE, lang: LANG, marketing: !!marketing, utm: UTM, redirect: REDIRECT })
+      body: JSON.stringify({ email: addr, source: 'pns-home', lang: LANG, marketing: !!mk, utm: UTM, redirect: REDIRECT, website: hp ? hp.value : '' })
     })
     var j = null; try { j = await res.json() } catch (e) {}
     if (res.status === 400 || (j && j.error === 'invalid_email')) return 'invalid_email'
     if (j && j.emailed) return 'ok'
-    if (j && j.error === 'email_failed') return 'email_failed'
-    if (!res.ok) throw new Error('http_' + res.status)
-    return 'email_failed'
+    if (res.status === 429 || (j && j.error === 'email_failed')) return 'limit'
+    throw new Error('http_' + res.status)
   }
-  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  function msg(text, ok) {
+    $$('[data-msg]', card).forEach(function (m) { m.textContent = ''; m.classList.remove('ok') })
+    var m = $('[data-msg]', panels[state])
+    if (text) { m.textContent = text; m.classList.toggle('ok', !!ok) }
+  }
+  function show(name, focus) {
+    state = name
+    Object.keys(panels).forEach(function (k) { panels[k].hidden = k !== name })
+    if (focus) { var h = $('h2', panels[name]); (h || input).focus({ preventScroll: true }) }
+  }
+  function label(key) { btnLabel.textContent = t(key || btnLabel.getAttribute('data-i18n')) }
+  function setNotice(key) { noticeKey = key; notice.hidden = !key; notice.textContent = key ? t(key) : '' }
+  function bad() { msg(t('err.invalid')); input.setAttribute('aria-invalid', 'true'); input.focus() }
+  function tick() { resendBtn.disabled = cool > 0; resendBtn.textContent = cool > 0 ? t('sent.resend.in', { n: cool }) : t('sent.resend') }
+  function startCooldown() {
+    cool = COOLDOWN; clearInterval(timer); tick()
+    timer = setInterval(function () { cool--; tick(); if (cool <= 0) clearInterval(timer) }, 1000)
+  }
 
-  /* ---------- form instances (hero: all states, teaser: form + sent) ---------- */
-  var forms = []
-  function Form(root) {
-    var self = this
-    this.root = root; this.name = root.getAttribute('data-form')
-    this.email = ''; this.marketing = false; this.cool = 0; this.timer = null; this.state = 'form'; this.busy = false
-    this.panels = {}; $$('[data-panel]', root).forEach(function (p) { self.panels[p.getAttribute('data-panel')] = p })
-    this.input = $('input[type=email]', root); this.box = $('input[name=marketing]', root)
-    this.btn = $('form button[type=submit]', root); this.btnLabel = $('span', this.btn)
-    this.notice = $('[data-notice]', root)
-    var f = $('form', root)
-    f.addEventListener('submit', function (e) { e.preventDefault(); self.submit() })
-    var rs = $('[data-resend]', root); if (rs) rs.addEventListener('click', function () { self.resend() })
-    $$('[data-other]', root).forEach(function (b) { b.addEventListener('click', function () { self.other() }) })
-    var dl = $('[data-download]', root); if (dl) dl.addEventListener('click', function () { self.download() })
-    var ds = $('[data-desktop]', root); if (ds) ds.addEventListener('click', function () { D.documentElement.classList.add('force-desktop') })
-    this.input.addEventListener('input', function () { self.msg('') })
-  }
-  Form.prototype.msg = function (text, ok, scope) {
-    $$('[data-msg]', this.root).forEach(function (m) { m.textContent = ''; m.classList.remove('ok') })
-    var p = this.panels[scope || this.state]; var m = p && $('[data-msg]', p)
-    if (m && text) { m.textContent = text; if (ok) m.classList.add('ok') }
-  }
-  Form.prototype.show = function (name, focus) {
-    var self = this; this.state = name
-    Object.keys(this.panels).forEach(function (k) { self.panels[k].hidden = k !== name })
-    if (focus) { var h = $('.gc-h', this.panels[name]); if (h) h.focus({ preventScroll: true }); else if (name === 'form') this.input.focus({ preventScroll: true }) }
-  }
-  Form.prototype.refreshText = function () {
-    this.setLabel(this.busy ? 'f.sending' : null)
-    this.tick(true)
-    if (this.noticeKey) this.notice.textContent = t(this.noticeKey)
-    if (this.state === 'ready') { var w = $('[data-who]', this.panels.ready); if (w) w.textContent = who() }
-  }
-  Form.prototype.setLabel = function (key) {
-    var el = this.btnLabel
-    if (key) el.textContent = t(key)
-    else { var k = el.getAttribute('data-i18n'); el.textContent = t(k) }
-  }
-  Form.prototype.setNotice = function (key) {
-    this.noticeKey = key
-    if (!this.notice) return
-    this.notice.hidden = !key; this.notice.textContent = key ? t(key) : ''
-  }
-  Form.prototype.submit = async function () {
-    if (this.busy) return
-    var email = this.input.value.trim()
-    this.msg('')
-    if (!EMAIL_RE.test(email)) { this.msg(t('err.invalid')); this.input.setAttribute('aria-invalid', 'true'); this.input.focus(); return }
-    this.input.removeAttribute('aria-invalid')
-    this.busy = true; this.btn.disabled = true; this.setLabel('f.sending')
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault(); if (busy) return
+    var v = input.value.trim(); msg('')
+    if (!EMAIL_RE.test(v)) return bad()
+    input.removeAttribute('aria-invalid')
+    busy = true; btn.disabled = true; label('f.sending')
     try {
-      var r = await signup(email, this.box.checked)
-      if (r === 'ok') { this.email = email; this.marketing = this.box.checked; this.sent(); }
-      else if (r === 'invalid_email') { this.msg(t('err.invalid')); this.input.setAttribute('aria-invalid', 'true'); this.input.focus() }
-      else this.msg(t('err.limit'))
-    } catch (e) { this.msg(t('err.net')) }
-    this.busy = false; this.btn.disabled = false; this.setLabel(null)
+      var r = await signup(v, box.checked)
+      if (r === 'ok') { email = v; marketing = box.checked; $('[data-to]', card).textContent = v; setNotice(null); show('sent', true); startCooldown() }
+      else if (r === 'invalid_email') bad()
+      else msg(t('err.limit'))
+    } catch (err) { msg(t('err.net')) }
+    busy = false; btn.disabled = false; label()
+  })
+  input.addEventListener('input', function () { msg('') })
+  resendBtn.addEventListener('click', async function () {
+    if (cool > 0 || !email) return
+    resendBtn.disabled = true; msg('')
+    var r; try { r = await signup(email, marketing) } catch (e) { r = 'net' }
+    msg(t(r === 'ok' ? 'sent.resent' : r === 'net' ? 'err.net' : 'err.limit'), r === 'ok')
+    startCooldown()
+  })
+  $$('[data-other]', card).forEach(function (b) {
+    b.addEventListener('click', function () {
+      clearInterval(timer); cool = 0
+      if (session()) { lsDel(SESSION_KEY); D.documentElement.classList.remove('is-in') }
+      msg(''); setNotice(null); input.value = ''; show('form', true)
+    })
+  })
+  $('[data-desktop]', card).addEventListener('click', function () { D.documentElement.classList.add('force-desktop') })
+
+  function ready(focus) { whoEl.textContent = who(); setNotice(null); show('ready', focus); D.documentElement.classList.add('is-in') }
+  function expired(key) {
+    D.documentElement.classList.remove('is-in'); clearInterval(timer)
+    show('form'); setNotice(key)
+    setTimeout(function () { try { input.focus({ preventScroll: true }) } catch (e) {} }, 0)
   }
-  Form.prototype.sent = function () {
-    $('[data-to]', this.panels.sent).textContent = this.email
-    this.setNotice(null); this.show('sent', true); this.startCooldown()
-  }
-  Form.prototype.startCooldown = function () {
-    var self = this; this.cool = COOLDOWN; clearInterval(this.timer)
-    this.tick()
-    this.timer = setInterval(function () { self.cool--; self.tick(); if (self.cool <= 0) clearInterval(self.timer) }, 1000)
-  }
-  Form.prototype.tick = function () {
-    var b = $('[data-resend]', this.root); if (!b) return
-    b.disabled = this.cool > 0
-    b.textContent = this.cool > 0 ? t('sent.resend.in', { n: this.cool }) : t('sent.resend')
-  }
-  Form.prototype.resend = async function () {
-    if (this.cool > 0 || !this.email) return
-    var b = $('[data-resend]', this.root); b.disabled = true; this.msg('')
-    try {
-      var r = await signup(this.email, this.marketing)
-      if (r === 'ok') this.msg(t('sent.resent'), true)
-      else this.msg(t('err.limit'))
-    } catch (e) { this.msg(t('err.net')) }
-    this.startCooldown()
-  }
-  Form.prototype.other = function () {
-    clearInterval(this.timer); this.cool = 0
-    if (this.name === 'hero' && session()) { lsDel(SESSION_KEY); D.documentElement.classList.remove('is-in') }
-    this.msg(''); this.setNotice(null); this.input.value = ''; this.show('form', true)
-  }
-  Form.prototype.ready = function (focus) {
-    var w = $('[data-who]', this.panels.ready); if (w) w.textContent = who()
-    this.setNotice(null); this.msg(''); this.show('ready', focus)
-    D.documentElement.classList.add('is-in')
-  }
-  Form.prototype.expired = function (key) {
-    D.documentElement.classList.remove('is-in'); clearInterval(this.timer)
-    this.show('form'); this.setNotice(key)
-    var im = this.input; setTimeout(function () { try { im.focus({ preventScroll: true }) } catch (e) {} }, 0)
-  }
-  Form.prototype.download = async function () {
-    var self = this, btn = $('[data-download]', this.root), lab = $('span', btn)
-    if (btn.disabled) return
-    btn.disabled = true; lab.textContent = t('ready.loading'); this.msg('')
+
+  var dl = $('[data-download]', card), dlLabel = $('span', dl)
+  dl.addEventListener('click', async function () {
+    if (dl.disabled) return
+    dl.disabled = true; dlLabel.textContent = t('ready.loading'); msg('')
     var get = function (s) { return fetch('/api/profile-name-search-download', { headers: { Authorization: 'Bearer ' + s.access_token } }) }
     try {
       var s = await ensureFresh()
-      if (!s) { this.expired('exp.session'); return }
+      if (!s) return expired('exp.session')
       var r = await get(s)
       if (r.status === 401) {
         s = await refresh()
-        if (!s) { this.expired('exp.session'); return }
+        if (!s) return expired('exp.session')
         r = await get(s)
-        if (r.status === 401) { lsDel(SESSION_KEY); this.expired('exp.session'); return }
+        if (r.status === 401) { lsDel(SESSION_KEY); return expired('exp.session') }
       }
       if (!r.ok) throw new Error('http_' + r.status)
-      var blob = await r.blob()
-      var url = URL.createObjectURL(blob), a = D.createElement('a')
+      var url = URL.createObjectURL(await r.blob()), a = D.createElement('a')
       a.href = url; a.download = 'profile-name-search.zip'; a.style.display = 'none'
       D.body.appendChild(a); a.click(); a.remove()
       setTimeout(function () { URL.revokeObjectURL(url) }, 8000)
-      this.msg(t('ready.done'), true)
-    } catch (e) { this.msg(t('ready.err')) }
-    btn.disabled = false; lab.textContent = t('ready.btn')
-  }
+      msg(t('ready.done'), true)
+    } catch (e) { msg(t('ready.err')) }
+    finally { dl.disabled = false; dlLabel.textContent = t('ready.btn') }
+  })
 
-  /* ---------- demo (lazy; static frame when motion is reduced) ---------- */
-  var demoOn = false
-  function setDemo() {
-    var f = $('#demo-frame'); if (!f || !demoOn) return
-    var reduced = mq('(prefers-reduced-motion: reduce)')
-    var src = '/labs/demo/pns-demo.html?lang=' + LANG + (reduced ? '&t=7' : '')
-    if (f.getAttribute('src') !== src) f.setAttribute('src', src)
-  }
-  function lazyDemo() {
-    var go = function () { demoOn = true; setDemo() }
-    var stage = $('#stage'); if (!stage) return
-    var start = function () {
-      if (!('IntersectionObserver' in window)) return go()
-      var io = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { io.disconnect(); go() } }, { rootMargin: '300px' })
-      io.observe(stage)
-    }
-    if (D.readyState === 'complete') setTimeout(start, 300); else window.addEventListener('load', function () { setTimeout(start, 300) })
-  }
-
-  /* ---------- social row ---------- */
-  function renderSocial() {
-    var box = $('#follow-l'), n = 0; if (!box) return
-    Object.keys(SOCIAL).forEach(function (k) {
-      var u = String(SOCIAL[k] || '').trim()
-      if (!/^https:\/\//i.test(u)) return
-      var a = D.createElement('a'); a.href = u; a.target = '_blank'; a.rel = 'noopener me'; a.textContent = SOCIAL_NAMES[k] || k
-      box.appendChild(a); n++
-    })
-    $('#follow').hidden = n === 0
-  }
+  /* ---------- social links (footer) ---------- */
+  var fl = $('#follow-l')
+  Object.keys(SOCIAL).forEach(function (k) {
+    var u = String(SOCIAL[k] || '').trim(); if (!/^https:\/\//i.test(u)) return
+    var a = D.createElement('a'); a.href = u; a.target = '_blank'; a.rel = 'noopener me'; a.textContent = SOCIAL_NAMES[k]
+    if (fl.childNodes.length) fl.appendChild(D.createTextNode(' · '))
+    fl.appendChild(a)
+  })
+  $('#follow').hidden = !fl.childNodes.length
 
   /* ---------- init ---------- */
-  collectEN()
-  $$('[data-form]').forEach(function (r) { forms.push(new Form(r)) })
-  var hero = forms.filter(function (f) { return f.name === 'hero' })[0]
   applyLang()
   $('#lang').addEventListener('change', function (e) { setLang(e.target.value) })
-  renderSocial(); lazyDemo()
-
-  var cpy = $('#copy-ext')
-  if (cpy) cpy.addEventListener('click', function () {
-    var done = function () { cpy.textContent = t('how.copied'); setTimeout(function () { cpy.textContent = t('how.copy') }, 2200) }
-    try { navigator.clipboard.writeText('chrome://extensions').then(done, done) } catch (e) { done() }
-  })
-
-  $$('[data-goto-form]').forEach(function (a) {
-    a.addEventListener('click', function () {
-      if (hero && hero.state === 'form') setTimeout(function () { try { hero.input.focus({ preventScroll: true }) } catch (e) {} }, 450)
-    })
-  })
-
-  function scrollToForm() { var el = $('#download'); if (el) setTimeout(function () { el.scrollIntoView({ block: 'center' }) }, 60) }
-  if (hero) {
-    if (returned.error) { hero.expired('exp.t'); scrollToForm() }
-    else if (session()) {
-      hero.ready(false)
-      if (returned.ok) scrollToForm()
-      else ensureFresh().then(function (s) { if (!s) hero.expired('exp.session') })
-    }
+  function toForm() { setTimeout(function () { card.scrollIntoView({ block: 'center' }) }, 60) }
+  if (returned.error) { expired('exp.t'); toForm() }
+  else if (session()) {
+    ready(false)
+    if (returned.ok) toForm()
+    else ensureFresh().then(function (s) { if (!s) expired('exp.session') })
   }
 })()
