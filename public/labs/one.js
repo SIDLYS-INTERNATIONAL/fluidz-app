@@ -43,7 +43,7 @@
   function collectEN() {
     $$('[data-i18n]').forEach(function (el) { var k = el.getAttribute('data-i18n'); if (EN[k] == null) EN[k] = el.textContent })
     $$('[data-i18n-html]').forEach(function (el) { var k = el.getAttribute('data-i18n-html'); if (EN[k] == null) EN[k] = el.innerHTML })
-    ;['ph:placeholder', 'aria:aria-label', 'title:title'].forEach(function (p) {
+    ;['ph:placeholder', 'aria:aria-label', 'title:title', 'alt:alt'].forEach(function (p) {
       var a = p.split(':')
       $$('[data-i18n-' + a[0] + ']').forEach(function (el) { var k = el.getAttribute('data-i18n-' + a[0]); if (EN[k] == null) EN[k] = el.getAttribute(a[1]) })
     })
@@ -64,6 +64,13 @@
     $$('[data-i18n-ph]').forEach(function (el) { el.setAttribute('placeholder', t(el.getAttribute('data-i18n-ph'))) })
     $$('[data-i18n-aria]').forEach(function (el) { el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria'))) })
     $$('[data-i18n-title]').forEach(function (el) { el.setAttribute('title', t(el.getAttribute('data-i18n-title'))) })
+    $$('[data-i18n-alt]').forEach(function (el) { el.setAttribute('alt', t(el.getAttribute('data-i18n-alt'))) })
+    // Screenshots exist in English and French: French pages show the French ones, every other language the English ones.
+    $$('img[data-src-fr]').forEach(function (el) {
+      if (!el.getAttribute('data-src-en')) el.setAttribute('data-src-en', el.getAttribute('src'))
+      var want = LANG === 'fr' ? el.getAttribute('data-src-fr') : el.getAttribute('data-src-en')
+      if (el.getAttribute('src') !== want) el.setAttribute('src', want)
+    })
     D.title = t('meta.title')
     setMeta('meta[name="description"]', 'content', t('meta.desc'))
     setMeta('meta[property="og:title"]', 'content', t('meta.title')); setMeta('meta[name="twitter:title"]', 'content', t('meta.title'))
@@ -75,10 +82,13 @@
   function setLang(l) {
     if (LANGS.indexOf(l) < 0) l = 'en'
     var done = function () { LANG = l; window.ONE_LANG = l; lsSet('fluidz_lang', l); applyLang() }
-    if (l === 'en' || (window.ONE_I18N || {})[l]) return done()
+    if (l === 'en' || ((window.ONE_I18N || {})[l] && (window.ONE_V3 || {})[l])) return done()
+    var more = function () { var s3 = D.createElement('script'); s3.src = '/labs/one-v3-' + l + '.js?v=1'; s3.onload = done; s3.onerror = done; D.head.appendChild(s3) }
+    if ((window.ONE_I18N || {})[l]) return more()
     var s = D.createElement('script')
     s.src = '/labs/' + (l === 'it' || l === 'de' ? 'one-i18n-2.js' : l === 'pt' ? 'one-i18n-3.js' : 'one-i18n.js') + '?v=2'
-    s.onload = done; s.onerror = done; D.head.appendChild(s)
+    // then the 3.0 strings of that language (one-v3-xx.js adds and updates keys in the same dictionary)
+    s.onload = more; s.onerror = more; D.head.appendChild(s)
   }
 
   /* ---------- phone detection (Chrome extensions can't run on phones) ---------- */
