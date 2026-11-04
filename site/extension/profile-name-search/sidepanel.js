@@ -13,7 +13,7 @@
     }
     try { window.close() } catch (e) { /* ignore */ }
   }
-  function showNo() { port = null; ui.update({ nogrid: true, lang: lang, groups: [], saved: [], matches: [] }); clearTimeout(retry); retry = setTimeout(connect, 2500) }
+  function showNo() { port = null; ui.update({ nogrid: true, lang: lang, matches: [], searches: [], settings: {} }); clearTimeout(retry); retry = setTimeout(connect, 2500) }
   function connect() {
     clearTimeout(retry);
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
@@ -22,7 +22,10 @@
       chrome.tabs.sendMessage(tab.id, { type: 'pns-ping' }, function () {
         if (chrome.runtime.lastError) return showNo();
         var p = chrome.tabs.connect(tab.id, { name: 'pns-side' }); port = p;
-        p.onMessage.addListener(function (m) { if (m && m.type === 'state') { lang = m.state.lang || lang; ui.update(m.state) } });
+        p.onMessage.addListener(function (m) {
+          if (m && m.type === 'state') { lang = m.state.lang || lang; ui.update(m.state) }
+          else if (m && (m.type === 'download' || m.type === 'focus')) ui.deliver(m); // backup file to save, or a keyboard shortcut
+        });
         p.onDisconnect.addListener(function () { void chrome.runtime.lastError; if (port === p) showNo() });
       });
     });
@@ -33,5 +36,6 @@
   chrome.tabs.onUpdated.addListener(function (id, info) { if (id === tabId && info.status === 'complete' && !port) setTimeout(function () { if (!port) connect() }, 1500) });
   // Tell the page this is a deliberate close, so the floating panel can come back at once.
   window.addEventListener('pagehide', function () { if (port) { try { port.postMessage({ type: 'bye' }) } catch (e) { /* closed */ } } });
-  chrome.storage.local.get(['pns_state_v1'], function (r) { var s = r && r.pns_state_v1; if (s && s.lang) lang = s.lang; connect() });
+  // Language: 3.x keeps it in pns_v3.settings; 2.x in pns_state_v1 (before the first visit to Grindr after the update).
+  chrome.storage.local.get(['pns_v3', 'pns_state_v1'], function (r) { var l = (r && r.pns_v3 && r.pns_v3.settings && r.pns_v3.settings.lang) || (r && r.pns_state_v1 && r.pns_state_v1.lang); if (l) lang = l; connect() });
 })();

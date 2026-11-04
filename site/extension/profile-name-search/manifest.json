@@ -1,24 +1,82 @@
 {
   "manifest_version": 3,
   "name": "Profile Name Search",
-  "version": "2.2.1",
+  "version": "3.0.0",
   "description": "Find any Grindr Web profile by name, keyword or emoji. It scrolls the grid for you and pauses on every match. Free, by Fluidz Labs.",
   "homepage_url": "https://fluidz.app/profile-name-search",
   "minimum_chrome_version": "116",
-  "permissions": ["storage", "sidePanel"],
-  "icons": { "16": "icon-16.png", "48": "icon-48.png", "128": "icon-128.png" },
+  "permissions": [
+    "storage",
+    "sidePanel"
+  ],
+  "icons": {
+    "16": "icon-16.png",
+    "48": "icon-48.png",
+    "128": "icon-128.png"
+  },
   "action": {
     "default_title": "Profile Name Search",
     "default_popup": "popup.html",
-    "default_icon": { "16": "icon-16.png", "48": "icon-48.png" }
+    "default_icon": {
+      "16": "icon-16.png",
+      "48": "icon-48.png"
+    }
   },
-  "background": { "service_worker": "background.js" },
-  "side_panel": { "default_path": "sidepanel.html" },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "commands": {
+    "toggle-scan": {
+      "suggested_key": {
+        "default": "Alt+Shift+S"
+      },
+      "description": "Start / pause the scan"
+    },
+    "focus-search": {
+      "suggested_key": {
+        "default": "Alt+Shift+F"
+      },
+      "description": "Go to the search field"
+    },
+    "next-match": {
+      "suggested_key": {
+        "default": "Alt+Shift+N"
+      },
+      "description": "Next match"
+    },
+    "prev-match": {
+      "suggested_key": {
+        "default": "Alt+Shift+P"
+      },
+      "description": "Previous match"
+    }
+  },
   "content_scripts": [
     {
-      "matches": ["*://web.grindr.com/*"],
-      "js": ["i18n.js", "icons.js", "ui.js", "content.js"],
-      "css": ["content.css"],
+      "matches": [
+        "*://web.grindr.com/*"
+      ],
+      "js": [
+        "i18n.js",
+        "i18n-fr.js",
+        "i18n-es.js",
+        "i18n-pt.js",
+        "i18n-it.js",
+        "i18n-de.js",
+        "icons.js",
+        "criteria.js",
+        "journal.js",
+        "store.js",
+        "ui-css.js",
+        "ui.js",
+        "content.js"
+      ],
+      "css": [
+        "content.css"
+      ],
       "run_at": "document_idle"
     }
   ]

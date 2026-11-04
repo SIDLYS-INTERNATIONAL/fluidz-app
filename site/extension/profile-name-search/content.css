@@ -1,10 +1,12 @@
-/* Profile Name Search — styles applied to Grindr's own grid cards. The panel itself lives in a shadow root (ui.js). */
+/* Profile Name Search — styles applied to Grindr's own grid cards. The panel itself lives in a shadow root (ui.js).
+   Matches get a discreet coral outline (switch it off in ⚙ → html.pns-no-outline); other cards are dimmed. */
 div[role="gridcell"].gnf-match {
-  outline: 3px solid #E0887A !important;
-  outline-offset: -3px;
+  outline: 2px solid rgba(224, 136, 122, 0.9) !important;
+  outline-offset: -2px;
   position: relative;
   z-index: 10;
 }
+html.pns-no-outline div[role="gridcell"].gnf-match { outline: none !important; }
 div[role="gridcell"].gnf-dim {
   opacity: 0.12;
   filter: grayscale(1);
