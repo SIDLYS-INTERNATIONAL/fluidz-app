@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Profile Name Search: find names in the Grindr grid | Fluidz</title>
-<meta name="description" content="Free Chrome extension for Grindr Web: search names or words in the grid and list every match. Everything stays in your browser. Get the link by e-mail.">
+<title>Profile Name Search: find a Grindr profile by name | Fluidz</title>
+<meta name="description" content="Free Chrome extension for Grindr Web. Find a profile by name in seconds, from the grid you already filtered. Nothing leaves your browser. Get the link by e-mail.">
 <link rel="canonical" href="https://fluidz.app/">
 <link rel="alternate" hreflang="x-default" href="https://fluidz.app/">
 <link rel="alternate" hreflang="en" href="https://fluidz.app/?lang=en">
@@ -14,137 +14,282 @@
 <link rel="alternate" hreflang="it" href="https://fluidz.app/?lang=it">
 <link rel="alternate" hreflang="de" href="https://fluidz.app/?lang=de">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<meta name="theme-color" content="#05040A" media="(prefers-color-scheme: dark)">
-<meta name="theme-color" content="#FBF8F6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#05040A">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Fluidz Labs">
 <meta property="og:url" content="https://fluidz.app/">
-<meta property="og:title" content="Profile Name Search: find names in the Grindr grid | Fluidz">
-<meta property="og:description" content="Free Chrome extension for Grindr Web: search names or words in the grid and list every match. Everything stays in your browser. Get the link by e-mail.">
+<meta property="og:title" content="Profile Name Search: find a Grindr profile by name | Fluidz">
+<meta property="og:description" content="Free Chrome extension for Grindr Web. Find a profile by name in seconds, from the grid you already filtered. Nothing leaves your browser. Get the link by e-mail.">
 <meta property="og:image" content="https://fluidz.app/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Profile Name Search: find names in the Grindr grid | Fluidz">
-<meta name="twitter:description" content="Free Chrome extension for Grindr Web: search names or words in the grid and list every match. Everything stays in your browser. Get the link by e-mail.">
+<meta name="twitter:title" content="Profile Name Search: find a Grindr profile by name | Fluidz">
+<meta name="twitter:description" content="Free Chrome extension for Grindr Web. Find a profile by name in seconds, from the grid you already filtered. Nothing leaves your browser. Get the link by e-mail.">
 <meta name="twitter:image" content="https://fluidz.app/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@800&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-<script>/* language before first paint: ?lang=xx, then saved choice, then browser. English lives in this page. */
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script>/* language before first paint: ?lang=xx, then saved choice, then browser. Loads the matching dictionary (English lives in this page). */
 (function(){var ok=['en','fr','es','pt','it','de'],l='en',u='';try{u=new URLSearchParams(location.search).get('lang')||'';l=u||localStorage.getItem('fluidz_lang')||(navigator.language||'en').slice(0,2).toLowerCase()}catch(e){}
 l=String(l).toLowerCase();if(ok.indexOf(l)<0)l='en';window.ONE_LANG=l;window.ONE_I18N=window.ONE_I18N||{};document.documentElement.lang=l;
 try{if(u&&ok.indexOf(u)>=0)localStorage.setItem('fluidz_lang',l)}catch(e){}
-if(l==='fr'||l==='es'||l==='pt')document.write('<script src="/labs/one-i18n.js?v=2"><\/script>');else if(l==='it'||l==='de')document.write('<script src="/labs/one-i18n-2.js?v=2"><\/script>')})()</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Profile Name Search","applicationCategory":"BrowserApplication","operatingSystem":"Windows, macOS, Linux (Chrome 116 or later)","softwareVersion":"2.2.1","fileSize":"41 KB","url":"https://fluidz.app/","description":"Free Chrome extension for Grindr Web: search names or words in the grid and list every match. The extension sends nothing anywhere.","inLanguage":["en","fr","es","pt","it","de"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Fluidz Labs","url":"https://fluidz.app/"}}</script>
-<link rel="stylesheet" href="/labs/one.css?v=2">
+if(l==='fr'||l==='es'||l==='pt')document.write('<script src="/labs/one-i18n.js?v=1"><\/script>');else if(l==='it'||l==='de')document.write('<script src="/labs/one-i18n-2.js?v=1"><\/script>')})()</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Profile Name Search","applicationCategory":"BrowserApplication","operatingSystem":"Windows, macOS, Linux (Chrome 116 or later)","softwareVersion":"2.2.1","fileSize":"41 KB","url":"https://fluidz.app/","description":"Free Chrome extension for Grindr Web: find a profile by name in seconds, from the grid you already filtered. The extension sends nothing anywhere.","inLanguage":["en","fr","es","pt","it","de"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Fluidz Labs","url":"https://fluidz.app/"}}</script>
+<link rel="stylesheet" href="/labs/one.css?v=1">
 </head>
 <body>
 <a class="skip" href="#main" data-i18n="skip">Skip to content</a>
 
-<header class="wrap top">
-  <a href="/" class="logo">Fluidz<small>Labs</small></a>
-  <label class="lang"><span class="sr" data-i18n="aria.lang">Language</span>
-    <select id="lang">
-      <option value="en">English</option><option value="fr">Français</option><option value="es">Español</option><option value="pt">Português</option><option value="it">Italiano</option><option value="de">Deutsch</option>
-    </select>
-  </label>
+<header class="top">
+  <div class="wrap top-in">
+    <a href="/" class="logo" aria-label="Fluidz Labs"><i aria-hidden="true"></i>Fluidz<small>Labs</small></a>
+    <div class="top-r">
+      <label class="lang"><span class="sr" data-i18n="aria.lang">Language</span>
+        <svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#globe"/></svg>
+        <select id="lang">
+          <option value="en">English</option><option value="fr">Français</option><option value="es">Español</option><option value="pt">Português</option><option value="it">Italiano</option><option value="de">Deutsch</option>
+        </select>
+      </label>
+      <a href="#download" class="btn btn-s" data-goto-form data-i18n="nav.cta">Get the extension</a>
+    </div>
+  </div>
 </header>
 
 <main id="main">
-<section class="wrap hero">
-  <div class="hero-copy">
-    <p class="kicker" data-i18n="hero.kicker">Profile Name Search · free Chrome extension</p>
-    <h1 data-i18n="hero.h1">Find names in the Grindr grid.</h1>
-    <p class="sub" data-i18n="hero.sub">Type a name or a word: the extension scans the Grindr Web grid and lists every profile that matches. For Chrome on a computer.</p>
+<section class="hero">
+  <div class="glow" aria-hidden="true"></div>
+  <div class="wrap hero-in">
+    <div class="hero-copy">
+      <p class="eyebrow"><i aria-hidden="true"></i><span data-i18n="hero.eyebrow">Profile Name Search · free Chrome extension</span></p>
+      <h1 data-i18n="hero.h1">Find a Grindr profile by name, in seconds.</h1>
+      <p class="hero-sub" data-i18n="hero.sub">A free extension for Grindr Web on desktop Chrome. It searches the grid you already filtered, and nothing leaves your browser.</p>
 
-    <div class="card" id="download" tabindex="-1">
-      <div data-panel="form">
-        <p class="notice" data-notice hidden></p>
-        <form novalidate>
-          <label class="sr" for="em" data-i18n="f.label">Your e-mail address</label>
-          <div class="row">
-            <input type="email" id="em" name="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="you@example.com" data-i18n-ph="f.ph">
-            <button type="submit" class="btn"><span data-i18n="f.cta">Email me the link</span></button>
+      <div class="gc" id="download" data-form="hero" tabindex="-1">
+        <div class="gc-p" data-panel="form">
+          <p class="notice" data-notice hidden></p>
+          <form novalidate>
+            <label class="sr" for="em-hero" data-i18n="f.label">Your e-mail address</label>
+            <div class="wf">
+              <input type="email" id="em-hero" name="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="you@example.com" data-i18n-ph="f.ph">
+              <button type="submit" class="btn btn-p"><span data-i18n="f.cta">Email me the download link</span></button>
+            </div>
+            <label class="opt"><input type="checkbox" name="marketing"><span data-i18n="f.consent">Tell me about new versions of the extension and the launch of the Fluidz app.</span></label>
+            <p class="fine"><span data-i18n="f.optional">Optional. We never sell or share your e-mail. The download works either way.</span> <span data-i18n-html="f.how">We e-mail you a one-time link that creates your free Fluidz account. No password. <a href="/privacy">Privacy</a></span></p>
+            <p class="msg" data-msg role="status" aria-live="polite"></p>
+          </form>
+        </div>
+        <div class="gc-p" data-panel="sent" hidden>
+          <span class="badge"><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#mail-check"/></svg></span>
+          <h2 class="gc-h" tabindex="-1" data-i18n="sent.t">Check your inbox</h2>
+          <p class="gc-t"><span data-i18n="sent.p">We sent your link to</span> <b class="addr" data-to></b></p>
+          <p class="gc-t" data-i18n="sent.computer">Open the e-mail on your computer: the link brings you back here, signed in, with the download.</p>
+          <p class="gc-t phone-note" data-i18n="sent.phone">You’re on a phone, and Chrome extensions don’t run on phones. Open the link on your computer.</p>
+          <p class="fine" data-i18n="sent.spam">Nothing after a minute? Check your spam or Promotions tab.</p>
+          <div class="acts"><button type="button" class="btn btn-g btn-s" data-resend data-i18n="sent.resend">Send it again</button><button type="button" class="linkbtn" data-other data-i18n="sent.other">Use another address</button></div>
+          <p class="msg" data-msg role="status" aria-live="polite"></p>
+        </div>
+        <div class="gc-p" data-panel="ready" hidden>
+          <span class="badge ok"><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#circle-check"/></svg></span>
+          <h2 class="gc-h" tabindex="-1" data-i18n="ready.t">You’re in</h2>
+          <div class="d-only">
+            <p class="gc-t" data-i18n="ready.p">Your free extension is ready. Download it, then install it in about two minutes (steps below).</p>
+            <button type="button" class="btn btn-p" data-download><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#download"/></svg><span data-i18n="ready.btn">Download the extension (.zip)</span></button>
+            <p class="meta">v2.2.1 · Chrome 116+ · 41 KB</p>
+            <a href="#how" class="next" data-i18n="ready.next">Next: install it ↓</a>
           </div>
-          <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <div class="m-only">
+            <p class="gc-t"><b data-i18n="ready.phone.t">Chrome extensions don’t run on phones: open this page on your computer.</b></p>
+            <p class="gc-t" data-i18n="ready.phone.p">Use the link in your e-mail there, and the download appears on this page.</p>
+            <button type="button" class="linkbtn" data-desktop data-i18n="ready.phone.override">I’m on a computer</button>
+          </div>
+          <p class="fine"><span data-i18n="ready.signed">Signed in as</span> <b data-who></b> · <button type="button" class="linkbtn" data-other data-i18n="ready.other">Use another address</button></p>
+          <p class="msg" data-msg role="status" aria-live="polite"></p>
+        </div>
+      </div>
+    </div>
+
+    <figure class="demo">
+      <div class="stage" id="stage"><iframe id="demo-frame" title="Profile Name Search demo" data-i18n-title="demo.title" loading="lazy" referrerpolicy="no-referrer" tabindex="-1"></iframe></div>
+      <figcaption data-i18n="demo.cap">Demo on a generated sample grid: fictional names, no real Grindr profile.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="strip" aria-label="Highlights" data-i18n-aria="strip.aria">
+  <ul class="wrap strip-in">
+    <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#badge-check"/></svg><span data-i18n="trust.1">Free</span></li>
+    <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#wifi-off"/></svg><span data-i18n="trust.2">Sends nothing anywhere</span></li>
+    <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#layout-grid"/></svg><span data-i18n="trust.3">Works on the Grindr Web grid, after your own filters</span></li>
+    <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#laptop"/></svg><span data-i18n="trust.4">Chrome, Brave, Edge, Arc</span></li>
+  </ul>
+</section>
+
+<section class="sec" id="what">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow"><i aria-hidden="true"></i><span data-i18n="ben.eyebrow">What it does</span></p>
+      <h2 data-i18n="ben.h2">Three things, done well.</h2>
+    </div>
+    <div class="ben">
+      <article class="card">
+        <div class="vis" aria-hidden="true">
+          <div class="qrow"><em data-i18n="ben.1.or">OR</em><code>top, xxl</code></div>
+          <div class="qrow"><em data-i18n="ben.1.and">AND</em><code>dom + top</code></div>
+          <div class="qrow"><em data-i18n="ben.1.exact">Exact</em><code>"dom top"</code></div>
+        </div>
+        <h3 data-i18n="ben.1.t">Search by keywords</h3>
+        <p data-i18n="ben.1.p">Type a name or a few words. A comma means OR, + means AND, quotes mean an exact phrase. Matches light up on the grid and in a list.</p>
+      </article>
+      <article class="card">
+        <div class="vis" aria-hidden="true">
+          <div class="tabs"><span data-i18n="tab.all">All</span><span><svg class="ic"><use href="/labs/icons.svg#star"/></svg><span data-i18n="tab.fav">Favorites</span></span><span class="on" data-i18n="tab.non">Not favorites</span></div>
+        </div>
+        <h3 data-i18n="ben.2.t">Skip who you already favorited</h3>
+        <p data-i18n="ben.2.p">Switch between All, Favorites and Not favorites. On Not favorites, the list, the highlights and the pauses only follow profiles you haven’t favorited yet.</p>
+      </article>
+      <article class="card">
+        <div class="vis" aria-hidden="true">
+          <div class="res"><span class="av"></span><span class="nm">TOP 🚀</span><span class="go"><span data-i18n="ben.3.show">Show on grid</span><svg class="ic"><use href="/labs/icons.svg#locate-fixed"/></svg></span></div>
+          <div class="speed"><svg class="ic"><use href="/labs/icons.svg#timer"/></svg><span data-i18n="ben.3.speed">Gentle pace</span></div>
+        </div>
+        <h3 data-i18n="ben.3.t">Let it scroll for you</h3>
+        <p data-i18n="ben.3.p">Auto-scroll loads the grid at a gentle pace, and can pause on each match. Click Show on grid and it takes you right to that profile.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec alt" id="how">
+  <div class="wrap narrow">
+    <div class="head">
+      <p class="eyebrow"><i aria-hidden="true"></i><span data-i18n="how.eyebrow">How it works</span></p>
+      <h2 data-i18n="how.h2">Three steps, about two minutes.</h2>
+      <p class="in-only banner" data-i18n="how.banner">You’re in. Next: install it.</p>
+    </div>
+    <ol class="steps">
+      <li class="step">
+        <span class="num" aria-hidden="true">1</span>
+        <div>
+          <h3 data-i18n="how.1.t">Get the link by e-mail</h3>
+          <p data-i18n="how.1.p">Enter your e-mail at the top of this page. We send a one-time link: open it on your computer and the download appears right here.</p>
+        </div>
+      </li>
+      <li class="step">
+        <span class="num" aria-hidden="true">2</span>
+        <div>
+          <h3 data-i18n="how.2.t">Install it</h3>
+          <p data-i18n="how.2.p">For now the extension is added by hand, in Chrome’s developer mode.</p>
+          <ol class="subs">
+            <li data-i18n="how.2.a">Unzip the download. Keep that folder where it is: Chrome reads the extension from it.</li>
+            <li><span data-i18n-html="how.2.b">Open <code>chrome://extensions</code> in Chrome. Chrome blocks links to it, so copy the address and paste it in the address bar.</span> <button type="button" class="btn btn-g btn-xs" id="copy-ext" data-i18n="how.copy">Copy</button></li>
+            <li data-i18n="how.2.c">Switch on Developer mode, top right.</li>
+            <li data-i18n-html="how.2.d">Click Load unpacked, then pick the unzipped folder: the one that directly contains <code>manifest.json</code>.</li>
+          </ol>
+        </div>
+      </li>
+      <li class="step">
+        <span class="num" aria-hidden="true">3</span>
+        <div>
+          <h3 data-i18n="how.3.t">Open Grindr Web, filter, then search</h3>
+          <p data-i18n-html="how.3.p">Open <a href="https://web.grindr.com" target="_blank" rel="noopener">web.grindr.com</a> in grid view and apply your Grindr filters first (position, age, favorites, online…). The panel appears: type what you’re looking for and start.</p>
+        </div>
+      </li>
+    </ol>
+    <div class="upd">
+      <h3 data-i18n="upd.t">Already installed? Updating</h3>
+      <ol>
+        <li data-i18n="upd.1">Unzip the new download over the same folder, replacing the files.</li>
+        <li data-i18n-html="upd.2">Open <code>chrome://extensions</code>.</li>
+        <li data-i18n="upd.3">Click the reload arrow ↻ on the extension’s card. Don’t click Remove: your saved searches stay.</li>
+      </ol>
+    </div>
+    <p class="cta-row"><a href="#download" class="btn btn-p" data-goto-form data-i18n="how.cta">Get the extension</a></p>
+  </div>
+</section>
+
+<section class="sec" id="privacy">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow sage"><i aria-hidden="true"></i><span data-i18n="priv.eyebrow">Privacy</span></p>
+      <h2 data-i18n="priv.h2">It reads your screen. It tells nobody.</h2>
+    </div>
+    <ul class="priv">
+      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#wifi-off"/></svg><div><h3 data-i18n="priv.1.t">No network calls</h3><p data-i18n="priv.1.p">The extension makes no network requests. Nothing it sees is sent anywhere.</p></div></li>
+      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#hard-drive"/></svg><div><h3 data-i18n="priv.2.t">Searches stay in your browser</h3><p data-i18n="priv.2.p">Your searches and settings are saved in Chrome’s local storage, on your computer.</p></div></li>
+      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#message-square"/></svg><div><h3 data-i18n="priv.3.t">It doesn’t read your messages</h3><p data-i18n="priv.3.p">It only looks at the names shown on the grid. It never opens or reads your chats.</p></div></li>
+      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#file-code"/></svg><div><h3 data-i18n="priv.4.t">Readable code</h3><p data-i18n="priv.4.p">No minification: open the files in any text editor and check for yourself. The whole zip is about 41 KB.</p></div></li>
+    </ul>
+    <p class="privnote"><span data-i18n="priv.mail">Your e-mail is used to send you the link, and for news only if you tick the box. Never sold, never shared.</span> <span data-i18n-html="priv.more"><a href="/privacy">Read the privacy policy</a></span></p>
+  </div>
+</section>
+
+<section class="sec alt" id="faq">
+  <div class="wrap narrow">
+    <div class="head">
+      <p class="eyebrow lav"><i aria-hidden="true"></i><span data-i18n="faq.eyebrow">FAQ</span></p>
+      <h2 data-i18n="faq.h2">Good questions.</h2>
+    </div>
+    <div class="faq">
+      <details><summary><span data-i18n="faq.1.q">Does it work on my phone?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.1.a">No. Chrome extensions only run in desktop browsers: Chrome, Brave, Edge or Arc, version 116 or later. On your phone, enter your e-mail and open the link on your computer.</p></details>
+      <details><summary><span data-i18n="faq.2.q">Why do you ask for my e-mail?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.2.a">It’s how we send you the download link, and how we can tell you when a new version is out, since updates are manual for now. The link creates a free Fluidz account, with no password. You only get news if you tick the box, and we never sell or share your address.</p></details>
+      <details><summary><span data-i18n="faq.3.q">Is it safe? Can I get banned?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.3.a">The extension is about 41 KB of readable JavaScript, it only runs on web.grindr.com and it makes no network requests. For your Grindr account, no tool can promise anything: Grindr’s terms are strict about third-party tools. It never acts for you (no favorites, no messages, no taps), but auto-scroll is a grey zone, so use it at your own discretion.</p></details>
+      <details><summary><span data-i18n="faq.4.q">How do I update it?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.4.a">Unzip the new download over the same folder, open chrome://extensions and click the reload arrow on its card. Don’t remove it: your saved searches are kept. Tick the box in the form to hear about new versions.</p></details>
+      <details><summary><span data-i18n="faq.5.q">Is it on the Chrome Web Store?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.5.a">Not for now. You add it in developer mode with Load unpacked (steps above). Grindr’s terms are strict about third-party tools, so we ship it directly, with plain, readable code.</p></details>
+      <details><summary><span data-i18n="faq.6.q">My Grindr Web chat disconnected after a search.</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.6.a">A few people report it after a very long, fast scan: Grindr Web may drop its chat connection while thousands of profiles load. We can’t reproduce it ourselves and we don’t control Grindr’s side, so we can’t say what triggers it or promise it’s gone. Keep the scan speed on Gentle, the default. To get your chat back, reload the Grindr tab: you stay signed in.</p></details>
+      <details><summary><span data-i18n="faq.7.q">Which languages?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.7.a">English, Français, Español, Português, Italiano and Deutsch. You pick yours in the extension’s welcome and can change it anytime.</p></details>
+      <details><summary><span data-i18n="faq.8.q">How much does it cost?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.8.a">Nothing. It’s free, with no trial and no limit.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="sec fz" id="soon">
+  <div class="glow lav" aria-hidden="true"></div>
+  <div class="wrap narrow center">
+    <p class="eyebrow lav"><i aria-hidden="true"></i><span data-i18n="fz.eyebrow">Coming soon</span></p>
+    <h2 data-i18n="fz.h2">Something bigger is coming.</h2>
+    <p class="lead" data-i18n="fz.p">A new Fluidz app is on its way. Be the first to know.</p>
+    <div class="gc" data-form="fz">
+      <div class="gc-p" data-panel="form">
+        <form novalidate>
+          <label class="sr" for="em-fz" data-i18n="f.label">Your e-mail address</label>
+          <div class="wf">
+            <input type="email" id="em-fz" name="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="you@example.com" data-i18n-ph="f.ph">
+            <button type="submit" class="btn btn-p"><span data-i18n="fz.cta">Keep me posted</span></button>
+          </div>
           <label class="opt"><input type="checkbox" name="marketing"><span data-i18n="f.consent">Tell me about new versions of the extension and the launch of the Fluidz app.</span></label>
-          <p class="fine" data-i18n-html="f.fine">Free. The download link arrives by e-mail and creates your free Fluidz account, no password. Never sold or shared. <a href="/privacy">Privacy</a></p>
+          <p class="fine"><span data-i18n="fz.note">You also get your free link to Profile Name Search.</span> <span data-i18n="f.optional">Optional. We never sell or share your e-mail. The download works either way.</span></p>
           <p class="msg" data-msg role="status" aria-live="polite"></p>
         </form>
       </div>
-      <div data-panel="sent" hidden>
-        <h2 tabindex="-1" data-i18n="sent.t">Check your inbox</h2>
-        <p><span data-i18n="sent.p">We sent your link to</span> <b class="addr" data-to></b></p>
-        <p data-i18n="sent.computer">Open the e-mail on your computer: the link brings you back here, signed in, with the download.</p>
-        <p class="phone warn" data-i18n="sent.phone">You’re on a phone, and Chrome extensions don’t run on phones. Open the link on your computer.</p>
+      <div class="gc-p" data-panel="sent" hidden>
+        <span class="badge"><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#mail-check"/></svg></span>
+        <h2 class="gc-h" tabindex="-1" data-i18n="sent.t">Check your inbox</h2>
+        <p class="gc-t"><span data-i18n="sent.p">We sent your link to</span> <b class="addr" data-to></b></p>
+        <p class="gc-t" data-i18n="sent.computer">Open the e-mail on your computer: the link brings you back here, signed in, with the download.</p>
         <p class="fine" data-i18n="sent.spam">Nothing after a minute? Check your spam or Promotions tab.</p>
-        <p class="acts"><button type="button" class="btn ghost" data-resend data-i18n="sent.resend">Send it again</button> <button type="button" class="link" data-other data-i18n="sent.other">Use another address</button></p>
-        <p class="msg" data-msg role="status" aria-live="polite"></p>
-      </div>
-      <div data-panel="ready" hidden>
-        <h2 tabindex="-1" data-i18n="ready.t">You’re in</h2>
-        <div class="desk">
-          <p data-i18n="ready.p">Your free extension is ready. Download it, then install it in about two minutes (steps below).</p>
-          <button type="button" class="btn" data-download><span data-i18n="ready.btn">Download the extension (.zip)</span></button>
-          <p class="fine">v2.2.1 · Chrome 116+ · 41 KB · <a href="#how" data-i18n="ready.next">Next: install it ↓</a></p>
-        </div>
-        <div class="mob">
-          <p><b data-i18n="ready.phone.t">Chrome extensions don’t run on phones: open this page on your computer.</b></p>
-          <p data-i18n="ready.phone.p">Use the link in your e-mail there, and the download appears on this page.</p>
-          <button type="button" class="link" data-desktop data-i18n="ready.phone.override">I’m on a computer</button>
-        </div>
-        <p class="fine"><span data-i18n="ready.signed">Signed in as</span> <b data-who></b> · <button type="button" class="link" data-other data-i18n="ready.other">Use another address</button></p>
+        <div class="acts"><button type="button" class="btn btn-g btn-s" data-resend data-i18n="sent.resend">Send it again</button><button type="button" class="linkbtn" data-other data-i18n="sent.other">Use another address</button></div>
         <p class="msg" data-msg role="status" aria-live="polite"></p>
       </div>
     </div>
-  </div>
-
-  <figure class="shot">
-    <div class="mock" role="img" aria-label="Example: the extension lists the profiles whose name matches the search." data-i18n-aria="shot.alt">
-      <div class="q" aria-hidden="true">alex, max<span data-i18n="shot.n">3 matches</span></div>
-      <ul aria-hidden="true">
-        <li><i></i>Alex<em data-i18n="shot.show">Show on grid</em></li>
-        <li><i></i>Maxime<em data-i18n="shot.show">Show on grid</em></li>
-        <li><i></i>alex_bcn<em data-i18n="shot.show">Show on grid</em></li>
-      </ul>
-      <div class="grid" aria-hidden="true"><b></b><b class="on"></b><b></b><b></b><b></b><b></b><b class="on"></b><b></b><b></b><b></b><b></b><b class="on"></b></div>
-    </div>
-    <figcaption data-i18n="shot.cap">Illustration with fictional names.</figcaption>
-  </figure>
-</section>
-
-<section class="wrap sec" id="how">
-  <h2 data-i18n="how.h2">Three steps</h2>
-  <ol class="steps">
-    <li><h3 data-i18n="how.1.t">Get the link</h3><p data-i18n="how.1.p">Enter your e-mail and open the link on your computer: the download appears on this page.</p></li>
-    <li><h3 data-i18n="how.2.t">Install</h3><p data-i18n-html="how.2.p">Unzip the file. Open <code>chrome://extensions</code> (paste it in the address bar), switch on Developer mode, click Load unpacked and pick the unzipped folder.</p></li>
-    <li><h3 data-i18n="how.3.t">Search</h3><p data-i18n-html="how.3.p">Open <a href="https://web.grindr.com" target="_blank" rel="noopener">web.grindr.com</a> in grid view, apply your filters, then type a name or a word.</p></li>
-  </ol>
-</section>
-
-<section class="wrap sec" id="faq">
-  <h2 data-i18n="faq.h2">Questions</h2>
-  <div class="faq">
-    <details><summary data-i18n="faq.1.q">Does anything leave my browser?</summary><p data-i18n="faq.1.a">No. The extension makes no network requests. Your searches and settings stay in your browser’s local storage, on your computer.</p></details>
-    <details><summary data-i18n="faq.2.q">Does it access my Grindr account?</summary><p data-i18n="faq.2.a">No. It never asks for your Grindr login and never reads your messages. It only looks at the names shown on the grid you have open.</p></details>
-    <details><summary data-i18n="faq.3.q">Does it click for me?</summary><p data-i18n="faq.3.a">Never: no taps, no favorites, no messages. It can scroll the grid to load more profiles. Keep the speed on Gentle, the default: a few people saw the Grindr Web chat disconnect after very long, fast scans. Grindr’s terms are strict about third-party tools, so use it at your own discretion.</p></details>
-    <details><summary data-i18n="faq.4.q">How do I update it?</summary><p data-i18n="faq.4.a">Unzip the new version over the same folder, open chrome://extensions and click the reload arrow ↻ on its card. Your saved searches are kept. Tick the box above to hear about new versions.</p></details>
+    <div class="follow" id="follow" hidden><span data-i18n="social.label">Follow Fluidz</span><span class="follow-l" id="follow-l"></span></div>
   </div>
 </section>
-
-<p class="wrap soon" data-i18n="soon">Another Fluidz app is coming soon.</p>
 </main>
 
-<footer class="wrap foot">
-  <p><b>Fluidz Labs · USA</b> · <span data-i18n="foot.na">Profile Name Search is not affiliated with Grindr.</span></p>
-  <nav aria-label="Footer" data-i18n-aria="aria.footer">
-    <a href="/privacy" data-i18n="foot.privacy">Privacy</a>
-    <a href="/terms" data-i18n="foot.terms">Terms</a>
-    <a href="/legal-notice" data-i18n="foot.legal">Legal notice</a>
-    <a href="mailto:hello@fluidz.app">hello@fluidz.app</a>
-  </nav>
-  <p id="follow" hidden><span data-i18n="social.label">Follow Fluidz</span>: <span id="follow-l"></span></p>
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div>
+      <p class="foot-pub">Fluidz Labs · USA</p>
+      <p class="foot-na" data-i18n="foot.na">Profile Name Search is not affiliated with Grindr.</p>
+    </div>
+    <nav aria-label="Footer" data-i18n-aria="aria.footer">
+      <a href="/privacy" data-i18n="foot.privacy">Privacy</a>
+      <a href="/terms" data-i18n="foot.terms">Terms</a>
+      <a href="/legal-notice" data-i18n="foot.legal">Legal notice</a>
+      <a href="mailto:hello@fluidz.app">hello@fluidz.app</a>
+    </nav>
+  </div>
 </footer>
 
-<script src="/labs/one.js?v=2"></script>
+<script src="/labs/one.js?v=1"></script>
 </body>
 </html>
