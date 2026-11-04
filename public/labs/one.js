@@ -35,6 +35,7 @@
     'exp.session': 'Your session has ended. Enter your e-mail to get a new link.',
     'ready.loading': 'Preparing…',
     'ready.done': 'Download started. Unzip it, then follow the steps below.',
+    'end.done': 'Download started. Unzip it, then follow the install steps above.',
     'ready.err': 'The download didn’t work. Try again in a moment.',
     'how.copied': 'Copied',
     'f.sending': 'Sending…'
@@ -76,7 +77,7 @@
     var done = function () { LANG = l; window.ONE_LANG = l; lsSet('fluidz_lang', l); applyLang() }
     if (l === 'en' || (window.ONE_I18N || {})[l]) return done()
     var s = D.createElement('script')
-    s.src = '/labs/' + (l === 'it' || l === 'de' ? 'one-i18n-2.js' : 'one-i18n.js') + '?v=1'
+    s.src = '/labs/' + (l === 'it' || l === 'de' ? 'one-i18n-2.js' : l === 'pt' ? 'one-i18n-3.js' : 'one-i18n.js') + '?v=2'
     s.onload = done; s.onerror = done; D.head.appendChild(s)
   }
 
@@ -156,7 +157,7 @@
   }
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-  /* ---------- form instances (hero: all states, teaser: form + sent) ---------- */
+  /* ---------- form instances (hero and bottom form: all states, teaser: form + sent) ---------- */
   var forms = []
   function Form(root) {
     var self = this
@@ -241,7 +242,11 @@
   }
   Form.prototype.other = function () {
     clearInterval(this.timer); this.cool = 0
-    if (this.name === 'hero' && session()) { lsDel(SESSION_KEY); D.documentElement.classList.remove('is-in') }
+    var self = this
+    if (this.panels.ready && session()) {
+      lsDel(SESSION_KEY); D.documentElement.classList.remove('is-in')
+      forms.forEach(function (g) { if (g !== self && g.state === 'ready') { g.msg(''); g.show('form') } })
+    }
     this.msg(''); this.setNotice(null); this.input.value = ''; this.show('form', true)
   }
   Form.prototype.ready = function (focus) {
@@ -250,7 +255,9 @@
     D.documentElement.classList.add('is-in')
   }
   Form.prototype.expired = function (key) {
+    var self = this
     D.documentElement.classList.remove('is-in'); clearInterval(this.timer)
+    forms.forEach(function (g) { if (g !== self && g.state === 'ready') g.show('form') })
     this.show('form'); this.setNotice(key)
     var im = this.input; setTimeout(function () { try { im.focus({ preventScroll: true }) } catch (e) {} }, 0)
   }
@@ -275,7 +282,7 @@
       a.href = url; a.download = 'profile-name-search.zip'; a.style.display = 'none'
       D.body.appendChild(a); a.click(); a.remove()
       setTimeout(function () { URL.revokeObjectURL(url) }, 8000)
-      this.msg(t('ready.done'), true)
+      this.msg(t(this.name === 'end' ? 'end.done' : 'ready.done'), true)
     } catch (e) { this.msg(t('ready.err')) }
     btn.disabled = false; lab.textContent = t('ready.btn')
   }
@@ -332,10 +339,12 @@
   })
 
   function scrollToForm() { var el = $('#download'); if (el) setTimeout(function () { el.scrollIntoView({ block: 'center' }) }, 60) }
+  // Signed-in state is shared: the hero form and the bottom form both show "You're in" with the download.
+  var others = forms.filter(function (f) { return f !== hero && f.panels.ready })
   if (hero) {
     if (returned.error) { hero.expired('exp.t'); scrollToForm() }
     else if (session()) {
-      hero.ready(false)
+      hero.ready(false); others.forEach(function (f) { f.ready(false) })
       if (returned.ok) scrollToForm()
       else ensureFresh().then(function (s) { if (!s) hero.expired('exp.session') })
     }

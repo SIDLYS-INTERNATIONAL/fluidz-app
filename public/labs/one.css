@@ -201,6 +201,31 @@ html.force-desktop .d-only{display:block}html.force-desktop .m-only{display:none
 .foot nav a:hover{color:var(--tx)}
 .foot nav a{padding:4px 0}
 
+/* full explanations: before you start, install guide, usage, troubleshooting, bottom form */
+.card.pre .badge{margin-bottom:18px}
+.card.pre .next{margin-top:14px}
+.head.sub{margin-top:96px}
+.st-btn{margin-top:18px}
+.step a.st-btn{color:var(--ink);text-decoration:none}
+.step a.st-btn.btn-g{color:var(--tx)}
+.cbx{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:14px}
+.cbx code{font-size:15px;padding:8px 14px;border-radius:12px;background:var(--bg3);border:1px solid var(--rule2);color:var(--tx)}
+.cbx .btn-xs{margin-left:0}
+.note{display:flex;gap:12px;align-items:flex-start;margin-top:16px;padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid var(--rule);font-size:14px;line-height:1.55;color:var(--mut)}
+.note .ic{color:var(--lav);font-size:17px;margin-top:2px}
+.note+.note{margin-top:12px}
+.priv a{color:var(--p);text-decoration:underline;text-underline-offset:3px}
+.priv p.fine{font-size:13.5px;color:var(--dim);margin-top:8px}
+.gx{margin:56px 0 22px;padding:28px;border-radius:22px;background:var(--bg2);border:1px solid var(--rule)}
+.gx h3{font-family:var(--fh);font-size:22px;font-weight:800;letter-spacing:-.02em;margin-bottom:8px}
+.gx>p{font-size:15px;color:var(--mut)}
+.ex{margin-top:18px}
+.ex li{display:grid;grid-template-columns:140px 130px minmax(0,1fr);gap:16px;align-items:center;padding:14px 0;border-top:1px solid var(--rule);font-size:15px;color:var(--mut)}
+.ex code{justify-self:start;max-width:100%;overflow:hidden;text-overflow:ellipsis;background:var(--p2);color:var(--p);border:1px solid var(--pbd);border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600;white-space:nowrap}
+.ex em{font-style:normal;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--lav)}
+#get{border-bottom:1px solid var(--rule)}
+#get .gc-h{font-size:24px;letter-spacing:-.02em;line-height:1.15}
+
 @media(max-width:1020px){
   .hero-in{grid-template-columns:minmax(0,1fr);gap:44px}
   .gc,.hero-sub{max-width:none}
@@ -231,6 +256,9 @@ html.force-desktop .d-only{display:block}html.force-desktop .m-only{display:none
   .faq summary{padding:17px 18px;font-size:16px}
   .faq details p{padding:0 18px 20px;font-size:15px}
   .lead{font-size:16.5px}
+  .head.sub{margin-top:68px}
+  .gx{padding:22px 18px;margin-top:40px}
+  .ex li{grid-template-columns:minmax(0,1fr);gap:6px}
 }
 @media(max-width:480px){.top .btn-s{white-space:normal;max-width:132px;line-height:1.15;padding:6px 12px;font-size:12.5px}.top-r{gap:8px}}
 @media(max-width:380px){.top-r{gap:6px}.logo{font-size:19px}.logo i{width:12px;height:12px}.lang .ic{display:none}.lang select{padding-left:10px}.top .btn-s{max-width:118px;padding:6px 10px}}
