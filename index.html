@@ -32,331 +32,251 @@
 (function(){var ok=['en','fr','es','pt','it','de'],l='en',u='';try{u=new URLSearchParams(location.search).get('lang')||'';l=u||localStorage.getItem('fluidz_lang')||(navigator.language||'en').slice(0,2).toLowerCase()}catch(e){}
 l=String(l).toLowerCase();if(ok.indexOf(l)<0)l='en';window.ONE_LANG=l;window.ONE_I18N=window.ONE_I18N||{};document.documentElement.lang=l;
 try{if(u&&ok.indexOf(u)>=0)localStorage.setItem('fluidz_lang',l)}catch(e){}
-if(l==='fr'||l==='es')document.write('<script src="/labs/one-i18n.js?v=2"><\/script>');else if(l==='it'||l==='de')document.write('<script src="/labs/one-i18n-2.js?v=2"><\/script>');else if(l==='pt')document.write('<script src="/labs/one-i18n-3.js?v=2"><\/script>');if(l!=='en')document.write('<script src="/labs/one-v3-'+l+'.js?v=1"><\/script>')})()</script>
+if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=1"><\/script>')})()</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Profile Name Search","applicationCategory":"BrowserApplication","operatingSystem":"Windows, macOS, Linux (Chrome 116 or later)","softwareVersion":"3.0.0","fileSize":"112 KB","url":"https://fluidz.app/","description":"Free Chrome extension for Grindr Web: find a profile by name in seconds, from the grid you already filtered. The extension sends nothing anywhere.","inLanguage":["en","fr","es","pt","it","de"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Fluidz Labs","url":"https://fluidz.app/"}}</script>
 <link rel="stylesheet" href="/labs/one.css?v=2">
-<link rel="stylesheet" href="/labs/one-v3.css?v=1">
+<link rel="stylesheet" href="/labs/one-v3.css?v=2">
 </head>
 <body>
 <a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="fl-en" viewBox="0 0 60 40"><rect width="60" height="40" fill="#012169"/><path d="M0 0L60 40M60 0L0 40" stroke="#fff" stroke-width="8"/><path d="M0 0L60 40M60 0L0 40" stroke="#C8102E" stroke-width="3"/><path d="M30 0V40M0 20H60" stroke="#fff" stroke-width="12"/><path d="M30 0V40M0 20H60" stroke="#C8102E" stroke-width="7"/></symbol>
+  <symbol id="fl-fr" viewBox="0 0 3 2"><path fill="#002654" d="M0 0h1v2H0z"/><path fill="#fff" d="M1 0h1v2H1z"/><path fill="#CE1126" d="M2 0h1v2H2z"/></symbol>
+  <symbol id="fl-es" viewBox="0 0 3 2"><path fill="#AA151B" d="M0 0h3v2H0z"/><path fill="#F1BF00" d="M0 .5h3v1H0z"/></symbol>
+  <symbol id="fl-pt" viewBox="0 0 30 20"><path fill="#009739" d="M0 0h30v20H0z"/><path fill="#FEDD00" d="M15 2.5 27 10 15 17.5 3 10z"/><circle cx="15" cy="10" r="4.6" fill="#012169"/></symbol>
+  <symbol id="fl-it" viewBox="0 0 3 2"><path fill="#009246" d="M0 0h1v2H0z"/><path fill="#fff" d="M1 0h1v2H1z"/><path fill="#CE2B37" d="M2 0h1v2H2z"/></symbol>
+  <symbol id="fl-de" viewBox="0 0 5 3"><path fill="#000" d="M0 0h5v1H0z"/><path fill="#DD0000" d="M0 1h5v1H0z"/><path fill="#FFCE00" d="M0 2h5v1H0z"/></symbol>
+</svg>
 
 <header class="top">
   <div class="wrap top-in">
     <a href="/" class="logo" aria-label="Fluidz Labs"><i aria-hidden="true"></i>Fluidz<small>Labs</small></a>
     <div class="top-r">
-      <label class="lang"><span class="sr" data-i18n="aria.lang">Language</span>
-        <svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#globe"/></svg>
-        <select id="lang">
-          <option value="en">English</option><option value="fr">Français</option><option value="es">Español</option><option value="pt">Português</option><option value="it">Italiano</option><option value="de">Deutsch</option>
-        </select>
-      </label>
+      <div class="lsel">
+        <button type="button" class="lsel-b" id="lang" aria-haspopup="listbox" aria-expanded="false" aria-controls="lang-menu"><svg class="fl" aria-hidden="true"><use href="#fl-en"/></svg><span class="lsel-c" data-lang-code>EN</span><svg class="ic lsel-ch" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></button>
+        <ul class="lsel-m" id="lang-menu" role="listbox" aria-label="Language" data-i18n-aria="aria.lang" hidden>
+          <li role="option" id="lo-en" data-lang="en" lang="en" tabindex="-1" aria-selected="true"><svg class="fl" aria-hidden="true"><use href="#fl-en"/></svg><span>English</span><svg class="ic lsel-ok" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg></li>
+          <li role="option" id="lo-fr" data-lang="fr" lang="fr" tabindex="-1" aria-selected="false"><svg class="fl" aria-hidden="true"><use href="#fl-fr"/></svg><span>Français</span><svg class="ic lsel-ok" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg></li>
+          <li role="option" id="lo-es" data-lang="es" lang="es" tabindex="-1" aria-selected="false"><svg class="fl" aria-hidden="true"><use href="#fl-es"/></svg><span>Español</span><svg class="ic lsel-ok" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg></li>
+          <li role="option" id="lo-pt" data-lang="pt" lang="pt" tabindex="-1" aria-selected="false"><svg class="fl" aria-hidden="true"><use href="#fl-pt"/></svg><span>Português</span><svg class="ic lsel-ok" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg></li>
+          <li role="option" id="lo-it" data-lang="it" lang="it" tabindex="-1" aria-selected="false"><svg class="fl" aria-hidden="true"><use href="#fl-it"/></svg><span>Italiano</span><svg class="ic lsel-ok" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg></li>
+          <li role="option" id="lo-de" data-lang="de" lang="de" tabindex="-1" aria-selected="false"><svg class="fl" aria-hidden="true"><use href="#fl-de"/></svg><span>Deutsch</span><svg class="ic lsel-ok" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg></li>
+        </ul>
+      </div>
       <a href="#download" class="btn btn-s" data-goto-form data-i18n="nav.cta">Get the extension</a>
     </div>
   </div>
 </header>
 
 <main id="main">
-<section class="hero">
+<section class="hero lp-hero">
   <div class="glow" aria-hidden="true"></div>
   <div class="wrap hero-in">
     <div class="hero-copy">
-      <p class="eyebrow"><i aria-hidden="true"></i><span data-i18n="hero.eyebrow">Profile Name Search · free Chrome extension</span></p>
+      <p class="eyebrow"><i aria-hidden="true"></i><span data-i18n="l.hero.eyebrow">Free Chrome extension · version 3.0</span></p>
       <h1 data-i18n="hero.h1">Find a Grindr profile by name, in seconds.</h1>
-      <p class="hero-sub" data-i18n="hero.sub">A free extension for Grindr Web on desktop Chrome. It searches the grid you already filtered, and nothing leaves your browser.</p>
-
-      <div class="gc" id="download" data-form="hero" tabindex="-1">
-        <div class="gc-p" data-panel="form">
-          <p class="notice" data-notice hidden></p>
-          <form novalidate>
-            <label class="sr" for="em-hero" data-i18n="f.label">Your e-mail address</label>
-            <div class="wf">
-              <input type="email" id="em-hero" name="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="you@example.com" data-i18n-ph="f.ph">
-              <button type="submit" class="btn btn-p"><span data-i18n="f.cta">Email me the download link</span></button>
-            </div>
-            <label class="opt"><input type="checkbox" name="marketing"><span data-i18n="f.consent">Tell me about new versions of the extension and the launch of the Fluidz app.</span></label>
-            <p class="fine"><span data-i18n="f.optional">Optional. We never sell or share your e-mail. The download works either way.</span> <span data-i18n-html="f.how">We e-mail you a one-time link that creates your free Fluidz account. No password. <a href="/privacy">Privacy</a></span></p>
-            <p class="msg" data-msg role="status" aria-live="polite"></p>
-          </form>
-        </div>
-        <div class="gc-p" data-panel="sent" hidden>
-          <span class="badge"><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#mail-check"/></svg></span>
-          <h2 class="gc-h" tabindex="-1" data-i18n="sent.t">Check your inbox</h2>
-          <p class="gc-t"><span data-i18n="sent.p">We sent your link to</span> <b class="addr" data-to></b></p>
-          <p class="gc-t" data-i18n="sent.computer">Open the e-mail on your computer: the link brings you back here, signed in, with the download.</p>
-          <p class="gc-t phone-note" data-i18n="sent.phone">You’re on a phone, and Chrome extensions don’t run on phones. Open the link on your computer.</p>
-          <p class="fine" data-i18n="sent.spam">Nothing after a minute? Check your spam or Promotions tab.</p>
-          <div class="acts"><button type="button" class="btn btn-g btn-s" data-resend data-i18n="sent.resend">Send it again</button><button type="button" class="linkbtn" data-other data-i18n="sent.other">Use another address</button></div>
-          <p class="msg" data-msg role="status" aria-live="polite"></p>
-        </div>
-        <div class="gc-p" data-panel="ready" hidden>
-          <span class="badge ok"><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#circle-check"/></svg></span>
-          <h2 class="gc-h" tabindex="-1" data-i18n="ready.t">You’re in</h2>
-          <div class="d-only">
-            <p class="gc-t" data-i18n="ready.p">Your free extension is ready. Download it, then install it in about two minutes (steps below).</p>
-            <button type="button" class="btn btn-p" data-download><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#download"/></svg><span data-i18n="ready.btn">Download the extension (.zip)</span></button>
-            <p class="meta">v3.0.0 · Chrome 116+ · 112 KB</p>
-            <a href="#how" class="next" data-i18n="ready.next">Next: install it ↓</a>
-          </div>
-          <div class="m-only">
-            <p class="gc-t"><b data-i18n="ready.phone.t">Chrome extensions don’t run on phones: open this page on your computer.</b></p>
-            <p class="gc-t" data-i18n="ready.phone.p">Use the link in your e-mail there, and the download appears on this page.</p>
-            <button type="button" class="linkbtn" data-desktop data-i18n="ready.phone.override">I’m on a computer</button>
-          </div>
-          <p class="fine"><span data-i18n="ready.signed">Signed in as</span> <b data-who></b> · <button type="button" class="linkbtn" data-other data-i18n="ready.other">Use another address</button></p>
-          <p class="msg" data-msg role="status" aria-live="polite"></p>
-        </div>
-      </div>
+      <p class="hero-sub" data-i18n="l.hero.sub">Type a name or a keyword. It scrolls your Grindr Web grid and outlines every match.</p>
+      <div class="gc" id="download" data-form="hero" tabindex="-1"></div>
+      <ul class="chips" aria-label="Highlights" data-i18n-aria="strip.aria">
+        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#badge-check"/></svg><span data-i18n="trust.1">Free</span></li>
+        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#wifi-off"/></svg><span data-i18n="trust.2">Sends nothing anywhere</span></li>
+        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#laptop"/></svg><span data-i18n="trust.4">Chrome, Brave, Edge, Arc</span></li>
+      </ul>
     </div>
-
-    <figure class="demo">
-      <div class="stage" id="stage"><iframe id="demo-frame" title="Profile Name Search demo" data-i18n-title="demo.title" loading="lazy" referrerpolicy="no-referrer" tabindex="-1"></iframe></div>
+    <figure class="demo lp-demo" id="demo">
+      <div class="stage" id="stage"><iframe id="demo-frame" title="Profile Name Search demo" data-i18n-title="demo.title" referrerpolicy="no-referrer" tabindex="-1"></iframe></div>
       <figcaption data-i18n="demo.cap">Demo on a generated sample grid: fictional names, no real Grindr profile.</figcaption>
     </figure>
   </div>
+  <ol class="wrap beats">
+    <li><span class="beat-n" aria-hidden="true">1</span><span data-i18n="l.demo.1">Type names or keywords</span></li>
+    <li><span class="beat-n" aria-hidden="true">2</span><span data-i18n="l.demo.2">It scrolls the grid for you</span></li>
+    <li><span class="beat-n" aria-hidden="true">3</span><span data-i18n="l.demo.3">Every match, outlined in coral</span></li>
+  </ol>
 </section>
 
-<section class="strip" aria-label="Highlights" data-i18n-aria="strip.aria">
-  <ul class="wrap strip-in">
-    <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#badge-check"/></svg><span data-i18n="trust.1">Free</span></li>
-    <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#wifi-off"/></svg><span data-i18n="trust.2">Sends nothing anywhere</span></li>
-    <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#layout-grid"/></svg><span data-i18n="trust.3">Works on the Grindr Web grid, after your own filters</span></li>
-    <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#laptop"/></svg><span data-i18n="trust.4">Chrome, Brave, Edge, Arc</span></li>
-  </ul>
+<section class="band">
+  <div class="wrap band-in">
+    <h2 class="band-h" data-i18n="l.cta1.h">Try it on your own grid.</h2>
+    <div class="gc" data-form="demo" tabindex="-1"></div>
+  </div>
 </section>
 
 <section class="sec" id="what">
   <div class="wrap">
-    <div class="head">
+    <div class="head center">
       <p class="eyebrow"><i aria-hidden="true"></i><span data-i18n="ben.eyebrow">What it does</span></p>
-      <h2 data-i18n="ben.h2">Three things, done well.</h2>
-      <p class="lead" data-i18n="ben.lead">Search by name, by keyword like TOP or XXL, or by emoji 🚀 — with synonyms, exclusions and saved searches. It scrolls the grid for you, pauses on every match and takes you straight to his card on the grid.</p>
+      <h2 data-i18n="l.feat.h2">Everything to find him, fast.</h2>
     </div>
-    <div class="ben">
-      <article class="card">
-        <div class="vis q4" aria-hidden="true">
-          <div class="qrow"><em data-i18n="ben.1.or">OR</em><code>jay, mike</code></div>
-          <div class="qrow"><em data-i18n="ben.1.and">AND</em><code>TOP + XXL</code></div>
-          <div class="qrow"><em data-i18n="ben.1.exact">Exact</em><code>"vers top"</code></div>
-          <div class="qrow"><em data-i18n="ben.1.not">Not</em><code>TOP -XXL</code></div>
-        </div>
-        <h3 data-i18n="ben.1.t">Search by keywords</h3>
-        <p data-i18n="ben.1.p">Type names or words: a comma means OR, + means AND, -word leaves a word out, (jay, jayden) groups synonyms. Build bigger searches in the editor and save as many as you like.</p>
-      </article>
-      <article class="card">
-        <div class="vis" aria-hidden="true">
-          <div class="tabs"><span data-i18n="tab.all">All</span><span><svg class="ic"><use href="/labs/icons.svg#star"/></svg><span data-i18n="tab.fav">Favorites</span></span><span class="on" data-i18n="tab.non">Not favorites</span></div>
-        </div>
-        <h3 data-i18n="ben.2.t">Skip who you already favorited</h3>
-        <p data-i18n="ben.2.p">Switch between All, Favorites and Not favorites. On Not favorites, the list, the highlights and the pauses only follow profiles you haven’t favorited yet.</p>
-      </article>
-      <article class="card">
-        <div class="vis" aria-hidden="true">
-          <div class="res"><span class="av"></span><span class="nm">TOP 🚀</span><span class="go"><span data-i18n="ben.3.show">Show on grid</span><svg class="ic"><use href="/labs/icons.svg#locate-fixed"/></svg></span></div>
-          <div class="speed"><svg class="ic"><use href="/labs/icons.svg#timer"/></svg><span data-i18n="ben.3.speed">Gentle pace</span></div>
-        </div>
-        <h3 data-i18n="ben.3.t">Let it scroll for you</h3>
-        <p data-i18n="ben.3.p">Auto-scroll loads the grid at a gentle pace, and can pause on each match. Click Show on grid and it takes you right to that profile.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section class="sec v3" id="new">
-  <div class="wrap">
-    <div class="head">
-      <p class="eyebrow"><i aria-hidden="true"></i><span data-i18n="v3.eyebrow">New in 3.0</span></p>
-      <h2 data-i18n="v3.h2">What changed in 3.0.</h2>
-      <p class="lead" data-i18n="v3.lead">A clearer panel, a real search editor, unlimited saved searches and a scan journal. These are real screens of version 3.0.0.</p>
-    </div>
-    <div class="shots">
-      <figure class="shot"><img src="/labs/img/pns3-blocks-en.webp" data-src-fr="/labs/img/pns3-blocks-fr.webp" width="300" height="250" loading="lazy" decoding="async" alt="The panel with its three numbered steps: Search, Scan, Results" data-i18n-alt="v3.blocks.alt"><figcaption><b data-i18n="v3.blocks.t">Three clear steps</b><span data-i18n="v3.blocks.p">① Search, ② Scan, ③ Results. One step open at a time; rare settings live in ⚙.</span></figcaption></figure>
-      <figure class="shot"><img src="/labs/img/pns3-editor-en.webp" data-src-fr="/labs/img/pns3-editor-fr.webp" width="300" height="250" loading="lazy" decoding="async" alt="The search editor with three criteria: Name (jay, jayden, jey), Role (top, vers top) and Size (XXL, XL)" data-i18n-alt="v3.editor.alt"><figcaption><b data-i18n="v3.editor.t">Search editor</b><span data-i18n="v3.editor.p">Each criterion is a list of synonyms (OR); criteria add up with “and also” (AND). Exclusions and a whole-word switch on each word.</span></figcaption></figure>
-      <figure class="shot"><img src="/labs/img/pns3-folders-en.webp" data-src-fr="/labs/img/pns3-folders-fr.webp" width="300" height="250" loading="lazy" decoding="async" alt="Saved searches sorted into folders, with a pinned search" data-i18n-alt="v3.folders.alt"><figcaption><b data-i18n="v3.folders.t">Unlimited saved searches</b><span data-i18n="v3.folders.p">Name them, sort them into folders, pin, duplicate, and combine two saved searches with AND or OR.</span></figcaption></figure>
-      <figure class="shot"><img src="/labs/img/pns3-journal-en.webp" data-src-fr="/labs/img/pns3-journal-fr.webp" width="300" height="245" loading="lazy" decoding="async" alt="The scan journal: three scans with their date, number of results and status" data-i18n-alt="v3.journal.alt"><figcaption><b data-i18n="v3.journal.t">Scan journal</b><span data-i18n="v3.journal.p">Every result is saved as it’s found: the last 20 scans, kept 30 days. “Find again” brings a profile back on the grid.</span></figcaption></figure>
-      <figure class="shot"><img src="/labs/img/pns3-compare-en.webp" data-src-fr="/labs/img/pns3-compare-fr.webp" width="300" height="250" loading="lazy" decoding="async" alt="Two scans compared: new in B, gone since A, in both" data-i18n-alt="v3.compare.alt"><figcaption><b data-i18n="v3.compare.t">Compare two scans</b><span data-i18n="v3.compare.p">See who is new and who is gone since last time, and hide the profiles you already saw.</span></figcaption></figure>
-      <figure class="shot"><img src="/labs/img/pns3-help-en.webp" data-src-fr="/labs/img/pns3-help-fr.webp" width="300" height="250" loading="lazy" decoding="async" alt="The syntax help with clickable examples and keyword ideas" data-i18n-alt="v3.help.alt"><figcaption><b data-i18n="v3.help.t">Help right in the field</b><span data-i18n="v3.help.p">The ? button lists clickable examples, keyword ideas and the keyboard shortcuts.</span></figcaption></figure>
-      <figure class="shot"><img src="/labs/img/pns3-settings-en.webp" data-src-fr="/labs/img/pns3-settings-fr.webp" width="300" height="250" loading="lazy" decoding="async" alt="The Settings & About screen: language, scan speed, time limit and display options" data-i18n-alt="v3.settings.alt"><figcaption><b data-i18n="v3.settings.t">Settings & About</b><span data-i18n="v3.settings.p">Language, scan speed, time limit, coral outline, discreet mode, journal PIN, My data and a grid self-test.</span></figcaption></figure>
-      <figure class="shot"><img src="/labs/img/pns3-outline-en.webp" data-src-fr="/labs/img/pns3-outline-fr.webp" width="300" height="400" loading="lazy" decoding="async" alt="A sample grid where the matches have a coral outline, next to the results" data-i18n-alt="v3.outline.alt"><figcaption><b data-i18n="v3.outline.t">Matches outlined on the grid</b><span data-i18n="v3.outline.p">A discreet coral outline marks every match on Grindr’s own grid. You can switch it off.</span></figcaption></figure>
+    <div class="shots lp-shots">
+      <figure class="shot"><img src="/labs/img/pns3-blocks-en.webp" data-src-fr="/labs/img/pns3-blocks-fr.webp" width="600" height="500" loading="lazy" decoding="async" alt="The panel with its three numbered steps: Search, Scan, Results" data-i18n-alt="v3.blocks.alt"><figcaption><b data-i18n="v3.blocks.t">Three clear steps</b><span data-i18n="l.f.blocks.p">Search, Scan, Results: one step open at a time.</span></figcaption></figure>
+      <figure class="shot"><img src="/labs/img/pns3-tabs-en.webp" data-src-fr="/labs/img/pns3-tabs-fr.webp" width="600" height="500" loading="lazy" decoding="async" alt="The results with the All, Favorites and Not favorites tabs" data-i18n-alt="l.f.tabs.alt"><figcaption><b data-i18n="ben.2.t">Skip who you already favorited</b><span data-i18n="l.f.tabs.p">All, Favorites, Not favorites: the list follows the tab.</span></figcaption></figure>
+      <figure class="shot"><img src="/labs/img/pns3-outline-en.webp" data-src-fr="/labs/img/pns3-outline-fr.webp" width="600" height="400" loading="lazy" decoding="async" alt="A sample grid where the matches have a coral outline, next to the results" data-i18n-alt="v3.outline.alt"><figcaption><b data-i18n="v3.outline.t">Matches outlined on the grid</b><span data-i18n="l.f.outline.p">A coral outline marks every match on Grindr’s own grid.</span></figcaption></figure>
+      <figure class="shot"><img src="/labs/img/pns3-pause-en.webp" data-src-fr="/labs/img/pns3-pause-fr.webp" width="600" height="500" loading="lazy" decoding="async" alt="The scroll paused on a new match, with Show and Resume buttons" data-i18n-alt="l.f.pause.alt"><figcaption><b data-i18n="l.f.pause.t">Pauses on every match</b><span data-i18n="l.f.pause.p">The scroll stops on a match: show him on the grid, or resume.</span></figcaption></figure>
+      <figure class="shot"><img src="/labs/img/pns3-editor-en.webp" data-src-fr="/labs/img/pns3-editor-fr.webp" width="600" height="500" loading="lazy" decoding="async" alt="The search editor with three criteria: Name (jay, jayden, jey), Role (top, vers top) and Size (XXL, XL)" data-i18n-alt="v3.editor.alt"><figcaption><b data-i18n="v3.editor.t">Search editor</b><span data-i18n="l.f.editor.p">Synonyms, AND, exclusions: big searches, no syntax to learn.</span></figcaption></figure>
+      <figure class="shot"><img src="/labs/img/pns3-folders-en.webp" data-src-fr="/labs/img/pns3-folders-fr.webp" width="600" height="500" loading="lazy" decoding="async" alt="Saved searches sorted into folders, with a pinned search" data-i18n-alt="v3.folders.alt"><figcaption><b data-i18n="v3.folders.t">Unlimited saved searches</b><span data-i18n="l.f.folders.p">Name them, pin them, sort them into folders.</span></figcaption></figure>
+      <figure class="shot"><img src="/labs/img/pns3-journal-en.webp" data-src-fr="/labs/img/pns3-journal-fr.webp" width="600" height="490" loading="lazy" decoding="async" alt="The scan journal: three scans with their date, number of results and status" data-i18n-alt="v3.journal.alt"><figcaption><b data-i18n="v3.journal.t">Scan journal</b><span data-i18n="l.f.journal.p">Your last 20 scans, kept 30 days on your computer only.</span></figcaption></figure>
+      <figure class="shot"><img src="/labs/img/pns3-compare-en.webp" data-src-fr="/labs/img/pns3-compare-fr.webp" width="600" height="500" loading="lazy" decoding="async" alt="Two scans compared: new in B, gone since A, in both" data-i18n-alt="v3.compare.alt"><figcaption><b data-i18n="v3.compare.t">Compare two scans</b><span data-i18n="l.f.compare.p">See who is new and who is gone since last time.</span></figcaption></figure>
     </div>
     <p class="shots-note" data-i18n="v3.note">Real screenshots on a generated sample grid: fictional names, no real Grindr profile.</p>
-    <h3 class="v3h" data-i18n="v3.all">Everything in 3.0</h3>
-    <ul class="v3list">
-      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#layout-grid"/></svg><div><h4 data-i18n="v3.f1.t">Three numbered steps</h4><p data-i18n="v3.f1.p">Search, Scan, Results — one open at a time, with a one-line summary on the others. An empty result offers two ways forward.</p></div></li>
-      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#text-cursor-input"/></svg><div><h4 data-i18n="v3.f2.t">Synonyms, AND, exclusions</h4><p data-i18n="v3.f2.p">(jay, jayden) + TOP finds either name with TOP. -XXL leaves XXL out. “Whole word” makes top skip laptop; by default a word matches anywhere.</p></div></li>
-      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#folder-down"/></svg><div><h4 data-i18n="v3.f3.t">Saved searches in folders</h4><p data-i18n="v3.f3.p">Unlimited, in collapsible folders, combinable with each other. Your 2.x searches move over by themselves.</p></div></li>
-      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#scroll-text"/></svg><div><h4 data-i18n="v3.f4.t">Scan journal & Find again</h4><p data-i18n="v3.f4.p">20 scans kept 30 days, on your computer only. Find again looks for the same photo id, then the same name: a lead, not a guarantee.</p></div></li>
-      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#refresh-cw"/></svg><div><h4 data-i18n="v3.f5.t">Compare & new since last time</h4><p data-i18n="v3.f5.p">Compare two scans, count who is new since last time, and hide the ones you already saw.</p></div></li>
-      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#tag"/></svg><div><h4 data-i18n="v3.f6.t">To review / Ignore</h4><p data-i18n="v3.f6.p">Mark profiles on your computer. Ignored ones disappear from the results, the outline and the pauses.</p></div></li>
-      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#eye-off"/></svg><div><h4 data-i18n="v3.f7.t">Discreet mode & journal PIN</h4><p data-i18n="v3.f7.p">Blur photos and names in the panel until you hover them. Lock the journal with a PIN: a comfort lock, not encryption.</p></div></li>
-      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#timer"/></svg><div><h4 data-i18n="v3.f8.t">Safer long scans</h4><p data-i18n="v3.f8.p">A time limit (30 min by default), a warning when Grindr is open in another tab, and Resume if Grindr crashes or empties the grid.</p></div></li>
-      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#key-round"/></svg><div><h4 data-i18n="v3.f9.t">Keyboard shortcuts</h4><p data-i18n="v3.f9.p">Alt+Shift+S start / pause, Alt+Shift+F search field, Alt+Shift+N / P next and previous match. Change them in chrome://extensions/shortcuts.</p></div></li>
-      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#hard-drive"/></svg><div><h4 data-i18n="v3.f10.t">My data, backup, self-test</h4><p data-i18n="v3.f10.p">See what is stored, export or import one backup file, erase everything. The grid self-test copies a diagnostic with no names.</p></div></li>
-    </ul>
-  </div>
-</section>
-
-<section class="sec alt" id="before">
-  <div class="wrap">
-    <div class="head">
-      <p class="eyebrow"><i aria-hidden="true"></i><span data-i18n="pre.eyebrow">Before you start</span></p>
-      <h2 data-i18n="pre.h2">Three things, and you’re ready.</h2>
-    </div>
-    <div class="ben">
-      <article class="card pre">
-        <span class="badge"><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#laptop"/></svg></span>
-        <h3 data-i18n="pre.1.t">A computer</h3>
-        <p data-i18n="pre.1.p">Mac or Windows. Chrome extensions don’t run on phones.</p>
-      </article>
-      <article class="card pre">
-        <span class="badge"><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#app-window"/></svg></span>
-        <h3 data-i18n="pre.2.t">Google Chrome</h3>
-        <p data-i18n="pre.2.p">Brave, Edge or Arc work too. Not Safari or Firefox.</p>
-        <a class="next" href="https://www.google.com/chrome/" target="_blank" rel="noopener"><span data-i18n="pre.2.l">Download Chrome</span> ↗</a>
-      </article>
-      <article class="card pre">
-        <span class="badge"><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#globe"/></svg></span>
-        <h3 data-i18n="pre.3.t">Grindr Web</h3>
-        <p data-i18n="pre.3.p">You’ll use it at web.grindr.com, logged in to your account.</p>
-        <a class="next" href="https://web.grindr.com" target="_blank" rel="noopener"><span data-i18n="pre.3.l">Open web.grindr.com</span> ↗</a>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section class="sec" id="how">
-  <div class="wrap narrow">
-    <div class="head">
-      <p class="eyebrow"><i aria-hidden="true"></i><span data-i18n="ins.eyebrow">Installation</span></p>
-      <h2 data-i18n="ins.h2">Install it in 5 steps.</h2>
-      <p class="lead" data-i18n="ins.p">Chrome only accepts extensions from its store or in “developer mode”. Profile Name Search isn’t on the store (here’s why below), so you add it by hand — it takes 2 minutes.</p>
-      <p class="in-only banner" data-i18n="how.banner">You’re in. Next: install it.</p>
-    </div>
-    <ol class="steps">
-      <li class="step">
-        <span class="num" aria-hidden="true">1</span>
-        <div>
-          <h3 data-i18n="ins.1.t">Get the link by e-mail, download and unzip</h3>
-          <p data-i18n="ins.1.p">Enter your e-mail at the top of this page. We send a one-time link: open it on your computer and the download appears right here. Chrome can’t read a .zip file, so unzip it first. On a Mac, double-click the .zip: a folder “profile-name-search” appears in Downloads. On Windows: right-click the .zip → Extract All → Extract.</p>
-          <img class="ishot" src="/labs/img/pns-install-1-en.webp" data-src-fr="/labs/img/pns-install-1-fr.webp" width="520" height="142" loading="lazy" decoding="async" alt="The unzipped profile-name-search folder in Downloads, next to the .zip" data-i18n-alt="ins.1.alt">
-          <a href="#download" class="btn btn-p btn-s st-btn" data-goto-form><span data-i18n="ins.1.btn">Get the link by e-mail</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-up"/></svg></a>
-          <p class="note"><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#info"/></svg><span data-i18n="ins.1.n">Keep this folder where it is (Downloads or Documents): Chrome reads the extension from it every time. If you delete or move it, the extension stops.</span></p>
-        </div>
-      </li>
-      <li class="step">
-        <span class="num" aria-hidden="true">2</span>
-        <div>
-          <h3 data-i18n="ins.2.t">Open Chrome’s extensions page</h3>
-          <p data-i18n="ins.2.p">Copy this address, paste it into Chrome’s address bar and press Enter.</p>
-          <img class="ishot" src="/labs/img/pns-install-2-en.webp" width="520" height="124" loading="lazy" decoding="async" alt="chrome://extensions typed in Chrome’s address bar" data-i18n-alt="ins.2.alt">
-          <p class="cbx"><code>chrome://extensions</code><button type="button" class="btn btn-g btn-xs" id="copy-ext" data-i18n="how.copy">Copy</button></p>
-          <p class="note"><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#info"/></svg><span data-i18n="ins.2.n">Why copy and not a link? For security, Chrome blocks websites from opening this page. Other way: menu ⋮ → Extensions → Manage extensions.</span></p>
-        </div>
-      </li>
-      <li class="step">
-        <span class="num" aria-hidden="true">3</span>
-        <div>
-          <h3 data-i18n="ins.3.t">Turn on Developer mode</h3>
-          <p data-i18n="ins.3.p">Top-right of the page, switch on “Developer mode”. Three new buttons appear on the left.</p>
-          <img class="ishot" src="/labs/img/pns-install-3-en.webp" data-src-fr="/labs/img/pns-install-3-fr.webp" width="520" height="128" loading="lazy" decoding="async" alt="The Developer mode switch, turned on, top-right of chrome://extensions" data-i18n-alt="ins.3.alt">
-          <p class="note"><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#info"/></svg><span data-i18n="ins.3.n">Developer mode only lets you load extensions from a folder. You can switch it off later — but then the extension stops.</span></p>
-        </div>
-      </li>
-      <li class="step">
-        <span class="num" aria-hidden="true">4</span>
-        <div>
-          <h3 data-i18n="ins.4.t">Click “Load unpacked” and pick the folder</h3>
-          <p data-i18n="ins.4.p">Click “Load unpacked” (top-left). In the window that opens, select the unzipped folder — not the .zip — the one that directly contains manifest.json, then click Select.</p>
-          <img class="ishot" src="/labs/img/pns-install-4-en.webp" data-src-fr="/labs/img/pns-install-4-fr.webp" width="520" height="242" loading="lazy" decoding="async" alt="The Load unpacked button, and the Profile Name Search 3.0.0 card once it is loaded" data-i18n-alt="ins.4.alt">
-          <p class="note"><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#info"/></svg><span data-i18n="ins.4.n">Got “Manifest file is missing”? You picked the wrong level: open the folder once more and select the one inside.</span></p>
-        </div>
-      </li>
-      <li class="step">
-        <span class="num" aria-hidden="true">5</span>
-        <div>
-          <h3 data-i18n="ins.5.t">Pin its icon and open Grindr Web</h3>
-          <p data-i18n="ins.5.p">Click the puzzle icon in Chrome’s toolbar, then the pin next to Profile Name Search: its pink-and-purple icon stays in your toolbar. Click it anytime to show, hide or reset the panel. Then open web.grindr.com — the panel appears with a short 4-step welcome.</p>
-          <img class="ishot" src="/labs/img/pns-install-5-en.webp" data-src-fr="/labs/img/pns-install-5-fr.webp" width="520" height="300" loading="lazy" decoding="async" alt="The puzzle menu with the pin next to Profile Name Search, and the panel open on Grindr Web" data-i18n-alt="ins.5.alt">
-          <a href="https://web.grindr.com" target="_blank" rel="noopener" class="btn btn-g btn-s st-btn"><span data-i18n="ins.5.btn">Open web.grindr.com</span> ↗</a>
-          <p class="note"><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#info"/></svg><span data-i18n="ins.5.n">Already had Grindr Web open? Reload the tab (⌘R / Ctrl+R) so the panel shows up.</span></p>
-        </div>
-      </li>
-    </ol>
-    <div class="upd">
-      <h3 data-i18n="upd.t">Already installed? Updating</h3>
-      <ol>
-        <li data-i18n="upd.1">Export a backup first (⚙ → My data). Then unzip the new download over the same folder, replacing the files.</li>
-        <li data-i18n-html="upd.2">Open <code>chrome://extensions</code>.</li>
-        <li data-i18n="upd.3">Click the reload arrow ↻ on the extension’s card. Don’t click Remove: your saved searches stay.</li>
-      </ol>
-      <p class="upd-n" data-i18n="upd.n">Coming from 2.x? Your saved searches, tab, language and settings move to 3.0 by themselves, and a “What’s new” card shows once.</p>
-    </div>
-    <p class="cta-row"><a href="#download" class="btn btn-p" data-goto-form data-i18n="how.cta">Get the extension</a></p>
-  </div>
-</section>
-
-<section class="sec alt" id="use">
-  <div class="wrap">
-    <div class="head">
-      <p class="eyebrow lav"><i aria-hidden="true"></i><span data-i18n="use.eyebrow">Once it’s installed</span></p>
-      <h2 data-i18n="use.h2">How to use it well.</h2>
-      <p class="lead" data-i18n="use.p">On your first visit to Grindr Web, a 4-step welcome walks you through it, starting with “Get your grid ready”. ⚙ → Replay the tour shows it again anytime.</p>
-    </div>
-    <ul class="priv use">
-      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#layout-grid"/></svg><div><h3 data-i18n="how.3.t">Open Grindr Web, filter, then search</h3><p data-i18n-html="how.3.p">Open <a href="https://web.grindr.com" target="_blank" rel="noopener">web.grindr.com</a> in grid view and apply your Grindr filters first (position, age, favorites, online…). The panel appears: type what you’re looking for and start.</p></div></li>
-      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#text-cursor-input"/></svg><div><h3 data-i18n="use.1.t">Type names, keywords or emojis</h3><p data-i18n="use.1.p">“jay”, “TOP”, “🚀”… Combine them: a comma (OR), a + (AND), -word to leave a word out, (a, b) for synonyms. See the examples below, or press ? in the panel.</p></div></li>
-      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#play"/></svg><div><h3 data-i18n="use.2.t">Start auto-scroll and let it load</h3><p data-i18n="use.2.p">It scrolls the grid for you and loads new profiles. Leave it running: the counters show how many profiles were scanned and found.</p><p class="fine" data-i18n="use.2.n">Scan speed: Gentle (the default) takes short breaks to keep Grindr Web happy. Fast is the old pace and can disconnect Grindr Web’s chat.</p></div></li>
-      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#pause"/></svg><div><h3 data-i18n="use.3.t">Pause, check, resume</h3><p data-i18n="use.3.p">Pause anytime (or let it pause on each match) to look at the profiles found, then press Resume to continue down the grid.</p></div></li>
-      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#flag"/></svg><div><h3 data-i18n="use.4.t">The end of the grid</h3><p data-i18n="use.4.p">When it stops, you’ve seen every profile Grindr shows you: that’s the limit of your Grindr plan, not of the extension. For more profiles, upgrade your Grindr plan.</p></div></li>
-    </ul>
-    <div class="gx">
-      <h3 data-i18n="g.h3">Search like on Google</h3>
-      <p data-i18n="g.p">It searches the name shown on each profile card — so names, keywords and emojis all work. Upper or lower case doesn’t matter.</p>
-      <ul class="ex">
-        <li><code>Jay</code><em data-i18n="g.1.l">A name</em><span data-i18n="g.1.e">Every profile whose name contains “jay”: Jay, Jayden, jay_bcn…</span></li>
-        <li><code>dom top</code><em data-i18n="g.2.l">A keyword</em><span data-i18n="g.2.e">Many guys put tags in their name: DOM TOP, vers, bear… Search them like a name.</span></li>
-        <li><code>🚀</code><em data-i18n="g.3.l">An emoji</em><span data-i18n="g.3.e">🚀, 🌴, 😈… emojis in names work too.</span></li>
-        <li><code>top, xxl</code><em data-i18n="g.4.l">OR — comma</em><span data-i18n="g.4.e">Either one: profiles with TOP or XXL in their name, in one pass.</span></li>
-        <li><code>dom + top</code><em data-i18n="g.5.l">AND — plus</em><span data-i18n="g.5.e">Both words, any order: “DOM TOP 🚀” and “top dom” match, “dom” alone doesn’t.</span></li>
-        <li><code>"dom top"</code><em data-i18n="g.6.l">Exact phrase</em><span data-i18n="g.6.e">Only these words, in this order.</span></li>
-        <li><code>(jay, jayden) + TOP</code><em data-i18n="g.7.l">Synonyms</em><span data-i18n="g.7.e">Jay or Jayden, and TOP somewhere in the name.</span></li>
-        <li><code>TOP -XXL</code><em data-i18n="g.8.l">Leave out — minus</em><span data-i18n="g.8.e">TOP, but never with XXL.</span></li>
-        <li><code>=top</code><em data-i18n="g.9.l">Whole word</em><span data-i18n="g.9.e">“top” as a word: “laptop” doesn’t match. The editor has the same switch on each word.</span></li>
+    <details class="fold">
+      <summary><span data-i18n="v3.all">Everything in 3.0</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary>
+      <ul class="v3list">
+        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#layout-grid"/></svg><div><h4 data-i18n="v3.f1.t">Three numbered steps</h4><p data-i18n="v3.f1.p">Search, Scan, Results — one open at a time, with a one-line summary on the others. An empty result offers two ways forward.</p></div></li>
+        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#text-cursor-input"/></svg><div><h4 data-i18n="v3.f2.t">Synonyms, AND, exclusions</h4><p data-i18n="v3.f2.p">(jay, jayden) + TOP finds either name with TOP. -XXL leaves XXL out. “Whole word” makes top skip laptop; by default a word matches anywhere.</p></div></li>
+        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#folder-down"/></svg><div><h4 data-i18n="v3.f3.t">Saved searches in folders</h4><p data-i18n="v3.f3.p">Unlimited, in collapsible folders, combinable with each other. Your 2.x searches move over by themselves.</p></div></li>
+        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#scroll-text"/></svg><div><h4 data-i18n="v3.f4.t">Scan journal & Find again</h4><p data-i18n="v3.f4.p">20 scans kept 30 days, on your computer only. Find again looks for the same photo id, then the same name: a lead, not a guarantee.</p></div></li>
+        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#refresh-cw"/></svg><div><h4 data-i18n="v3.f5.t">Compare & new since last time</h4><p data-i18n="v3.f5.p">Compare two scans, count who is new since last time, and hide the ones you already saw.</p></div></li>
+        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#tag"/></svg><div><h4 data-i18n="v3.f6.t">To review / Ignore</h4><p data-i18n="v3.f6.p">Mark profiles on your computer. Ignored ones disappear from the results, the outline and the pauses.</p></div></li>
+        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#eye-off"/></svg><div><h4 data-i18n="v3.f7.t">Discreet mode & journal PIN</h4><p data-i18n="v3.f7.p">Blur photos and names in the panel until you hover them. Lock the journal with a PIN: a comfort lock, not encryption.</p></div></li>
+        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#timer"/></svg><div><h4 data-i18n="v3.f8.t">Safer long scans</h4><p data-i18n="v3.f8.p">A time limit (30 min by default), a warning when Grindr is open in another tab, and Resume if Grindr crashes or empties the grid.</p></div></li>
+        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#key-round"/></svg><div><h4 data-i18n="v3.f9.t">Keyboard shortcuts</h4><p data-i18n="v3.f9.p">Alt+Shift+S start / pause, Alt+Shift+F search field, Alt+Shift+N / P next and previous match. Change them in chrome://extensions/shortcuts.</p></div></li>
+        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#hard-drive"/></svg><div><h4 data-i18n="v3.f10.t">My data, backup, self-test</h4><p data-i18n="v3.f10.p">See what is stored, export or import one backup file, erase everything. The grid self-test copies a diagnostic with no names.</p></div></li>
       </ul>
-    </div>
-    <p class="note"><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#star"/></svg><span data-i18n="tip.tabs">Three tabs above the results — All, Favorites and Not favorites. Pick “Not favorites” to skip the guys you already favorited: the list, the grid outline and the auto-scroll pauses all follow the tab.</span></p>
-    <p class="note"><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#panel-right"/></svg><span data-i18n="tip.panel">Best option: open it in Chrome’s side panel (toolbar icon → “Open in Chrome’s side panel”). It sits next to the page and never covers the grid. Prefer it floating over the page? Drag it by its handle (top or bottom), shrink it to a bubble, or park it on the screen edge. Lost it? Toolbar icon → Reset panel position.</span></p>
+    </details>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap band-in">
+    <h2 class="band-h" data-i18n="l.cta2.h">Free, and installed in two minutes.</h2>
+    <div class="gc" data-form="feat" tabindex="-1"></div>
   </div>
 </section>
 
 <section class="sec" id="privacy">
-  <div class="wrap">
-    <div class="head">
+  <div class="wrap pv">
+    <div class="pv-copy">
       <p class="eyebrow sage"><i aria-hidden="true"></i><span data-i18n="tr.eyebrow">Why you can trust it</span></p>
-      <h2 data-i18n="priv.h2">It reads your screen. It tells nobody.</h2>
-      <p class="lead"><span data-i18n="tr.h">We built it for ourselves. Now it’s yours — for free.</span> <span data-i18n="tr.p">It reads what’s already on your screen and helps you get through it faster. That’s all.</span></p>
+      <h2 class="pv-h" data-i18n="priv.h2">It reads your screen. It tells nobody.</h2>
+      <ul class="pv-l">
+        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#wifi-off"/></svg><span data-i18n="priv.1.t">No network calls</span></li>
+        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#hard-drive"/></svg><span data-i18n="priv.2.t">Searches stay in your browser</span></li>
+        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#message-square"/></svg><span data-i18n="priv.3.t">It doesn’t read your messages</span></li>
+        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#hand"/></svg><span data-i18n="priv.0.t">Never acts on its own</span></li>
+        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#map-pin-off"/></svg><span data-i18n="priv.5.t">Respects hidden distance</span></li>
+        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#file-code"/></svg><span data-i18n="priv.4.t">Readable code</span></li>
+      </ul>
+      <p class="privnote"><span data-i18n="priv.mail">Your e-mail is used to send you the link, and for news only if you tick the box. Never sold, never shared.</span> <span data-i18n-html="priv.more"><a href="/privacy">Read the privacy policy</a></span></p>
     </div>
-    <ul class="priv">
-      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#hand"/></svg><div><h3 data-i18n="priv.0.t">Never acts on its own</h3><p data-i18n="priv.0.p">No favorites, no messages, no clicks behind your back. It only scrolls back to a profile when you click “Show on grid”.</p></div></li>
-      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#wifi-off"/></svg><div><h3 data-i18n="priv.1.t">No network calls</h3><p data-i18n="priv.1.p">The extension makes no network requests. Nothing it sees is sent anywhere.</p></div></li>
-      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#hard-drive"/></svg><div><h3 data-i18n="priv.2.t">Searches stay in your browser</h3><p data-i18n="priv.2.p">Your searches, journal and settings are saved in Chrome’s local storage, on your computer. Export a backup file whenever you want.</p></div></li>
-      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#message-square"/></svg><div><h3 data-i18n="priv.3.t">It doesn’t read your messages</h3><p data-i18n="priv.3.p">It only looks at the names shown on the grid. It never opens or reads your chats.</p></div></li>
-      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#map-pin-off"/></svg><div><h3 data-i18n="priv.5.t">Respects hidden distance</h3><p data-i18n="priv.5.p">On purpose: it never tries to locate a profile that chose to hide its distance.</p></div></li>
-      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#file-code"/></svg><div><h3 data-i18n="priv.4.t">Readable code</h3><p data-i18n="priv.4.p">No minification: open the files in any text editor and check for yourself. The whole zip is about 110 KB.</p></div></li>
-    </ul>
-    <p class="privnote"><span data-i18n="priv.mail">Your e-mail is used to send you the link, and for news only if you tick the box. Never sold, never shared.</span> <span data-i18n-html="priv.more"><a href="/privacy">Read the privacy policy</a></span></p>
+    <figure class="shot pv-shot"><img src="/labs/img/pns3-mydata-en.webp" data-src-fr="/labs/img/pns3-mydata-fr.webp" width="600" height="500" loading="lazy" decoding="async" alt="The My data screen: what is stored, only on this computer, with backup and erase buttons" data-i18n-alt="l.priv.alt"></figure>
   </div>
 </section>
 
-<section class="sec alt" id="faq">
+<section class="sec alt" id="how">
+  <div class="wrap">
+    <div class="head center">
+      <p class="eyebrow"><i aria-hidden="true"></i><span data-i18n="ins.eyebrow">Installation</span></p>
+      <h2 data-i18n="ins.h2">Install it in 5 steps.</h2>
+      <p class="lead" data-i18n="l.ins.lead">It isn’t on the Chrome Web Store, so you add it by hand. It takes two minutes.</p>
+      <ul class="need"><li class="need-t" data-i18n="l.need">You need:</li><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#laptop"/></svg><span data-i18n="pre.1.t">A computer</span></li><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#app-window"/></svg><span data-i18n="pre.2.t">Google Chrome</span></li><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#globe"/></svg><span data-i18n="pre.3.t">Grindr Web</span></li></ul>
+      <p class="in-only banner" data-i18n="how.banner">You’re in. Next: install it.</p>
+    </div>
+    <ol class="lsteps">
+      <li class="lstep">
+        <div class="lstep-t">
+          <span class="num" aria-hidden="true">1</span>
+          <h3 data-i18n="ins.1.t">Get the link by e-mail, download and unzip</h3>
+          <p data-i18n="l.ins.1.p">Enter your e-mail, open the link on your computer, then download and unzip the .zip.</p>
+          <a href="#download" class="btn btn-p btn-s st-btn" data-goto-form><span data-i18n="ins.1.btn">Get the link by e-mail</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-up"/></svg></a>
+          <details class="more"><summary data-i18n="l.more">Details</summary><p data-i18n="ins.1.p">Enter your e-mail at the top of this page. We send a one-time link: open it on your computer and the download appears right here. Chrome can’t read a .zip file, so unzip it first. On a Mac, double-click the .zip: a folder “profile-name-search” appears in Downloads. On Windows: right-click the .zip → Extract All → Extract.</p><p data-i18n="ins.1.n">Keep this folder where it is (Downloads or Documents): Chrome reads the extension from it every time. If you delete or move it, the extension stops.</p></details>
+        </div>
+        <img class="lshot" src="/labs/img/pns-install-1-en.webp" data-src-fr="/labs/img/pns-install-1-fr.webp" width="1040" height="264" loading="lazy" decoding="async" alt="The unzipped profile-name-search folder in Downloads, next to the .zip" data-i18n-alt="ins.1.alt">
+      </li>
+      <li class="lstep">
+        <div class="lstep-t">
+          <span class="num" aria-hidden="true">2</span>
+          <h3 data-i18n="ins.2.t">Open Chrome’s extensions page</h3>
+          <p data-i18n="ins.2.p">Copy this address, paste it into Chrome’s address bar and press Enter.</p>
+          <p class="cbx"><code>chrome://extensions</code><button type="button" class="btn btn-g btn-xs" id="copy-ext" data-i18n="how.copy">Copy</button></p>
+          <details class="more"><summary data-i18n="l.more">Details</summary><p data-i18n="ins.2.n">Why copy and not a link? For security, Chrome blocks websites from opening this page. Other way: menu ⋮ → Extensions → Manage extensions.</p></details>
+        </div>
+        <img class="lshot" src="/labs/img/pns-install-2-en.webp" width="1040" height="230" loading="lazy" decoding="async" alt="chrome://extensions typed in Chrome’s address bar" data-i18n-alt="ins.2.alt">
+      </li>
+      <li class="lstep">
+        <div class="lstep-t">
+          <span class="num" aria-hidden="true">3</span>
+          <h3 data-i18n="ins.3.t">Turn on Developer mode</h3>
+          <p data-i18n="ins.3.p">Top-right of the page, switch on “Developer mode”. Three new buttons appear on the left.</p>
+          <details class="more"><summary data-i18n="l.more">Details</summary><p data-i18n="ins.3.n">Developer mode only lets you load extensions from a folder. You can switch it off later — but then the extension stops.</p></details>
+        </div>
+        <img class="lshot" src="/labs/img/pns-install-3-en.webp" data-src-fr="/labs/img/pns-install-3-fr.webp" width="1040" height="238" loading="lazy" decoding="async" alt="The Developer mode switch, turned on, top-right of chrome://extensions" data-i18n-alt="ins.3.alt">
+      </li>
+      <li class="lstep">
+        <div class="lstep-t">
+          <span class="num" aria-hidden="true">4</span>
+          <h3 data-i18n="ins.4.t">Click “Load unpacked” and pick the folder</h3>
+          <p data-i18n="l.ins.4.p">Select the unzipped folder, the one that contains manifest.json — not the .zip.</p>
+          <details class="more"><summary data-i18n="l.more">Details</summary><p data-i18n="ins.4.p">Click “Load unpacked” (top-left). In the window that opens, select the unzipped folder — not the .zip — the one that directly contains manifest.json, then click Select.</p><p data-i18n="ins.4.n">Got “Manifest file is missing”? You picked the wrong level: open the folder once more and select the one inside.</p></details>
+        </div>
+        <img class="lshot" src="/labs/img/pns-install-4-en.webp" data-src-fr="/labs/img/pns-install-4-fr.webp" width="1040" height="449" loading="lazy" decoding="async" alt="The Load unpacked button, and the Profile Name Search 3.0.0 card once it is loaded" data-i18n-alt="ins.4.alt">
+      </li>
+      <li class="lstep">
+        <div class="lstep-t">
+          <span class="num" aria-hidden="true">5</span>
+          <h3 data-i18n="ins.5.t">Pin its icon and open Grindr Web</h3>
+          <p data-i18n="l.ins.5.p">Pin the icon in Chrome’s toolbar, then open web.grindr.com: the panel appears.</p>
+          <a href="https://web.grindr.com" target="_blank" rel="noopener" class="btn btn-g btn-s st-btn"><span data-i18n="ins.5.btn">Open web.grindr.com</span> ↗</a>
+          <details class="more"><summary data-i18n="l.more">Details</summary><p data-i18n="ins.5.p">Click the puzzle icon in Chrome’s toolbar, then the pin next to Profile Name Search: its pink-and-purple icon stays in your toolbar. Click it anytime to show, hide or reset the panel. Then open web.grindr.com — the panel appears with a short 4-step welcome.</p><p data-i18n="ins.5.n">Already had Grindr Web open? Reload the tab (⌘R / Ctrl+R) so the panel shows up.</p></details>
+        </div>
+        <img class="lshot" src="/labs/img/pns-install-5-en.webp" data-src-fr="/labs/img/pns-install-5-fr.webp" width="1040" height="557" loading="lazy" decoding="async" alt="The puzzle menu with the pin next to Profile Name Search, and the panel open on Grindr Web" data-i18n-alt="ins.5.alt">
+      </li>
+    </ol>
+    <div class="faq lp-upd">
+      <details class="upd-d"><summary><span data-i18n="upd.t">Already installed? Updating</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary>
+        <div class="upd">
+          <ol>
+            <li data-i18n="upd.1">Export a backup first (⚙ → My data). Then unzip the new download over the same folder, replacing the files.</li>
+            <li data-i18n-html="upd.2">Open <code>chrome://extensions</code>.</li>
+            <li data-i18n="upd.3">Click the reload arrow ↻ on the extension’s card. Don’t click Remove: your saved searches stay.</li>
+          </ol>
+          <p class="upd-n" data-i18n="upd.n">Coming from 2.x? Your saved searches, tab, language and settings move to 3.0 by themselves, and a “What’s new” card shows once.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="faq">
   <div class="wrap narrow">
-    <div class="head">
+    <div class="head center">
       <p class="eyebrow lav"><i aria-hidden="true"></i><span data-i18n="faq.eyebrow">FAQ</span></p>
       <h2 data-i18n="faq.h2">Questions we get a lot.</h2>
     </div>
-    <div class="faq">
+    <div class="faq lp-faq">
       <details><summary><span data-i18n="faq.safe.q">Is it safe?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.safe.a">The download is a zip of about 110 KB: plain, readable JavaScript, nothing minified. The extension only asks Chrome for local storage, only runs on web.grindr.com, and makes no network requests — nothing leaves your browser. Open content.js in any text editor to check.</p></details>
       <details><summary><span data-i18n="faq.1.q">Does it work on my phone?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.1.a">No. Chrome extensions only run in desktop browsers: Chrome, Brave, Edge or Arc, version 116 or later. On your phone, enter your e-mail and open the link on your computer.</p></details>
       <details><summary><span data-i18n="faq.8.q">How much does it cost?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.8.a">Nothing. It’s free, with no trial and no limit.</p></details>
+      <details><summary><span data-i18n="l.q.use">How do I use it well?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary>
+        <div class="fa">
+          <p data-i18n="use.p">On your first visit to Grindr Web, a 4-step welcome walks you through it, starting with “Get your grid ready”. ⚙ → Replay the tour shows it again anytime.</p>
+          <ol class="fa-l">
+            <li><b data-i18n="how.3.t">Open Grindr Web, filter, then search</b> <span data-i18n-html="how.3.p">Open <a href="https://web.grindr.com" target="_blank" rel="noopener">web.grindr.com</a> in grid view and apply your Grindr filters first (position, age, favorites, online…). The panel appears: type what you’re looking for and start.</span></li>
+            <li><b data-i18n="use.1.t">Type names, keywords or emojis</b> <span data-i18n="use.1.p">“jay”, “TOP”, “🚀”… Combine them: a comma (OR), a + (AND), -word to leave a word out, (a, b) for synonyms. See the examples below, or press ? in the panel.</span></li>
+            <li><b data-i18n="use.2.t">Start auto-scroll and let it load</b> <span data-i18n="use.2.p">It scrolls the grid for you and loads new profiles. Leave it running: the counters show how many profiles were scanned and found.</span> <span data-i18n="use.2.n">Scan speed: Gentle (the default) takes short breaks to keep Grindr Web happy. Fast is the old pace and can disconnect Grindr Web’s chat.</span></li>
+            <li><b data-i18n="use.3.t">Pause, check, resume</b> <span data-i18n="use.3.p">Pause anytime (or let it pause on each match) to look at the profiles found, then press Resume to continue down the grid.</span></li>
+            <li><b data-i18n="use.4.t">The end of the grid</b> <span data-i18n="use.4.p">When it stops, you’ve seen every profile Grindr shows you: that’s the limit of your Grindr plan, not of the extension. For more profiles, upgrade your Grindr plan.</span></li>
+          </ol>
+          <p data-i18n="tip.tabs">Three tabs above the results — All, Favorites and Not favorites. Pick “Not favorites” to skip the guys you already favorited: the list, the grid outline and the auto-scroll pauses all follow the tab.</p>
+          <p data-i18n="tip.panel">Best option: open it in Chrome’s side panel (toolbar icon → “Open in Chrome’s side panel”). It sits next to the page and never covers the grid. Prefer it floating over the page? Drag it by its handle (top or bottom), shrink it to a bubble, or park it on the screen edge. Lost it? Toolbar icon → Reset panel position.</p>
+        </div>
+      </details>
+      <details><summary><span data-i18n="g.h3">Search like on Google</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary>
+        <div class="fa">
+          <p data-i18n="g.p">It searches the name shown on each profile card — so names, keywords and emojis all work. Upper or lower case doesn’t matter.</p>
+          <ul class="ex">
+            <li><code>Jay</code><em data-i18n="g.1.l">A name</em><span data-i18n="g.1.e">Every profile whose name contains “jay”: Jay, Jayden, jay_bcn…</span></li>
+            <li><code>dom top</code><em data-i18n="g.2.l">A keyword</em><span data-i18n="g.2.e">Many guys put tags in their name: DOM TOP, vers, bear… Search them like a name.</span></li>
+            <li><code>🚀</code><em data-i18n="g.3.l">An emoji</em><span data-i18n="g.3.e">🚀, 🌴, 😈… emojis in names work too.</span></li>
+            <li><code>top, xxl</code><em data-i18n="g.4.l">OR — comma</em><span data-i18n="g.4.e">Either one: profiles with TOP or XXL in their name, in one pass.</span></li>
+            <li><code>dom + top</code><em data-i18n="g.5.l">AND — plus</em><span data-i18n="g.5.e">Both words, any order: “DOM TOP 🚀” and “top dom” match, “dom” alone doesn’t.</span></li>
+            <li><code>"dom top"</code><em data-i18n="g.6.l">Exact phrase</em><span data-i18n="g.6.e">Only these words, in this order.</span></li>
+            <li><code>(jay, jayden) + TOP</code><em data-i18n="g.7.l">Synonyms</em><span data-i18n="g.7.e">Jay or Jayden, and TOP somewhere in the name.</span></li>
+            <li><code>TOP -XXL</code><em data-i18n="g.8.l">Leave out — minus</em><span data-i18n="g.8.e">TOP, but never with XXL.</span></li>
+            <li><code>=top</code><em data-i18n="g.9.l">Whole word</em><span data-i18n="g.9.e">“top” as a word: “laptop” doesn’t match. The editor has the same switch on each word.</span></li>
+          </ul>
+        </div>
+      </details>
       <details><summary><span data-i18n="faq.2.q">Why do you ask for my e-mail?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.2.a">It’s how we send you the download link, and how we can tell you when a new version is out, since updates are manual for now. The link creates a free Fluidz account, with no password. You only get news if you tick the box, and we never sell or share your address.</p></details>
       <details><summary><span data-i18n="faq.ban.q">Can I get banned from Grindr for using it?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.ban.a">No tool can promise that. Grindr’s terms are strict about third-party tools. Profile Name Search never acts for you — no favorites, no messages, no taps — it only reads the names already on your screen and scrolls the grid. But auto-scroll is a grey zone, so use it at your own discretion.</p></details>
       <details><summary><span data-i18n="faq.store.q">Why isn’t it on the Chrome Web Store?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.store.a">Grindr’s terms are strict about third-party tools. Profile Name Search never acts on its own — it only searches, scrolls and shows you a match when you ask — but auto-scroll is enough of a grey zone to keep it off the store. So we ship it directly, with plain, readable code and no network calls. Use it at your own discretion.</p></details>
@@ -368,11 +288,11 @@ if(l==='fr'||l==='es')document.write('<script src="/labs/one-i18n.js?v=2"><\/scr
       <details><summary><span data-i18n="faq.7.q">Which languages?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.7.a">English, Français, Español, Português, Italiano and Deutsch. You pick yours in the extension’s welcome and can change it anytime.</p></details>
     </div>
 
-    <div class="head sub" id="help">
+    <div class="head sub center" id="help">
       <p class="eyebrow"><i aria-hidden="true"></i><span data-i18n="ts.eyebrow">Troubleshooting</span></p>
       <h2 data-i18n="ts.h2">Stuck? It’s usually one of these.</h2>
     </div>
-    <div class="faq">
+    <div class="faq lp-faq">
       <details><summary><span data-i18n="ts.1.q">I don’t see the panel on Grindr Web.</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="ts.1.a">Reload the tab (⌘R / Ctrl+R). Check that the extension’s switch is blue in chrome://extensions and that you’re on web.grindr.com — not the phone app.</p></details>
       <details><summary><span data-i18n="ts.2.q">Chrome says “Manifest file is missing or unreadable”.</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="ts.2.a">You selected the wrong folder. Pick the folder that directly contains manifest.json (often the one inside the first folder).</p></details>
       <details><summary><span data-i18n="ts.3.q">I can’t find “Load unpacked”.</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="ts.3.a">Developer mode is off: turn on the switch top-right of chrome://extensions and the button appears top-left.</p></details>
@@ -390,81 +310,8 @@ if(l==='fr'||l==='es')document.write('<script src="/labs/one-i18n.js?v=2"><\/scr
   <div class="wrap narrow center">
     <p class="eyebrow"><i aria-hidden="true"></i><span data-i18n="end.eyebrow">Free · link by e-mail</span></p>
     <h2 data-i18n="end.h2">Get Profile Name Search</h2>
-    <p class="lead" data-i18n="end.p">Enter your e-mail: we send you a one-time link. Open it on your computer, download the extension right here, and install it in about two minutes.</p>
-    <div class="gc" data-form="end" tabindex="-1">
-      <div class="gc-p" data-panel="form">
-        <p class="notice" data-notice hidden></p>
-        <form novalidate>
-          <label class="sr" for="em-end" data-i18n="f.label">Your e-mail address</label>
-          <div class="wf">
-            <input type="email" id="em-end" name="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="you@example.com" data-i18n-ph="f.ph">
-            <button type="submit" class="btn btn-p"><span data-i18n="f.cta">Email me the download link</span></button>
-          </div>
-          <label class="opt"><input type="checkbox" name="marketing"><span data-i18n="f.consent">Tell me about new versions of the extension and the launch of the Fluidz app.</span></label>
-          <p class="fine"><span data-i18n="f.optional">Optional. We never sell or share your e-mail. The download works either way.</span> <span data-i18n-html="f.how">We e-mail you a one-time link that creates your free Fluidz account. No password. <a href="/privacy">Privacy</a></span></p>
-          <p class="msg" data-msg role="status" aria-live="polite"></p>
-        </form>
-      </div>
-      <div class="gc-p" data-panel="sent" hidden>
-        <span class="badge"><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#mail-check"/></svg></span>
-        <h2 class="gc-h" tabindex="-1" data-i18n="sent.t">Check your inbox</h2>
-        <p class="gc-t"><span data-i18n="sent.p">We sent your link to</span> <b class="addr" data-to></b></p>
-        <p class="gc-t" data-i18n="sent.computer">Open the e-mail on your computer: the link brings you back here, signed in, with the download.</p>
-        <p class="gc-t phone-note" data-i18n="sent.phone">You’re on a phone, and Chrome extensions don’t run on phones. Open the link on your computer.</p>
-        <p class="fine" data-i18n="sent.spam">Nothing after a minute? Check your spam or Promotions tab.</p>
-        <div class="acts"><button type="button" class="btn btn-g btn-s" data-resend data-i18n="sent.resend">Send it again</button><button type="button" class="linkbtn" data-other data-i18n="sent.other">Use another address</button></div>
-        <p class="msg" data-msg role="status" aria-live="polite"></p>
-      </div>
-      <div class="gc-p" data-panel="ready" hidden>
-        <span class="badge ok"><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#circle-check"/></svg></span>
-        <h2 class="gc-h" tabindex="-1" data-i18n="ready.t">You’re in</h2>
-        <div class="d-only">
-          <p class="gc-t" data-i18n="end.ready">Your free extension is ready. Download it, then install it in about two minutes (steps above).</p>
-          <button type="button" class="btn btn-p" data-download><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#download"/></svg><span data-i18n="ready.btn">Download the extension (.zip)</span></button>
-          <p class="meta">v3.0.0 · Chrome 116+ · 112 KB</p>
-          <a href="#how" class="next" data-i18n="end.next">Back to the install steps ↑</a>
-        </div>
-        <div class="m-only">
-          <p class="gc-t"><b data-i18n="ready.phone.t">Chrome extensions don’t run on phones: open this page on your computer.</b></p>
-          <p class="gc-t" data-i18n="ready.phone.p">Use the link in your e-mail there, and the download appears on this page.</p>
-          <button type="button" class="linkbtn" data-desktop data-i18n="ready.phone.override">I’m on a computer</button>
-        </div>
-        <p class="fine"><span data-i18n="ready.signed">Signed in as</span> <b data-who></b> · <button type="button" class="linkbtn" data-other data-i18n="ready.other">Use another address</button></p>
-        <p class="msg" data-msg role="status" aria-live="polite"></p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="sec fz" id="soon">
-  <div class="glow lav" aria-hidden="true"></div>
-  <div class="wrap narrow center">
-    <p class="eyebrow lav"><i aria-hidden="true"></i><span data-i18n="fz.eyebrow">Coming soon</span></p>
-    <h2 data-i18n="fz.h2">Something bigger is coming.</h2>
-    <p class="lead" data-i18n="fz.p">A new Fluidz app is on its way. Be the first to know.</p>
-    <div class="gc" data-form="fz">
-      <div class="gc-p" data-panel="form">
-        <form novalidate>
-          <label class="sr" for="em-fz" data-i18n="f.label">Your e-mail address</label>
-          <div class="wf">
-            <input type="email" id="em-fz" name="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="you@example.com" data-i18n-ph="f.ph">
-            <button type="submit" class="btn btn-p"><span data-i18n="fz.cta">Keep me posted</span></button>
-          </div>
-          <label class="opt"><input type="checkbox" name="marketing"><span data-i18n="f.consent">Tell me about new versions of the extension and the launch of the Fluidz app.</span></label>
-          <p class="fine"><span data-i18n="fz.note">You also get your free link to Profile Name Search.</span> <span data-i18n="f.optional">Optional. We never sell or share your e-mail. The download works either way.</span></p>
-          <p class="msg" data-msg role="status" aria-live="polite"></p>
-        </form>
-      </div>
-      <div class="gc-p" data-panel="sent" hidden>
-        <span class="badge"><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#mail-check"/></svg></span>
-        <h2 class="gc-h" tabindex="-1" data-i18n="sent.t">Check your inbox</h2>
-        <p class="gc-t"><span data-i18n="sent.p">We sent your link to</span> <b class="addr" data-to></b></p>
-        <p class="gc-t" data-i18n="sent.computer">Open the e-mail on your computer: the link brings you back here, signed in, with the download.</p>
-        <p class="fine" data-i18n="sent.spam">Nothing after a minute? Check your spam or Promotions tab.</p>
-        <div class="acts"><button type="button" class="btn btn-g btn-s" data-resend data-i18n="sent.resend">Send it again</button><button type="button" class="linkbtn" data-other data-i18n="sent.other">Use another address</button></div>
-        <p class="msg" data-msg role="status" aria-live="polite"></p>
-      </div>
-    </div>
+    <div class="gc lp-end" data-form="end" tabindex="-1"></div>
+    <p class="soon"><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#sparkles"/></svg><span data-i18n="fz.p">A new Fluidz app is on its way. Be the first to know.</span></p>
     <div class="follow" id="follow" hidden><span data-i18n="social.label">Follow Fluidz</span><span class="follow-l" id="follow-l"></span></div>
   </div>
 </section>
@@ -485,6 +332,50 @@ if(l==='fr'||l==='es')document.write('<script src="/labs/one-i18n.js?v=2"><\/scr
   </div>
 </footer>
 
-<script src="/labs/one.js?v=2"></script>
+<template id="gc-tpl">
+  <div class="gc-p" data-panel="form">
+    <p class="notice" data-notice hidden></p>
+    <form novalidate>
+      <label class="sr" for="em" data-i18n="f.label">Your e-mail address</label>
+      <div class="wf lp-wf">
+        <input type="email" id="em" name="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="you@example.com" data-i18n-ph="f.ph">
+        <button type="submit" class="btn btn-p"><span data-i18n="f.cta">Email me the download link</span></button>
+      </div>
+      <div class="hp" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
+      <label class="opt"><input type="checkbox" name="marketing"><span data-i18n="f.consent">Tell me about new versions of the extension and the launch of the Fluidz app.</span></label>
+      <p class="fine"><span data-i18n="f.optional">Optional. We never sell or share your e-mail. The download works either way.</span> <span data-i18n-html="f.how">We e-mail you a one-time link that creates your free Fluidz account. No password. <a href="/privacy">Privacy</a></span></p>
+      <p class="msg" data-msg role="status" aria-live="polite"></p>
+    </form>
+  </div>
+  <div class="gc-p" data-panel="sent" hidden>
+    <span class="badge"><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#mail-check"/></svg></span>
+    <h2 class="gc-h" tabindex="-1" data-i18n="sent.t">Check your inbox</h2>
+    <p class="gc-t"><span data-i18n="sent.p">We sent your link to</span> <b class="addr" data-to></b></p>
+    <p class="gc-t" data-i18n="sent.computer">Open the e-mail on your computer: the link brings you back here, signed in, with the download.</p>
+    <p class="gc-t phone-note" data-i18n="sent.phone">You’re on a phone, and Chrome extensions don’t run on phones. Open the link on your computer.</p>
+    <p class="fine" data-i18n="sent.spam">Nothing after a minute? Check your spam or Promotions tab.</p>
+    <div class="acts"><button type="button" class="btn btn-g btn-s" data-resend data-i18n="sent.resend">Send it again</button><button type="button" class="linkbtn" data-other data-i18n="sent.other">Use another address</button></div>
+    <p class="msg" data-msg role="status" aria-live="polite"></p>
+  </div>
+  <div class="gc-p" data-panel="ready" hidden>
+    <span class="badge ok"><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#circle-check"/></svg></span>
+    <h2 class="gc-h" tabindex="-1" data-i18n="ready.t">You’re in</h2>
+    <div class="d-only">
+      <p class="gc-t" data-i18n="ready.p">Your free extension is ready. Download it, then install it in about two minutes (steps below).</p>
+      <button type="button" class="btn btn-p" data-download><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#download"/></svg><span data-i18n="ready.btn">Download the extension (.zip)</span></button>
+      <p class="meta">v3.0.0 · Chrome 116+ · 112 KB</p>
+      <a href="#how" class="next" data-i18n="ready.next">Next: install it ↓</a>
+    </div>
+    <div class="m-only">
+      <p class="gc-t"><b data-i18n="ready.phone.t">Chrome extensions don’t run on phones: open this page on your computer.</b></p>
+      <p class="gc-t" data-i18n="ready.phone.p">Use the link in your e-mail there, and the download appears on this page.</p>
+      <button type="button" class="linkbtn" data-desktop data-i18n="ready.phone.override">I’m on a computer</button>
+    </div>
+    <p class="fine"><span data-i18n="ready.signed">Signed in as</span> <b data-who></b> · <button type="button" class="linkbtn" data-other data-i18n="ready.other">Use another address</button></p>
+    <p class="msg" data-msg role="status" aria-live="polite"></p>
+  </div>
+</template>
+
+<script src="/labs/one.js?v=3"></script>
 </body>
 </html>
