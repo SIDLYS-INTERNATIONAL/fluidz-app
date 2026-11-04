@@ -22,6 +22,7 @@
 // per-instance in-memory throttle (5 requests / IP / minute).
 
 import { createClient } from '@supabase/supabase-js'
+import { notifyOwner, when } from '../server/notify.js'
 
 const SUPABASE_URL = process.env.VITE_SUPABASE_URL || 'https://kxbrfjqxufvskcxmliak.supabase.co'
 const SUPABASE_KEY = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY || ''
@@ -137,5 +138,10 @@ export default async function handler(req, res) {
     return res.status(200).json({ ok: false, emailed: false, error: 'email_failed' })
   }
 
-  return res.status(200).json({ ok: true, emailed: true })
+  res.status(200).json({ ok: true, emailed: true })
+  // Owner notification (after the answer; never blocks the sign-up)
+  await notifyOwner(`Nouvelle inscription · ${source}`, [
+    ['E-mail', email], ['Langue', lang], ['Source', source], ['Newsletter', marketing ? 'oui' : 'non'],
+    ['UTM', [utm.utm_source, utm.utm_medium, utm.utm_campaign].filter(Boolean).join(' / ')], ['Quand', when()],
+  ])
 }
