@@ -61,26 +61,84 @@
     function openBlock(n) { V.block = n; V.ov = null; redraw() }
     function redraw() { if (S) update(S, true) }
 
-    /* ---------- the search field (one element, kept across re-renders so focus and caret survive) ---------- */
+    /* ---------- the search field: chips (as in 2.x) + one input, kept across re-renders so focus and caret survive ----------
+       A chip = one alternative of the search ("dom + top" = dom AND top inside the chip); chips are OR alternatives.
+       Comma or Enter turns what is typed into a chip, "+ word" continues the last chip (AND), Backspace removes the last chip,
+       click a chip to edit it. Searches that need more (synonyms, exclusions, whole word, saved blocks) show the summary instead. */
     var typing = false, quiet = false;
     var input = stopKeys(h('input', { type: 'text', attrs: { autocomplete: 'off', spellcheck: 'false', maxlength: '400', 'aria-label': 'search' } }));
-    input.addEventListener('focus', function () { if (!typing && S) input.value = S.qText || '' });
-    input.addEventListener('input', function () { typing = true; send({ a: 'draft', v: input.value }); renderLive() });
+    // Simple form of a query: [{ terms: ['dom', 'top'], text: 'dom + top' }, ...] or null when it needs the readable summary.
+    function chipsOf(q) {
+      q = C.clean(q); if (q.exclude.length) return null;
+      var plain = function (it) { return it.ref == null && !it.name && it.terms.every(function (t) { return !t.w }) };
+      var one = function (gr) { return C.serialize({ groups: [gr], exclude: [] }) };
+      if (q.groups.length === 1 && q.groups[0].items.length === 1 && plain(q.groups[0].items[0])) return q.groups[0].items[0].terms.map(function (t) { return { terms: [t.t], text: one({ items: [{ name: '', terms: [t] }] }) } });
+      var out = [];
+      for (var i = 0; i < q.groups.length; i++) { var gr = q.groups[i]; if (!gr.items.every(function (it) { return plain(it) && it.terms.length === 1 })) return null; out.push({ terms: gr.items.map(function (it) { return it.terms[0].t }), text: one(gr) }) }
+      return out;
+    }
+    // The chips as the panel knows them right now: the engine answers a little later, so a search just sent is used until the state catches up
+    // (paste "top, dom" then Enter at once must not lose "top").
+    var sentText = null;
+    function setText(v) { sentText = v; send({ a: 'set-text', v: v }) }
+    function curQ() { return sentText != null ? C.parse(sentText, resolver).q : S.q }
+    function chipsText(list) { return (list || chipsOf(curQ()) || []).map(function (c) { return c.text }).join(', ') }
+    // Chips + what is typed, as one text. A draft starting with "+" continues the last chip (AND), otherwise it is a new chip (OR).
+    function joinPiece(base, d) { d = String(d || '').trim(); if (!d) return base; if (!base) return d.replace(/^\+\s*/, ''); return /^\+/.test(d) ? base + ' ' + d : base + ', ' + d }
+    function combineText(draft) { return joinPiece(chipsText(), draft) }
+    var resolver = function (n) { var f = (S.searches || []).filter(function (x) { return C.norm(x.name) === C.norm(n) })[0]; return f ? f.id : null };
+    // Splits typed text at OR separators (outside quotes and parentheses): complete pieces become chips, `last` stays in the input.
+    function splitOr(str) {
+      var pieces = [], cur = '', inQ = false, depth = 0;
+      for (var i = 0; i < str.length; i++) {
+        var ch = str.charAt(i);
+        if (/["“”]/.test(ch)) inQ = !inQ; else if (!inQ && ch === '(') depth++; else if (!inQ && ch === ')') depth = Math.max(0, depth - 1);
+        if (!inQ && !depth && /[,，;|]/.test(ch)) { if (cur.trim()) pieces.push(cur.trim()); cur = ''; continue }
+        cur += ch;
+      }
+      return { pieces: pieces, last: pieces.length ? cur.replace(/^\s+/, '') : cur };
+    }
+    input.addEventListener('input', function () {
+      if (/＋/.test(input.value)) input.value = input.value.replace(/＋/g, '+');
+      var sp = splitOr(input.value);
+      if (sp.pieces.length) { var txt = chipsText(); sp.pieces.forEach(function (p) { if (!/["“”]/.test(p)) p = p.replace(/\s*\+\s*$/, ''); txt = joinPiece(txt, p) }); input.value = sp.last; setText(txt) }
+      typing = !!input.value.trim();
+      send({ a: 'draft', v: typing ? combineText(input.value) : null }); renderLive();
+    });
     input.addEventListener('keydown', function (e) {
       if (e.key === 'Enter') {
         e.preventDefault();
-        if (!typing) { send({ a: e.shiftKey ? 'prev' : 'next' }); return }
+        if (!input.value.trim()) { send({ a: e.shiftKey ? 'prev' : 'next' }); return }
         if (C.parse(input.value).pending) return; // "dom +" waits for its next word
-        commit(); V.block = C.isEmpty(C.parse(input.value).q) ? 1 : 2; redraw();
-      } else if (e.key === 'Escape') { typing = false; input.value = S ? S.qText : ''; send({ a: 'draft', v: null }); renderLive() }
+        commit();
+      } else if (e.key === 'Backspace' && !input.value) { var ch = chipsOf(curQ()); if (ch && ch.length) setText(chipsText(ch.slice(0, -1))) }
+      else if (e.key === 'Escape') { if (input.value.trim() && !C.parse(input.value).pending) commit(); else { typing = false; input.value = ''; send({ a: 'draft', v: null }); renderLive() } } // Esc leaves the field; a chip being edited is not lost
     });
     input.addEventListener('blur', function () { if (!quiet && typing && !C.parse(input.value).pending) commit() });
-    function commit() { typing = false; send({ a: 'set-text', v: input.value }); send({ a: 'draft', v: null }) }
-    function insertText(t, replace) { // from the "?" help: an example replaces the field, a keyword is added to it (OR)
-      var cur = replace ? '' : (typing ? input.value : (S.qText || ''));
-      var v = cur && !/[,+(]\s*$/.test(cur) ? cur + ', ' + t : cur + t;
-      V.ov = null; V.block = 1; input.value = v; typing = true; send({ a: 'draft', v: v }); redraw();
-      setTimeout(function () { input.focus(); try { input.setSelectionRange(v.length, v.length) } catch (e) { /* ignore */ } }, 0);
+    function commit() { var v = combineText(input.value); typing = false; input.value = ''; setText(v) }
+    function editChip(i) { // the chip goes back into the input, the others stay
+      var ch = chipsOf(curQ()) || [], c = ch[i]; if (!c) return;
+      var rest = chipsText(ch.filter(function (_, j) { return j !== i }));
+      setText(rest); input.value = c.text; typing = true; send({ a: 'draft', v: joinPiece(rest, c.text) });
+      setTimeout(function () { input.focus(); try { input.setSelectionRange(c.text.length, c.text.length) } catch (e) { /* ignore */ } }, 0);
+    }
+    function insertText(t, replace) { // from the "?" help: an example replaces the search, a keyword is added as a chip (OR)
+      V.ov = null; V.block = 1; typing = false; input.value = ''; setText(replace ? t : joinPiece(chipsText(), t)); redraw();
+      setTimeout(function () { input.focus() }, 0);
+    }
+    function opEl(kind) { return h('i', { cls: 'op ' + kind, text: T(kind === 'or' ? 'opOr' : 'opAnd') }) }
+    function chipBody(c) { var out = []; c.terms.forEach(function (t, ti) { if (ti) out.push(opEl('and')); out.push(h('span', { text: t })) }); return out }
+    function buildField() {
+      var f = h('div', { cls: 'field', on: { click: function (e) { if (e.target === f) input.focus() } } });
+      var ch = chipsOf(S.q) || [];
+      ch.forEach(function (c, i) {
+        if (i) f.appendChild(h('span', { cls: 'orp', text: T('opOr') }));
+        var ct = h.apply(null, ['span', { cls: 'ct', title: T('chipEdit'), attrs: { role: 'button', tabindex: '0' }, on: { click: function (e) { e.stopPropagation(); editChip(i) }, keydown: function (e) { if (e.key === 'Enter') { e.stopPropagation(); e.preventDefault(); editChip(i) } } } }].concat(chipBody(c)));
+        f.appendChild(h('span', { cls: 'chip', attrs: { 'data-chip': String(i) } }, ct, h('button', { type: 'button', title: T('clearChip') + ': ' + c.text, on: { click: function (e) { e.stopPropagation(); setText(chipsText(ch.filter(function (_, j) { return j !== i }))) } } }, ic('x'))));
+      });
+      input.placeholder = ch.length ? '' : T('ph');
+      f.appendChild(input);
+      return f;
     }
 
     // Readable lines for a query: "Size  XL · XXL", "and also", "or else", "Without  bot".
@@ -100,12 +158,22 @@
       if (pending) box.appendChild(h('div', { cls: 'wait', text: T('andAlso') + ' … ' + T('sumWait') }));
       return box;
     }
-    function renderLive() { // what is being typed, read back under the field
+    // One line under the field, from the chips + what is typed: "Looking for: dom AND top OR 🚀" (readable lines when the text needs more).
+    function renderLive() {
       var box = slots.live; if (!box) return;
       while (box.firstChild) box.removeChild(box.firstChild);
-      if (!typing || !input.value.trim()) { box.style.display = 'none'; return }
-      var p = C.parse(input.value, function (n) { var f = (S.searches || []).filter(function (x) { return C.norm(x.name) === C.norm(n) })[0]; return f ? f.id : null });
-      box.style.display = ''; box.appendChild(linesEl(p.q, p.pending));
+      var text = typing && input.value.trim() ? combineText(input.value) : chipsText();
+      if (!text.trim()) { box.style.display = 'none'; return }
+      var p = C.parse(text, resolver), ch = chipsOf(p.q);
+      box.style.display = '';
+      if (!ch) { box.appendChild(linesEl(p.q, p.pending)); return }
+      var line = h('div', { cls: 'sum' }, document.createTextNode(T('sumLbl') + ' '));
+      ch.forEach(function (c, gi) {
+        if (gi) { line.appendChild(document.createTextNode(' ')); line.appendChild(opEl('or')); line.appendChild(document.createTextNode(' ')) }
+        c.terms.forEach(function (t, ti) { if (ti) { line.appendChild(document.createTextNode(' ')); line.appendChild(opEl('and')); line.appendChild(document.createTextNode(' ')) } line.appendChild(h('b', { text: t })) });
+      });
+      if (p.pending) { line.appendChild(document.createTextNode(' ')); line.appendChild(opEl('and')); line.appendChild(h('em', { cls: 'wait', text: ' ' + T('sumWait') })) }
+      box.appendChild(line);
     }
 
     /* ---------- header ---------- */
@@ -134,6 +202,7 @@
         box.appendChild(h('div', { cls: 'toast', attrs: { role: 'status' } }, h('span', { text: msg }), btn('', null, function () { send({ a: 'toast-ok' }) }, 'x', T('dismiss'))));
       }
       if (S.otherTabs > 0) box.appendChild(card('warn', 'triangle-alert', T('tabsTitle'), T('tabsText'), [btn('', T('gotIt'), function () { send({ a: 'tabs-ok' }) })]));
+      if (S.sideHint && !side) box.appendChild(card('sidehint', 'panel-right', T('sideHintT'), T('sideHint'), [btn('', T('gotIt'), function () { send({ a: 'side-hint-ok' }) })]));
       if (S.crash) box.appendChild(card('warn', 'triangle-alert', T('crashTitle'), T('crashText', { n: S.crash.n }), [btn('p', T('resumeScan'), function () { send({ a: 'crash-resume' }) }), btn('', T('openJournal'), function () { send({ a: 'crash-ok' }); openOv('journal') })]));
       if (S.interrupted && !S.running) box.appendChild(card('warn', 'history', T('intTitle'), T('intText', { d: fmtDate(S.interrupted.t), n: S.interrupted.n, q: S.interrupted.qText }), [btn('p', T('resumeScan'), function () { send({ a: 'interrupted-resume' }); V.block = 2 }), btn('', T('openJournal'), function () { send({ a: 'interrupted-ok' }); openOv('journal') }), btn('', T('dismiss'), function () { send({ a: 'interrupted-ok' }) })]));
       if (S.cap) box.appendChild(card('warn', 'timer', T('capTitle'), T('capText', { m: S.settings.capMin }), [btn('p', T('resumeScan'), function () { send({ a: 'toggle-scroll' }) }), btn('', T('gotIt'), function () { send({ a: 'cap-ok' }) })]));
@@ -163,14 +232,13 @@
       var has = !C.isEmpty(S.q), short = C.shortText(S.q, nameOf, 40);
       var head = blockHead(1, T('b1'), has ? short : T('b1none'), has);
       if (V.block !== 1) return wrapBlock(1, head);
-      input.placeholder = T('ph');
-      if (!typing && root.getRootNode().activeElement !== input) input.value = S.qText || '';
-      var field = h('div', { cls: 'field' }, input,
-        (typing ? input.value : S.qText) ? h('button', { type: 'button', cls: 'fbtn clr', title: T('clearSearch'), on: { click: function () { typing = false; input.value = ''; send({ a: 'draft', v: null }); send({ a: 'clear-q' }); renderLive() } } }, ic('x')) : null,
+      var row = h('div', { cls: 'frow' }, buildField(),
+        (has || typing) ? h('button', { type: 'button', cls: 'fbtn clr', title: T('clearSearch'), on: { click: function () { typing = false; input.value = ''; sentText = ''; send({ a: 'clear-q' }); renderLive() } } }, ic('x')) : null,
         h('button', { type: 'button', cls: 'fbtn q', title: T('helpSyntax'), text: '?', on: { click: function () { openOv('help') } } }));
       slots.live = h('div', { attrs: { 'aria-live': 'polite' } });
-      var body = [field, slots.live];
-      if (has) body.push(h('div', { cls: 'act' }, h('div', { cls: 'top' }, h('span', { text: T('activeSearch') }), btn('edit', T('edit'), function () { openEditor(S.q, null) }, 'pencil')), linesEl(S.q)));
+      var body = [row, slots.live];
+      // The chips are the summary; only a search the chips cannot show (synonyms, exclusions, whole word, saved blocks) gets "Active search [Edit]".
+      if (has && !chipsOf(S.q)) body.push(h('div', { cls: 'act' }, h('div', { cls: 'top' }, h('span', { text: T('activeSearch') }), btn('edit', T('edit'), function () { openEditor(S.q, null) }, 'pencil')), linesEl(S.q)));
       var nSaved = (S.searches || []).length;
       body.push(h('div', { cls: 'links' },
         btn('lk', T('saveSearch'), function () { openOv('searches', 'save') }, 'star', null),
@@ -456,70 +524,11 @@
       V.menu = null; V.ov = null; V.block = 1; typing = false; send({ a: 'set-q', q: q }); redraw();
     }
 
-    /* ---------- search editor ---------- */
-    function openEditor(q, forId) {
-      var m = C.clone(C.clean(q || C.emptyQuery()));
-      if (!m.groups.length) m.groups.push({ items: [{ name: '', terms: [] }] });
-      V.ed = m; V.edFor = forId || null; V.edSave = false; V.edFocus = null; V.ov = 'editor'; V.edVer = (V.edVer || 0) + 1; V.menu = null;
-      redraw(); preview();
-    }
-    function edChanged(refocus) { V.edVer++; V.edFocus = refocus || null; redraw(); preview() }
-    var prevTimer = null;
-    function preview() { clearTimeout(prevTimer); prevTimer = setTimeout(function () { if (V.ed) send({ a: 'preview', q: C.clean(V.ed) }) }, 150) }
-    function addWords(list, raw) {
-      String(raw).split(/[,，;|]/).forEach(function (w) { w = w.trim(); if (w && !list.some(function (t) { return C.norm(t.t) === C.norm(w) })) list.push({ t: w.slice(0, 60), w: false }) });
-    }
-    function chipEl(t, list, i) {
-      return h('span', { cls: 'chp' + (t.w ? ' w' : '') }, h('span', { text: t.t }),
-        h('button', { type: 'button', cls: 'ww', text: T('wwShort'), title: T('wholeT'), attrs: { 'aria-pressed': t.w ? 'true' : 'false' }, on: { click: function () { t.w = !t.w; edChanged() } } }),
-        h('button', { type: 'button', title: T('remove') + ': ' + t.t, on: { click: function () { list.splice(i, 1); edChanged() } } }, ic('x')));
-    }
-    function wordInput(list, key) {
-      var inp = stopKeys(h('input', { cls: 'addw', attrs: { maxlength: '60', placeholder: T('addWord'), 'aria-label': T('addWord'), 'data-k': key } }));
-      function flush() { if (inp.value.trim()) { addWords(list, inp.value); inp.value = ''; edChanged(key) } }
-      inp.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); flush() } else if (e.key === 'Backspace' && !inp.value && list.length) { list.pop(); edChanged(key) } });
-      inp.addEventListener('blur', function () { if (inp.value.trim()) { addWords(list, inp.value); inp.value = ''; V.edVer++; preview(); setTimeout(redraw, 0) } });
-      return inp;
-    }
-    function ovEditor() {
-      var m = V.ed, body = [];
-      body.push(h('p', { cls: 'note', text: T('edIntro') + ' ' + T('edWW') }));
-      m.groups.forEach(function (gr, gi) {
-        if (gi) body.push(h('div', { cls: 'conn or' }, h('span', { text: T('orElse') }), h('button', { type: 'button', title: T('removeAlt'), on: { click: function () { m.groups.splice(gi, 1); if (!m.groups.length) m.groups.push({ items: [{ name: '', terms: [] }] }); edChanged() } } }, ic('x'))));
-        gr.items.forEach(function (it, ii) {
-          if (ii) body.push(h('div', { cls: 'conn' }, h('span', { text: T('andAlso') })));
-          var rm = h('button', { type: 'button', cls: 'dots', title: T('removeCrit'), on: { click: function () { gr.items.splice(ii, 1); if (!gr.items.length && m.groups.length > 1) m.groups.splice(gi, 1); else if (!gr.items.length) gr.items.push({ name: '', terms: [] }); edChanged() } } }, ic('x'));
-          if (it.ref != null) { body.push(h('div', { cls: 'crit ref' }, h('div', { cls: 'cn' }, ic('folder'), h('b', { text: nameOf(it.ref) || it.name || '?' }), nameOf(it.ref) ? null : h('span', { cls: 'badge bad', text: T('refMissing') }), rm))); return }
-          var nm = stopKeys(h('input', { cls: 'txt', attrs: { maxlength: '40', placeholder: T('critName', { n: ii + 1 }), 'aria-label': T('critNameL') } }));
-          nm.value = it.name || ''; nm.addEventListener('input', function () { it.name = nm.value; preview() });
-          var key = 'g' + gi + 'i' + ii;
-          body.push(h('div', { cls: 'crit' }, h('div', { cls: 'cn' }, nm, rm), h('div', { cls: 'chips' }, it.terms.map(function (t, ti) { return chipEl(t, it.terms, ti) }), wordInput(it.terms, key))));
-        });
-        var picker = V.menu === 'pick' + gi ? h('div', { cls: 'menu' }, (S.searches || []).length ? (S.searches || []).filter(function (s) { return s.id !== V.edFor }).map(function (s) { return btn('', s.name, function () { gr.items.push({ ref: s.id, name: s.name }); V.menu = null; edChanged() }) }) : h('p', { cls: 'note', text: T('noSaved') })) : null;
-        body.push(h('div', { cls: 'links' },
-          btn('lk', T('addCrit'), function () { gr.items.push({ name: '', terms: [] }); edChanged('g' + gi + 'i' + (gr.items.length - 1)) }, 'plus'),
-          btn('lk', T('addSaved'), function () { V.menu = V.menu === 'pick' + gi ? null : 'pick' + gi; redraw() }, 'folder')));
-        if (picker) body.push(picker);
-      });
-      body.push(h('div', { cls: 'links' }, btn('lk', T('addAlt'), function () { m.groups.push({ items: [{ name: '', terms: [] }] }); edChanged('g' + (m.groups.length - 1) + 'i0') }, 'git-branch')));
-      body.push(h('div', { cls: 'crit x' }, h('div', { cls: 'cn' }, h('b', { text: T('without'), attrs: { style: 'font-size:12px' } })), h('div', { cls: 'chips' }, m.exclude.map(function (t, ti) { return chipEl(t, m.exclude, ti) }), wordInput(m.exclude, 'x'))));
-      var cleaned = C.clean(m), pv = S.preview && S.preview.sig === C.sig(cleaned) ? S.preview.n : null;
-      body.push(h('div', { cls: 'prev' }, h('h4', { text: T('preview'), attrs: { style: 'font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--tx3)' } }),
-        C.isEmpty(cleaned) ? h('p', { cls: 'note', text: T('edEmpty') }) : linesEl(cleaned),
-        h('div', { cls: 'cnt', attrs: { 'data-preview': '' }, text: C.isEmpty(cleaned) ? '' : (pv == null ? '…' : T('previewN', { n: pv })) })));
-      if (V.edSave) {
-        var nameIn = stopKeys(h('input', { cls: 'txt', attrs: { maxlength: '60', placeholder: C.shortText(cleaned, nameOf, 40) || T('searchName'), 'aria-label': T('searchName') } }));
-        var fsel = h('select', { cls: 'txt', attrs: { 'aria-label': T('folder') } }, (S.folders || []).map(function (f) { return h('option', { text: f.name || T('folderDefault'), attrs: { value: f.id } }) }));
-        body.push(h('div', { cls: 'sec' }, h('h4', { text: T('saveAs') }), h('div', { cls: 'frm' }, nameIn, fsel), h('div', { cls: 'foot' }, btn('lk', T('cancel'), function () { V.edSave = false; redraw() }), btn('lk p', T('save'), function () { send({ a: 'search-save', q: cleaned, name: nameIn.value, folder: fsel.value }); V.edSave = false; redraw() }, 'star'))));
-        setTimeout(function () { nameIn.focus() }, 0);
-      }
-      var forName = V.edFor ? nameOf(V.edFor) : '';
-      body.push(h('div', { cls: 'foot' },
-        btn('lk', T('cancel'), function () { V.ed = null; V.ov = null; redraw() }),
-        btn('lk', forName ? T('saveChanges') : T('save'), function () { if (C.isEmpty(cleaned)) return; if (forName) { send({ a: 'search-update', id: V.edFor, q: cleaned }); V.ed = null; V.ov = 'searches'; redraw() } else { V.edSave = true; redraw() } }, 'star'),
-        btn('lk p', T('searchBtn'), function () { if (C.isEmpty(cleaned)) return; V.ed = null; V.ov = null; V.block = 2; typing = false; send({ a: 'set-q', q: cleaned }); redraw() }, 'search')));
-      return ovWrap(forName ? T('editorOf', { name: forName }) : T('editorT'), body);
-    }
+    /* ---------- Advanced search (step by step): ui-editor.js, loaded after this file ---------- */
+    var ED = g.PNS_UI_EDITOR ? g.PNS_UI_EDITOR.create({ h: h, ic: ic, btn: btn, T: T, S: function () { return S }, V: V, send: send, redraw: redraw, nameOf: nameOf, stopKeys: stopKeys, ovWrap: ovWrap,
+      applySearch: function (q) { V.ed = null; V.ov = null; V.block = 2; typing = false; input.value = ''; sentText = C.serialize(q, nameOf); send({ a: 'set-q', q: q }); redraw() },
+      closeEditor: function (ov) { V.ed = null; V.ov = ov || null; redraw() } }) : null;
+    function openEditor(q, forId) { if (ED) ED.open(q, forId) }
 
     // Scan journal
     function lockGate() {
@@ -620,7 +629,7 @@
         h('div', { cls: 'bot' }, dots, h('button', { type: 'button', cls: 'nx', on: { click: function () { send({ a: 'welcome-next' }) } } }, h('span', { text: last ? T('done') : T('nextW') }), last ? ic('check') : ic('arrow-right'))));
     }
     function buildWhatsNew() {
-      var items = ['wn1', 'wn2', 'wn3', 'wn4', 'wn5', 'wn6'].map(function (k) { var p = T(k).split(' — '); return h('li', null, h('b', { text: p[0] }), p[1] ? document.createTextNode(' — ' + p[1]) : null) });
+      var items = ['wn0', 'wn1', 'wn2', 'wn3', 'wn4', 'wn5', 'wn6'].map(function (k) { var p = T(k).split(' — '); return h('li', null, h('b', { text: p[0] }), p[1] ? document.createTextNode(' — ' + p[1]) : null) });
       return h('div', { cls: 'pw', attrs: { 'data-whatsnew': '' } },
         h('div', { cls: 'top' }, h('span', { text: 'v' + S.version }), null),
         h('h4', { text: T('wnTitle') }),
@@ -662,6 +671,7 @@
     }
     function update(state, local) {
       S = state; lang = state.lang || 'en';
+      if (sentText != null && S.q && C.sig(C.parse(sentText, resolver).q) === C.sig(S.q)) sentText = null; // the engine caught up with the last search sent
       var k = state.nogrid ? 'nogrid' : (state.view === 'welcome' ? 'welcome' : (state.view === 'whatsnew' ? 'whatsnew' : (state.collapsed && !side ? 'pill' : 'panel')));
       if (!local) autoAdvance();
       var hadFocus = root.getRootNode().activeElement === input, edKey = hadFocus ? null : focusKey();
@@ -675,7 +685,7 @@
     function updateBody(k) {
       if (k !== kind) skeleton(k);
       var L = lang;
-      slot(slots.cards, 'cards', JSON.stringify([L, S.note, S.end, !!S.chatNote, S.crash, S.interrupted, S.cap, S.otherTabs, S.notice, S.view, S.toast, S.running, S.settings && S.settings.capMin]), buildCards);
+      slot(slots.cards, 'cards', JSON.stringify([L, S.note, S.end, !!S.chatNote, S.crash, S.interrupted, S.cap, S.otherTabs, S.sideHint, S.notice, S.view, S.toast, S.running, S.settings && S.settings.capMin]), buildCards);
       if (S.toast && S.toast.id !== lastToast) { lastToast = S.toast.id; clearTimeout(toastTimer); toastTimer = setTimeout(function () { send({ a: 'toast-ok' }) }, 5000) }
       if (k === 'pill') { slot(slots.main, 'pill', [L, S.found, S.running].join('|'), buildPill); return }
       if (k === 'welcome') { slot(slots.main, 'welcome', [L, S.welcomeStep].join('|'), buildWelcome); return }
@@ -710,7 +720,7 @@
       else if (o === 'data') base.push(S.searches.length, S.folders.length, S.scanCount, S.marks, S.lock);
       else if (o === 'selftest') base.push(S.selftest && S.selftest.t);
       else if (o === 'searches') base.push(S.searches, S.folders, S.q);
-      else if (o === 'editor') base.push(V.edVer, V.edSave, S.searches.length, S.preview);
+      else if (o === 'editor') base.push(ED && ED.sig());
       else if (o === 'journal') base.push(S.journal, S.lock);
       else if (o === 'scan') base.push(S.scan && S.scan.s, S.scan && S.scan.res.length, S.find);
       else if (o === 'compare') base.push(S.journal && S.journal.map(function (x) { return x.id }), V.cmpA, V.cmpB, S.cmp && [S.cmp.added.length, S.cmp.gone.length, S.cmp.a.id, S.cmp.b.id]);
@@ -724,7 +734,7 @@
       if (o === 'data') return ovData();
       if (o === 'selftest') return ovSelfTest();
       if (o === 'searches') return ovSearches();
-      if (o === 'editor') return V.ed ? ovEditor() : h('div');
+      if (o === 'editor') return ED ? ED.build() : h('div');
       if (o === 'journal') return ovJournal();
       if (o === 'scan') return ovScan();
       if (o === 'compare') return ovCompare();

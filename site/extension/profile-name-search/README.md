@@ -17,7 +17,7 @@ Works in Chrome 116+ and browsers built on it (Brave, Edge, Arc). Not Safari or 
 
 The panel has three numbered steps. Only one is open at a time; the others show a one-line summary.
 
-1. **Search** — type names, keywords or emojis, press Enter. *Active search [Edit]* shows one readable line per criterion. **?** opens the syntax help with clickable examples and keyword ideas.
+1. **Search** — type a name, keyword or emoji and press Enter (or a comma): it becomes a **chip**. Chips are alternatives (a small *OR* pill sits between them); type `+ word` to continue the last chip (`dom` **AND** `top`, with a coral AND badge inside the chip). Click a chip to edit it, × or Backspace removes it. The line under the field reads the search back: *Looking for: dom AND top OR 🚀*. **?** opens the syntax help with clickable examples and keyword ideas. A search the chips cannot show (synonyms, exclusions, whole word, saved blocks) is shown as *Active search [Edit]* instead, one readable line per criterion.
 2. **Scan** — starts the auto-scroll. It loads the grid, reads every name and, if you keep *Pause at each match* on (default), stops on each new match.
 3. **Results** — tabs *All / Favorites / Not favorites*, *N new since last time*, *Hide already seen*, *Show on grid* (scrolls back to him and flashes the card). Matches get a discreet coral outline on Grindr's grid.
 
@@ -40,7 +40,10 @@ Accents and capitals are ignored. Searches typed in 2.x keep exactly the same me
 
 ### Advanced (folded under the three steps)
 
-- **Search editor** — criteria as rows of synonym chips (OR inside a row, *and also* between rows, *or else* for alternatives), a *word* toggle per chip (whole word), *Without* for exclusions, saved searches as blocks, live preview, Cancel / Save / Search.
+- **Advanced search** (button *Advanced criteria* in ①, or *Edit* on an active search) — a full-panel screen in two steps:
+  1. **Create keyword groups** — a group is a list of words that mean the same thing for you (`top`, `dom`, `active`): one of them in the name is enough. Each group has an optional name (*Role*, *Size*, *Origin*…), synonym chips with a `+ word` input (Enter or a comma adds a chip), a *word* toggle per chip (whole word, on hover or long press), and buttons to move it up/down or delete it. A **Without** group holds the excluded words.
+  2. **Combine the groups** — each group has a *required* checkbox (all ticked by default: a profile must match all of them). Untick groups to make them alternatives (one of them is enough). The toggle *Every group must match (AND)* / *Any group is enough (OR)* sets all boxes at once. Saved searches can be added here as groups. A live preview says the search in words (*Role: top or dom or active, AND Size: XXL or XL, without sub*) with the number of loaded profiles that match.
+  Both steps carry a reminder: the more precise the search, the fewer profiles it finds — often none; start wide, then add a group. It turns coral once 3 groups are required. Bottom bar: Cancel / Next, then Back / Cancel / Save / Search. Esc closes the screen. In the model, required groups go into every alternative and each optional group makes one alternative; a search typed with another shape (`dom + top, bear + xxl`) keeps its own combination until a box is ticked.
 - **My searches** — unlimited, in collapsible folders, with a counter. ⋯ menu: use, add to the active search (AND / OR), edit, rename, pin, duplicate, move, delete.
 - **Scan journal** — every result is written as it is found (date, time, query, name, favorite state, thumbnail link/id — never the image). Last 20 scans, kept 30 days. **Find again** looks for the same thumbnail id first, then the same name: a lead, not a guarantee.
 - **Compare two scans** — new in B, gone since A, in both.
@@ -65,7 +68,7 @@ Language (6), scan speed (*Gentle* default / *Fast*), *Pause at each match* (on 
 | Alt+Shift+F | go to the search field |
 | Alt+Shift+N / Alt+Shift+P | next / previous match |
 | Enter / Shift+Enter (in the field) | search, then next / previous match |
-| Esc | close a window of the panel |
+| Esc | close a window of the panel (in the field: leave it, the text becomes a chip) |
 
 Change them in `chrome://extensions/shortcuts`.
 
@@ -104,6 +107,12 @@ Some people report that the chat on Grindr Web disconnected after a long scan. W
 - Keep *Scan speed* on **Gentle** (default) and the scan time limit on.
 
 ## Changelog
+
+### 3.0.1
+- **Simple search field with chips is back** (as in 2.x): comma or Enter makes a chip, `+ word` continues the last chip as AND (coral badge), OR pill between chips, click a chip to edit it, Backspace removes the last one, *Looking for: …* read-back line. Typed 2.x syntax and saved searches (2.x and 3.0) load unchanged. *Active search [Edit]* is only shown for searches the chips cannot display.
+- **New step-by-step Advanced search**: ① create keyword groups (name, synonyms, whole word, *Without*, reorder), ② combine them (*required* checkboxes, AND / OR toggle, saved searches as groups, preview in words, match count) with a precision reminder that turns coral at 3 required groups. Usable at side-panel width, keyboard friendly (Enter adds a chip, Esc closes).
+- Side panel: if Chrome refuses to open it from the ◫ button, the panel now says what to do (click the extension icon, then *Open in Chrome’s side panel*) instead of failing silently. The dock flow itself is unchanged since 2.2.1.
+- New file `ui-editor.js` (the advanced screen); every file stays under 70 KB. Same permissions, no network access. All 6 languages.
 
 ### 3.0.0
 - **Clearer panel**: three numbered, collapsible steps (① Search, ② Scan, ③ Results), one open at a time; rare settings moved to **⚙ Settings & About**; small *by Fluidz* link in the header; empty state with two ways forward.

@@ -7,7 +7,7 @@ const FAVS = [0, 3, 7] // TOP 🚀, vers top, top dom are favorites
 async function block(e, n) { const open = await e.$('section.blk.on').getAttribute('data-block').catch(() => null); if (open !== String(n)) { await e.$('.bh[data-b="' + n + '"]').click(); await e.run(300) } }
 async function st(e) { await block(e, 3); return e.sh(r => ({ tabs: [...r.querySelectorAll('.ftabs button')].map(b => b.textContent.replace(/\s+/g, ' ').trim() + (b.getAttribute('aria-selected') === 'true' ? '*' : '')), res: [...r.querySelectorAll('.res .r .tx b')].map(b => b.textContent), empty: (r.querySelector('.res .empty') || {}).textContent || '', grid: [...document.querySelectorAll('[role=gridcell].gnf-match p')].map(p => p.textContent) })) }
 async function tab(e, i) { await block(e, 3); await e.$('.ftabs button').nth(i).click(); await e.run(800) }
-async function type(e, t) { await block(e, 1); const i = e.$('.field input'); await i.click(); await i.fill(t); await i.press('Enter'); await e.run(1000) }
+async function type(e, t) { await clear(e); const i = e.$('.field input'); await i.click(); await i.fill(t); await i.press('Enter'); await e.run(1000) }
 async function clear(e) { await block(e, 1); if (await e.$('.fbtn.clr').count()) { await e.$('.fbtn.clr').click(); await e.run(400) } }
 const shown = e => e.page.evaluate(() => { const h = document.getElementById('pns-host'); return !!h && h.style.display !== 'none' })
 const CONNECT = () => { window.__ports = window.__ports || []; const ls = { m: [], d: [] }; const p = { name: 'pns-side', postMessage() { window.__got = (window.__got || 0) + 1 }, onMessage: { addListener(f) { ls.m.push(f) } }, onDisconnect: { addListener(f) { ls.d.push(f) } }, __ls: ls }; window.__ports.push(p); window.__onConnect(p); window.__cur = p }
@@ -70,9 +70,18 @@ const WATCH = () => { window.__flash = 0; const h = document.getElementById('pns
   check('still hidden at 3.5 s', !(await shown(f)))
   await f.run(1000)
   check('visible after the 4 s grace if the side panel never comes back', await shown(f))
+  // ◫ header button: the message to the service worker is sent from the click itself (user gesture); if Chrome refuses, a hint says what to do
+  check('header has the ◫ "Open in Chrome’s side panel" button in float mode', await f.$('.btns button[title="Open in Chrome’s side panel"]').count() === 1)
+  await f.page.evaluate(() => { window.__sideReply = { ok: false } }); await f.$('.btns button[title="Open in Chrome’s side panel"]').click(); await f.run(400)
+  check('side panel refused by Chrome: a one-line hint card (icon, then ◫) instead of a silent failure', await f.sh(r => { const c = r.querySelector('.card.sidehint'); return c && /side panel did not open/.test(c.textContent) && /extension icon/.test(c.textContent) }))
+  await f.$('.card.sidehint button').click(); await f.run(300)
+  check('hint can be dismissed', !(await f.sh(r => !!r.querySelector('.card.sidehint'))))
+  await f.page.evaluate(() => { window.__sideReply = { ok: false } }); await f.$('.btns button[title="Open in Chrome’s side panel"]').click(); await f.run(300)
+  await f.page.evaluate(CONNECT); await f.run(300); await f.page.evaluate(DROP, true); await f.run(300)
+  check('hint cleared by itself once the side panel connected (floating panel back after a deliberate close, no hint)', await shown(f) && !(await f.sh(r => !!r.querySelector('.card.sidehint'))))
   check('no page errors', f.errs.length === 0, f.errs)
   await f.ctx.close()
-  const lastSide = { pns_v3: { schema: 3, settings: { welcomeDone: true, whatsNew: '3.0.0', lang: 'en', lastSide: true } } }
+  const lastSide = { pns_v3: { schema: 3, settings: { welcomeDone: true, whatsNew: '3.0.1', lang: 'en', lastSide: true } } }
   f = await mk(b, { total: 6, first: 6, batch: 0, latency: 100, names: SIX, mem: lastSide })
   check('reload with lastSide: floating panel hidden during grace', !(await shown(f)))
   await f.page.evaluate(CONNECT); await f.run(2500)

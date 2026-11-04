@@ -20,7 +20,7 @@ body{margin:0;font:14px sans-serif;background:#111;color:#ddd}#app{display:flex}
 // Stubs run before the page: chrome.* (storage in memory), counters, observer tracking, fake network grid.
 const INIT = (cfg) => `(() => {
   window.__cfg = ${JSON.stringify(cfg)};
-  const mem = window.__cfg.mem || { pns_v3: { schema: 3, settings: { welcomeDone: true, whatsNew: '3.0.0', lang: 'en' } } }; const listeners = [], changed = [];
+  const mem = window.__cfg.mem || { pns_v3: { schema: 3, settings: { welcomeDone: true, whatsNew: '3.0.1', lang: 'en' } } }; const listeners = [], changed = [];
   const clone = o => JSON.parse(JSON.stringify(o));
   window.chrome = {
     storage: { local: {
@@ -28,7 +28,7 @@ const INIT = (cfg) => `(() => {
       set(o, cb) { Object.assign(mem, clone(o)); window.__writes = (window.__writes || 0) + 1; cb && cb() },
       remove(k, cb) { (Array.isArray(k) ? k : [k]).forEach(x => delete mem[x]); cb && cb() } },
       onChanged: { addListener(f) { changed.push(f) } } },
-    runtime: { id: 'test', onMessage: { addListener(f) { listeners.push(f) } }, onConnect: { addListener(f) { window.__onConnect = f } }, sendMessage() {}, lastError: null,
+    runtime: { id: 'test', onMessage: { addListener(f) { listeners.push(f) } }, onConnect: { addListener(f) { window.__onConnect = f } }, sendMessage(m, cb) { if (cb) cb(window.__sideReply === undefined ? { ok: true } : window.__sideReply) }, lastError: null,
       connect(o) { const ls = { m: [], d: [] }; const p = { name: o && o.name, postMessage() {}, onMessage: { addListener(f) { ls.m.push(f) } }, onDisconnect: { addListener(f) { ls.d.push(f) } } };
         window.__bg = { tabs: n => ls.m.forEach(f => f({ type: 'tabs', n })), cmd: c => ls.m.forEach(f => f({ type: 'cmd', cmd: c })) }; return p } } };
   window.__mem = mem; window.__send = (m) => { let r; listeners.forEach(f => f(m, {}, x => { r = x })); return r };
