@@ -1,15 +1,17 @@
 // Vercel Serverless Function: serves the Profile Name Search extension as a .zip.
 // The extension source lives in site/extension/profile-name-search/ as plain text files
 // (PNG icons as *.png.b64, because this repo is edited through text-only tools). The zip is
-// built here at request time, with a top-level "profile-name-search/" folder so that
-// unzipping gives exactly the folder the install guide talks about.
+// built here at request time, with a top-level "Fluidz-Profile-Name-Search-<version>/" folder
+// (version read from manifest.json) so that unzipping gives exactly the folder the install
+// guide talks about. The zip file is named the same way.
 
 import { readdirSync, readFileSync } from 'fs'
 import { join } from 'path'
 import { deflateRawSync } from 'zlib'
 
-const ROOT = 'profile-name-search/'
+const BASENAME = 'Fluidz-Profile-Name-Search'
 let cached = null
+let cachedName = BASENAME + '.zip'
 
 const CRC = (() => {
   const t = new Uint32Array(256)
@@ -30,6 +32,10 @@ function buildZip() {
   const dir = join(process.cwd(), 'site', 'extension', 'profile-name-search')
   const names = readdirSync(dir).filter((n) => !n.startsWith('.')).sort()
   if (!names.includes('manifest.json')) throw new Error('manifest missing')
+  const version = String(JSON.parse(readFileSync(join(dir, 'manifest.json'), 'utf-8')).version || '').trim()
+  if (!/^\d+(\.\d+)*$/.test(version)) throw new Error('manifest version missing')
+  const base = `${BASENAME}-${version}`
+  const ROOT = `${base}/`
   const dosTime = (12 << 11) | (0 << 5) | 0 // 12:00:00
   const dosDate = ((2026 - 1980) << 9) | (11 << 5) | 3 // 2026-11-03
   const parts = []
@@ -81,6 +87,7 @@ function buildZip() {
   end.writeUInt16LE(names.length, 10)
   end.writeUInt32LE(cd.length, 12)
   end.writeUInt32LE(offset, 16)
+  cachedName = `${base}.zip`
   return Buffer.concat([...parts, cd, end])
 }
 
@@ -124,7 +131,7 @@ export default async function handler(req, res) {
     return res.status(404).json({ error: 'not_found' })
   }
   res.setHeader('Content-Type', 'application/zip')
-  res.setHeader('Content-Disposition', 'attachment; filename="profile-name-search.zip"')
+  res.setHeader('Content-Disposition', `attachment; filename="${cachedName}"`)
   res.setHeader('Content-Length', String(cached.length))
   if (req.method === 'HEAD') return res.status(200).end()
   return res.status(200).send(cached)

@@ -349,8 +349,9 @@
       }
       if (!r.ok) throw new Error('http_' + r.status)
       var blob = await r.blob()
+      var cd = r.headers.get('Content-Disposition') || '', fm = /filename="?([A-Za-z0-9._-]+\.zip)"?/.exec(cd)
       var url = URL.createObjectURL(blob), a = D.createElement('a')
-      a.href = url; a.download = 'profile-name-search.zip'; a.style.display = 'none'
+      a.href = url; a.download = fm ? fm[1] : 'Fluidz-Profile-Name-Search.zip'; a.style.display = 'none'
       D.body.appendChild(a); a.click(); a.remove()
       setTimeout(function () { URL.revokeObjectURL(url) }, 8000)
       this.msg(t(this.name === 'end' ? 'end.done' : 'ready.done'), true)
