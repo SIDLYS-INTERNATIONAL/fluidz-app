@@ -9,42 +9,113 @@ Landing page and install guide: https://fluidz.app/profile-name-search
 1. Unzip the download. You get a folder called `profile-name-search`.
 2. In Chrome, open `chrome://extensions` and turn on **Developer mode** (top right).
 3. Click **Load unpacked** and select the unzipped `profile-name-search` folder (the one that contains `manifest.json`).
-4. Open https://web.grindr.com. On your first visit a 3-step welcome walks you through it.
+4. Open https://web.grindr.com. On your first visit a 4-step welcome walks you through it (step 1: get your Grindr grid ready).
 
 Works in Chrome 116+ and browsers built on it (Brave, Edge, Arc). Not Safari or Firefox.
 
 ## Using it
 
-- **Search**: type a name, a keyword or an emoji and press Enter. Each Enter adds a chip. Chips are combined with **OR**; inside a chip use **+** for **AND** (`+` and `＋` both work; `, ; |` all start a new OR chip) (`dom + top`) and quotes for an exact phrase (`"dom top"`).
-- **Auto-scroll**: scrolls the grid to load more profiles and pauses on each new match (switch that off if you prefer it to keep going).
-- **Scan speed**: *Gentle* (default, recommended) scrolls slower with a little random jitter, waits for Grindr to finish loading and takes a short break (about 8-10 s) every ~120-150 new profiles. *Fast* is the old v2.0 pace and may disconnect the Grindr chat.
-- **Turn off for now**: the × in the panel (or toolbar icon → *Turn off for now*) stops the scan and all page watching, so Grindr Web runs as if the extension were not there. Toolbar icon → *Show the floating panel* turns it back on.
-- **Show on grid**: scrolls to the profile and flashes it. If Grindr already unloaded the card, the panel scrolls back to where he was.
-- **All / Favorites / Not favorites**: three tabs above the results. *Not favorites* hides the profiles you already favorited, everywhere (results list, grid highlight, auto-scroll pauses, Previous/Next), so you can focus on new guys. *Favorites* works without a search too: it lists every favorite seen on the grid. The extension remembers your tab.
-- **Saved searches**: keep up to 3.
-- **Side panel**: toolbar icon → *Open in Chrome's side panel*. It sits next to the page and never covers the grid.
-- **Floating panel**: drag it by either handle, shrink it to a bubble, or close it (toolbar icon → *Show the floating panel*). Lost it? Toolbar icon → *Reset panel position*.
-- **Languages**: English, Français, Español, Português, Italiano, Deutsch (the 💡 button reopens the welcome, where you can change language).
+The panel has three numbered steps. Only one is open at a time; the others show a one-line summary.
+
+1. **Search** — type names, keywords or emojis, press Enter. *Active search [Edit]* shows one readable line per criterion. **?** opens the syntax help with clickable examples and keyword ideas.
+2. **Scan** — starts the auto-scroll. It loads the grid, reads every name and, if you keep *Pause at each match* on (default), stops on each new match.
+3. **Results** — tabs *All / Favorites / Not favorites*, *N new since last time*, *Hide already seen*, *Show on grid* (scrolls back to him and flashes the card). Matches get a discreet coral outline on Grindr's grid.
+
+The search works on Grindr's **grid view**, after Grindr's own filters (position, favorites, age…): set those first.
+
+### Search syntax
+
+| Type | Means |
+|---|---|
+| `jay, mike` | jay OR mike (`;` `\|` and `，` work too) |
+| `TOP + XXL` | TOP AND XXL |
+| `(jay, jayden) + TOP` | one criterion with synonyms AND another one |
+| `Size: (XL, XXL)` | a named criterion |
+| `TOP -XXL` | TOP but not XXL |
+| `"vers top"` | exact phrase (any symbol inside is literal) |
+| `=top` | whole word only (`top`, not `laptop`). Default is *contains*. |
+| `@"My search"` | reuse a saved search as a block |
+
+Accents and capitals are ignored. Searches typed in 2.x keep exactly the same meaning.
+
+### Advanced (folded under the three steps)
+
+- **Search editor** — criteria as rows of synonym chips (OR inside a row, *and also* between rows, *or else* for alternatives), a *word* toggle per chip (whole word), *Without* for exclusions, saved searches as blocks, live preview, Cancel / Save / Search.
+- **My searches** — unlimited, in collapsible folders, with a counter. ⋯ menu: use, add to the active search (AND / OR), edit, rename, pin, duplicate, move, delete.
+- **Scan journal** — every result is written as it is found (date, time, query, name, favorite state, thumbnail link/id — never the image). Last 20 scans, kept 30 days. **Find again** looks for the same thumbnail id first, then the same name: a lead, not a guarantee.
+- **Compare two scans** — new in B, gone since A, in both.
+- **To review / Ignored** — local marks. Ignored profiles disappear from results, outline and pauses.
+
+### Safety nets
+
+- **Scan time limit** (⚙, default 30 min): the scan stops by itself with a message; *Resume* continues.
+- **Another Grindr tab**: a warning appears when Grindr Web is open in two tabs.
+- **Grindr crashes or empties the grid** during a scan: the scan pauses, the list is already in the journal, a *Resume* banner appears. After a reload, an unfinished scan is offered again.
+- **Interested in someone?** Press *Show on grid* and tap Grindr's own star yourself. The extension never clicks in your Grindr account.
+
+### ⚙ Settings & About
+
+Language (6), scan speed (*Gentle* default / *Fast*), *Pause at each match* (on by default), scan time limit, coral outline on/off, **discreet mode** (photos and names blurred in the panel until hovered), **journal PIN**, help, **My data**, **grid self-test** (*Copy the report* copies a text diagnostic without names or photos and opens an e-mail draft to hello@fluidz.app — nothing is sent by the extension), feedback, version, fluidz.app.
+
+### Keyboard shortcuts
+
+| Shortcut | Action |
+|---|---|
+| Alt+Shift+S | start / pause the scan |
+| Alt+Shift+F | go to the search field |
+| Alt+Shift+N / Alt+Shift+P | next / previous match |
+| Enter / Shift+Enter (in the field) | search, then next / previous match |
+| Esc | close a window of the panel |
+
+Change them in `chrome://extensions/shortcuts`.
+
+## Your data
+
+Everything is stored in this Chrome profile only (`chrome.storage.local`). Nothing is ever sent.
+
+| Key | What |
+|---|---|
+| `pns_v3` | settings, active search, folders, saved searches, local marks, journal PIN (salted SHA-256 hash only) |
+| `pns_journal_v1` | scan journal (20 scans, 30 days) |
+| `pns_state_v1` | 2.x settings: read once to migrate, then left untouched |
+
+**⚙ → My data** shows what is stored and the counters, exports one backup file (`format: 1`: searches, folders, marks, journal — never the PIN), imports one (merges without duplicates; refuses invalid files and files from a newer format), clears the journal, or erases everything.
+
+The **journal PIN** is a comfort lock, not encryption: it hides the journal in the panel, but someone with access to this computer's Chrome profile could still read the data.
 
 ## Privacy
 
-- No network requests, no analytics, no account. The code is plain, unminified JavaScript — read it.
-- Permissions: `storage` (remembers your searches, language and panel position on this computer) and `sidePanel`. It only runs on `web.grindr.com`.
+- No network requests, no analytics, no account, no remote fonts or scripts. The code is plain, unminified JavaScript — read it.
+- Permissions: `storage` (your data, on this computer) and `sidePanel`. Unchanged since 2.x. It only runs on `web.grindr.com`. The "other tab" warning uses a message port between the page and the extension's own service worker: no `tabs` permission, no host permission.
 - It never clicks, likes, favorites or messages anyone for you.
 
-## Updating
+## Updating without losing anything
 
-Download the new zip, replace the old folder, then click ↻ on the extension's card in `chrome://extensions` and reload your Grindr tab. Settings are kept. If you used **Profile Hunter** before, your last search and shortcuts are carried over.
+Download the new zip and **unzip it over the same folder** (replace the files), then click ↻ on the extension's card in `chrome://extensions` and reload your Grindr tab. Do not remove the extension: removing it deletes its data. Your 2.x searches (up to 3), current search, tab, language and settings move to 3.0 automatically and the panel says *Your searches were kept*. *What's new* is shown once.
+
+Chrome ties an unpacked extension's data to its ID, and that ID comes from the folder's location. Keep the same folder and nothing is lost. If you ever move the folder, export a backup first (⚙ → My data) and import it after.
 
 ## Grindr chat got disconnected?
 
-Some people report that the chat on Grindr Web disconnected after a long scan. We could not reproduce it ourselves and do not know the exact cause, so we cannot promise it is fixed. A long, fast scan loads thousands of profiles in minutes, which Grindr Web may not like. What helps:
+Some people report that the chat on Grindr Web disconnected after a long scan. We could not reproduce it ourselves and do not know the exact cause, so we cannot promise it is fixed. What helps:
 
 - Reload the Grindr tab (⌘R / Ctrl+R). You stay signed in.
 - For long chats, use the Grindr phone app, a Chrome window without the extension, or turn the extension off in `chrome://extensions` and reload.
-- Keep *Scan speed* on **Gentle** (default). Avoid **Fast** for long scans.
+- Keep *Scan speed* on **Gentle** (default) and the scan time limit on.
 
 ## Changelog
+
+### 3.0.0
+- **Clearer panel**: three numbered, collapsible steps (① Search, ② Scan, ③ Results), one open at a time; rare settings moved to **⚙ Settings & About**; small *by Fluidz* link in the header; empty state with two ways forward.
+- **Search**: criteria with synonyms `(a, b) + (c, d)`, named criteria, exclusions `-word`, whole word `=word` (default stays *contains*), saved searches as blocks `@"name"`. *Active search [Edit]* summary. **?** help with clickable examples and keyword ideas. 2.x syntax unchanged.
+- **Search editor** (overlay): chips per criterion, *and also* / *or else*, per-chip whole-word toggle, *Without*, saved searches as blocks, live preview, Cancel / Save / Search.
+- **Saved searches**: unlimited, in collapsible folders, pin, rename, duplicate, move, delete, combine (AND / OR). Your 2.x searches are migrated automatically.
+- **Scan journal** with continuous autosave (20 scans, 30 days), **Find again** (thumbnail id, then name — a lead, not a guarantee), **compare two scans**, **hide already seen** with a *new since last time* counter.
+- **Local marks** *To review* / *Ignore*, **discreet mode**, **journal PIN** (comfort lock), **My data** screen, one **backup file** (format 1) with export / import, erase everything.
+- **Safety**: scan time limit (default 30 min), warning when Grindr Web is open in another tab, pause + *Resume* when Grindr crashes or empties the grid, interrupted scans offered again after a reload, keyboard shortcuts.
+- **Grid self-test** with *Copy the report* (no names, no photos) and a feedback link.
+- Discreet coral outline on matches (can be switched off). Welcome tour gets a step 1 *Get your grid ready*. *What's new* shown once after the update. All 6 languages.
+- Same permissions as 2.2.1. No network access.
 
 ### 2.2.1
 - Fixed: with the side panel open, the floating panel no longer flashes over Grindr (and blocks your clicks) each time you open a profile. The side panel keeps its link to the page, and the floating panel only comes back after a short delay if the side panel really went away, or right away when you close the side panel yourself.
