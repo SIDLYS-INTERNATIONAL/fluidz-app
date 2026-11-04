@@ -1,38 +1,6 @@
 {
   "rewrites": [
     {
-      "source": "/profile-name-search",
-      "destination": "/profile-name-search.html"
-    },
-    {
-      "source": "/album-creator",
-      "destination": "/album-creator.html"
-    },
-    {
-      "source": "/album-creator/create",
-      "destination": "/album-creator/create.html"
-    },
-    {
-      "source": "/preview/safety",
-      "destination": "/preview/safety.html"
-    },
-    {
-      "source": "/support",
-      "destination": "/support.html"
-    },
-    {
-      "source": "/my-labs",
-      "destination": "/my-labs.html"
-    },
-    {
-      "source": "/hookup-safety-check",
-      "destination": "/hookup-safety-check.html"
-    },
-    {
-      "source": "/about",
-      "destination": "/about.html"
-    },
-    {
       "source": "/privacy",
       "destination": "/privacy.html"
     },
@@ -43,14 +11,6 @@
     {
       "source": "/terms",
       "destination": "/terms.html"
-    },
-    {
-      "source": "/guides",
-      "destination": "/guides.html"
-    },
-    {
-      "source": "/guides/:slug",
-      "destination": "/guides/:slug.html"
     }
   ],
   "headers": [
@@ -78,17 +38,45 @@
           "value": "camera=(), microphone=(), geolocation=()"
         }
       ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
+      ]
+    },
+    {
+      "source": "/labs/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300, must-revalidate"
+        }
+      ]
     }
   ],
   "redirects": [
     {
+      "source": "/profile-name-search",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/profile-name-search.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
       "source": "/profile-hunter",
-      "destination": "/profile-name-search",
+      "destination": "/",
       "permanent": true
     },
     {
       "source": "/profile-hunter.html",
-      "destination": "/profile-name-search",
+      "destination": "/",
       "permanent": true
     },
     {
@@ -98,12 +86,12 @@
     },
     {
       "source": "/tools",
-      "destination": "/#tools",
+      "destination": "/",
       "permanent": false
     },
     {
       "source": "/my-tools",
-      "destination": "/my-labs",
+      "destination": "/",
       "permanent": false
     },
     {
