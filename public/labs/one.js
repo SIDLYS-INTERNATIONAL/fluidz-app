@@ -23,7 +23,7 @@
   function lsSet(k, v) { try { localStorage.setItem(k, v) } catch (e) {} }
   function lsDel(k) { try { localStorage.removeItem(k) } catch (e) {} }
 
-  /* ---------- i18n: English lives in the page (data-i18n*), other languages in /labs/one-i18n*.js ---------- */
+  /* ---------- i18n: English lives in the page (data-i18n*), other languages in /labs/one-l-<lang>.js ---------- */
   var LANG = window.ONE_LANG || 'en'
   var EN = {
     'err.invalid': 'Please enter a valid e-mail address.',
@@ -36,6 +36,8 @@
     'ready.loading': 'Preparing…',
     'ready.done': 'Download started. Unzip it, then follow the steps below.',
     'end.done': 'Download started. Unzip it, then follow the install steps above.',
+    'end.ready': 'Your free extension is ready. Download it, then install it in about two minutes (steps above).',
+    'end.next': 'Back to the install steps ↑',
     'ready.err': 'The download didn’t work. Try again in a moment.',
     'how.copied': 'Copied',
     'f.sending': 'Sending…'
@@ -43,7 +45,7 @@
   function collectEN() {
     $$('[data-i18n]').forEach(function (el) { var k = el.getAttribute('data-i18n'); if (EN[k] == null) EN[k] = el.textContent })
     $$('[data-i18n-html]').forEach(function (el) { var k = el.getAttribute('data-i18n-html'); if (EN[k] == null) EN[k] = el.innerHTML })
-    ;['ph:placeholder', 'aria:aria-label', 'title:title'].forEach(function (p) {
+    ;['ph:placeholder', 'aria:aria-label', 'title:title', 'alt:alt'].forEach(function (p) {
       var a = p.split(':')
       $$('[data-i18n-' + a[0] + ']').forEach(function (el) { var k = el.getAttribute('data-i18n-' + a[0]); if (EN[k] == null) EN[k] = el.getAttribute(a[1]) })
     })
@@ -64,11 +66,18 @@
     $$('[data-i18n-ph]').forEach(function (el) { el.setAttribute('placeholder', t(el.getAttribute('data-i18n-ph'))) })
     $$('[data-i18n-aria]').forEach(function (el) { el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria'))) })
     $$('[data-i18n-title]').forEach(function (el) { el.setAttribute('title', t(el.getAttribute('data-i18n-title'))) })
+    $$('[data-i18n-alt]').forEach(function (el) { el.setAttribute('alt', t(el.getAttribute('data-i18n-alt'))) })
+    // Screenshots exist in English and French: French pages show the French ones, every other language the English ones.
+    $$('img[data-src-fr]').forEach(function (el) {
+      if (!el.getAttribute('data-src-en')) el.setAttribute('data-src-en', el.getAttribute('src'))
+      var want = LANG === 'fr' ? el.getAttribute('data-src-fr') : el.getAttribute('data-src-en')
+      if (el.getAttribute('src') !== want) el.setAttribute('src', want)
+    })
     D.title = t('meta.title')
     setMeta('meta[name="description"]', 'content', t('meta.desc'))
     setMeta('meta[property="og:title"]', 'content', t('meta.title')); setMeta('meta[name="twitter:title"]', 'content', t('meta.title'))
     setMeta('meta[property="og:description"]', 'content', t('meta.desc')); setMeta('meta[name="twitter:description"]', 'content', t('meta.desc'))
-    var sel = $('#lang'); if (sel) sel.value = LANG
+    langUI()
     forms.forEach(function (f) { f.refreshText() })
     setDemo()
   }
@@ -77,8 +86,56 @@
     var done = function () { LANG = l; window.ONE_LANG = l; lsSet('fluidz_lang', l); applyLang() }
     if (l === 'en' || (window.ONE_I18N || {})[l]) return done()
     var s = D.createElement('script')
-    s.src = '/labs/' + (l === 'it' || l === 'de' ? 'one-i18n-2.js' : l === 'pt' ? 'one-i18n-3.js' : 'one-i18n.js') + '?v=2'
+    s.src = '/labs/one-l-' + l + '.js?v=1'
     s.onload = done; s.onerror = done; D.head.appendChild(s)
+  }
+
+  /* ---------- language menu (button + listbox, replaces the native <select>) ---------- */
+  var LB = $('#lang'), LM = $('#lang-menu')
+  function langOpts() { return $$('[role=option]', LM) }
+  function langUI() {
+    if (!LB) return
+    var cur = null
+    langOpts().forEach(function (o) { var on = o.getAttribute('data-lang') === LANG; o.setAttribute('aria-selected', on ? 'true' : 'false'); if (on) cur = o })
+    var u = $('.fl use', LB); if (u) u.setAttribute('href', '#fl-' + LANG)
+    var c = $('[data-lang-code]', LB); if (c) c.textContent = LANG.toUpperCase()
+    LB.setAttribute('aria-label', t('aria.lang') + ': ' + (cur ? cur.textContent.trim() : LANG))
+  }
+  function langOpen(focusLast) {
+    if (!LM.hidden) return
+    LM.hidden = false; LB.setAttribute('aria-expanded', 'true')
+    var os = langOpts(), sel = os.filter(function (o) { return o.getAttribute('aria-selected') === 'true' })[0]
+    ;(focusLast ? os[os.length - 1] : sel || os[0]).focus()
+  }
+  function langClose(back) {
+    if (LM.hidden) return
+    LM.hidden = true; LB.setAttribute('aria-expanded', 'false')
+    if (back) LB.focus()
+  }
+  function langPick(o) { langClose(true); var l = o.getAttribute('data-lang'); if (l !== LANG) setLang(l) }
+  function langInit() {
+    if (!LB || !LM) return
+    LB.addEventListener('click', function () { if (LM.hidden) langOpen(); else langClose(false) })
+    LB.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); langOpen(e.key === 'ArrowUp') }
+    })
+    LM.addEventListener('click', function (e) { var o = e.target.closest('[role=option]'); if (o) langPick(o) })
+    LM.addEventListener('keydown', function (e) {
+      var os = langOpts(), i = os.indexOf(D.activeElement), k = e.key
+      if (k === 'ArrowDown') { e.preventDefault(); os[(i + 1) % os.length].focus() }
+      else if (k === 'ArrowUp') { e.preventDefault(); os[(i - 1 + os.length) % os.length].focus() }
+      else if (k === 'Home') { e.preventDefault(); os[0].focus() }
+      else if (k === 'End') { e.preventDefault(); os[os.length - 1].focus() }
+      else if (k === 'Enter' || k === ' ') { e.preventDefault(); if (i >= 0) langPick(os[i]) }
+      else if (k === 'Escape') { e.preventDefault(); langClose(true) }
+      else if (k === 'Tab') langClose(false)
+      else if (k.length === 1 && /\S/.test(k)) {
+        var m = os.filter(function (o) { return o.textContent.trim().toLowerCase().indexOf(k.toLowerCase()) === 0 })[0]
+        if (m) m.focus()
+      }
+    })
+    D.addEventListener('pointerdown', function (e) { if (!LM.hidden && !e.target.closest('.lsel')) langClose(false) })
+    D.addEventListener('focusin', function (e) { if (!LM.hidden && !e.target.closest('.lsel')) langClose(false) })
   }
 
   /* ---------- phone detection (Chrome extensions can't run on phones) ---------- */
@@ -143,10 +200,10 @@
   })()
 
   /* ---------- signup ---------- */
-  async function signup(email, marketing) {
+  async function signup(email, marketing, website) {
     var res = await fetch('/api/labs-signup', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email, source: SOURCE, lang: LANG, marketing: !!marketing, utm: UTM, redirect: REDIRECT })
+      body: JSON.stringify({ email: email, source: SOURCE, lang: LANG, marketing: !!marketing, utm: UTM, redirect: REDIRECT, website: website || '' })
     })
     var j = null; try { j = await res.json() } catch (e) {}
     if (res.status === 400 || (j && j.error === 'invalid_email')) return 'invalid_email'
@@ -157,14 +214,28 @@
   }
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-  /* ---------- form instances (hero and bottom form: all states, teaser: form + sent) ---------- */
+  /* ---------- form instances: every [data-form] box gets the same three panels from <template id="gc-tpl"> ---------- */
   var forms = []
+  function buildForms() {
+    var tpl = $('#gc-tpl'); if (!tpl) return
+    $$('[data-form]').forEach(function (box) {
+      if ($('[data-panel]', box)) return
+      var n = box.getAttribute('data-form'), frag = tpl.content.cloneNode(true)
+      $$('[id]', frag).forEach(function (el) { el.id = el.id + '-' + n })
+      $$('label[for]', frag).forEach(function (el) { el.setAttribute('for', el.getAttribute('for') + '-' + n) })
+      if (n === 'end') {
+        $$('[data-i18n="ready.p"]', frag).forEach(function (el) { el.setAttribute('data-i18n', 'end.ready') })
+        $$('[data-i18n="ready.next"]', frag).forEach(function (el) { el.setAttribute('data-i18n', 'end.next'); el.setAttribute('href', '#how') })
+      }
+      box.appendChild(frag)
+    })
+  }
   function Form(root) {
     var self = this
     this.root = root; this.name = root.getAttribute('data-form')
     this.email = ''; this.marketing = false; this.cool = 0; this.timer = null; this.state = 'form'; this.busy = false
     this.panels = {}; $$('[data-panel]', root).forEach(function (p) { self.panels[p.getAttribute('data-panel')] = p })
-    this.input = $('input[type=email]', root); this.box = $('input[name=marketing]', root)
+    this.input = $('input[type=email]', root); this.box = $('input[name=marketing]', root); this.hp = $('input[name=website]', root)
     this.btn = $('form button[type=submit]', root); this.btnLabel = $('span', this.btn)
     this.notice = $('[data-notice]', root)
     var f = $('form', root)
@@ -209,7 +280,7 @@
     this.input.removeAttribute('aria-invalid')
     this.busy = true; this.btn.disabled = true; this.setLabel('f.sending')
     try {
-      var r = await signup(email, this.box.checked)
+      var r = await signup(email, this.box.checked, this.hp ? this.hp.value : '')
       if (r === 'ok') { this.email = email; this.marketing = this.box.checked; this.sent(); }
       else if (r === 'invalid_email') { this.msg(t('err.invalid')); this.input.setAttribute('aria-invalid', 'true'); this.input.focus() }
       else this.msg(t('err.limit'))
@@ -234,7 +305,7 @@
     if (this.cool > 0 || !this.email) return
     var b = $('[data-resend]', this.root); b.disabled = true; this.msg('')
     try {
-      var r = await signup(this.email, this.marketing)
+      var r = await signup(this.email, this.marketing, this.hp ? this.hp.value : '')
       if (r === 'ok') this.msg(t('sent.resent'), true)
       else this.msg(t('err.limit'))
     } catch (e) { this.msg(t('err.net')) }
@@ -278,8 +349,9 @@
       }
       if (!r.ok) throw new Error('http_' + r.status)
       var blob = await r.blob()
+      var cd = r.headers.get('Content-Disposition') || '', fm = /filename="?([A-Za-z0-9._-]+\.zip)"?/.exec(cd)
       var url = URL.createObjectURL(blob), a = D.createElement('a')
-      a.href = url; a.download = 'profile-name-search.zip'; a.style.display = 'none'
+      a.href = url; a.download = fm ? fm[1] : 'Fluidz-Profile-Name-Search.zip'; a.style.display = 'none'
       D.body.appendChild(a); a.click(); a.remove()
       setTimeout(function () { URL.revokeObjectURL(url) }, 8000)
       this.msg(t(this.name === 'end' ? 'end.done' : 'ready.done'), true)
@@ -287,7 +359,7 @@
     btn.disabled = false; lab.textContent = t('ready.btn')
   }
 
-  /* ---------- demo (lazy; static frame when motion is reduced) ---------- */
+  /* ---------- demo (loads with the page, it sits next to the hero; static frame when motion is reduced) ---------- */
   var demoOn = false
   function setDemo() {
     var f = $('#demo-frame'); if (!f || !demoOn) return
@@ -295,16 +367,7 @@
     var src = '/labs/demo/pns-demo.html?lang=' + LANG + (reduced ? '&t=7' : '')
     if (f.getAttribute('src') !== src) f.setAttribute('src', src)
   }
-  function lazyDemo() {
-    var go = function () { demoOn = true; setDemo() }
-    var stage = $('#stage'); if (!stage) return
-    var start = function () {
-      if (!('IntersectionObserver' in window)) return go()
-      var io = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { io.disconnect(); go() } }, { rootMargin: '300px' })
-      io.observe(stage)
-    }
-    if (D.readyState === 'complete') setTimeout(start, 300); else window.addEventListener('load', function () { setTimeout(start, 300) })
-  }
+  function startDemo() { if (!$('#stage')) return; demoOn = true; setDemo() }
 
   /* ---------- social row ---------- */
   function renderSocial() {
@@ -319,12 +382,13 @@
   }
 
   /* ---------- init ---------- */
+  buildForms()
   collectEN()
   $$('[data-form]').forEach(function (r) { forms.push(new Form(r)) })
   var hero = forms.filter(function (f) { return f.name === 'hero' })[0]
   applyLang()
-  $('#lang').addEventListener('change', function (e) { setLang(e.target.value) })
-  renderSocial(); lazyDemo()
+  langInit()
+  renderSocial(); startDemo()
 
   var cpy = $('#copy-ext')
   if (cpy) cpy.addEventListener('click', function () {

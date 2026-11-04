@@ -34,3 +34,6 @@ Sessions Templates Covers/
 
 # Claude Code worktrees
 .claude/worktrees/
+
+# Page images decoded from site/labs-img/*.b64 by scripts/labs-images.mjs (build step)
+public/labs/img/

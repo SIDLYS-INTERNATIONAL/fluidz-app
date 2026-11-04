@@ -3,208 +3,208 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Profile Name Search — sample demo</title>
+<title>Profile Name Search 3.0 — sample demo</title>
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/labs/site.css">
-<link rel="stylesheet" href="/labs/panel.css">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
-html,body{width:100%;height:100%;overflow:hidden;background:#0c0b10}
-body::before{display:none}
-#cam{position:absolute;left:0;top:0;width:1440px;height:810px;transform-origin:0 0;overflow:hidden;background:#100f14}
-#track{position:absolute;left:0;top:0;width:1440px;will-change:transform}
-.pf{position:relative;float:left;width:180px;height:216px}
-.pf .im{position:absolute;inset:6px;border-radius:12px;overflow:hidden;background:linear-gradient(160deg,hsl(var(--h) 22% 30%),hsl(var(--h) 18% 14%));transition:opacity .3s,box-shadow .3s}
-.pn-res .av{background-size:cover!important;background-position:center 20%!important}
-.pf .im.ph{background-size:cover;background-position:center}.pf .im.ph::before,.pf .im.ph::after{display:none}
-.pf .im::before{content:'';position:absolute;left:50%;top:30%;width:56px;height:56px;margin-left:-28px;border-radius:50%;background:hsl(var(--h) 14% 42% / .75)}
-.pf .im::after{content:'';position:absolute;left:50%;top:62%;width:120px;height:110px;margin-left:-60px;border-radius:60px 60px 0 0;background:hsl(var(--h) 14% 38% / .75)}
-.pf .nm{position:absolute;left:14px;bottom:14px;font-size:12px;font-weight:700;color:#fff;background:rgba(0,0,0,.5);padding:3px 8px;border-radius:7px;z-index:2;max-width:150px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pf .dist{position:absolute;right:14px;top:14px;font-size:10px;color:rgba(255,255,255,.7);z-index:2;background:rgba(0,0,0,.35);padding:2px 6px;border-radius:6px}
-.dim .pf:not(.hit) .im{opacity:.5}
-.pf.hit .im{box-shadow:inset 0 0 0 2px #E0887A,0 0 0 1px #E0887A}
-.pf.hit .nm{background:#E0887A;color:#14090A}
-.pf.focus .im{box-shadow:inset 0 0 0 3px #E0887A,0 0 40px rgba(224,136,122,.5);transform:scale(1.03)}
-.pf .open{display:none;position:absolute;left:6px;right:6px;bottom:6px;z-index:3;padding:34px 12px 12px;border-radius:0 0 12px 12px;background:linear-gradient(transparent,rgba(0,0,0,.85));font-size:10.5px;color:rgba(255,255,255,.85)}
-.pf .open b{display:block;font-family:var(--fh);font-size:15px;color:#fff;margin-bottom:2px}
-.pf.focus .open{display:block}
-.pf.focus .nm{opacity:0}
-#badge{position:absolute;left:20px;top:16px;z-index:5;font-family:var(--fm);font-size:11px;letter-spacing:1px;color:#E0887A;background:rgba(224,136,122,.12);border:1px solid rgba(224,136,122,.3);border-radius:999px;padding:6px 12px;backdrop-filter:blur(10px)}
-#veil{position:absolute;inset:0;background:rgba(5,4,10,.55);opacity:0;z-index:6;pointer-events:none}
-#dock{position:absolute;right:28px;top:22px;z-index:8;transform-origin:50% 50%}
-#dock .pn{gap:8px;padding:12px 14px}
-#dock .pn{box-shadow:0 30px 80px rgba(0,0,0,.7)}
-#dock .pn-help,#dock .pn-saved{display:none}
-.co{position:absolute;z-index:9;right:calc(100% + 16px);white-space:nowrap;background:#E0887A;color:#14090A;font-size:13px;font-weight:800;border-radius:999px;padding:5px 12px;opacity:0;transform:translateX(12px);transition:none}
-.co::after{content:'';position:absolute;left:100%;top:50%;width:14px;height:2px;background:#E0887A}
-#cur{position:absolute;z-index:20;left:0;top:0;width:26px;height:26px;opacity:0;filter:drop-shadow(0 2px 6px rgba(0,0,0,.6))}
-#cur svg{width:26px;height:26px;fill:#fff;stroke:#111;stroke-width:1.5}
-.pn-go{transition:none}
-.pn-res .r{display:none}
-.pn-field .typed{font-size:13px;font-weight:600;color:var(--tx)}
+/* A faithful, lighter copy of the 3.0 panel (same colours and layout as the extension's ui-css.js). No video: CSS + a small script. */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;background:#0c0b10;font-family:"Plus Jakarta Sans",system-ui,sans-serif;color:#EDE8F5;-webkit-font-smoothing:antialiased}
+#cam{position:absolute;left:0;top:0;width:960px;height:540px;transform-origin:0 0;overflow:hidden;background:#100f14}
+#grid{position:absolute;left:0;top:0;width:620px;height:540px;overflow:hidden}
+#track{position:absolute;left:10px;top:0;width:600px;display:grid;grid-template-columns:repeat(4,150px);will-change:transform}
+.pf{position:relative;height:180px;padding:4px}
+.pf .im{position:absolute;inset:4px;border-radius:10px;overflow:hidden;background:#1a1820 center/cover no-repeat;transition:opacity .3s,filter .3s}
+.pf .nm{position:absolute;left:12px;bottom:12px;z-index:2;font-size:12px;font-weight:700;color:#fff;text-shadow:0 1px 3px #000;max-width:120px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pf .st{position:absolute;right:12px;top:10px;z-index:2;width:14px;height:14px;fill:#f5c518;display:none}
+.pf.fav .st{display:block}
+.dim .pf:not(.hit) .im{opacity:.14;filter:grayscale(1)}
+.pf.hit .im{outline:2px solid rgba(224,136,122,.9);outline-offset:-2px}
+.pf.pulse .im{box-shadow:0 0 0 6px rgba(224,136,122,.55)}
+#badge{position:absolute;left:18px;top:14px;z-index:5;font-size:10px;font-weight:700;letter-spacing:1px;color:#E0887A;background:rgba(12,11,16,.82);border:1px solid rgba(224,136,122,.3);border-radius:999px;padding:5px 11px}
+/* panel */
+#dock{position:absolute;right:16px;top:12px;width:324px;display:flex;flex-direction:column;gap:7px}
+.card,.panel{background:rgba(13,12,22,.97);border:1px solid rgba(255,255,255,.09);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.panel{padding:10px;display:flex;flex-direction:column;gap:7px}
+.hd{display:flex;align-items:center;justify-content:space-between;height:28px}
+.brand{display:flex;align-items:center;gap:7px}.drop{width:11px;height:11px;border-radius:50%;background:linear-gradient(135deg,#E0887A,#9080BA)}
+.brand b{display:block;font-size:13px;font-weight:700;line-height:1.1}.brand small{display:block;font-size:9.5px;font-weight:600;color:rgba(237,232,245,.32)}
+.btns{display:flex;gap:4px}.btns i{width:24px;height:24px;border-radius:7px;background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;color:rgba(237,232,245,.56)}
+.ic{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.blk{border-radius:12px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05)}
+.blk.on{background:rgba(255,255,255,.035);border-color:rgba(255,255,255,.09)}
+.bh{display:flex;align-items:center;gap:7px;padding:8px 9px;min-height:36px}
+.bh .n{width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,.07);color:rgba(237,232,245,.56);font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.blk.on .bh .n{background:#E0887A;color:#14090A}
+.bh .t{font-size:12.5px;font-weight:700}
+.bh .s{flex:1;min-width:0;font-size:10.5px;font-weight:600;color:rgba(237,232,245,.32);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:right}
+.bh .s.hot{color:#E0887A}.bh .s .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#6BA888;margin-right:4px;vertical-align:middle}
+.bh .chev{color:rgba(237,232,245,.32);transition:transform .15s}.blk.on .bh .chev{transform:rotate(90deg)}
+.bb{padding:0 9px 9px;display:none;flex-direction:column;gap:7px}.blk.on .bb{display:flex}
+.field{min-height:36px;background:#1D1B2E;border:1px solid rgba(224,136,122,.28);border-radius:11px;padding:0 6px 0 10px;display:flex;align-items:center;gap:4px;font-size:12px}
+.field .v{flex:1;white-space:nowrap;overflow:hidden}.field .ph{color:rgba(237,232,245,.32)}
+.caret{display:inline-block;width:1.5px;height:14px;background:#E0887A;vertical-align:middle;margin-left:1px}
+.field .q{width:20px;height:20px;border-radius:50%;border:1px solid rgba(255,255,255,.09);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;color:rgba(237,232,245,.56)}
+.act{border:1px solid rgba(255,255,255,.09);border-radius:11px;padding:7px 9px;display:flex;flex-direction:column;gap:4px}
+.act .top{display:flex;justify-content:space-between;font-size:9.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:rgba(237,232,245,.32)}
+.act .top span+span{font-size:10.5px;letter-spacing:0;text-transform:none;color:#E0887A}
+.lines{font-size:11px;line-height:1.45;color:rgba(237,232,245,.56)}.lines .tm{color:#E0887A;font-weight:700}
+.lines .c{font-size:8.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:rgba(237,232,245,.32);margin:0 4px}
+.links{display:flex;gap:5px}.lk{border-radius:999px;padding:5px 9px;font-size:10.5px;font-weight:700;background:rgba(255,255,255,.05);color:rgba(237,232,245,.56);white-space:nowrap}
+.go{height:34px;border-radius:11px;background:#E0887A;color:#14090A;font-size:12.5px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:7px}
+.go.stop{background:#1D1B2E;color:#E0887A}
+.stats{display:flex;gap:5px}.stat{flex:1;border-radius:9px;background:rgba(255,255,255,.03);padding:6px 7px}
+.stat b{display:block;font-size:15px;font-weight:800;font-variant-numeric:tabular-nums}.stat small{display:block;font-size:9.5px;color:rgba(237,232,245,.56);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.meta{font-size:10px;color:rgba(237,232,245,.32)}
+.ftabs{display:flex;gap:3px;padding:3px;border-radius:11px;background:rgba(255,255,255,.04)}
+.ftabs span{flex:1 1 auto;display:flex;align-items:center;justify-content:center;gap:4px;border-radius:8px;padding:5px 4px;font-size:10.5px;font-weight:800;color:rgba(237,232,245,.56);white-space:nowrap}
+.ftabs span.on{background:#E0887A;color:#14090A}.ftabs i{font-style:normal;font-size:9.5px;opacity:.75}
+.res{display:flex;flex-direction:column;gap:4px}
+.r{display:flex;align-items:center;gap:8px;border-radius:11px;padding:6px 7px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05)}
+.r.on{background:rgba(224,136,122,.12);border-color:rgba(224,136,122,.28)}
+.av{width:28px;height:28px;border-radius:50%;flex-shrink:0;position:relative;overflow:hidden;background:#1a1820 center/cover no-repeat}
+.r .tx{flex:1;min-width:0}.r .tx b{display:block;font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.r .tx b svg{width:10px;height:10px;fill:#E0887A;margin-right:3px;vertical-align:-1px}
+.r .tx small{display:block;font-size:9.5px;color:rgba(237,232,245,.32)}
+.sh{display:inline-flex;align-items:center;gap:3px;border-radius:999px;padding:4px 8px;font-size:10px;font-weight:800;background:rgba(255,255,255,.07)}
+.r.on .sh{background:#E0887A;color:#14090A}
+.card{padding:9px 11px;display:flex;align-items:center;gap:10px;border-color:rgba(224,136,122,.28)}
+.card .av{width:32px;height:32px}.card .tx{flex:1;min-width:0}.card .tx b{display:block;font-size:12.5px;font-weight:700}
+.card .tx small{display:block;font-size:10.5px;color:rgba(237,232,245,.56);line-height:1.35}
+.card .na{display:flex;flex-direction:column;gap:4px}.card .na span{border-radius:999px;padding:4px 9px;font-size:10.5px;font-weight:700;background:rgba(255,255,255,.07);text-align:center}
+.card .na .p{background:#E0887A;color:#14090A;font-weight:800}
+.adv{font-size:11px;font-weight:700;color:rgba(237,232,245,.56);padding:2px 2px 0;display:flex;align-items:center;gap:5px}
+#note{display:none}
+#cur{position:absolute;z-index:20;left:0;top:0;width:22px;height:22px;opacity:0;filter:drop-shadow(0 2px 5px rgba(0,0,0,.6))}
+#cur svg{width:22px;height:22px;fill:#fff;stroke:#111;stroke-width:1.5}
 </style>
 </head>
 <body>
 <div id="cam">
   <div id="grid"><div id="track"></div></div>
-  <div id="badge" data-k="badge">SAMPLE GRID · FICTIONAL PROFILES</div>
-  <div id="veil"></div>
+  <div id="badge" data-k="badge"></div>
   <div id="dock">
-    <div class="pn">
-      <div class="pn-h"><div class="pn-brand"><span class="grip"><i data-ico="grip-vertical"></i></span><i class="drop"></i><div><b>Profile Name Search</b><small data-k="by">by Fluidz Labs</small></div></div>
-        <div class="pn-btns"><span class="b on"><i data-ico="lightbulb"></i></span><span class="b"><i data-ico="panel-right"></i></span><span class="b"><i data-ico="minus"></i></span><span class="b"><i data-ico="x"></i></span></div></div>
-      <div class="pn-step"><span class="n">1</span><span data-k="s1">Who are you looking for?</span></div>
-      <div class="pn-field" id="field"></div>
-      <div class="pn-tip"><i data-ico="sparkles"></i><span><span data-k="tip1">Names, keywords or emojis: jay · dom top · 🚀</span><br><span data-k="tip2">Type a comma or press Enter for OR · use + for AND · "exact phrase"</span></span></div>
-      <hr>
-      <div class="pn-step"><span class="n">2</span><span data-k="s2">Let it scroll for you</span></div>
-      <div class="pn-go" id="go"><i data-ico="play"></i><span id="golbl" data-k="start">Start auto-scroll</span></div>
-      <div class="pn-row" id="pauserow"><span data-k="pauseEach">Pause at each new match</span><span class="tg on"><i></i></span></div>
-      <div class="pn-gauges">
-        <div class="gauge" id="g1" style="--c:#6BA888;--v:0"><div class="wrapn"><div class="ring"></div><b style="font-size:15px">0</b></div><small data-k="gScanned">profiles scanned</small></div>
-        <div class="gauge" id="g2" style="--c:#E0887A;--v:0"><div class="wrapn"><div class="ring"></div><b>0</b></div><small data-k="gFound">profiles found</small></div>
-        <div class="gauge" id="g3" style="--c:#9080BA;--v:56"><div class="wrapn"><div class="ring"></div><b>5</b></div><small data-k="gFav">already favorites</small></div>
-      </div>
-      <hr>
-      <div class="pn-step"><span class="n">3</span><span data-k="s3">Click a match to find him on the grid</span></div>
-      <div class="pn-tabs"><span class="on"><b data-k="tabAll">All</b></span><span>★ <b data-k="tabFav">Favorites</b></span><span><b data-k="tabNon">Not favorites</b></span></div>
-      <div class="pn-nav"><span class="pl"><i data-ico="chevron-left"></i><span data-k="prev">Previous</span></span><span class="c" id="cnt">0 / 0</span><span class="pl"><span data-k="next">Next</span><i data-ico="chevron-right"></i></span></div>
-      <div class="pn-res" id="res">
-        <div class="r" id="r1"><span class="av"></span><span class="tx"><b>TOP 🚀</b><small>On screen</small></span><span class="sh"><span data-k="show">Show on grid</span> <i data-ico="locate-fixed"></i></span></div>
-        <div class="r" id="r2"><span class="av"></span><span class="tx"><b>XXL</b><small>On screen</small></span><span class="sh"><span data-k="show">Show on grid</span> <i data-ico="locate-fixed"></i></span></div>
-        <div class="r" id="r3"><span class="av"></span><span class="tx"><b>vers top</b><small>Scrolled past — we’ll bring it back</small></span><span class="sh"><span data-k="show">Show on grid</span> <i data-ico="locate-fixed"></i></span></div>
-      </div>
-      <div class="pn-drag"><i data-ico="grip-horizontal"></i><span data-k="drag">Drag to move</span></div>
+    <div class="card" id="note"><span class="av" id="noteAv"></span><div class="tx"><b id="noteT"></b><small data-k="noteText"></small></div><div class="na"><span class="p" data-k="noteShow"></span><span data-k="noteResume"></span></div></div>
+    <div class="panel">
+      <div class="hd"><div class="brand"><i class="drop"></i><div><b>Profile Name Search</b><small data-k="byFluidz"></small></div></div>
+        <div class="btns"><i><svg class="ic" viewBox="0 0 24 24"><path d="M9.67 4.14a2.34 2.34 0 0 1 4.66 0 2.34 2.34 0 0 0 3.32 1.91 2.34 2.34 0 0 1 2.33 4.03 2.34 2.34 0 0 0 0 3.84 2.34 2.34 0 0 1-2.33 4.03 2.34 2.34 0 0 0-3.32 1.91 2.34 2.34 0 0 1-4.66 0 2.34 2.34 0 0 0-3.32-1.91 2.34 2.34 0 0 1-2.33-4.03 2.34 2.34 0 0 0 0-3.84 2.34 2.34 0 0 1 2.33-4.03 2.34 2.34 0 0 0 3.32-1.91"/><circle cx="12" cy="12" r="3"/></svg></i><i><svg class="ic"><use href="/labs/icons.svg#panel-right"/></svg></i><i><svg class="ic"><use href="/labs/icons.svg#minus"/></svg></i><i><svg class="ic"><use href="/labs/icons.svg#x"/></svg></i></div></div>
+      <section class="blk" id="b1"><div class="bh"><span class="n">1</span><span class="t" data-k="b1"></span><span class="s" id="s1"></span><svg class="ic chev"><use href="/labs/icons.svg#chevron-right"/></svg></div>
+        <div class="bb"><div class="field"><span class="v" id="field"></span><span class="q">?</span></div>
+          <div class="act" id="act"><div class="top"><span data-k="activeSearch"></span><span data-k="edit"></span></div><div class="lines" id="lines"></div></div>
+          <div class="links"><span class="lk" data-k="saveSearch"></span><span class="lk" id="mys"></span></div></div></section>
+      <section class="blk" id="b2"><div class="bh"><span class="n">2</span><span class="t" data-k="b2"></span><span class="s" id="s2"></span><svg class="ic chev"><use href="/labs/icons.svg#chevron-right"/></svg></div>
+        <div class="bb"><div class="go stop" id="go"><svg class="ic"><use href="/labs/icons.svg#pause"/></svg><span data-k="pause"></span></div>
+          <div class="stats"><div class="stat"><b id="g1" style="color:#6BA888">0</b><small data-k="gScanned"></small></div><div class="stat"><b id="g2" style="color:#E0887A">0</b><small data-k="gFound"></small></div><div class="stat"><b id="g3" style="color:#9080BA">0</b><small data-k="gFav"></small></div></div>
+          <div class="meta" id="meta"></div></div></section>
+      <section class="blk" id="b3"><div class="bh"><span class="n">3</span><span class="t" data-k="b3"></span><span class="s" id="s3"></span><svg class="ic chev"><use href="/labs/icons.svg#chevron-right"/></svg></div>
+        <div class="bb"><div class="ftabs" id="tabs"><span id="tA"><b data-k="tabAll"></b><i></i></span><span id="tF">★ <b data-k="tabFav"></b><i></i></span><span id="tN"><b data-k="tabNon"></b><i></i></span></div>
+          <div class="res" id="res"></div></div></section>
+      <div class="adv"><svg class="ic"><use href="/labs/icons.svg#chevron-right"/></svg><span data-k="advanced"></span></div>
     </div>
-    <span class="co" id="co1" data-k="co1">Several names</span><span class="co" id="co2" data-k="co2">Pauses on each match</span><span class="co" id="co3" data-k="co3">Counters</span><span class="co" id="co4" data-k="co4">Click to open</span>
   </div>
   <div id="cur"><svg viewBox="0 0 24 24"><path d="M4 3l16 7-7 2-3 7z"/></svg></div>
 </div>
 <script>
-/* Language: ?lang= (set by the parent page), else the parent page's language (same origin), else the saved site language, else English. */
-var PNS_DEMO_I18N = {"en":{"tabAll":"All","tabFav":"Favorites","tabNon":"Not favorites","by":"by Fluidz Labs","s1":"Who are you looking for?","ph":"add a name…","tip1":"Names, keywords or emojis: jay · dom top · 🚀","tip2":"Type a comma or press Enter for OR · use + for AND · \"exact phrase\"","onlyFav":"Only my favorites","s2":"Let it scroll for you","start":"Start auto-scroll","pause":"Pause auto-scroll","resume":"Resume auto-scroll","pauseEach":"Pause at each new match","gScanned":"profiles scanned","gFound":"profiles found","gFav":"already favorites","s3":"Click a match to find him on the grid","prev":"Previous","next":"Next","show":"Show on grid","onScreen":"On screen","pastBack":"Scrolled past — we’ll bring it back","drag":"Drag to move","badge":"SAMPLE GRID · FICTIONAL PROFILES","co1":"Several names","co2":"Pauses on each match","co3":"Counters","co4":"Click to open","open":"Found on the grid — tap to open"},"fr":{"tabAll":"Tous","tabFav":"Favoris","tabNon":"Non favoris","by":"par Fluidz Labs","s1":"Qui cherches-tu ?","ph":"ajoute un prénom…","tip1":"Prénoms, mots-clés ou emojis : jay · dom top · 🚀","tip2":"Tape une virgule ou appuie sur Entrée pour OU · utilise + pour ET · \"phrase exacte\"","onlyFav":"Seulement mes favoris","s2":"Laisse-le défiler à ta place","start":"Lancer le défilement auto","pause":"Mettre en pause","resume":"Reprendre le défilement","pauseEach":"Pause à chaque nouveau match","gScanned":"profils scannés","gFound":"profils trouvés","gFav":"déjà en favoris","s3":"Clique sur un match pour le retrouver dans la grille","prev":"Précédent","next":"Suivant","show":"Voir dans la grille","onScreen":"À l’écran","pastBack":"Déjà passé — on le ramène","drag":"Glisser pour déplacer","badge":"GRILLE D’EXEMPLE · PROFILS FICTIFS","co1":"Plusieurs prénoms","co2":"Pause à chaque match","co3":"Compteurs","co4":"Clique pour l’ouvrir","open":"Retrouvé dans la grille — touche pour ouvrir"},"es":{"tabAll":"Todos","tabFav":"Favoritos","tabNon":"No favoritos","by":"de Fluidz Labs","s1":"¿A quién buscas?","ph":"añade un nombre…","tip1":"Nombres, palabras clave o emojis: jay · dom top · 🚀","tip2":"Escribe una coma o pulsa Intro para O · usa + para Y · \"frase exacta\"","onlyFav":"Solo mis favoritos","s2":"Deja que se desplace por ti","start":"Iniciar desplazamiento auto","pause":"Pausar desplazamiento","resume":"Reanudar desplazamiento","pauseEach":"Pausar en cada coincidencia nueva","gScanned":"perfiles escaneados","gFound":"perfiles encontrados","gFav":"ya en favoritos","s3":"Pulsa una coincidencia para encontrarlo en la cuadrícula","prev":"Anterior","next":"Siguiente","show":"Ver en la cuadrícula","onScreen":"En pantalla","pastBack":"Ya pasó — lo traemos de vuelta","drag":"Arrastra para mover","badge":"CUADRÍCULA DE EJEMPLO · PERFILES FICTICIOS","co1":"Varios nombres","co2":"Pausa en cada coincidencia","co3":"Contadores","co4":"Pulsa para abrirlo","open":"Encontrado en la cuadrícula — toca para abrir"},"pt":{"tabAll":"Todos","tabFav":"Favoritos","tabNon":"Não favoritos","by":"da Fluidz Labs","s1":"Quem você procura?","ph":"adicione um nome…","tip1":"Nomes, palavras-chave ou emojis: jay · dom top · 🚀","tip2":"Digite uma vírgula ou pressione Enter para OU · use + para E · \"frase exata\"","onlyFav":"Só meus favoritos","s2":"Deixe rolar por você","start":"Iniciar rolagem auto","pause":"Pausar rolagem","resume":"Retomar rolagem","pauseEach":"Pausar a cada novo match","gScanned":"perfis escaneados","gFound":"perfis encontrados","gFav":"já nos favoritos","s3":"Clique num match para achá-lo na grade","prev":"Anterior","next":"Próximo","show":"Ver na grade","onScreen":"Na tela","pastBack":"Já passou — vamos trazê-lo de volta","drag":"Arraste para mover","badge":"GRADE DE EXEMPLO · PERFIS FICTÍCIOS","co1":"Vários nomes","co2":"Pausa a cada match","co3":"Contadores","co4":"Clique para abrir","open":"Encontrado na grade — toque para abrir"},"it":{"tabAll":"Tutti","tabFav":"Preferiti","tabNon":"Non preferiti","by":"di Fluidz Labs","s1":"Chi stai cercando?","ph":"aggiungi un nome…","tip1":"Nomi, parole chiave o emoji: jay · dom top · 🚀","tip2":"Scrivi una virgola o premi Invio per O · usa + per E · \"frase esatta\"","onlyFav":"Solo i miei preferiti","s2":"Lascia che scorra al posto tuo","start":"Avvia scorrimento auto","pause":"Metti in pausa","resume":"Riprendi scorrimento","pauseEach":"Pausa a ogni nuovo match","gScanned":"profili scansionati","gFound":"profili trovati","gFav":"già nei preferiti","s3":"Tocca un match per trovarlo nella griglia","prev":"Precedente","next":"Successivo","show":"Mostra nella griglia","onScreen":"Sullo schermo","pastBack":"Già superato — lo riportiamo qui","drag":"Trascina per spostare","badge":"GRIGLIA DI ESEMPIO · PROFILI FITTIZI","co1":"Più nomi","co2":"Pausa a ogni match","co3":"Contatori","co4":"Clicca per aprirlo","open":"Trovato nella griglia — tocca per aprire"},"de":{"tabAll":"Alle","tabFav":"Favoriten","tabNon":"Keine Favoriten","by":"von Fluidz Labs","s1":"Wen suchst du?","ph":"Namen hinzufügen…","tip1":"Namen, Stichwörter oder Emojis: jay · dom top · 🚀","tip2":"Tippe ein Komma oder drücke Enter für ODER · nutze + für UND · \"genaue Wortfolge\"","onlyFav":"Nur meine Favoriten","s2":"Lass es für dich scrollen","start":"Auto-Scrollen starten","pause":"Auto-Scrollen pausieren","resume":"Auto-Scrollen fortsetzen","pauseEach":"Bei jedem neuen Treffer pausieren","gScanned":"Profile gescannt","gFound":"Profile gefunden","gFav":"schon Favoriten","s3":"Tippe auf einen Treffer, um ihn im Raster zu finden","prev":"Zurück","next":"Weiter","show":"Im Raster zeigen","onScreen":"Auf dem Bildschirm","pastBack":"Schon vorbei — wir holen ihn zurück","drag":"Zum Verschieben ziehen","badge":"BEISPIEL-RASTER · FIKTIVE PROFILE","co1":"Mehrere Namen","co2":"Pausiert bei jedem Treffer","co3":"Zähler","co4":"Klicken zum Öffnen","open":"Im Raster gefunden — zum Öffnen tippen"}}
-var PNS_DEMO_LANG = (function () {
+var I = {"en":{"badge":"SAMPLE GRID · FICTIONAL PROFILES","nScanned":"{n} scanned","byFluidz":"by Fluidz","b1":"Search","b2":"Scan","b3":"Results","ph":"top, dom · FIST + XXL","activeSearch":"Active search","edit":"Edit","orElse":"or else","andAlso":"and also","saveSearch":"Save","mySearches":"My searches ({n})","advCriteria":"Advanced criteria","pause":"Pause auto-scroll","resume":"Resume auto-scroll","gScanned":"profiles scanned","gFound":"profiles found","gFav":"already favorites","metaPause":"pause at each match","speedGentle":"Gentle","metaCap":"stops after {m} min","tabAll":"All","tabFav":"Favorites","tabNon":"Not favorites","onScreen":"On screen","pastBack":"Scrolled past — we’ll bring it back","noteShow":"Show","noteTitle":"New match: {name}","noteText":"Scrolling paused. Show him on the grid, or resume.","noteResume":"Resume","nFound":"{n} found","scanning":"Scanning","advanced":"Advanced","b2idle":"ready","b3idle":"none yet","drag":"Drag to move"},"fr":{"badge":"GRILLE D’EXEMPLE · PROFILS FICTIFS","nScanned":"scannés : {n}","byFluidz":"par Fluidz","b1":"Chercher","b2":"Scanner","b3":"Résultats","ph":"top, dom · FIST + XXL","activeSearch":"Recherche active","edit":"Modifier","orElse":"ou bien","andAlso":"et aussi","saveSearch":"Enregistrer","mySearches":"Mes recherches ({n})","advCriteria":"Critères avancés","pause":"Mettre en pause","resume":"Reprendre le défilement","gScanned":"profils scannés","gFound":"profils trouvés","gFav":"déjà en favoris","metaPause":"pause à chaque match","speedGentle":"Douce","metaCap":"arrêt après {m} min","tabAll":"Tous","tabFav":"Favoris","tabNon":"Non favoris","onScreen":"À l’écran","pastBack":"Déjà passé — on le ramène","noteShow":"Voir","noteTitle":"Nouveau match : {name}","noteText":"Défilement en pause. Montre-le dans la grille, ou reprends.","noteResume":"Reprendre","nFound":"trouvés : {n}","scanning":"En cours","advanced":"Avancé","b2idle":"prêt","b3idle":"aucun pour l’instant","drag":"Glisser pour déplacer"},"es":{"badge":"CUADRÍCULA DE EJEMPLO · PERFILES FICTICIOS","nScanned":"escaneados: {n}","byFluidz":"por Fluidz","b1":"Buscar","b2":"Escanear","b3":"Resultados","ph":"top, dom · FIST + XXL","activeSearch":"Búsqueda activa","edit":"Editar","orElse":"o bien","andAlso":"y también","saveSearch":"Guardar","mySearches":"Mis búsquedas ({n})","advCriteria":"Criterios avanzados","pause":"Pausar desplazamiento","resume":"Reanudar desplazamiento","gScanned":"perfiles escaneados","gFound":"perfiles encontrados","gFav":"ya en favoritos","metaPause":"pausa en cada coincidencia","speedGentle":"Suave","metaCap":"se para tras {m} min","tabAll":"Todos","tabFav":"Favoritos","tabNon":"No favoritos","onScreen":"En pantalla","pastBack":"Ya pasó — lo traemos de vuelta","noteShow":"Ver","noteTitle":"Nueva coincidencia: {name}","noteText":"Desplazamiento en pausa. Muéstralo en la cuadrícula o reanuda.","noteResume":"Reanudar","nFound":"encontrados: {n}","scanning":"En curso","advanced":"Avanzado","b2idle":"listo","b3idle":"ninguno aún","drag":"Arrastra para mover"},"pt":{"badge":"GRADE DE EXEMPLO · PERFIS FICTÍCIOS","nScanned":"varridos: {n}","byFluidz":"por Fluidz","b1":"Pesquisar","b2":"Varrer","b3":"Resultados","ph":"top, dom · FIST + XXL","activeSearch":"Pesquisa ativa","edit":"Editar","orElse":"ou então","andAlso":"e também","saveSearch":"Guardar","mySearches":"As minhas pesquisas ({n})","advCriteria":"Critérios avançados","pause":"Pausar rolagem","resume":"Retomar rolagem","gScanned":"perfis escaneados","gFound":"perfis encontrados","gFav":"já nos favoritos","metaPause":"pausa em cada match","speedGentle":"Suave","metaCap":"para após {m} min","tabAll":"Todos","tabFav":"Favoritos","tabNon":"Não favoritos","onScreen":"Na tela","pastBack":"Já passou — vamos trazê-lo de volta","noteShow":"Ver","noteTitle":"Novo match: {name}","noteText":"Rolagem em pausa. Mostre-o na grade ou retome.","noteResume":"Retomar","nFound":"encontrados: {n}","scanning":"A varrer","advanced":"Avançado","b2idle":"pronto","b3idle":"nenhum ainda","drag":"Arraste para mover"},"it":{"badge":"GRIGLIA DI ESEMPIO · PROFILI FITTIZI","nScanned":"scansionati: {n}","byFluidz":"di Fluidz","b1":"Cerca","b2":"Scansiona","b3":"Risultati","ph":"top, dom · FIST + XXL","activeSearch":"Ricerca attiva","edit":"Modifica","orElse":"oppure","andAlso":"e anche","saveSearch":"Salva","mySearches":"Le mie ricerche ({n})","advCriteria":"Criteri avanzati","pause":"Metti in pausa","resume":"Riprendi scorrimento","gScanned":"profili scansionati","gFound":"profili trovati","gFav":"già nei preferiti","metaPause":"pausa a ogni match","speedGentle":"Delicata","metaCap":"si ferma dopo {m} min","tabAll":"Tutti","tabFav":"Preferiti","tabNon":"Non preferiti","onScreen":"Sullo schermo","pastBack":"Già superato — lo riportiamo qui","noteShow":"Mostra","noteTitle":"Nuovo match: {name}","noteText":"Scorrimento in pausa. Mostralo nella griglia o riprendi.","noteResume":"Riprendi","nFound":"trovati: {n}","scanning":"In corso","advanced":"Avanzate","b2idle":"pronto","b3idle":"ancora nessuno","drag":"Trascina per spostare"},"de":{"badge":"BEISPIEL-RASTER · FIKTIVE PROFILE","nScanned":"{n} gescannt","byFluidz":"von Fluidz","b1":"Suchen","b2":"Scannen","b3":"Ergebnisse","ph":"top, dom · FIST + XXL","activeSearch":"Aktive Suche","edit":"Bearbeiten","orElse":"oder sonst","andAlso":"und auch","saveSearch":"Speichern","mySearches":"Meine Suchen ({n})","advCriteria":"Erweiterte Kriterien","pause":"Auto-Scrollen pausieren","resume":"Auto-Scrollen fortsetzen","gScanned":"Profile gescannt","gFound":"Profile gefunden","gFav":"schon Favoriten","metaPause":"Pause bei jedem Treffer","speedGentle":"Sanft","metaCap":"stoppt nach {m} Min.","tabAll":"Alle","tabFav":"Favoriten","tabNon":"Keine Favoriten","onScreen":"Auf dem Bildschirm","pastBack":"Schon vorbei — wir holen ihn zurück","noteShow":"Zeigen","noteTitle":"Neuer Treffer: {name}","noteText":"Scrollen pausiert. Zeig ihn im Raster oder mach weiter.","noteResume":"Weiter","nFound":"{n} gefunden","scanning":"Läuft","advanced":"Erweitert","b2idle":"bereit","b3idle":"noch keine","drag":"Zum Verschieben ziehen"}}
+var L = (function () {
   var ok = /^(en|fr|es|pt|it|de)$/, l = ''
   try { l = new URLSearchParams(location.search).get('lang') || '' } catch (e) {}
-  if (!ok.test(l)) try { var P = window.parent; l = (P !== window && P.Labs && P.Labs.lang) ? P.Labs.lang() : (P !== window ? P.LABS_LANG : '') || '' } catch (e) { l = '' }
+  if (!ok.test(l)) try { var P = window.parent; l = P !== window ? (P.ONE_LANG || '') : '' } catch (e) { l = '' }
   if (!ok.test(l)) try { l = localStorage.getItem('fluidz_lang') || '' } catch (e) { l = '' }
   return ok.test(l) ? l : 'en'
 })()
-function T(k) { var d = PNS_DEMO_I18N[PNS_DEMO_LANG] || {}; return d[k] != null ? d[k] : ((PNS_DEMO_I18N.en || {})[k] != null ? PNS_DEMO_I18N.en[k] : k) }
-document.documentElement.lang = PNS_DEMO_LANG
+function T(k, v) { var s = (I[L] || {})[k]; if (s == null) s = I.en[k]; if (v) for (var n in v) s = s.split('{' + n + '}').join(v[n]); return s }
+document.documentElement.lang = L
 Array.prototype.forEach.call(document.querySelectorAll('[data-k]'), function (el) { el.textContent = T(el.getAttribute('data-k')) })
-</script>
-<script src="/labs/demo/icons-lite.js"></script>
-<script src="/labs/demo/faces.js"></script>
-<script>
-(function () {
-  var FACES = window.PNS_FACES || []
-  var COLS = 8, ROWH = 216, ROWS = 16, VIEW = 810 / ROWH
-  var pool = ['Alex', 'Sam', 'Leo', 'Hugo', 'Ken', 'Yann', 'Raf', 'Max', 'Joe', 'Theo', 'Nico', 'Luca', 'Eli', 'Tom', 'Ben', 'Axel', 'Noah', 'Marc', 'Paul', 'Remy', 'Ivan', 'Omar', 'Dan', 'Finn', 'Kai', 'Lou', 'Sacha', 'Tim', 'Vic', 'Zed', 'Adam', 'Bo', 'Cyril', 'Dario', 'Enzo', 'Gus', 'Hal', 'Igor', 'Jules', 'Kyle', 'Liam', 'Milo', 'Ned', 'Otto', 'Pip', 'Quin', 'Rio', 'Seb', 'Ty', 'Uri', 'Val', 'Walt', 'Xav', 'Yves', 'Zack', 'Rafa', 'bear 🐻', 'vers', '🔥', 'Pierre', 'Karl', 'Matt', 'Hans', 'Dylan', 'Arno', 'Bastien', 'Cole']
-  var fixed = { 1: 'TOP 🚀', 8: 'XXL', 10: 'vers top', 83: 'Top here', 89: 'XXL bear', 94: 'Leo · top', 98: 'TOP dom', 109: 'xxl 25', 112: 'Max XXL' }
-  var matches = Object.keys(fixed).map(Number).sort(function (a, b) { return a - b })
-  var track = document.getElementById('track'), grid = document.getElementById('grid')
-  track.style.height = ROWS * ROWH + 'px'
-  var cards = []
-  for (var i = 0; i < COLS * ROWS; i++) {
-    var nm = fixed[i] || pool[(i * 7 + 3) % pool.length]
-    var c = document.createElement('div'); c.className = 'pf'; c.style.setProperty('--h', (i * 47) % 360)
-    c.innerHTML = '<div class="im"></div><span class="dist">' + (((i * 13) % 90) / 10 + 0.1).toFixed(1) + ' km</span><span class="nm"></span><div class="open"><b></b>' + T('open') + '</div>'
-    var ph = FACES[(i * 5 + 2) % FACES.length]; if (fixed[i]) ph = fixed[i] === 'TOP 🚀' ? FACES[1] : (fixed[i] === 'XXL' ? FACES[2] : FACES[(i * 3) % FACES.length]); var im = c.querySelector('.im'); im.className = 'im ph'; im.style.backgroundImage = 'url(' + ph + ')'
-    c.querySelector('.nm').textContent = nm; c.querySelector('.open b').textContent = nm
+;(function () {
+  var $ = function (id) { return document.getElementById(id) }
+  var POOL = ['Sam', 'Leo', 'Noah', 'Eli', 'Theo', 'Max', 'Hugo', 'Adam', 'Lucas', 'Tom', 'Ben', 'Nico', 'Alex', 'Paul', 'Liam', 'Omar', 'Finn', 'Kai', 'Ivan', 'Jules', 'Rafa', 'Milo', 'Enzo', 'Dario', 'Karim', 'Mehdi', 'Yanis', 'Diego', 'Kenji', 'Marco']
+  // matches of "dom, fist, TOP + XXL" (dom OR fist OR (TOP AND XXL)); fav = already a Grindr favorite
+  var FIX = { 1: ['Dom', 1], 6: ['DOM TOP 🔥', 0], 9: ['Leo TOP XXL', 0], 14: ['Domi', 1], 19: ['FIST 🤜', 0], 22: ['TOP XXL', 0], 27: ['fist sub', 0], 33: ['Dom XL', 1] }
+  // 32 photo tiles (/labs/img/pp-NN.webp); the tagged profiles get the tiles without a visible face
+  var NF = [2, 3, 5, 6, 8, 9, 11, 13, 14, 16, 17, 19, 21, 22, 24, 25, 27, 29, 30, 31]
+  var photo = function (i) { var n = FIX[i] ? NF[(i * 5) % NF.length] : ((i * 11) % 32) + 1; return '/labs/img/pp-' + (n < 10 ? '0' : '') + n + '.webp' }
+  var COLS = 4, ROWH = 180, N = 48, cards = [], track = $('track')
+  for (var i = 0; i < N; i++) {
+    var f = FIX[i], c = document.createElement('div'); c.className = 'pf' + (f && f[1] ? ' fav' : '') + (!f && i % 9 === 4 ? ' fav' : '')
+    c.innerHTML = '<div class="im" style="background-image:url(' + photo(i) + ')"></div><svg class="st" viewBox="0 0 16 16"><path d="M8,1L5.7,5.6L1,6.3L4.5,9.6L3.7,14.5L8,12.2L12.3,14.5L11.5,9.6L15,6.3L10.3,5.6z"/></svg><span class="nm"></span>'
+    c.querySelector('.nm').textContent = f ? f[0] : POOL[(i * 7 + 3) % POOL.length]
     track.appendChild(c); cards.push(c)
   }
-  ;[['r1', 1], ['r2', 2], ['r3', 6]].forEach(function (a) { document.querySelector('#' + a[0] + ' .av').style.backgroundImage = 'url(' + FACES[a[1]] + ')' })
-  var $ = function (id) { return document.getElementById(id) }
-  var lerp = function (a, b, k) { return a + (b - a) * Math.max(0, Math.min(1, k)) }
+  var MATCH = Object.keys(FIX).map(Number).sort(function (a, b) { return a - b })
+  var TYPED = 'dom, fist, TOP + XXL'
   var ease = function (k) { k = Math.max(0, Math.min(1, k)); return k * k * (3 - 2 * k) }
-  function frontier(t) { if (t < 2) return 0; if (t < 5.7) return 6 * (t - 2) / 3.7; if (t < 12.5) return 6; return 6 + 5.25 * Math.min(1, (t - 12.5) / 2.5) }
-  function offset(t) {
-    if (t < 5.7) return frontier(t)
-    if (t < 10.6) return 6
-    if (t < 11.4) return lerp(6, 0, ease((t - 10.6) / 0.8))
-    if (t < 12) return 0
-    if (t < 12.5) return lerp(0, 6, ease((t - 12) / 0.5))
-    return frontier(t)
+  var lerp = function (a, b, k) { return a + (b - a) * Math.max(0, Math.min(1, k)) }
+  function scroll(t) { // rows scrolled
+    if (t < 2.6) return 0
+    if (t < 7) return 4.4 * ease((t - 2.6) / 4.4)
+    if (t < 9.7) return 4.4
+    if (t < 10.4) return lerp(4.4, 0, ease((t - 9.7) / 0.7))
+    return 0
   }
-  var ZIN = 5.7, ZOUT = 9.7
-  function zoom(t) { if (t < ZIN || t > ZOUT + 0.4) return 0; if (t < ZIN + 0.4) return ease((t - ZIN) / 0.4); if (t > ZOUT) return 1 - ease((t - ZOUT) / 0.4); return 1 }
-  function setGauge(id, v, txt) { var g = $(id); g.style.setProperty('--v', v); g.querySelector('b').textContent = txt }
-  function fmt(n) { return n >= 1000 ? Math.floor(n / 1000) + ' ' + String(n % 1000).padStart(3, '0') : String(n) }
-  var curPos = function (x, y, o, press) { var c = $('cur'); c.style.opacity = o; c.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + (press ? 0.85 : 1) + ')' }
-  function rect(el) { var a = el.getBoundingClientRect(); var cam = $('cam').getBoundingClientRect(); var k = cam.width / 1440; return { x: (a.left - cam.left) / k, y: (a.top - cam.top) / k, w: a.width / k, h: a.height / k } }
-
+  function lines() {
+    var tm = function (x) { return '<span class="tm">' + x + '</span>' }, c = function (k) { return '<span class="c">' + T(k) + '</span>' }
+    return tm('dom') + c('orElse') + tm('fist') + c('orElse') + tm('TOP') + c('andAlso') + tm('XXL')
+  }
+  function row(i, on, past) {
+    var f = FIX[i], star = f[1] ? '<svg viewBox="0 0 16 16"><path d="M8,1L5.7,5.6L1,6.3L4.5,9.6L3.7,14.5L8,12.2L12.3,14.5L11.5,9.6L15,6.3L10.3,5.6z"/></svg>' : ''
+    return '<div class="r' + (on ? ' on' : '') + '" data-i="' + i + '"><span class="av" style="background-image:url(' + photo(i) + ')"></span><span class="tx"><b>' + star + f[0].replace(/</g, '') + '</b><small>' + (past ? T('pastBack') : T('onScreen')) + '</small></span><span class="sh">' + T('noteShow') + ' <svg class="ic" style="width:11px;height:11px"><use href="/labs/icons.svg#locate-fixed"/></svg></span></div>'
+  }
+  var last = ''
   window.setT = function (t) {
     t = ((t % 15) + 15) % 15
-    var f = frontier(t), off = offset(t), started = t >= 2
+    var off = scroll(t), scanning = t >= 2.6 && t < 7
     track.style.transform = 'translateY(' + (-off * ROWH) + 'px)'
-    grid.classList.toggle('dim', started)
-    var found = 0
-    cards.forEach(function (c, i) {
-      var hit = started && fixed[i] != null && Math.floor(i / COLS) < f + VIEW
-      c.classList.toggle('hit', hit); if (hit) found++
-      c.classList.toggle('focus', i === 1 && t >= 11.4 && t < 12.2)
-    })
-    // typing
-    var field = $('field'), chips = ''
-    var typed = ''
-    if (t < 0.2) typed = ''
-    else if (t < 0.7) typed = 'top'.slice(0, Math.ceil((t - 0.2) / 0.5 * 3))
-    else if (t < 1.0) typed = ''
-    else if (t < 1.5) typed = 'xxl'.slice(0, Math.ceil((t - 1.0) / 0.5 * 3))
-    if (t >= 0.7) chips += '<span class="chip">top <i class="ico"><svg><use href="/labs/icons.svg#x"/></svg></i></span>'
-    if (t >= 1.5) chips += '<span class="chip">xxl <i class="ico"><svg><use href="/labs/icons.svg#x"/></svg></i></span>'
-    field.innerHTML = chips + (typed ? '<span class="typed">' + typed + '</span>' : '') + (t < 2 ? '<span class="caret"></span>' : '') + (t >= 1.5 || (!typed && t > 0.7) ? '<span class="ph">' + T('ph') + '</span>' : '')
-    if (!chips && !typed) field.innerHTML = '<span class="caret"></span><span class="ph">' + T('ph') + '</span>'
-    // scroll button
-    var running = (t >= 2 && t < 5.7) || t >= 12
-    var go = $('go'), lbl = $('golbl'), ic = go.querySelector('use')
-    if (t < 2) { go.className = 'pn-go'; lbl.textContent = T('start'); ic.setAttribute('href', '/labs/icons.svg#play') }
-    else if (running) { go.className = 'pn-go stop'; lbl.textContent = T('pause'); ic.setAttribute('href', '/labs/icons.svg#pause') }
-    else { go.className = 'pn-go'; lbl.textContent = T('resume'); ic.setAttribute('href', '/labs/icons.svg#play') }
-    var scanned = Math.round(f * 106.667)
-    setGauge('g1', started ? Math.min(100, scanned / 12) : 0, fmt(scanned))
-    setGauge('g2', found * 11, String(found))
-    $('cnt').textContent = (found ? (t >= 10.6 && t < 12.2 ? 1 : 1) : 0) + ' / ' + found
-    ;['r1', 'r2', 'r3'].forEach(function (id, k) {
-      var el = $(id); el.style.display = found > k ? 'flex' : 'none'
-      el.classList.toggle('on', k === 0 && t >= 10.6 && t < 12.2)
-      el.querySelector('small').textContent = k === 2 && !(t < 5.7) ? T('pastBack') : T('onScreen')
-    })
-    $('r3').querySelector('small').textContent = (off > 1.6) ? T('pastBack') : T('onScreen')
-    $('r2').querySelector('small').textContent = (off > 1.6) ? T('pastBack') : T('onScreen')
-    $('r1').querySelector('small').textContent = (off > 1.0) ? T('pastBack') : T('onScreen')
-    // zoom + callouts
-    var z = zoom(t), dock = $('dock')
-    dock.style.transform = 'scale(' + (1 + 0.07 * z) + ')'
-    $('veil').style.opacity = z
-    var cos = [['co1', 'field', 6.0], ['co2', 'pauserow', 6.9], ['co3', 'g2', 7.8], ['co4', 'r1', 8.7]]
-    cos.forEach(function (c) {
-      var el = $(c[0]), tgt = $(c[1]), p = (t - c[2]) / 0.35, vis = t >= c[2] && t < ZOUT + 0.2 ? ease(p) : 0
-      var dr = dock.getBoundingClientRect(), tr = tgt.getBoundingClientRect(), k = $('cam').getBoundingClientRect().width / 1440
-      var sc = 1 + 0.07 * z
-      el.style.top = ((tr.top - dr.top) / k / sc + (tr.height / k / sc) / 2 - 14) + 'px'
-      el.style.opacity = vis; el.style.transform = 'translateX(' + (12 * (1 - vis)) + 'px)'
-    })
-    // cursor: appears 9.8, moves to Jay's "Show on grid", clicks 10.6, then to the card
-    var cur = 0, cx = 0, cy = 0, press = false
-    if (t >= 9.6 && t < 12.2) {
-      var sh = rect($('r1').querySelector('.sh')), tx = sh.x + sh.w * 0.6, ty = sh.y + sh.h * 0.5
-      var sx = 900, sy = 520
-      if (t < 10.5) { var k2 = ease((t - 9.6) / 0.9); cx = lerp(sx, tx, k2); cy = lerp(sy, ty, k2) }
-      else if (t < 11.4) { cx = tx; cy = ty; var k3 = ease((t - 11.0) / 0.4); if (t >= 11.0) { cx = lerp(tx, 330, k3); cy = lerp(ty, 150, k3) } }
-      else { cx = 330; cy = 150 }
-      press = t >= 10.55 && t < 10.7
-      cur = 1
+    $('grid').classList.toggle('dim', t >= 2.6)
+    var visRows = (t >= 7 ? 4.4 : off) + 540 / ROWH, seen = t < 2.6 ? 0 : Math.min(N, Math.floor((visRows + 0.2) * COLS)), found = []
+    var nonTab = t >= 11.6
+    cards.forEach(function (c, i) { var hit = t >= 2.6 && FIX[i] && i < seen; if (hit) found.push(i); c.classList.toggle('hit', !!hit && !(nonTab && FIX[i][1])); c.classList.toggle('pulse', i === 6 && t >= 10.4 && t < 11.2) })
+    var favs = found.filter(function (i) { return FIX[i][1] }).length
+    var block = t < 2.6 ? 1 : (t < 7 ? 2 : 3)
+    ;['b1', 'b2', 'b3'].forEach(function (id, k) { $(id).classList.toggle('on', block === k + 1) })
+    // ① typing, then the active search
+    var n = t < 0.3 ? 0 : Math.min(TYPED.length, Math.floor((t - 0.3) / 0.1))
+    $('field').innerHTML = n ? TYPED.slice(0, n).replace(/</g, '') + (t < 2.6 ? '<span class="caret"></span>' : '') : '<span class="ph">' + T('ph') + '</span><span class="caret"></span>'
+    $('act').style.display = n >= TYPED.length ? '' : 'none'
+    $('lines').innerHTML = lines()
+    $('mys').textContent = T('mySearches', { n: 4 })
+    $('s1').textContent = t >= 2.6 ? 'dom | fist | TOP + XXL' : ''; $('s1').className = 's' + (t >= 2.6 ? ' hot' : '')
+    // ② scan
+    var scanned = t < 2.6 ? 0 : Math.round(seen * 26.5)
+    $('s2').innerHTML = scanning ? '<span class="dot"></span>' + T('scanning') + ' · ' + scanned : (t >= 7 ? T('nScanned', { n: scanned }) : T('b2idle'))
+    $('s2').className = 's' + (scanning ? ' hot' : '')
+    $('g1').textContent = scanned; $('g2').textContent = found.length; $('g3').textContent = favs
+    $('meta').textContent = T('speedGentle') + ' · ' + T('metaPause') + ' · ' + T('metaCap', { m: 30 })
+    // ③ results, tabs All / Favorites / Not favorites
+    var non = t >= 11.6, list = non ? found.filter(function (i) { return !FIX[i][1] }) : found
+    $('s3').textContent = found.length ? T('nFound', { n: found.length }) : T('b3idle'); $('s3').className = 's' + (found.length ? ' hot' : '')
+    $('tA').className = non ? '' : 'on'; $('tN').className = non ? 'on' : ''; $('tF').className = ''
+    $('tA').querySelector('i').textContent = found.length; $('tF').querySelector('i').textContent = favs; $('tN').querySelector('i').textContent = found.length - favs
+    var cur = t >= 10.2 && t < 11.6 ? 6 : -1, key = list.join() + '|' + cur + '|' + Math.round(off * 2)
+    if (key !== last) { last = key; $('res').innerHTML = list.slice(0, 5).map(function (i) { return row(i, i === cur, Math.floor(i / COLS) < off - 0.6 || Math.floor(i / COLS) >= off + 2.9) }).join('') }
+    // pause on a match
+    var note = t >= 7 && t < 9.4
+    $('note').style.display = note ? 'flex' : 'none'; $('noteT').textContent = T('noteTitle', { name: FIX[6][0] }); $('noteAv').style.backgroundImage = 'url(' + photo(6) + ')'
+    // cursor: Show on the 6th card (DOM TOP, 9.0-10.2), then the Not favorites tab (11.0-11.6)
+    var c = $('cur'), o = 0, x = 0, y = 0
+    var target = function (el) { if (!el) return [700, 400]; var a = el.getBoundingClientRect(), cam = $('cam').getBoundingClientRect(), k = cam.width / 960; return [(a.left - cam.left) / k + a.width / k * 0.55, (a.top - cam.top) / k + a.height / k * 0.5] }
+    if (t >= 9 && t < 12.4) {
+      var sh = document.querySelector('#res .r[data-i="6"] .sh') || document.querySelector('#res .r .sh'), p1 = target(sh), p2 = target($('tN'))
+      if (t < 9.9) { var k1 = ease((t - 9) / 0.9); x = lerp(560, p1[0], k1); y = lerp(470, p1[1], k1) }
+      else if (t < 11) { var k2 = ease((t - 10.3) / 0.7); x = lerp(p1[0], p2[0], k2); y = lerp(p1[1], p2[1], k2) }
+      else { x = p2[0]; y = p2[1] }
+      o = t > 12 ? 1 - (t - 12) / 0.4 : 1
+      c.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + ((t > 9.95 && t < 10.1) || (t > 11.45 && t < 11.6) ? 0.82 : 1) + ')'
     }
-    curPos(cx, cy, cur, press)
+    c.style.opacity = o
   }
-
-  function fit() { var k = Math.min(innerWidth / 1440, innerHeight / 810), cam = $('cam'); cam.style.transform = 'scale(' + k + ')'; cam.style.left = (innerWidth - 1440 * k) / 2 + 'px'; cam.style.top = (innerHeight - 810 * k) / 2 + 'px' }
+  function fit() { var k = Math.min(innerWidth / 960, innerHeight / 540), cam = $('cam'); cam.style.transform = 'scale(' + k + ')'; cam.style.left = (innerWidth - 960 * k) / 2 + 'px'; cam.style.top = (innerHeight - 540 * k) / 2 + 'px' }
   addEventListener('resize', fit); fit()
-  var q = new URLSearchParams(location.search)
-  if (q.has('t')) setT(+q.get('t')); else { setT(0); if (!q.has('static')) { var t0 = performance.now(); (function tick(n) { setT((n - t0) / 1000); requestAnimationFrame(tick) })(t0) } }
+  var q = new URLSearchParams(location.search), reduce = false
+  try { reduce = matchMedia('(prefers-reduced-motion: reduce)').matches } catch (e) {}
+  // Readable without interaction: a still frame with results when asked (?t=) or when the visitor prefers less motion.
+  if (q.has('t')) setT(+q.get('t')); else if (reduce || q.has('static')) setT(8); else { setT(0); var t0 = performance.now(); (function tick(now) { setT((now - t0) / 1000); requestAnimationFrame(tick) })(t0) }
 })()
 </script>
 </body>
