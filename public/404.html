@@ -1,8 +1,26 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
-<title>Page not found · Fluidz Labs</title><link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta name="theme-color" content="#05040A">
+<title>Page not found · Fluidz</title><link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta name="theme-color" content="#05040A">
 <style>:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:#05040A;color:#F4F2FA;font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;text-align:center}
-main{max-width:460px}h1{font-size:28px;margin:0 0 8px}p{color:#B9B4CC;margin:0 0 22px}a.b{display:inline-block;background:#FF6B5B;color:#1A0B09;font-weight:700;text-decoration:none;padding:12px 22px;border-radius:999px}a.b:focus-visible{outline:2px solid #fff;outline-offset:3px}.l{margin-top:18px;font-size:14px}.l a{color:#B9B4CC;margin:0 8px}</style></head>
-<body><main><h1>This page doesn’t exist.</h1><p>The link may be old or mistyped. Fluidz Labs has free tools for hookup-app users.</p>
-<a class="b" href="/">Go to Fluidz Labs</a>
-<div class="l"><a href="/profile-name-search">Profile Name Search</a><a href="/album-creator">Album Creator</a><a href="/support">Support</a></div></main></body></html>
+main{max-width:460px}h1{font-size:28px;margin:0 0 8px}p{color:#B9B4CC;margin:0 0 22px}a.b{display:inline-block;background:#E0887A;color:#14090A;font-weight:700;text-decoration:none;padding:12px 22px;border-radius:999px}a.b:focus-visible,.l a:focus-visible{outline:2px solid #fff;outline-offset:3px}.l{margin-top:18px;font-size:14px}.l a{color:#B9B4CC;margin:0 8px;display:inline-block;padding:4px 0}.l a:hover{color:#F4F2FA}</style></head>
+<body><main><h1 data-k="h">This page doesn’t exist.</h1><p data-k="p">The link may be old or mistyped. The Profile Name Search extension is on the home page.</p>
+<a class="b" href="/" data-k="b">Back to the home page</a>
+<div class="l"><a href="/privacy" data-k="privacy">Privacy</a><a href="/terms" data-k="terms">Terms</a><a href="/legal-notice" data-k="legal">Legal notice</a></div></main>
+<script>
+(function () {
+  var T = {
+    fr: { t: 'Page introuvable · Fluidz', h: 'Cette page n’existe pas.', p: 'Le lien est peut-être ancien ou mal saisi. L’extension Profile Name Search se trouve sur la page d’accueil.', b: 'Retour à l’accueil', privacy: 'Confidentialité', terms: 'CGU', legal: 'Mentions légales' },
+    es: { t: 'Página no encontrada · Fluidz', h: 'Esta página no existe.', p: 'Puede que el enlace sea antiguo o tenga un error. La extensión Profile Name Search está en la página de inicio.', b: 'Volver al inicio', privacy: 'Privacidad', terms: 'Condiciones de uso', legal: 'Aviso legal' },
+    pt: { t: 'Página não encontrada · Fluidz', h: 'Esta página não existe.', p: 'O link pode estar antigo ou digitado errado. A extensão Profile Name Search está na página inicial.', b: 'Voltar ao início', privacy: 'Privacidade', terms: 'Termos de uso', legal: 'Aviso legal' },
+    it: { t: 'Pagina non trovata · Fluidz', h: 'Questa pagina non esiste.', p: 'Il link potrebbe essere vecchio o digitato male. L’estensione Profile Name Search si trova nella pagina iniziale.', b: 'Torna alla home', privacy: 'Privacy', terms: 'Condizioni d’uso', legal: 'Note legali' },
+    de: { t: 'Seite nicht gefunden · Fluidz', h: 'Diese Seite gibt es nicht.', p: 'Der Link ist vielleicht alt oder falsch eingetippt. Die Erweiterung Profile Name Search findest du auf der Startseite.', b: 'Zur Startseite', privacy: 'Datenschutz', terms: 'Nutzungsbedingungen', legal: 'Rechtliche Hinweise' }
+  }
+  var ok = ['en', 'fr', 'es', 'pt', 'it', 'de'], l = 'en'
+  try { l = new URLSearchParams(location.search).get('lang') || localStorage.getItem('fluidz_lang') || navigator.language || 'en' } catch (e) { l = (navigator.language || 'en') }
+  l = String(l).slice(0, 2).toLowerCase(); if (ok.indexOf(l) < 0) l = 'en'
+  document.documentElement.lang = l
+  if (l === 'en') return
+  var d = T[l]; document.title = d.t
+  Array.prototype.forEach.call(document.querySelectorAll('[data-k]'), function (el) { var v = d[el.getAttribute('data-k')]; if (v) el.textContent = v })
+})()
+</script></body></html>

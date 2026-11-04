@@ -84,7 +84,39 @@ function buildZip() {
   return Buffer.concat([...parts, cd, end])
 }
 
+const SUPABASE_URL = (process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || 'https://kxbrfjqxufvskcxmliak.supabase.co').replace(/\/+$/, '')
+const SUPABASE_KEY = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY || ''
+
+// The zip is only served to a signed-in Fluidz account: the visitor gets there through
+// the magic link e-mailed by /api/labs-signup. Token verified against Supabase Auth;
+// if Supabase cannot be reached we refuse (never serve unverified).
+async function verifiedUser(req) {
+  const m = /^Bearer\s+([A-Za-z0-9._~+/=-]{20,4096})$/.exec(String(req.headers.authorization || '').trim())
+  if (!m) return false
+  try {
+    const r = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+      headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${m[1]}` },
+      signal: AbortSignal.timeout(5000),
+    })
+    return r.status === 200
+  } catch (e) {
+    console.error('profile-name-search download: auth check failed', e?.name || 'error')
+    return false
+  }
+}
+
 export default async function handler(req, res) {
+  res.setHeader('Cache-Control', 'private, no-store')
+  res.setHeader('X-Robots-Tag', 'noindex')
+  if (req.method === 'OPTIONS') {
+    res.setHeader('Allow', 'GET, HEAD, OPTIONS')
+    return res.status(204).end()
+  }
+  if (req.method !== 'GET' && req.method !== 'HEAD') {
+    res.setHeader('Allow', 'GET, HEAD, OPTIONS')
+    return res.status(405).json({ error: 'method_not_allowed' })
+  }
+  if (!(await verifiedUser(req))) return res.status(401).json({ error: 'login_required' })
   try {
     if (!cached) cached = buildZip()
   } catch (e) {
@@ -94,6 +126,6 @@ export default async function handler(req, res) {
   res.setHeader('Content-Type', 'application/zip')
   res.setHeader('Content-Disposition', 'attachment; filename="profile-name-search.zip"')
   res.setHeader('Content-Length', String(cached.length))
-  res.setHeader('Cache-Control', 'public, max-age=600')
+  if (req.method === 'HEAD') return res.status(200).end()
   return res.status(200).send(cached)
 }

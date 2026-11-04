@@ -11,5 +11,5 @@
   window.LABS_I18N = window.LABS_I18N || {}
   document.documentElement.lang = l
   try { if (fromUrl && ok.indexOf(fromUrl) >= 0) localStorage.setItem('fluidz_lang', l) } catch (e) {}
-  if (l !== 'en') document.write('<script src="/labs/i18n/' + l + '.js?v=1"><\/script>')
+  if (l !== 'en') document.write('<script src="/labs/i18n/' + l + '.js?v=2"><\/script>')
 })()

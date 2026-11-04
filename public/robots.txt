@@ -1,6 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /preview/
 Disallow: /api/
 
 Sitemap: https://fluidz.app/sitemap-labs.xml
