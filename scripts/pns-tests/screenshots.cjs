@@ -1,6 +1,13 @@
 /* Screenshots of the 3.0.0 panel (EN + FR, 2x) for the site and the review. Fake grid with fictitious first names and
-   neutral avatars; test words TOP and XXL. Usage: node scripts/pns-tests/screenshots.cjs <out dir> */
-const { chromium, mk } = require('./harness.cjs')
+   neutral avatars (or photo tiles with PHOTOS=dir); test words TOP and XXL. Usage: node scripts/pns-tests/screenshots.cjs <out dir> */
+const harness = require('./harness.cjs')
+const { chromium, mk } = harness
+// Photo tiles for the fake grid (PHOTOS=<dir with 01..32.webp>, Unsplash tiles curated for the site); tagged names get the
+// tiles without a visible face. Without PHOTOS the harness's neutral avatars are used.
+const PHOTOS = process.env.PHOTOS || ''
+const NF = [2, 3, 5, 6, 8, 9, 11, 13, 14, 16, 17, 19, 21, 22, 24, 25, 27, 29, 30, 31]
+const tile = i => { const tagged = /[A-Z]{2}|\u{1F525}|\u{1F680}|sub|top|vers|bttm/u.test(NAMES[i] || ''); const n = tagged ? NF[(i * 5) % NF.length] : ((i * 11) % 32) + 1; return PHOTOS + '/' + String(n).padStart(2, '0') + '.webp' }
+if (PHOTOS) harness.photoFor = tile
 const OUT = process.argv[2] || '/tmp/claude-0/work/fav/v3'
 const FIRST = ['Leo', 'Sam', 'Noah', 'Eli', 'Theo', 'Max', 'Hugo', 'Adam', 'Lucas', 'Tom', 'Ben', 'Nico', 'Alex', 'Paul', 'Liam', 'Enzo', 'Karim', 'Mehdi', 'Yanis', 'Diego', 'Rafael', 'Kenji', 'Omar', 'Jules', 'Marco']
 const TAGS = [' TOP', '', ' XXL', ' DOM', ' 🚀', ' sub', ' top', ' FIST', '', ' TOP XXL', ' vers DOM XL', ' bttm 🔥']

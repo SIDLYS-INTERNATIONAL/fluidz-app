@@ -69,7 +69,7 @@ async function mk(browser, cfg, opts = {}) {
   const errs = []; page.on('pageerror', e => errs.push(String(e))); page.on('console', m => { if (m.type() === 'error') errs.push(m.text()) })
   const net = []; page.on('request', r => { const u = r.url(); if (!/^https:\/\/x\.test\/|^http:\/\/web\.grindr\.test\/|^data:|^blob:/.test(u)) net.push(u) })
   await page.clock.install({ time: opts.time || 1_762_250_000_000 })
-  await page.route('https://x.test/**', r => { const m = r.request().url().match(/([0-9a-f]{24})/); const i = m ? parseInt(m[1].slice(-6), 16) : 0; r.fulfill({ contentType: 'image/svg+xml', body: avatarSvg(i) }) })
+  await page.route('https://x.test/**', r => { const m = r.request().url().match(/([0-9a-f]{24})/); const i = m ? parseInt(m[1].slice(-5), 16) : 0; const ph = module.exports.photoFor && module.exports.photoFor(i - 100000); if (ph) return r.fulfill({ contentType: 'image/webp', body: require('fs').readFileSync(ph) }); r.fulfill({ contentType: 'image/svg+xml', body: avatarSvg(i) }) })
   await page.route('http://web.grindr.test/**', r => r.fulfill({ contentType: 'text/html', body: PAGE }))
   await page.addInitScript(INIT(cfg))
   await page.goto('http://web.grindr.test/')
@@ -84,4 +84,5 @@ async function mk(browser, cfg, opts = {}) {
 let fails = 0, passes = 0
 const check = (n, ok, i) => { if (ok) passes++; else fails++; console.log((ok ? 'PASS ' : 'FAIL ') + n + (!ok && i !== undefined ? '  ' + (typeof i === 'string' ? i : JSON.stringify(i)) : '')) }
 const done = () => { console.log(`\n${passes} passed, ${fails} failed`); return fails }
-module.exports = { chromium, mk, check, done, EXT, read, avatarSvg, PAGE, INIT, counts: () => ({ passes, fails }) }
+// photoFor(n): optional hook (screenshots.cjs) returning a photo file for grid card n instead of the neutral avatar
+module.exports = { chromium, mk, check, done, EXT, read, avatarSvg, PAGE, INIT, counts: () => ({ passes, fails }), photoFor: null }
