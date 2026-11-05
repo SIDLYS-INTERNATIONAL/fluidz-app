@@ -32,10 +32,10 @@
 (function(){var ok=['en','fr','es','pt','it','de'],l='en',u='';try{u=new URLSearchParams(location.search).get('lang')||'';l=u||localStorage.getItem('fluidz_lang')||(navigator.language||'en').slice(0,2).toLowerCase()}catch(e){}
 l=String(l).toLowerCase();if(ok.indexOf(l)<0)l='en';window.ONE_LANG=l;window.ONE_I18N=window.ONE_I18N||{};document.documentElement.lang=l;
 try{if(u&&ok.indexOf(u)>=0)localStorage.setItem('fluidz_lang',l)}catch(e){}
-if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=1"><\/script>')})()</script>
+if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=2"><\/script>')})()</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Profile Name Search","applicationCategory":"BrowserApplication","operatingSystem":"Windows, macOS, Linux (Chrome 116 or later)","softwareVersion":"3.0.0","fileSize":"112 KB","url":"https://fluidz.app/","description":"Free Chrome extension for Grindr Web: find a profile by name in seconds, from the grid you already filtered. The extension sends nothing anywhere.","inLanguage":["en","fr","es","pt","it","de"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Fluidz Labs","url":"https://fluidz.app/"}}</script>
-<link rel="stylesheet" href="/labs/one.css?v=2">
-<link rel="stylesheet" href="/labs/one-v3.css?v=2">
+<link rel="stylesheet" href="/labs/one.css?v=3">
+<link rel="stylesheet" href="/labs/one-v3.css?v=3">
 </head>
 <body>
 <a class="skip" href="#main" data-i18n="skip">Skip to content</a>
@@ -112,7 +112,6 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=1"><\/script>')}
         <ul class="flist"><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg><span data-i18n="l.a.1">Step 1: keyword groups — (top, dom, active): one of them is enough</span></li><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg><span data-i18n="l.a.2">Step 2: combine them — all required (AND) or any (OR), without sub</span></li><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg><span data-i18n="l.a.3">A reminder when the search gets too precise to find anyone</span></li></ul>
       </div>
     </div>
-    <div class="mini"><figure class="shot"><img src="/labs/img/pns3-folders-en.webp" data-src-fr="/labs/img/pns3-folders-fr.webp" width="1200" height="800" loading="lazy" decoding="async" alt="Saved searches sorted into folders, with a pinned search" data-i18n-alt="v3.folders.alt"><figcaption><b data-i18n="v3.folders.t">Unlimited saved searches</b><span data-i18n="l.f.folders.p">Name them, pin them, sort them into folders.</span></figcaption></figure></figure><figure class="shot"><img src="/labs/img/pns3-blocks-en.webp" data-src-fr="/labs/img/pns3-blocks-fr.webp" width="1200" height="800" loading="lazy" decoding="async" alt="The panel with its three numbered steps: Search, Scan, Results" data-i18n-alt="v3.blocks.alt"><figcaption><b data-i18n="v3.blocks.t">Three clear steps</b><span data-i18n="l.f.blocks.p">Search, Scan, Results: one step open at a time.</span></figcaption></figure></figure></div>
   </div>
 </section>
 
@@ -126,11 +125,9 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=1"><\/script>')}
       <figure class="shot frow-shot anim"><div class="stage anim-stage"><iframe data-anim="/labs/demo/anim-scan.html" title="Profile Name Search" data-i18n-title="v3.outline.t" referrerpolicy="no-referrer" loading="lazy" tabindex="-1"></iframe></div></figure>
       <div class="frow-copy">
         <h3 data-i18n="v3.outline.t">Matches outlined on the grid</h3><p class="frow-p" data-i18n="l.f.outline.p">A coral outline marks every match on Grindr’s own grid.</p>
-        <ul class="flist"><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg><span data-i18n="l.b.1">Gentle speed, 30-minute limit by default</span></li><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg><span data-i18n="l.b.2">Pause on every match — your choice</span></li><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg><span data-i18n="l.b.3">Resume if Grindr crashes or empties the grid</span></li></ul>
+        <ul class="flist"><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg><span data-i18n="l.b.1">Gentle speed, 30-minute limit by default</span></li><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg><span data-i18n="l.b.2">Pause on every match — your choice</span></li><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg><span data-i18n="l.b.3">Resume if Grindr crashes or empties the grid</span></li><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg><span data-i18n="ben.2.t">Skip who you already favorited</span></li></ul>
       </div>
     </div>
-    <div class="mini"><figure class="shot"><img src="/labs/img/pns3-pause-en.webp" data-src-fr="/labs/img/pns3-pause-fr.webp" width="1200" height="800" loading="lazy" decoding="async" alt="The scroll paused on a new match, with Show and Resume buttons" data-i18n-alt="l.f.pause.alt"><figcaption><b data-i18n="l.f.pause.t">Pauses on every match</b><span data-i18n="l.f.pause.p">The scroll stops on a match: show him on the grid, or resume.</span></figcaption></figure></figure><figure class="shot"><img src="/labs/img/pns3-tabs-en.webp" data-src-fr="/labs/img/pns3-tabs-fr.webp" width="1200" height="800" loading="lazy" decoding="async" alt="The results with the All, Favorites and Not favorites tabs" data-i18n-alt="l.f.tabs.alt"><figcaption><b data-i18n="ben.2.t">Skip who you already favorited</b><span data-i18n="l.f.tabs.p">All, Favorites, Not favorites: the list follows the tab.</span></figcaption></figure></figure></div>
-    <p class="shots-note" data-i18n="v3.note">Real screenshots on a generated sample grid: fictional names, no real Grindr profile.</p>
   </div>
 </section>
 
@@ -141,18 +138,18 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=1"><\/script>')}
       <h2 data-i18n="l.new.h2">New in 3.0: ten things 2.x couldn’t do.</h2>
       <p class="lead" data-i18n="l.new.p">Released in November 2026. Your saved searches move over by themselves; nothing to reconfigure.</p>
     </div>
-      <ul class="v3list">
-        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#layout-grid"/></svg><div><span class="newchip" data-i18n="l.new.chip">New</span><h4 data-i18n="v3.f1.t">Three numbered steps</h4><p data-i18n="v3.f1.p">Search, Scan, Results — one open at a time, with a one-line summary on the others. An empty result offers two ways forward.</p></div></li>
-        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#text-cursor-input"/></svg><div><span class="newchip" data-i18n="l.new.chip">New</span><h4 data-i18n="v3.f2.t">Synonyms, AND, exclusions</h4><p data-i18n="v3.f2.p">(top, dom, active) + XXL finds any of the three with XXL. -sub leaves sub out. “Whole word” makes top skip laptop; by default a word matches anywhere.</p></div></li>
-        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#folder-down"/></svg><div><span class="newchip" data-i18n="l.new.chip">New</span><h4 data-i18n="v3.f3.t">Saved searches in folders</h4><p data-i18n="v3.f3.p">Unlimited, in collapsible folders, combinable with each other. Your 2.x searches move over by themselves.</p></div></li>
-        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#scroll-text"/></svg><div><span class="newchip" data-i18n="l.new.chip">New</span><h4 data-i18n="v3.f4.t">Scan journal & Find again</h4><p data-i18n="v3.f4.p">20 scans kept 30 days, on your computer only. Find again looks for the same photo id, then the same name: a lead, not a guarantee.</p></div></li>
-        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#refresh-cw"/></svg><div><span class="newchip" data-i18n="l.new.chip">New</span><h4 data-i18n="v3.f5.t">Compare & new since last time</h4><p data-i18n="v3.f5.p">Compare two scans, count who is new since last time, and hide the ones you already saw.</p></div></li>
-        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#tag"/></svg><div><span class="newchip" data-i18n="l.new.chip">New</span><h4 data-i18n="v3.f6.t">To review / Ignore</h4><p data-i18n="v3.f6.p">Mark profiles on your computer. Ignored ones disappear from the results, the outline and the pauses.</p></div></li>
-        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#eye-off"/></svg><div><span class="newchip" data-i18n="l.new.chip">New</span><h4 data-i18n="v3.f7.t">Discreet mode & journal PIN</h4><p data-i18n="v3.f7.p">Blur photos and names in the panel until you hover them. Lock the journal with a PIN: a comfort lock, not encryption.</p></div></li>
-        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#timer"/></svg><div><span class="newchip" data-i18n="l.new.chip">New</span><h4 data-i18n="v3.f8.t">Safer long scans</h4><p data-i18n="v3.f8.p">A time limit (30 min by default), a warning when Grindr is open in another tab, and Resume if Grindr crashes or empties the grid.</p></div></li>
-        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#key-round"/></svg><div><span class="newchip" data-i18n="l.new.chip">New</span><h4 data-i18n="v3.f9.t">Keyboard shortcuts</h4><p data-i18n="v3.f9.p">Alt+Shift+S start / pause, Alt+Shift+F search field, Alt+Shift+N / P next and previous match. Change them in chrome://extensions/shortcuts.</p></div></li>
-        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#hard-drive"/></svg><div><span class="newchip" data-i18n="l.new.chip">New</span><h4 data-i18n="v3.f10.t">My data, backup, self-test</h4><p data-i18n="v3.f10.p">See what is stored, export or import one backup file, erase everything. The grid self-test copies a diagnostic with no names.</p></div></li>
-      </ul>
+    <ul class="nlist">
+      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#layout-grid"/></svg><h4 data-i18n="v3.f1.t">Three numbered steps</h4><p data-i18n="l.n.1">Search, Scan, Results: open one, or all three.</p></li>
+      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#text-cursor-input"/></svg><h4 data-i18n="v3.f2.t">Synonyms, AND, exclusions</h4><p data-i18n="l.n.2">(top, dom) + XXL -sub, in one search.</p></li>
+      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#folder-down"/></svg><h4 data-i18n="v3.f3.t">Saved searches in folders</h4><p data-i18n="l.n.3">Unlimited, pinned, sorted into folders.</p></li>
+      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#scroll-text"/></svg><h4 data-i18n="v3.f4.t">Scan journal & Find again</h4><p data-i18n="l.n.4">20 scans kept 30 days, on your computer.</p></li>
+      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#refresh-cw"/></svg><h4 data-i18n="v3.f5.t">Compare & new since last time</h4><p data-i18n="l.n.5">See who is new since your last scan.</p></li>
+      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#tag"/></svg><h4 data-i18n="v3.f6.t">To review / Ignore</h4><p data-i18n="l.n.6">Ignored profiles leave the results.</p></li>
+      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#eye-off"/></svg><h4 data-i18n="v3.f7.t">Discreet mode & journal PIN</h4><p data-i18n="l.n.7">Photos and names blurred until you hover.</p></li>
+      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#timer"/></svg><h4 data-i18n="v3.f8.t">Safer long scans</h4><p data-i18n="l.n.8">A time limit, and Resume if Grindr crashes.</p></li>
+      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#key-round"/></svg><h4 data-i18n="v3.f9.t">Keyboard shortcuts</h4><p data-i18n="l.n.9">Start, pause, next match: Alt+Shift.</p></li>
+      <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#hard-drive"/></svg><h4 data-i18n="v3.f10.t">My data, backup, self-test</h4><p data-i18n="l.n.10">Export, import or erase in one click.</p></li>
+    </ul>
   </div>
 </section>
 
@@ -188,57 +185,56 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=1"><\/script>')}
       <p class="eyebrow"><i aria-hidden="true"></i><span data-i18n="ins.eyebrow">Installation</span></p>
       <h2 data-i18n="ins.h2">Install it in 5 steps.</h2>
       <p class="lead" data-i18n="l.ins.lead">It isn’t on the Chrome Web Store, so you add it by hand. It takes two minutes.</p>
-      <ul class="need"><li class="need-t" data-i18n="l.need">You need:</li><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#laptop"/></svg><span data-i18n="pre.1.t">A computer</span></li><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#app-window"/></svg><span data-i18n="pre.2.t">Google Chrome</span></li><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#globe"/></svg><span data-i18n="pre.3.t">Grindr Web</span></li></ul>
+      <ul class="need"><li class="need-t" data-i18n="l.need">You need:</li><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#laptop"/></svg><span data-i18n="pre.1.t">A computer</span></li><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#app-window"/></svg><span data-i18n="pre.2.t">Chrome, Brave, Edge or Arc</span></li><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#globe"/></svg><span data-i18n="pre.3.t">Grindr Web</span></li></ul>
       <p class="in-only banner" data-i18n="how.banner">You’re in. Next: install it.</p>
     </div>
-    <ol class="lsteps">
-      <li class="lstep">
-        <div class="lstep-t">
-          <span class="num" aria-hidden="true">1</span>
-          <h3 data-i18n="ins.1.t">Get the link by e-mail, download and unzip</h3>
-          <p data-i18n="l.ins.1.p">Enter your e-mail, open the link on your computer, then download and unzip the .zip.</p>
-          <a href="#download" class="btn btn-p btn-s st-btn" data-goto-form><span data-i18n="ins.1.btn">Get the link by e-mail</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-up"/></svg></a>
-          <details class="more"><summary data-i18n="l.more">Details</summary><p data-i18n="ins.1.p">Enter your e-mail at the top of this page. We send a one-time link: open it on your computer and the download appears right here. Chrome can’t read a .zip file, so unzip it first. On a Mac, double-click the .zip: a folder “Fluidz-Profile-Name-Search-3.0.0” appears in Downloads. On Windows: right-click the .zip → Extract All → Extract.</p><p data-i18n="ins.1.n">Keep this folder where it is (Downloads or Documents): Chrome reads the extension from it every time. If you delete or move it, the extension stops.</p></details>
+    <ol class="stepper" id="stepper">
+      <li class="st" data-st>
+        <h3 class="st-h"><button type="button" class="st-b" aria-expanded="true" aria-controls="st-p1" id="st-h1"><span class="num" aria-hidden="true">1</span><span data-i18n="ins.1.t">Get the link by e-mail, download and unzip</span></button></h3>
+        <div class="st-p" id="st-p1" role="region" aria-labelledby="st-h1">
+            <p data-i18n="l.ins.1.p">Enter your e-mail, open the link on your computer, then download and unzip the .zip.</p>
+            <a href="#download" class="btn btn-p btn-s st-btn" data-goto-form><span data-i18n="ins.1.btn">Get the link by e-mail</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-up"/></svg></a>
+            <details class="more"><summary data-i18n="l.more">Details</summary><p data-i18n="ins.1.p">Enter your e-mail at the top of this page. We send a one-time link: open it on your computer and the download appears right here. Chrome can’t read a .zip file, so unzip it first. On a Mac, double-click the .zip: a folder “Fluidz-Profile-Name-Search-3.0.0” appears in Downloads. On Windows: right-click the .zip → Extract All → Extract.</p><p data-i18n="ins.1.n">Keep this folder where it is (Downloads or Documents): Chrome reads the extension from it every time. If you delete or move it, the extension stops.</p></details>
+          <img class="lshot st-img" src="/labs/img/pns-install-1-en.webp" data-src-fr="/labs/img/pns-install-1-fr.webp" width="1040" height="264" loading="lazy" decoding="async" alt="The unzipped Fluidz-Profile-Name-Search-3.0.0 folder in Downloads, next to the .zip" data-i18n-alt="ins.1.alt">
+          <button type="button" class="st-next" data-st-next><span data-i18n="l.st.next">Next step</span> →</button>
         </div>
-        <img class="lshot" src="/labs/img/pns-install-1-en.webp" data-src-fr="/labs/img/pns-install-1-fr.webp" width="1040" height="264" loading="lazy" decoding="async" alt="The unzipped Fluidz-Profile-Name-Search-3.0.0 folder in Downloads, next to the .zip" data-i18n-alt="ins.1.alt">
       </li>
-      <li class="lstep">
-        <div class="lstep-t">
-          <span class="num" aria-hidden="true">2</span>
-          <h3 data-i18n="ins.2.t">Open Chrome’s extensions page</h3>
-          <p data-i18n="ins.2.p">Copy this address, paste it into Chrome’s address bar and press Enter.</p>
-          <p class="cbx"><code>chrome://extensions</code><button type="button" class="btn btn-g btn-xs" id="copy-ext" data-i18n="how.copy">Copy</button></p>
-          <details class="more"><summary data-i18n="l.more">Details</summary><p data-i18n="ins.2.n">Why copy and not a link? For security, Chrome blocks websites from opening this page. Other way: menu ⋮ → Extensions → Manage extensions.</p></details>
+      <li class="st" data-st>
+        <h3 class="st-h"><button type="button" class="st-b" aria-expanded="true" aria-controls="st-p2" id="st-h2"><span class="num" aria-hidden="true">2</span><span data-i18n="ins.2.t">Open Chrome’s extensions page</span></button></h3>
+        <div class="st-p" id="st-p2" role="region" aria-labelledby="st-h2">
+            <p data-i18n="ins.2.p">Copy this address, paste it into Chrome’s address bar and press Enter.</p>
+            <p class="cbx"><code>chrome://extensions</code><button type="button" class="btn btn-g btn-xs" id="copy-ext" data-i18n="how.copy">Copy</button></p>
+            <details class="more"><summary data-i18n="l.more">Details</summary><p data-i18n="ins.2.n">Why copy and not a link? For security, Chrome blocks websites from opening this page. Other way: menu ⋮ → Extensions → Manage extensions.</p></details>
+          <img class="lshot st-img" src="/labs/img/pns-install-2-en.webp" width="1040" height="230" loading="lazy" decoding="async" alt="chrome://extensions typed in Chrome’s address bar" data-i18n-alt="ins.2.alt">
+          <button type="button" class="st-next" data-st-next><span data-i18n="l.st.next">Next step</span> →</button>
         </div>
-        <img class="lshot" src="/labs/img/pns-install-2-en.webp" width="1040" height="230" loading="lazy" decoding="async" alt="chrome://extensions typed in Chrome’s address bar" data-i18n-alt="ins.2.alt">
       </li>
-      <li class="lstep">
-        <div class="lstep-t">
-          <span class="num" aria-hidden="true">3</span>
-          <h3 data-i18n="ins.3.t">Turn on Developer mode</h3>
-          <p data-i18n="ins.3.p">Top-right of the page, switch on “Developer mode”. Three new buttons appear on the left.</p>
-          <details class="more"><summary data-i18n="l.more">Details</summary><p data-i18n="ins.3.n">Developer mode only lets you load extensions from a folder. You can switch it off later — but then the extension stops.</p></details>
+      <li class="st" data-st>
+        <h3 class="st-h"><button type="button" class="st-b" aria-expanded="true" aria-controls="st-p3" id="st-h3"><span class="num" aria-hidden="true">3</span><span data-i18n="ins.3.t">Turn on Developer mode</span></button></h3>
+        <div class="st-p" id="st-p3" role="region" aria-labelledby="st-h3">
+            <p data-i18n="ins.3.p">Top-right of the page, switch on “Developer mode”. Three new buttons appear on the left.</p>
+            <details class="more"><summary data-i18n="l.more">Details</summary><p data-i18n="ins.3.n">Developer mode only lets you load extensions from a folder. You can switch it off later — but then the extension stops.</p></details>
+          <img class="lshot st-img" src="/labs/img/pns-install-3-en.webp" data-src-fr="/labs/img/pns-install-3-fr.webp" width="1040" height="238" loading="lazy" decoding="async" alt="The Developer mode switch, turned on, top-right of chrome://extensions" data-i18n-alt="ins.3.alt">
+          <button type="button" class="st-next" data-st-next><span data-i18n="l.st.next">Next step</span> →</button>
         </div>
-        <img class="lshot" src="/labs/img/pns-install-3-en.webp" data-src-fr="/labs/img/pns-install-3-fr.webp" width="1040" height="238" loading="lazy" decoding="async" alt="The Developer mode switch, turned on, top-right of chrome://extensions" data-i18n-alt="ins.3.alt">
       </li>
-      <li class="lstep">
-        <div class="lstep-t">
-          <span class="num" aria-hidden="true">4</span>
-          <h3 data-i18n="ins.4.t">Click “Load unpacked” and pick the folder</h3>
-          <p data-i18n="l.ins.4.p">Select the unzipped folder, the one that contains manifest.json — not the .zip.</p>
-          <details class="more"><summary data-i18n="l.more">Details</summary><p data-i18n="ins.4.p">Click “Load unpacked” (top-left). In the window that opens, select the unzipped folder — not the .zip — the one that directly contains manifest.json, then click Select.</p><p data-i18n="ins.4.n">Got “Manifest file is missing”? You picked the wrong level: open the folder once more and select the one inside.</p></details>
+      <li class="st" data-st>
+        <h3 class="st-h"><button type="button" class="st-b" aria-expanded="true" aria-controls="st-p4" id="st-h4"><span class="num" aria-hidden="true">4</span><span data-i18n="ins.4.t">Click “Load unpacked” and pick the folder</span></button></h3>
+        <div class="st-p" id="st-p4" role="region" aria-labelledby="st-h4">
+            <p data-i18n="l.ins.4.p">Select the unzipped folder, the one that contains manifest.json — not the .zip.</p>
+            <details class="more"><summary data-i18n="l.more">Details</summary><p data-i18n="ins.4.p">Click “Load unpacked” (top-left). In the window that opens, select the unzipped folder — not the .zip — the one that directly contains manifest.json, then click Select.</p><p data-i18n="ins.4.n">Got “Manifest file is missing”? You picked the wrong level: open the folder once more and select the one inside.</p></details>
+          <img class="lshot st-img" src="/labs/img/pns-install-4-en.webp" data-src-fr="/labs/img/pns-install-4-fr.webp" width="1040" height="449" loading="lazy" decoding="async" alt="The Load unpacked button, and the Profile Name Search 3.0.0 card once it is loaded" data-i18n-alt="ins.4.alt">
+          <button type="button" class="st-next" data-st-next><span data-i18n="l.st.next">Next step</span> →</button>
         </div>
-        <img class="lshot" src="/labs/img/pns-install-4-en.webp" data-src-fr="/labs/img/pns-install-4-fr.webp" width="1040" height="449" loading="lazy" decoding="async" alt="The Load unpacked button, and the Profile Name Search 3.0.0 card once it is loaded" data-i18n-alt="ins.4.alt">
       </li>
-      <li class="lstep">
-        <div class="lstep-t">
-          <span class="num" aria-hidden="true">5</span>
-          <h3 data-i18n="ins.5.t">Pin its icon and open Grindr Web</h3>
-          <p data-i18n="l.ins.5.p">Pin the icon in Chrome’s toolbar, then open web.grindr.com: the panel appears.</p>
-          <a href="https://web.grindr.com" target="_blank" rel="noopener" class="btn btn-g btn-s st-btn"><span data-i18n="ins.5.btn">Open web.grindr.com</span> ↗</a>
-          <details class="more"><summary data-i18n="l.more">Details</summary><p data-i18n="ins.5.p">Click the puzzle icon in Chrome’s toolbar, then the pin next to Profile Name Search: its pink-and-purple icon stays in your toolbar. Click it anytime to show, hide or reset the panel. Then open web.grindr.com — the panel appears with a short 4-step welcome.</p><p data-i18n="ins.5.n">Already had Grindr Web open? Reload the tab (⌘R / Ctrl+R) so the panel shows up.</p></details>
+      <li class="st" data-st>
+        <h3 class="st-h"><button type="button" class="st-b" aria-expanded="true" aria-controls="st-p5" id="st-h5"><span class="num" aria-hidden="true">5</span><span data-i18n="ins.5.t">Pin its icon and open Grindr Web</span></button></h3>
+        <div class="st-p" id="st-p5" role="region" aria-labelledby="st-h5">
+            <p data-i18n="l.ins.5.p">Pin the icon in Chrome’s toolbar, then open web.grindr.com: the panel appears.</p>
+            <a href="https://web.grindr.com" target="_blank" rel="noopener" class="btn btn-g btn-s st-btn"><span data-i18n="ins.5.btn">Open web.grindr.com</span> ↗</a>
+            <details class="more"><summary data-i18n="l.more">Details</summary><p data-i18n="ins.5.p">Click the puzzle icon in Chrome’s toolbar, then the pin next to Profile Name Search: its pink-and-purple icon stays in your toolbar. Click it anytime to show, hide or reset the panel. Then open web.grindr.com — the panel appears with a short 4-step welcome.</p><p data-i18n="ins.5.n">Already had Grindr Web open? Reload the tab (⌘R / Ctrl+R) so the panel shows up.</p></details>
+          <img class="lshot st-img" src="/labs/img/pns-install-5-en.webp" data-src-fr="/labs/img/pns-install-5-fr.webp" width="1040" height="557" loading="lazy" decoding="async" alt="The puzzle menu with the pin next to Profile Name Search, and the panel open on Grindr Web" data-i18n-alt="ins.5.alt">
         </div>
-        <img class="lshot" src="/labs/img/pns-install-5-en.webp" data-src-fr="/labs/img/pns-install-5-fr.webp" width="1040" height="557" loading="lazy" decoding="async" alt="The puzzle menu with the pin next to Profile Name Search, and the panel open on Grindr Web" data-i18n-alt="ins.5.alt">
       </li>
     </ol>
     <div class="faq lp-upd">
@@ -262,10 +258,13 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=1"><\/script>')}
       <p class="eyebrow lav"><i aria-hidden="true"></i><span data-i18n="faq.eyebrow">FAQ</span></p>
       <h2 data-i18n="faq.h2">Questions we get a lot.</h2>
     </div>
-    <div class="faq lp-faq">
+    <div class="ftabs" role="tablist" aria-label="FAQ" hidden><button type="button" role="tab" id="ft-q" aria-controls="faq-q" aria-selected="true"><span data-i18n="l.faq.tab">Questions</span></button><button type="button" role="tab" id="ft-ts" aria-controls="help" aria-selected="false" tabindex="-1"><span data-i18n="l.faq.ts">Troubleshooting</span></button></div>
+    <div class="faq lp-faq" id="faq-q" role="tabpanel" aria-labelledby="ft-q">
       <details><summary><span data-i18n="faq.safe.q">Is it safe?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.safe.a">The download is a zip of about 110 KB: plain, readable JavaScript, nothing minified. The extension only asks Chrome for local storage, only runs on web.grindr.com, and makes no network requests — nothing leaves your browser. Open content.js in any text editor to check.</p></details>
-      <details><summary><span data-i18n="faq.1.q">Does it work on my phone?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.1.a">No. Chrome extensions only run in desktop browsers: Chrome, Brave, Edge or Arc, version 116 or later. On your phone, enter your e-mail and open the link on your computer.</p></details>
+      <details><summary><span data-i18n="faq.ban.q">Can I get banned from Grindr for using it?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.ban.a">No tool can promise that. Grindr’s terms are strict about third-party tools. Profile Name Search never acts for you — no favorites, no messages, no taps — it only reads the names already on your screen and scrolls the grid. But auto-scroll is a grey zone, so use it at your own discretion.</p></details>
       <details><summary><span data-i18n="faq.8.q">How much does it cost?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.8.a">Nothing. It’s free, with no trial and no limit.</p></details>
+      <details><summary><span data-i18n="faq.1.q">Does it work on my phone?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.1.a">No. Chrome extensions only run in desktop browsers: Chrome, Brave, Edge or Arc, version 116 or later. On your phone, enter your e-mail and open the link on your computer.</p></details>
+      <details><summary><span data-i18n="faq.2.q">Why do you ask for my e-mail?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.2.a">It’s how we send you the download link, and how we can tell you when a new version is out, since updates are manual for now. The link creates a free Fluidz account, with no password. You only get news if you tick the box, and we never sell or share your address.</p></details>
       <details><summary><span data-i18n="l.q.use">How do I use it well?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary>
         <div class="fa">
           <p data-i18n="use.p">On your first visit to Grindr Web, a 4-step welcome walks you through it, starting with “Get your grid ready”. ⚙ → Replay the tour shows it again anytime.</p>
@@ -280,46 +279,45 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=1"><\/script>')}
           <p data-i18n="tip.panel">Best option: open it in Chrome’s side panel (toolbar icon → “Open in Chrome’s side panel”). It sits next to the page and never covers the grid. Prefer it floating over the page? Drag it by its handle (top or bottom), shrink it to a bubble, or park it on the screen edge. Lost it? Toolbar icon → Reset panel position.</p>
         </div>
       </details>
-      <details><summary><span data-i18n="g.h3">Search like on Google</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary>
-        <div class="fa">
-          <p data-i18n="g.p">It searches the name shown on each profile card — so names, keywords and emojis all work. Upper or lower case doesn’t matter.</p>
-          <ul class="ex">
-            <li><code>sub</code><em data-i18n="g.1.l">A word</em><span data-i18n="g.1.e">Every profile whose name contains “sub”: Sub, SUBBY, sub_bcn…</span></li>
-            <li><code>dom top</code><em data-i18n="g.2.l">Tags in names</em><span data-i18n="g.2.e">Many guys put tags in their name: DOM TOP, vers, bear… Search them like a name.</span></li>
-            <li><code>🚀</code><em data-i18n="g.3.l">An emoji</em><span data-i18n="g.3.e">🚀, 🌴, 😈… emojis in names work too.</span></li>
-            <li><code>top, xxl</code><em data-i18n="g.4.l">OR — comma</em><span data-i18n="g.4.e">Either one: profiles with TOP or XXL in their name, in one pass.</span></li>
-            <li><code>dom + top</code><em data-i18n="g.5.l">AND — plus</em><span data-i18n="g.5.e">Both words, any order: “DOM TOP 🚀” and “top dom” match, “dom” alone doesn’t.</span></li>
-            <li><code>"dom top"</code><em data-i18n="g.6.l">Exact phrase</em><span data-i18n="g.6.e">Only these words, in this order.</span></li>
-            <li><code>(top, dom, active) + XXL</code><em data-i18n="g.7.l">Synonyms</em><span data-i18n="g.7.e">top, dom or active, and XXL somewhere in the name.</span></li>
-            <li><code>TOP -XXL</code><em data-i18n="g.8.l">Leave out — minus</em><span data-i18n="g.8.e">TOP, but never with XXL.</span></li>
-            <li><code>=top</code><em data-i18n="g.9.l">Whole word</em><span data-i18n="g.9.e">“top” as a word: “laptop” doesn’t match. The editor has the same switch on each word.</span></li>
-          </ul>
-        </div>
-      </details>
-      <details><summary><span data-i18n="faq.2.q">Why do you ask for my e-mail?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.2.a">It’s how we send you the download link, and how we can tell you when a new version is out, since updates are manual for now. The link creates a free Fluidz account, with no password. You only get news if you tick the box, and we never sell or share your address.</p></details>
-      <details><summary><span data-i18n="faq.ban.q">Can I get banned from Grindr for using it?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.ban.a">No tool can promise that. Grindr’s terms are strict about third-party tools. Profile Name Search never acts for you — no favorites, no messages, no taps — it only reads the names already on your screen and scrolls the grid. But auto-scroll is a grey zone, so use it at your own discretion.</p></details>
-      <details><summary><span data-i18n="faq.store.q">Why isn’t it on the Chrome Web Store?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.store.a">Grindr’s terms are strict about third-party tools. Profile Name Search never acts on its own — it only searches, scrolls and shows you a match when you ask — but auto-scroll is enough of a grey zone to keep it off the store. So we ship it directly, with plain, readable code and no network calls. Use it at your own discretion.</p></details>
-      <details><summary><span data-i18n="faq.br.q">Which browsers?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.br.a">Google Chrome, and browsers built on it that accept Chrome extensions: Brave, Edge, Arc. Not Safari or Firefox.</p></details>
-      <details><summary><span data-i18n="faq.more.q">How can I see more profiles?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.more.a">Grindr decides how many profiles load, depending on your plan. When the scroll stops, you’ve seen every profile Grindr shows you: that’s the limit of your current Grindr plan, not of the extension. To load more profiles, upgrade your Grindr subscription. The extension can only read what Grindr shows.</p></details>
-      <details><summary><span data-i18n="faq.4.q">How do I update it?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.4.a">Export a backup first (⚙ → My data). Then unzip the new download over the same folder, open chrome://extensions and click the reload arrow ↻ on its card. Don’t click Remove: removing deletes its data. Your saved searches are kept. Tick the box in the form to hear about new versions.</p></details>
-      <details><summary><span data-i18n="faq.v3.q">I used version 2. Will I lose my saved searches?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.v3.a">No. Unzip 3.0 over the same folder and reload it: your saved searches, current search, tab, language and settings move over by themselves, and the panel says “Your searches were kept”. Keep the same folder: Chrome links the extension’s data to it.</p></details>
-      <details><summary><span data-i18n="faq.data.q">What does the extension store, and where?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.data.a">Only on your computer, in Chrome’s local storage: settings, saved searches and folders, your marks, and the scan journal (names, photo links and dates — never the photos), 20 scans for 30 days. ⚙ → My data shows it, exports it to one backup file and erases it.</p></details>
-      <details><summary><span data-i18n="faq.7.q">Which languages?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.7.a">English, Français, Español, Português, Italiano and Deutsch. You pick yours in the extension’s welcome and can change it anytime.</p></details>
+      <div class="faq faq-more" id="faq-more">
+        <details><summary><span data-i18n="g.h3">Search like on Google</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary>
+          <div class="fa">
+            <p data-i18n="g.p">It searches the name shown on each profile card — so names, keywords and emojis all work. Upper or lower case doesn’t matter.</p>
+            <ul class="ex">
+              <li><code>sub</code><em data-i18n="g.1.l">A word</em><span data-i18n="g.1.e">Every profile whose name contains “sub”: Sub, SUBBY, sub_bcn…</span></li>
+              <li><code>dom top</code><em data-i18n="g.2.l">Tags in names</em><span data-i18n="g.2.e">Many guys put tags in their name: DOM TOP, vers, bear… Search them like a name.</span></li>
+              <li><code>🚀</code><em data-i18n="g.3.l">An emoji</em><span data-i18n="g.3.e">🚀, 🌴, 😈… emojis in names work too.</span></li>
+              <li><code>top, xxl</code><em data-i18n="g.4.l">OR — comma</em><span data-i18n="g.4.e">Either one: profiles with TOP or XXL in their name, in one pass.</span></li>
+              <li><code>dom + top</code><em data-i18n="g.5.l">AND — plus</em><span data-i18n="g.5.e">Both words, any order: “DOM TOP 🚀” and “top dom” match, “dom” alone doesn’t.</span></li>
+              <li><code>"dom top"</code><em data-i18n="g.6.l">Exact phrase</em><span data-i18n="g.6.e">Only these words, in this order.</span></li>
+              <li><code>(top, dom, active) + XXL</code><em data-i18n="g.7.l">Synonyms</em><span data-i18n="g.7.e">top, dom or active, and XXL somewhere in the name.</span></li>
+              <li><code>TOP -XXL</code><em data-i18n="g.8.l">Leave out — minus</em><span data-i18n="g.8.e">TOP, but never with XXL.</span></li>
+              <li><code>=top</code><em data-i18n="g.9.l">Whole word</em><span data-i18n="g.9.e">“top” as a word: “laptop” doesn’t match. The editor has the same switch on each word.</span></li>
+            </ul>
+          </div>
+        </details>
+        <details><summary><span data-i18n="faq.store.q">Why isn’t it on the Chrome Web Store?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.store.a">Grindr’s terms are strict about third-party tools. Profile Name Search never acts on its own — it only searches, scrolls and shows you a match when you ask — but auto-scroll is enough of a grey zone to keep it off the store. So we ship it directly, with plain, readable code and no network calls. Use it at your own discretion.</p></details>
+        <details><summary><span data-i18n="faq.br.q">Which browsers?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.br.a">Google Chrome, and browsers built on it that accept Chrome extensions: Brave, Edge, Arc. Not Safari or Firefox.</p></details>
+        <details><summary><span data-i18n="faq.more.q">How can I see more profiles?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.more.a">Grindr decides how many profiles load, depending on your plan. When the scroll stops, you’ve seen every profile Grindr shows you: that’s the limit of your current Grindr plan, not of the extension. To load more profiles, upgrade your Grindr subscription. The extension can only read what Grindr shows.</p></details>
+        <details><summary><span data-i18n="faq.4.q">How do I update it?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.4.a">Export a backup first (⚙ → My data). Then unzip the new download over the same folder, open chrome://extensions and click the reload arrow ↻ on its card. Don’t click Remove: removing deletes its data. Your saved searches are kept. Tick the box in the form to hear about new versions.</p></details>
+        <details><summary><span data-i18n="faq.v3.q">I used version 2. Will I lose my saved searches?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.v3.a">No. Unzip 3.0 over the same folder and reload it: your saved searches, current search, tab, language and settings move over by themselves, and the panel says “Your searches were kept”. Keep the same folder: Chrome links the extension’s data to it.</p></details>
+        <details><summary><span data-i18n="faq.data.q">What does the extension store, and where?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.data.a">Only on your computer, in Chrome’s local storage: settings, saved searches and folders, your marks, and the scan journal (names, photo links and dates — never the photos), 20 scans for 30 days. ⚙ → My data shows it, exports it to one backup file and erases it.</p></details>
+        <details><summary><span data-i18n="faq.7.q">Which languages?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.7.a">English, Français, Español, Português, Italiano and Deutsch. You pick yours in the extension’s welcome and can change it anytime.</p></details>
+      </div>
+      <button type="button" class="btn btn-g btn-s faq-mbtn" aria-expanded="false" aria-controls="faq-more" hidden><span data-i18n="l.faq.more">More questions</span> (8)</button>
     </div>
-
-    <div class="head sub center" id="help">
-      <p class="eyebrow"><i aria-hidden="true"></i><span data-i18n="ts.eyebrow">Troubleshooting</span></p>
-      <h2 data-i18n="ts.h2">Stuck? It’s usually one of these.</h2>
-    </div>
-    <div class="faq lp-faq">
-      <details><summary><span data-i18n="ts.1.q">I don’t see the panel on Grindr Web.</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="ts.1.a">Reload the tab (⌘R / Ctrl+R). Check that the extension’s switch is blue in chrome://extensions and that you’re on web.grindr.com — not the phone app.</p></details>
-      <details><summary><span data-i18n="ts.2.q">Chrome says “Manifest file is missing or unreadable”.</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="ts.2.a">You selected the wrong folder. Pick the folder that directly contains manifest.json (often the one inside the first folder).</p></details>
-      <details><summary><span data-i18n="ts.3.q">I can’t find “Load unpacked”.</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="ts.3.a">Developer mode is off: turn on the switch top-right of chrome://extensions and the button appears top-left.</p></details>
-      <details><summary><span data-i18n="ts.4.q">Chrome shows a warning about developer-mode extensions.</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="ts.4.a">That’s normal for any extension not installed from the store. Click × to dismiss it; it doesn’t affect anything.</p></details>
-      <details><summary><span data-i18n="ts.5.q">Auto-scroll doesn’t move.</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="ts.5.a">Scroll the grid a little by hand first, then press Start again. Grindr sometimes loads slowly.</p></details>
-      <details><summary><span data-i18n="ts.6.q">Grindr Web chat got disconnected after a search.</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="ts.6.a">It can happen after a long, fast scan: Grindr Web may drop its chat connection while thousands of profiles load. We can’t reproduce it ourselves and we don’t control Grindr’s side, so we can’t say for sure what triggers it or promise it’s gone. To get your chat back, reload the Grindr tab (⌘R / Ctrl+R): you stay signed in. For long chats, turn the extension off in chrome://extensions (or use another Chrome profile), or use the Grindr phone app. Since version 2.1.0 the scan is gentler: Scan speed is on Gentle by default, with short breaks taken automatically, while Fast (the old pace) may cause it. To update, download the new .zip and replace the content of your existing folder.</p></details>
-      <details><summary><span data-i18n="ts.7.q">The panel says “Grindr stopped responding”.</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="ts.7.a">Grindr crashed or emptied the grid during a scan, so the scan paused and kept its results in the journal. Reload the Grindr tab if needed, then press Resume. After a reload, an unfinished scan is offered again.</p></details>
-      <details><summary><span data-i18n="ts.8.q">The scan stopped by itself.</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="ts.8.a">It reached the scan time limit (30 minutes by default, set in ⚙). Press Resume to go on, or pick another limit. If the panel warns that Grindr Web is open in another tab, close the other tab: use one tab at a time.</p></details>
+    <div class="ts-p" id="help" role="tabpanel" aria-labelledby="ft-ts">
+      <h3 class="ts-h" data-i18n="ts.h2">Stuck? It’s usually one of these.</h3>
+      <div class="faq lp-faq">
+        <details><summary><span data-i18n="ts.1.q">I don’t see the panel on Grindr Web.</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="ts.1.a">Reload the tab (⌘R / Ctrl+R). Check that the extension’s switch is blue in chrome://extensions and that you’re on web.grindr.com — not the phone app.</p></details>
+        <details><summary><span data-i18n="ts.2.q">Chrome says “Manifest file is missing or unreadable”.</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="ts.2.a">You selected the wrong folder. Pick the folder that directly contains manifest.json (often the one inside the first folder).</p></details>
+        <details><summary><span data-i18n="ts.3.q">I can’t find “Load unpacked”.</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="ts.3.a">Developer mode is off: turn on the switch top-right of chrome://extensions and the button appears top-left.</p></details>
+        <details><summary><span data-i18n="ts.4.q">Chrome shows a warning about developer-mode extensions.</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="ts.4.a">That’s normal for any extension not installed from the store. Click × to dismiss it; it doesn’t affect anything.</p></details>
+        <details><summary><span data-i18n="ts.5.q">Auto-scroll doesn’t move.</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="ts.5.a">Scroll the grid a little by hand first, then press Start again. Grindr sometimes loads slowly.</p></details>
+        <details><summary><span data-i18n="ts.6.q">Grindr Web chat got disconnected after a search.</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="ts.6.a">It can happen after a long, fast scan: Grindr Web may drop its chat connection while thousands of profiles load. We can’t reproduce it ourselves and we don’t control Grindr’s side, so we can’t say for sure what triggers it or promise it’s gone. To get your chat back, reload the Grindr tab (⌘R / Ctrl+R): you stay signed in. For long chats, turn the extension off in chrome://extensions (or use another Chrome profile), or use the Grindr phone app. Since version 2.1.0 the scan is gentler: Scan speed is on Gentle by default, with short breaks taken automatically, while Fast (the old pace) may cause it. To update, download the new .zip and replace the content of your existing folder.</p></details>
+        <details><summary><span data-i18n="ts.7.q">The panel says “Grindr stopped responding”.</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="ts.7.a">Grindr crashed or emptied the grid during a scan, so the scan paused and kept its results in the journal. Reload the Grindr tab if needed, then press Resume. After a reload, an unfinished scan is offered again.</p></details>
+        <details><summary><span data-i18n="ts.8.q">The scan stopped by itself.</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="ts.8.a">It reached the scan time limit (30 minutes by default, set in ⚙). Press Resume to go on, or pick another limit. If the panel warns that Grindr Web is open in another tab, close the other tab: use one tab at a time.</p></details>
+      </div>
     </div>
   </div>
 </section>
@@ -395,6 +393,6 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=1"><\/script>')}
   </div>
 </template>
 
-<script src="/labs/one.js?v=3"></script>
+<script src="/labs/one.js?v=4"></script>
 </body>
 </html>

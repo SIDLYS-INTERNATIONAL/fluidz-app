@@ -393,6 +393,54 @@
     $('#follow').hidden = n === 0
   }
 
+  /* ---------- install guide: one step open; on a computer its screenshot sits in the viewer on the right ---------- */
+  function initStepper() {
+    var box = $('#stepper'); if (!box) return
+    var sts = $$('[data-st]', box); if (!sts.length) return
+    function open(i, focus) {
+      if (i < 0 || i >= sts.length) return
+      sts.forEach(function (li, j) { var on = j === i; li.classList.toggle('on', on); $('.st-b', li).setAttribute('aria-expanded', on ? 'true' : 'false') })
+      if (focus) {
+        try { $('.st-b', sts[i]).focus({ preventScroll: true }) } catch (e) {}
+        if (mq('(max-width: 900px)')) sts[i].scrollIntoView({ block: 'start', behavior: mq('(prefers-reduced-motion: reduce)') ? 'auto' : 'smooth' })
+      }
+    }
+    sts.forEach(function (li, i) {
+      $('.st-b', li).addEventListener('click', function () { open(i) })
+      var n = $('[data-st-next]', li); if (n) n.addEventListener('click', function () { open(i + 1, true) })
+    })
+    box.classList.add('js-st'); open(0)
+    var imgs = $$('.st-img', box), pre = function () { imgs.forEach(function (im) { im.loading = 'eager' }) }
+    if (!('IntersectionObserver' in window)) { pre(); return }
+    var io = new IntersectionObserver(function (es) { if (es.some(function (e) { return e.isIntersecting })) { pre(); io.disconnect() } }, { rootMargin: '600px 0px' })
+    io.observe(box)
+  }
+
+  /* ---------- FAQ: Questions / Troubleshooting tabs, six questions first ---------- */
+  function initFaq() {
+    var tabs = $('.ftabs'), q = $('#faq-q'), ts = $('#help'), more = $('#faq-more'), mb = $('.faq-mbtn')
+    if (more && mb) {
+      more.hidden = true; mb.hidden = false
+      mb.addEventListener('click', function () {
+        more.hidden = false; mb.hidden = true; mb.setAttribute('aria-expanded', 'true')
+        var s1 = $('summary', more); if (s1) try { s1.focus() } catch (e) {}
+      })
+    }
+    if (!tabs || !q || !ts) return
+    var bs = $$('[role="tab"]', tabs)
+    function sel(i, focus) {
+      bs.forEach(function (b, j) { var on = i === j; b.setAttribute('aria-selected', on ? 'true' : 'false'); b.tabIndex = on ? 0 : -1 })
+      q.hidden = i !== 0; ts.hidden = i !== 1
+      if (focus) bs[i].focus()
+    }
+    bs.forEach(function (b, i) {
+      b.addEventListener('click', function () { sel(i) })
+      b.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); sel(i === 0 ? 1 : 0, true) } })
+    })
+    tabs.hidden = false; var sec = $('#faq'); if (sec) sec.classList.add('js-tabs')
+    sel(location.hash === '#help' ? 1 : 0)
+  }
+
   /* ---------- init ---------- */
   buildForms()
   collectEN()
@@ -400,7 +448,7 @@
   var hero = forms.filter(function (f) { return f.name === 'hero' })[0]
   applyLang()
   langInit()
-  renderSocial(); startDemo(); startAnims()
+  renderSocial(); startDemo(); startAnims(); initStepper(); initFaq()
 
   var cpy = $('#copy-ext')
   if (cpy) cpy.addEventListener('click', function () {
