@@ -23,7 +23,7 @@ const GRID = PAGE.replace('</body>', `<script>const g=document.getElementById('g
   const pop = await ctx.newPage(); const perr = []; pop.on('pageerror', e => perr.push(String(e))); pop.on('console', m => { if (m.type() === 'error') perr.push(m.text()) })
   await pop.goto('chrome-extension://' + id + '/popup.html'); await pop.waitForTimeout(500)
   const info = await pop.evaluate(() => new Promise(r => chrome.commands.getAll(c => r({ v: chrome.runtime.getManifest().version, perms: chrome.runtime.getManifest().permissions, cmds: c.map(x => x.name + '=' + x.shortcut), by: document.getElementById('by').textContent }))))
-  check('manifest version 3.0.1, permissions unchanged (storage, sidePanel)', info.v === '3.0.1' && JSON.stringify(info.perms) === '["storage","sidePanel"]', info)
+  check('manifest version 3.0.2, permissions unchanged (storage, sidePanel)', info.v === '3.0.2' && JSON.stringify(info.perms) === '["storage","sidePanel"]', info)
   check('4 keyboard commands registered', info.cmds.filter(c => /toggle-scan|focus-search|next-match|prev-match/.test(c)).length === 4, info.cmds)
   await pop.goto('chrome-extension://' + id + '/sidepanel.html'); await pop.waitForTimeout(800)
   check('popup + side panel pages open without errors (ui-editor.js loaded too)', perr.length === 0 && await pop.evaluate(() => !!document.querySelector('#app .root') && !!window.PNS_UI_EDITOR), perr)

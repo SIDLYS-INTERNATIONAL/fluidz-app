@@ -107,7 +107,7 @@
       edWithoutHint: 'ausgeschlossene Wörter',
       sideHintT: 'Der Seitenbereich hat sich nicht geöffnet',
       sideHint: 'Klicke auf das Symbol der Erweiterung in der Chrome-Leiste und dann auf „Im Seitenbereich von Chrome öffnen“.',
-      wn0: '3.0.1 — Das einfache Suchfeld mit Chips ist zurück; neue Erweiterte Suche Schritt für Schritt.',
+      wn0: '3.0.2 — Suchen, Scannen und Ergebnisse können zusammen offen bleiben; jeder schließt sich mit einem Klick.',
       byFluidz: 'von Fluidz',
       settings: 'Einstellungen & Info',
       b1: 'Suchen',

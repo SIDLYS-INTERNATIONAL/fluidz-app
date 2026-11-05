@@ -107,7 +107,7 @@
       edWithoutHint: 'palavras excluídas',
       sideHintT: 'O painel lateral não abriu',
       sideHint: 'Clique no ícone da extensão na barra do Chrome e depois em “Abrir no painel lateral do Chrome”.',
-      wn0: '3.0.1 — O campo de busca simples com fichas voltou; nova Busca avançada passo a passo.',
+      wn0: '3.0.2 — Pesquisar, Varrer e Resultados podem ficar abertos juntos; cada um fecha com um clique.',
       byFluidz: 'por Fluidz',
       settings: 'Definições e Sobre',
       b1: 'Pesquisar',
