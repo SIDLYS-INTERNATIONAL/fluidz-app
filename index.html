@@ -77,7 +77,6 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=1"><\/script>')}
       <p class="eyebrow"><i aria-hidden="true"></i><span data-i18n="l.hero.eyebrow">Free Chrome extension · version 3.0</span></p>
       <h1 data-i18n="hero.h1">Find a Grindr profile by name, in seconds.</h1>
       <p class="hero-sub" data-i18n="l.hero.sub">Type a name or a keyword. It scrolls your Grindr Web grid and outlines every match.</p>
-      <div class="gc" id="download" data-form="hero" tabindex="-1"></div>
       <ul class="chips" aria-label="Highlights" data-i18n-aria="strip.aria">
         <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#badge-check"/></svg><span data-i18n="trust.1">Free</span></li>
         <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#wifi-off"/></svg><span data-i18n="trust.2">Sends nothing anywhere</span></li>
@@ -94,12 +93,32 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=1"><\/script>')}
     <li><span class="beat-n" aria-hidden="true">2</span><span data-i18n="l.demo.2">It scrolls the grid for you</span></li>
     <li><span class="beat-n" aria-hidden="true">3</span><span data-i18n="l.demo.3">Every match, outlined in coral</span></li>
   </ol>
+  <div class="wrap hero-form">
+    <h2 class="hero-form-h" data-i18n="l.cta1.h">Try it on your own grid.</h2>
+    <div class="gc" id="download" data-form="hero" tabindex="-1"></div>
+  </div>
 </section>
 
-<section class="band">
-  <div class="wrap band-in">
-    <h2 class="band-h" data-i18n="l.cta1.h">Try it on your own grid.</h2>
-    <div class="gc" data-form="demo" tabindex="-1"></div>
+
+<section class="sec" id="new">
+  <div class="wrap">
+    <div class="head center">
+      <p class="eyebrow"><i aria-hidden="true"></i><span data-i18n="l.new.eb">Version 3.0 · just out</span></p>
+      <h2 data-i18n="l.new.h2">New in 3.0: ten things 2.x couldn’t do.</h2>
+      <p class="lead" data-i18n="l.new.p">Released in November 2026. Your saved searches move over by themselves; nothing to reconfigure.</p>
+    </div>
+      <ul class="v3list">
+        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#layout-grid"/></svg><div><span class="newchip" data-i18n="l.new.chip">New</span><h4 data-i18n="v3.f1.t">Three numbered steps</h4><p data-i18n="v3.f1.p">Search, Scan, Results — one open at a time, with a one-line summary on the others. An empty result offers two ways forward.</p></div></li>
+        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#text-cursor-input"/></svg><div><span class="newchip" data-i18n="l.new.chip">New</span><h4 data-i18n="v3.f2.t">Synonyms, AND, exclusions</h4><p data-i18n="v3.f2.p">(top, dom, active) + XXL finds any of the three with XXL. -sub leaves sub out. “Whole word” makes top skip laptop; by default a word matches anywhere.</p></div></li>
+        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#folder-down"/></svg><div><span class="newchip" data-i18n="l.new.chip">New</span><h4 data-i18n="v3.f3.t">Saved searches in folders</h4><p data-i18n="v3.f3.p">Unlimited, in collapsible folders, combinable with each other. Your 2.x searches move over by themselves.</p></div></li>
+        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#scroll-text"/></svg><div><span class="newchip" data-i18n="l.new.chip">New</span><h4 data-i18n="v3.f4.t">Scan journal & Find again</h4><p data-i18n="v3.f4.p">20 scans kept 30 days, on your computer only. Find again looks for the same photo id, then the same name: a lead, not a guarantee.</p></div></li>
+        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#refresh-cw"/></svg><div><span class="newchip" data-i18n="l.new.chip">New</span><h4 data-i18n="v3.f5.t">Compare & new since last time</h4><p data-i18n="v3.f5.p">Compare two scans, count who is new since last time, and hide the ones you already saw.</p></div></li>
+        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#tag"/></svg><div><span class="newchip" data-i18n="l.new.chip">New</span><h4 data-i18n="v3.f6.t">To review / Ignore</h4><p data-i18n="v3.f6.p">Mark profiles on your computer. Ignored ones disappear from the results, the outline and the pauses.</p></div></li>
+        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#eye-off"/></svg><div><span class="newchip" data-i18n="l.new.chip">New</span><h4 data-i18n="v3.f7.t">Discreet mode & journal PIN</h4><p data-i18n="v3.f7.p">Blur photos and names in the panel until you hover them. Lock the journal with a PIN: a comfort lock, not encryption.</p></div></li>
+        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#timer"/></svg><div><span class="newchip" data-i18n="l.new.chip">New</span><h4 data-i18n="v3.f8.t">Safer long scans</h4><p data-i18n="v3.f8.p">A time limit (30 min by default), a warning when Grindr is open in another tab, and Resume if Grindr crashes or empties the grid.</p></div></li>
+        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#key-round"/></svg><div><span class="newchip" data-i18n="l.new.chip">New</span><h4 data-i18n="v3.f9.t">Keyboard shortcuts</h4><p data-i18n="v3.f9.p">Alt+Shift+S start / pause, Alt+Shift+F search field, Alt+Shift+N / P next and previous match. Change them in chrome://extensions/shortcuts.</p></div></li>
+        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#hard-drive"/></svg><div><span class="newchip" data-i18n="l.new.chip">New</span><h4 data-i18n="v3.f10.t">My data, backup, self-test</h4><p data-i18n="v3.f10.p">See what is stored, export or import one backup file, erase everything. The grid self-test copies a diagnostic with no names.</p></div></li>
+      </ul>
   </div>
 </section>
 
@@ -110,13 +129,13 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=1"><\/script>')}
       <h2 data-i18n="l.sA.h2">Search like on Google.</h2>
     </div>
     <div class="frow">
-      <figure class="shot frow-shot"><img src="/labs/img/pns3-editor-en.webp" data-src-fr="/labs/img/pns3-editor-fr.webp" width="600" height="500" loading="lazy" decoding="async" alt="The search editor with three criteria: Role (top, dom, active), Pos (vers, vers top) and Size (XXL, XL)" data-i18n-alt="v3.editor.alt"></figure>
+      <figure class="shot frow-shot anim"><div class="stage anim-stage"><iframe data-anim="/labs/demo/anim-editor.html" title="Profile Name Search" data-i18n-title="v3.editor.t" referrerpolicy="no-referrer" loading="lazy" tabindex="-1"></iframe></div></figure>
       <div class="frow-copy">
         <h3 data-i18n="v3.editor.t">Search editor</h3><p class="frow-p" data-i18n="l.f.editor.p">Synonyms, AND, exclusions: big searches, no syntax to learn.</p>
         <ul class="flist"><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg><span data-i18n="l.a.1">Synonyms: (top, dom, active) finds any of them</span></li><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg><span data-i18n="l.a.2">AND and exclusions: TOP + XXL -sub</span></li><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg><span data-i18n="l.a.3">“Whole word” switch on every word</span></li></ul>
       </div>
     </div>
-    <div class="mini"><figure class="shot"><img src="/labs/img/pns3-folders-en.webp" data-src-fr="/labs/img/pns3-folders-fr.webp" width="600" height="500" loading="lazy" decoding="async" alt="Saved searches sorted into folders, with a pinned search" data-i18n-alt="v3.folders.alt"><figcaption><b data-i18n="v3.folders.t">Unlimited saved searches</b><span data-i18n="l.f.folders.p">Name them, pin them, sort them into folders.</span></figcaption></figure></figure><figure class="shot"><img src="/labs/img/pns3-blocks-en.webp" data-src-fr="/labs/img/pns3-blocks-fr.webp" width="600" height="500" loading="lazy" decoding="async" alt="The panel with its three numbered steps: Search, Scan, Results" data-i18n-alt="v3.blocks.alt"><figcaption><b data-i18n="v3.blocks.t">Three clear steps</b><span data-i18n="l.f.blocks.p">Search, Scan, Results: one step open at a time.</span></figcaption></figure></figure></div>
+    <div class="mini"><figure class="shot"><img src="/labs/img/pns3-folders-en.webp" data-src-fr="/labs/img/pns3-folders-fr.webp" width="1200" height="800" loading="lazy" decoding="async" alt="Saved searches sorted into folders, with a pinned search" data-i18n-alt="v3.folders.alt"><figcaption><b data-i18n="v3.folders.t">Unlimited saved searches</b><span data-i18n="l.f.folders.p">Name them, pin them, sort them into folders.</span></figcaption></figure></figure><figure class="shot"><img src="/labs/img/pns3-blocks-en.webp" data-src-fr="/labs/img/pns3-blocks-fr.webp" width="1200" height="800" loading="lazy" decoding="async" alt="The panel with its three numbered steps: Search, Scan, Results" data-i18n-alt="v3.blocks.alt"><figcaption><b data-i18n="v3.blocks.t">Three clear steps</b><span data-i18n="l.f.blocks.p">Search, Scan, Results: one step open at a time.</span></figcaption></figure></figure></div>
   </div>
 </section>
 
@@ -127,13 +146,13 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=1"><\/script>')}
       <h2 data-i18n="l.sB.h2">It scrolls, you watch.</h2>
     </div>
     <div class="frow rev">
-      <figure class="shot frow-shot"><img src="/labs/img/pns3-outline-en.webp" data-src-fr="/labs/img/pns3-outline-fr.webp" width="600" height="400" loading="lazy" decoding="async" alt="A sample grid where the matches have a coral outline, next to the results" data-i18n-alt="v3.outline.alt"></figure>
+      <figure class="shot frow-shot anim"><div class="stage anim-stage"><iframe data-anim="/labs/demo/anim-scan.html" title="Profile Name Search" data-i18n-title="v3.outline.t" referrerpolicy="no-referrer" loading="lazy" tabindex="-1"></iframe></div></figure>
       <div class="frow-copy">
         <h3 data-i18n="v3.outline.t">Matches outlined on the grid</h3><p class="frow-p" data-i18n="l.f.outline.p">A coral outline marks every match on Grindr’s own grid.</p>
         <ul class="flist"><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg><span data-i18n="l.b.1">Gentle speed, 30-minute limit by default</span></li><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg><span data-i18n="l.b.2">Pause on every match — your choice</span></li><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg><span data-i18n="l.b.3">Resume if Grindr crashes or empties the grid</span></li></ul>
       </div>
     </div>
-    <div class="mini"><figure class="shot"><img src="/labs/img/pns3-pause-en.webp" data-src-fr="/labs/img/pns3-pause-fr.webp" width="600" height="500" loading="lazy" decoding="async" alt="The scroll paused on a new match, with Show and Resume buttons" data-i18n-alt="l.f.pause.alt"><figcaption><b data-i18n="l.f.pause.t">Pauses on every match</b><span data-i18n="l.f.pause.p">The scroll stops on a match: show him on the grid, or resume.</span></figcaption></figure></figure><figure class="shot"><img src="/labs/img/pns3-tabs-en.webp" data-src-fr="/labs/img/pns3-tabs-fr.webp" width="600" height="500" loading="lazy" decoding="async" alt="The results with the All, Favorites and Not favorites tabs" data-i18n-alt="l.f.tabs.alt"><figcaption><b data-i18n="ben.2.t">Skip who you already favorited</b><span data-i18n="l.f.tabs.p">All, Favorites, Not favorites: the list follows the tab.</span></figcaption></figure></figure></div>
+    <div class="mini"><figure class="shot"><img src="/labs/img/pns3-pause-en.webp" data-src-fr="/labs/img/pns3-pause-fr.webp" width="1200" height="800" loading="lazy" decoding="async" alt="The scroll paused on a new match, with Show and Resume buttons" data-i18n-alt="l.f.pause.alt"><figcaption><b data-i18n="l.f.pause.t">Pauses on every match</b><span data-i18n="l.f.pause.p">The scroll stops on a match: show him on the grid, or resume.</span></figcaption></figure></figure><figure class="shot"><img src="/labs/img/pns3-tabs-en.webp" data-src-fr="/labs/img/pns3-tabs-fr.webp" width="1200" height="800" loading="lazy" decoding="async" alt="The results with the All, Favorites and Not favorites tabs" data-i18n-alt="l.f.tabs.alt"><figcaption><b data-i18n="ben.2.t">Skip who you already favorited</b><span data-i18n="l.f.tabs.p">All, Favorites, Not favorites: the list follows the tab.</span></figcaption></figure></figure></div>
   </div>
 </section>
 
@@ -144,41 +163,26 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=1"><\/script>')}
       <h2 data-i18n="l.sC.h2">Nobody gets lost anymore.</h2>
     </div>
     <div class="frow">
-      <figure class="shot frow-shot"><img src="/labs/img/pns3-journal-en.webp" data-src-fr="/labs/img/pns3-journal-fr.webp" width="600" height="490" loading="lazy" decoding="async" alt="The scan journal: three scans with their date, number of results and status" data-i18n-alt="v3.journal.alt"></figure>
+      <figure class="shot frow-shot anim"><div class="stage anim-stage"><iframe data-anim="/labs/demo/anim-journal.html" title="Profile Name Search" data-i18n-title="v3.journal.t" referrerpolicy="no-referrer" loading="lazy" tabindex="-1"></iframe></div></figure>
       <div class="frow-copy">
         <h3 data-i18n="v3.journal.t">Scan journal</h3><p class="frow-p" data-i18n="l.f.journal.p">Your last 20 scans, kept 30 days on your computer only.</p>
         <ul class="flist"><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg><span data-i18n="l.c.1">Find again by photo id, then by name</span></li><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg><span data-i18n="l.c.2">Compare two scans: new, gone, in both</span></li><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#check"/></svg><span data-i18n="l.c.3">To review / Ignore marks, on your computer only</span></li></ul>
       </div>
     </div>
-    <div class="mini one"><figure class="shot"><img src="/labs/img/pns3-compare-en.webp" data-src-fr="/labs/img/pns3-compare-fr.webp" width="600" height="500" loading="lazy" decoding="async" alt="Two scans compared: new in B, gone since A, in both" data-i18n-alt="v3.compare.alt"><figcaption><b data-i18n="v3.compare.t">Compare two scans</b><span data-i18n="l.f.compare.p">See who is new and who is gone since last time.</span></figcaption></figure></figure></div>
+    <div class="mini one"><figure class="shot"><img src="/labs/img/pns3-compare-en.webp" data-src-fr="/labs/img/pns3-compare-fr.webp" width="1200" height="800" loading="lazy" decoding="async" alt="Two scans compared: new in B, gone since A, in both" data-i18n-alt="v3.compare.alt"><figcaption><b data-i18n="v3.compare.t">Compare two scans</b><span data-i18n="l.f.compare.p">See who is new and who is gone since last time.</span></figcaption></figure></figure></div>
     <p class="shots-note" data-i18n="v3.note">Real screenshots on a generated sample grid: fictional names, no real Grindr profile.</p>
-    <details class="fold">
-      <summary><span data-i18n="v3.all">Everything in 3.0</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary>
-      <ul class="v3list">
-        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#layout-grid"/></svg><div><h4 data-i18n="v3.f1.t">Three numbered steps</h4><p data-i18n="v3.f1.p">Search, Scan, Results — one open at a time, with a one-line summary on the others. An empty result offers two ways forward.</p></div></li>
-        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#text-cursor-input"/></svg><div><h4 data-i18n="v3.f2.t">Synonyms, AND, exclusions</h4><p data-i18n="v3.f2.p">(top, dom, active) + XXL finds any of the three with XXL. -sub leaves sub out. “Whole word” makes top skip laptop; by default a word matches anywhere.</p></div></li>
-        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#folder-down"/></svg><div><h4 data-i18n="v3.f3.t">Saved searches in folders</h4><p data-i18n="v3.f3.p">Unlimited, in collapsible folders, combinable with each other. Your 2.x searches move over by themselves.</p></div></li>
-        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#scroll-text"/></svg><div><h4 data-i18n="v3.f4.t">Scan journal & Find again</h4><p data-i18n="v3.f4.p">20 scans kept 30 days, on your computer only. Find again looks for the same photo id, then the same name: a lead, not a guarantee.</p></div></li>
-        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#refresh-cw"/></svg><div><h4 data-i18n="v3.f5.t">Compare & new since last time</h4><p data-i18n="v3.f5.p">Compare two scans, count who is new since last time, and hide the ones you already saw.</p></div></li>
-        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#tag"/></svg><div><h4 data-i18n="v3.f6.t">To review / Ignore</h4><p data-i18n="v3.f6.p">Mark profiles on your computer. Ignored ones disappear from the results, the outline and the pauses.</p></div></li>
-        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#eye-off"/></svg><div><h4 data-i18n="v3.f7.t">Discreet mode & journal PIN</h4><p data-i18n="v3.f7.p">Blur photos and names in the panel until you hover them. Lock the journal with a PIN: a comfort lock, not encryption.</p></div></li>
-        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#timer"/></svg><div><h4 data-i18n="v3.f8.t">Safer long scans</h4><p data-i18n="v3.f8.p">A time limit (30 min by default), a warning when Grindr is open in another tab, and Resume if Grindr crashes or empties the grid.</p></div></li>
-        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#key-round"/></svg><div><h4 data-i18n="v3.f9.t">Keyboard shortcuts</h4><p data-i18n="v3.f9.p">Alt+Shift+S start / pause, Alt+Shift+F search field, Alt+Shift+N / P next and previous match. Change them in chrome://extensions/shortcuts.</p></div></li>
-        <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#hard-drive"/></svg><div><h4 data-i18n="v3.f10.t">My data, backup, self-test</h4><p data-i18n="v3.f10.p">See what is stored, export or import one backup file, erase everything. The grid self-test copies a diagnostic with no names.</p></div></li>
-      </ul>
-    </details>
   </div>
 </section>
 
 <section class="band">
   <div class="wrap band-in">
     <h2 class="band-h" data-i18n="l.cta2.h">Free, and installed in two minutes.</h2>
-    <div class="gc" data-form="feat" tabindex="-1"></div>
+    <div class="band-cta"><a href="#download" class="btn btn-p btn-l" data-goto-form data-i18n="l.cta.btn">Get the extension — free</a><span class="band-sub" data-i18n="l.cta.sub">A one-time link by e-mail, installed in two minutes.</span></div>
   </div>
 </section>
 
 <section class="sec" id="privacy">
-  <div class="wrap pv">
+  <div class="wrap pv pv-one">
     <div class="pv-copy">
       <p class="eyebrow sage"><i aria-hidden="true"></i><span data-i18n="tr.eyebrow">Why you can trust it</span></p>
       <h2 class="pv-h" data-i18n="priv.h2">It reads your screen. It tells nobody.</h2>
@@ -190,9 +194,8 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=1"><\/script>')}
         <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#map-pin-off"/></svg><span data-i18n="priv.5.t">Respects hidden distance</span></li>
         <li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#file-code"/></svg><span data-i18n="priv.4.t">Readable code</span></li>
       </ul>
-      <p class="privnote"><span data-i18n="priv.mail">Your e-mail is used to send you the link, and for news only if you tick the box. Never sold, never shared.</span> <span data-i18n-html="priv.more"><a href="/privacy">Read the privacy policy</a></span></p>
+      <p class="privnote"><span data-i18n-html="priv.more"><a href="/privacy">Read the privacy policy</a></span></p>
     </div>
-    <figure class="shot pv-shot"><img src="/labs/img/pns3-mydata-en.webp" data-src-fr="/labs/img/pns3-mydata-fr.webp" width="600" height="500" loading="lazy" decoding="async" alt="The My data screen: what is stored, only on this computer, with backup and erase buttons" data-i18n-alt="l.priv.alt"></figure>
   </div>
 </section>
 

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Profile Name Search 3.0 - auto-scroll scan</title>
+<meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Auto-scroll scan, 10 s loop. Colours and layout from pns-demo.html; 800x600, scaled to fit. */
+:root{--m:rgba(237,232,245,.56);--d:rgba(237,232,245,.32);--b:rgba(255,255,255,.09);--c:#E0887A}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;background:#0c0b10;font-family:"Plus Jakarta Sans",system-ui,sans-serif;color:#EDE8F5}
+#cam{position:absolute;left:0;top:0;width:800px;height:600px;transform-origin:0 0;overflow:hidden;background:#100f14}
+#grid{position:absolute;inset:0;overflow:hidden}
+#track{position:absolute;left:0;top:0;width:800px;display:grid;grid-template-columns:repeat(4,200px)}
+.pf{position:relative;height:180px}
+.pf .im{position:absolute;inset:4px;border-radius:12px;overflow:hidden;background:#1a1820 center/cover no-repeat}
+.pf .nm{position:absolute;left:14px;bottom:13px;z-index:2;font-size:14px;font-weight:700;color:#fff;text-shadow:0 1px 3px #000;white-space:nowrap}
+.pf .st{position:absolute;right:14px;top:12px;z-index:2;width:16px;height:16px;fill:#f5c518}
+.dim .pf:not(.hit) .im{opacity:.14;filter:grayscale(1)}
+.pf.hit .im{outline:3px solid rgba(224,136,122,.9);outline-offset:-3px}
+.pf.pulse .im{box-shadow:0 0 0 7px rgba(224,136,122,.55)}
+#badge{position:absolute;left:20px;top:16px;z-index:5;font-size:11px;font-weight:700;letter-spacing:1px;color:var(--c);background:rgba(12,11,16,.82);border:1px solid rgba(224,136,122,.3);border-radius:999px;padding:6px 13px}
+#dock{position:absolute;right:18px;top:104px;width:336px}
+.card,.panel{background:rgba(13,12,22,.97);border:1px solid var(--b);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.panel{padding:11px;display:flex;flex-direction:column;gap:8px}
+.hd{display:flex;align-items:center;justify-content:space-between;height:30px}
+.brand{display:flex;align-items:center;gap:8px}.drop{width:12px;height:12px;border-radius:50%;background:linear-gradient(135deg,#E0887A,#9080BA)}
+.brand b{display:block;font-size:14px;font-weight:700;line-height:1.1}.brand small{display:block;font-size:10.5px;font-weight:600;color:var(--d)}
+.btns{display:flex;gap:4px}.btns i,.bh .n,.go{display:flex;align-items:center;justify-content:center}.btns i{width:26px;height:26px;border-radius:8px;background:rgba(255,255,255,.04);color:var(--m)}
+.ic{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.blk{border-radius:12px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05)}
+.blk.on{background:rgba(255,255,255,.035);border-color:var(--b)}
+.bh{display:flex;align-items:center;gap:8px;padding:8px 10px;min-height:38px}
+.bh .n{width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.07);color:var(--m);font-size:11px;font-weight:800}
+.blk.on .bh .n{background:var(--c);color:#14090A}
+.bh .t{font-size:13.5px;font-weight:700}
+.bh .s{flex:1;min-width:0;font-size:11.5px;font-weight:600;color:var(--d);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:right}
+.bh .s.hot{color:var(--c)}.bh .s .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#6BA888;margin-right:5px;vertical-align:middle}
+.bh .chev{color:var(--d)}.blk.on .bh .chev{transform:rotate(90deg)}
+.bb{padding:0 10px 10px;display:none;flex-direction:column;gap:8px}.blk.on .bb{display:flex}
+.go{height:38px;border-radius:11px;background:#1D1B2E;color:var(--c);font-size:13.5px;font-weight:800;gap:8px}
+.stats{display:flex;gap:6px}.stat{flex:1;border-radius:10px;background:rgba(255,255,255,.03);padding:7px 8px}
+.stat b{display:block;font-size:18px;font-weight:800;font-variant-numeric:tabular-nums}.stat small{display:block;font-size:10.5px;color:var(--m);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.meta{font-size:11px;color:var(--d)}
+.card{position:absolute;right:18px;top:16px;width:336px;padding:10px 11px;display:flex;align-items:center;gap:9px;border-color:rgba(224,136,122,.28);opacity:0}
+.card .av{width:34px;height:34px;border-radius:50%;background:#1a1820 center/cover no-repeat}
+.card .tx{flex:1;min-width:0}.card .tx b{display:block;font-size:12.5px;font-weight:700;white-space:nowrap}
+.card .tx small{display:block;font-size:11px;color:var(--m);line-height:1.35}
+.card .na{display:flex;flex-direction:column;gap:5px}.card .na span{border-radius:999px;padding:5px 10px;font-size:11px;font-weight:700;background:rgba(255,255,255,.07);text-align:center}
+.card .na .p{background:var(--c);color:#14090A;font-weight:800}
+#fade{position:absolute;inset:0;z-index:8;background:#100f14;opacity:0}
+#cur{position:absolute;z-index:9;left:0;top:0;width:26px;height:26px;opacity:0;filter:drop-shadow(0 2px 5px rgba(0,0,0,.6))}
+#cur svg{width:26px;height:26px;fill:#fff;stroke:#111;stroke-width:1.5}
+</style>
+</head>
+<body>
+<div id="cam">
+  <div id="grid"><div id="track"></div></div>
+  <div id="badge" data-k="badge"></div>
+  <div class="card" id="note"><span class="av" id="noteAv"></span><div class="tx"><b id="noteT"></b><small data-k="noteText"></small></div><div class="na"><span class="p" data-k="noteShow"></span><span id="resume" data-k="noteResume"></span></div></div>
+  <div id="dock"><div class="panel">
+    <div class="hd"><div class="brand"><i class="drop"></i><div><b>Profile Name Search</b><small data-k="byFluidz"></small></div></div>
+      <div class="btns"><i><svg class="ic"><use href="/labs/icons.svg#minus"/></svg></i><i><svg class="ic"><use href="/labs/icons.svg#x"/></svg></i></div></div>
+    <section class="blk"><div class="bh"><span class="n">1</span><span class="t" data-k="b1"></span><span class="s hot">top | xxl</span><svg class="ic chev"><use href="/labs/icons.svg#chevron-right"/></svg></div></section>
+    <section class="blk on"><div class="bh"><span class="n">2</span><span class="t" data-k="b2"></span><span class="s hot" id="s2"></span><svg class="ic chev"><use href="/labs/icons.svg#chevron-right"/></svg></div>
+      <div class="bb"><div class="go"><svg class="ic"><use href="/labs/icons.svg#pause"/></svg><span data-k="pause"></span></div>
+        <div class="stats"><div class="stat"><b id="g1" style="color:#6BA888">0</b><small data-k="gScanned"></small></div><div class="stat"><b id="g2" style="color:#E0887A">0</b><small data-k="gFound"></small></div><div class="stat"><b id="g3" style="color:#9080BA">0</b><small data-k="gFav"></small></div></div>
+        <div class="meta" id="meta"></div></div></section>
+    <section class="blk"><div class="bh"><span class="n">3</span><span class="t" data-k="b3"></span><span class="s" id="s3"></span><svg class="ic chev"><use href="/labs/icons.svg#chevron-right"/></svg></div></section>
+  </div></div>
+  <div id="fade"></div>
+  <div id="cur"><svg viewBox="0 0 24 24"><path d="M4 3l16 7-7 2-3 7z"/></svg></div>
+</div>
+<script>
+var I = {"en":{"badge":"SAMPLE GRID · FICTIONAL PROFILES","byFluidz":"by Fluidz","b1":"Search","b2":"Scan","b3":"Results","pause":"Pause auto-scroll","gScanned":"profiles scanned","gFound":"profiles found","gFav":"already favorites","speedGentle":"Gentle","metaPause":"pause at each match","metaCap":"stops after {m} min","noteTitle":"New match: {name}","noteText":"Scrolling paused. Show him on the grid, or resume.","noteShow":"Show","noteResume":"Resume","scanning":"Scanning","paused":"Paused","nFound":"{n} found"},
+"fr":{"badge":"GRILLE D’EXEMPLE · PROFILS FICTIFS","byFluidz":"par Fluidz","b1":"Chercher","b2":"Scanner","b3":"Résultats","pause":"Mettre en pause","gScanned":"profils scannés","gFound":"profils trouvés","gFav":"déjà en favoris","speedGentle":"Douce","metaPause":"pause à chaque match","metaCap":"arrêt après {m} min","noteTitle":"Nouveau match : {name}","noteText":"Défilement en pause. Montre-le dans la grille, ou reprends.","noteShow":"Voir","noteResume":"Reprendre","scanning":"En cours","paused":"En pause","nFound":"trouvés : {n}"},
+"es":{"badge":"CUADRÍCULA DE EJEMPLO · PERFILES FICTICIOS","byFluidz":"por Fluidz","b1":"Buscar","b2":"Escanear","b3":"Resultados","pause":"Pausar desplazamiento","gScanned":"perfiles escaneados","gFound":"perfiles encontrados","gFav":"ya en favoritos","speedGentle":"Suave","metaPause":"pausa en cada coincidencia","metaCap":"se para tras {m} min","noteTitle":"Nueva coincidencia: {name}","noteText":"Desplazamiento en pausa. Muéstralo en la cuadrícula o reanuda.","noteShow":"Ver","noteResume":"Reanudar","scanning":"En curso","paused":"En pausa","nFound":"encontrados: {n}"},
+"pt":{"badge":"GRADE DE EXEMPLO · PERFIS FICTÍCIOS","byFluidz":"por Fluidz","b1":"Pesquisar","b2":"Varrer","b3":"Resultados","pause":"Pausar rolagem","gScanned":"perfis escaneados","gFound":"perfis encontrados","gFav":"já nos favoritos","speedGentle":"Suave","metaPause":"pausa em cada match","metaCap":"para após {m} min","noteTitle":"Novo match: {name}","noteText":"Rolagem em pausa. Mostre-o na grade ou retome.","noteShow":"Ver","noteResume":"Retomar","scanning":"A varrer","paused":"Em pausa","nFound":"encontrados: {n}"},
+"it":{"badge":"GRIGLIA DI ESEMPIO · PROFILI FITTIZI","byFluidz":"di Fluidz","b1":"Cerca","b2":"Scansiona","b3":"Risultati","pause":"Metti in pausa","gScanned":"profili scansionati","gFound":"profili trovati","gFav":"già nei preferiti","speedGentle":"Delicata","metaPause":"pausa a ogni match","metaCap":"si ferma dopo {m} min","noteTitle":"Nuovo match: {name}","noteText":"Scorrimento in pausa. Mostralo nella griglia o riprendi.","noteShow":"Mostra","noteResume":"Riprendi","scanning":"In corso","paused":"In pausa","nFound":"trovati: {n}"},
+"de":{"badge":"BEISPIEL-RASTER · FIKTIVE PROFILE","byFluidz":"von Fluidz","b1":"Suchen","b2":"Scannen","b3":"Ergebnisse","pause":"Auto-Scrollen pausieren","gScanned":"Profile gescannt","gFound":"Profile gefunden","gFav":"schon Favoriten","speedGentle":"Sanft","metaPause":"Pause bei jedem Treffer","metaCap":"stoppt nach {m} Min.","noteTitle":"Neuer Treffer: {name}","noteText":"Scrollen pausiert. Zeig ihn im Raster oder mach weiter.","noteShow":"Zeigen","noteResume":"Weiter","scanning":"Läuft","paused":"Pausiert","nFound":"{n} gefunden"}}
+var L = (function () {
+  var ok = /^(en|fr|es|pt|it|de)$/, l = ''
+  try { l = new URLSearchParams(location.search).get('lang') || '' } catch (e) {}
+  if (!ok.test(l)) try { var P = window.parent; l = P !== window ? (P.ONE_LANG || '') : '' } catch (e) { l = '' }
+  return ok.test(l) ? l : 'en'
+})()
+function T(k, v) { var s = (I[L] || {})[k]; if (s == null) s = I.en[k]; if (v) for (var n in v) s = s.split('{' + n + '}').join(v[n]); return s }
+document.documentElement.lang = L
+document.querySelectorAll('[data-k]').forEach(function (el) { el.textContent = T(el.getAttribute('data-k')) })
+;(function () {
+  var $ = function (id) { return document.getElementById(id) }
+  var LOOP = 10, W = 800, H = 600, COLS = 4, ROWH = 180, N = 36
+  var clamp = function (k) { return Math.max(0, Math.min(1, k)) }
+  var ease = function (k) { k = clamp(k); return k * k * (3 - 2 * k) }
+  var lerp = function (a, b, k) { return a + (b - a) * clamp(k) }
+  var S = function (el, p, v) { var m = el._s || (el._s = {}); if (m[p] !== v) { m[p] = v; el.style[p] = v } }
+  var C = function (el, c, on) { var m = el._c || (el._c = {}); on = !!on; if (m[c] !== on) { m[c] = on; el.classList.toggle(c, on) } }
+  var X = function (el, h) { if (el._h !== h) { el._h = h; el.innerHTML = h } }
+  var POOL = ['Leo', 'Sam', 'Noah', 'Theo', 'Max', 'Hugo', 'Adam', 'Lucas', 'Tom', 'Ben', 'Nico', 'Alex', 'Paul', 'Liam', 'Omar', 'Enzo', 'Mehdi', 'Yanis', 'Kenji', 'Marco']
+  // tagged profiles: [name, already a favorite, tile]; the search is "top, xxl"
+  var FIX = { 1: ['Leo TOP', 0, 16], 8: ['Karim XXL', 1, 19], 14: ['Nico sub', 0, 21], 17: ['Tom TOP XXL', 0, 22], 20: ['FIST \ud83e\udd1c', 0, 24], 22: ['Max XXL', 0, 25], 25: ['Diego dom', 0, 27], 28: ['DOM TOP \ud83d\udd25', 0, 2] }
+  // 32 photo tiles; tagged profiles get the tiles without a visible face (2,3,5,6,8,9,11,13,14,16,17,19,21,22,24,25,27,29,30,31)
+  var photo = function (i) { var n = FIX[i] ? FIX[i][2] : ((i * 11) % 32) + 1; return '/labs/img/pp-' + (n < 10 ? '0' : '') + n + '.webp' }
+  var hit = function (i) { return !!FIX[i] && /top|xxl/i.test(FIX[i][0]) }
+  var track = $('track'), cards = []
+  for (var i = 0; i < N; i++) {
+    var f = FIX[i], c = document.createElement('div'); c.className = 'pf'
+    c.innerHTML = '<div class="im" style="background-image:url(' + photo(i) + ')"></div>' + (f && f[1] ? '<svg class="st" viewBox="0 0 16 16"><path d="M8,1L5.7,5.6L1,6.3L4.5,9.6L3.7,14.5L8,12.2L12.3,14.5L11.5,9.6L15,6.3L10.3,5.6z"/></svg>' : '') + '<span class="nm"></span>'
+    c.lastChild.textContent = f ? f[0] : POOL[(i * 7 + 3) % POOL.length]
+    track.appendChild(c); cards.push(c)
+  }
+  var note = $('note'), cur = $('cur'), cam = $('cam')
+  $('meta').textContent = T('speedGentle') + ' \u00b7 ' + T('metaPause') + ' \u00b7 ' + T('metaCap', { m: 30 })
+  $('noteT').textContent = T('noteTitle', { name: FIX[28][0] }); $('noteAv').style.backgroundImage = 'url(' + photo(28) + ')'
+  function target(el, fx, fy) { var a = el.getBoundingClientRect(), c = cam.getBoundingClientRect(), k = c.width / W; return [(a.left - c.left) / k + a.width / k * fx, (a.top - c.top) / k + a.height / k * fy] }
+  function scroll(t) { // rows scrolled
+    if (t < 0.8) return 0
+    if (t < 6) return 5 * ease((t - 0.8) / 5.2)
+    if (t < 8.6) return 5
+    return 5 + 0.6 * ease((t - 8.6) / 1)
+  }
+  window.setT = function (t) {
+    t = ((t % LOOP) + LOOP) % LOOP
+    var off = scroll(t), on = t >= 0.8, paused = t >= 6 && t < 8.3
+    S(track, 'transform', 'translateY(' + (-off * ROWH) + 'px)')
+    C($('grid'), 'dim', on)
+      var seen = on ? Math.min(N, Math.floor((off + H / ROWH - 0.3) * COLS)) : 0, found = 0, favs = 0
+    cards.forEach(function (c, i) { var h = on && hit(i) && i < seen; if (h) { found++; if (FIX[i][1]) favs++ } C(c, 'hit', h); C(c, 'pulse', i === 28 && paused) })
+    var scanned = Math.round(seen * 14.5)
+    X($('s2'), (paused ? T('paused') : '<span class="dot"></span>' + T('scanning')) + ' \u00b7 ' + scanned)
+    X($('g1'), scanned); X($('g2'), found); X($('g3'), favs)
+    X($('s3'), found ? T('nFound', { n: found }) : ''); C($('s3'), 'hot', found > 0)
+    // the pause card slides in at 6, out after Resume (8.2)
+    var k = t < 6 ? 0 : (t < 8.2 ? ease((t - 6) / 0.4) : 1 - ease((t - 8.2) / 0.4))
+    S(note, 'opacity', k); S(note, 'transform', 'translate(' + ((1 - k) * 48) + 'px,0)')
+    // cursor: to Resume (7.6-8.1), click (8.15)
+    var o = 0
+    if (t >= 7.6 && t < 8.9) {
+      var p = target($('resume'), 0.5, 0.55), kk = ease((t - 7.6) / 0.5), x = lerp(560, p[0], kk), y = lerp(430, p[1], kk)
+      o = t < 7.85 ? (t - 7.6) / 0.25 : (t > 8.6 ? 1 - (t - 8.6) / 0.3 : 1)
+      S(cur, 'transform', 'translate(' + x + 'px,' + y + 'px) scale(' + (t >= 8.15 && t < 8.3 ? 0.82 : 1) + ')')
+    }
+    S(cur, 'opacity', clamp(o))
+    S($('fade'), 'opacity', t < 0.3 ? 1 - ease(t / 0.3) : (t > 9.6 ? ease((t - 9.6) / 0.35) : 0))
+  }
+  function fit() { var k = Math.min(innerWidth / W, innerHeight / H), c = cam.style; c.transform = 'scale(' + k + ')'; c.left = (innerWidth - W * k) / 2 + 'px'; c.top = (innerHeight - H * k) / 2 + 'px' }
+  addEventListener('resize', fit); fit()
+  var q = new URLSearchParams(location.search), reduce = false
+  try { reduce = matchMedia('(prefers-reduced-motion: reduce)').matches } catch (e) {}
+  // ?t= / ?static / reduced motion: a still frame
+  if (q.has('t')) setT(+q.get('t')); else if (reduce || q.has('static')) setT(6.8); else { setT(0); var t0 = performance.now(); (function tick(now) { setT((now - t0) / 1000); requestAnimationFrame(tick) })(t0) }
+})()
+</script>
+</body>
+</html>
