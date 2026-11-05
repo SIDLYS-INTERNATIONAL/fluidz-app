@@ -5,9 +5,10 @@ const { chromium, mk, check, done } = require('./harness.cjs')
 const fs = require('fs'), os = require('os'), path = require('path')
 const BIG = []; for (let i = 0; i < 400; i++) BIG.push(i % 10 === 3 ? 'top ' + i : i % 25 === 7 ? 'XXL ' + i : 'guy ' + i)
 const big = { total: 400, first: 30, batch: 60, latency: 300, names: BIG, favs: [3, 53, 103] }
-const v3 = (settings, extra) => ({ pns_v3: Object.assign({ schema: 3, settings: Object.assign({ welcomeDone: true, whatsNew: '3.0.0', lang: 'en' }, settings || {}) }, extra || {}) })
+const v3 = (settings, extra) => ({ pns_v3: Object.assign({ schema: 3, settings: Object.assign({ welcomeDone: true, whatsNew: '3.0.1', lang: 'en' }, settings || {}) }, extra || {}) })
 
-async function search(e, text) { const i = e.$('.field input'); if (!(await i.count())) { await e.$('.bh[data-b="1"]').click(); await e.run(200) } await i.click(); await i.fill(text); await i.press('Enter'); await e.run(800) }
+// Types a new search: existing chips are cleared first (typing into a non-empty field adds a chip, as in 2.x).
+async function search(e, text) { const i = e.$('.field input'); if (!(await i.count())) { await e.$('.bh[data-b="1"]').click(); await e.run(200) } if (await e.$('.fbtn.clr').count()) { await e.$('.fbtn.clr').click(); await e.run(200) } await i.click(); await i.fill(text); await i.press('Enter'); await e.run(800) }
 async function block(e, n) { const open = await e.$('section.blk.on').getAttribute('data-block').catch(() => null); if (open !== String(n)) { await e.$('.bh[data-b="' + n + '"]').click(); await e.run(300) } }
 async function adv(e, i) { if (!(await e.$('.agrid').count())) { await e.$('.advh').click(); await e.run(200) } await e.$('.agrid button').nth(i).click(); await e.run(300) }
 async function settings(e) { await e.$('.btns button').first().click(); await e.run(300) }
@@ -160,6 +161,11 @@ async function stopScan(e) { await block(e, 2); if (/Pause/.test(await e.$('.go'
   await btnText(e, 'Let’s go').click(); await e.run(300)
   check('after What’s new: the panel', await e.sh(r => r.querySelectorAll('section.blk').length === 3))
   check('migrated searches listed', /My searches \(3\)/.test(await e.sh(r => r.querySelector('.links') ? r.querySelector('.links').textContent : r.querySelector('.panel').textContent)))
+  check('migrated 2.x chips show as chips in the field', await e.sh(r => [...r.querySelectorAll('.field .chip')].map(c => c.textContent).join() === 'top'))
+  await e.$('.links button').nth(1).click(); await e.run(300); await e.$('.it:has-text("dom + top") .tx').first().click(); await e.run(800); await block(e, 1)
+  m = await e.mem(); check('a 2.x saved search "dom + top" loads as one AND chip (model: 1 alternative, 2 criteria), nothing on this grid', await e.sh(r => [...r.querySelectorAll('.field .chip')].map(c => c.textContent).join() === 'domANDtop') && m.pns_v3.q.groups.length === 1 && m.pns_v3.q.groups[0].items.length === 2 && (await gridMatches(e)).length === 0)
+  await block(e, 1); await e.$('.links button').nth(1).click(); await e.run(300); await e.$('.it:has-text("TOP, XXL") .tx').first().click(); await e.run(800); await block(e, 1)
+  check('a 2.x saved search "TOP, XXL" loads as two OR chips, no "Active search" block, and runs', await e.sh(r => [...r.querySelectorAll('.field .chip')].map(c => c.textContent).join() === 'TOP,XXL' && !r.querySelector('.act')) && (await gridMatches(e)).length > 0 && (await gridMatches(e)).every(n => /top|xxl/i.test(n)))
   const memAfter = await e.mem(); await e.ctx.close()
   e = await mk(b, Object.assign({}, big, { mem: memAfter }), { quiet: true })
   check('What’s new is not shown a second time', await e.sh(r => !r.querySelector('[data-whatsnew]') && r.querySelectorAll('section.blk').length === 3))
@@ -170,7 +176,7 @@ async function stopScan(e) { await block(e, 2); if (/Pause/.test(await e.$('.go'
   check('fresh install: welcome step 1 = "Get your grid ready" (Grindr filters first)', await e.sh(r => r.querySelector('.pw[data-step="1"]') && /Get your grid ready/.test(r.querySelector('.pw h4').textContent) && /filters/.test(r.querySelector('.pw p').textContent) && /STEP 1 OF 4/.test(r.querySelector('.pw .top').textContent)))
   for (let i = 0; i < 4; i++) { await e.$('.pw .nx').click(); await e.run(250) }
   m = await e.mem()
-  check('4 steps, then the panel; no What’s new for a fresh install', await e.sh(r => r.querySelectorAll('section.blk').length === 3) && m.pns_v3.settings.welcomeDone && m.pns_v3.settings.whatsNew === '3.0.0')
+  check('4 steps, then the panel; no What’s new for a fresh install', await e.sh(r => r.querySelectorAll('section.blk').length === 3) && m.pns_v3.settings.welcomeDone && m.pns_v3.settings.whatsNew === '3.0.1')
   await e.ctx.close()
 
   // ---------- backup export / import ----------

@@ -8,7 +8,7 @@
   window.__pnsInjected = true;
 
   var C = window.PNS_CRIT, JR = window.PNS_JOURNAL, ST = window.PNS_STORE;
-  var VERSION = '3.0.0';
+  var VERSION = '3.0.1';
   var CFG = {
     LIST_CAP: 150,
     // Page-observer pacing (ms). Renders are throttled, never one per DOM mutation; slower while a scan is running.
@@ -36,7 +36,7 @@
     scanId: null, runAcc: 0, runFrom: 0, crashTicks: 0,
     crash: null, interrupted: null, cap: false, otherTabs: 0, tabsOk: false, toast: null,
     unlockedAt: 0, openScan: null, cmp: null, preview: null, selftest: null, find: null,
-    sideOpen: false, sideGrace: false, sideBye: false
+    sideOpen: false, sideGrace: false, sideBye: false, sideHint: false
   };
 
   /* ---------- helpers ---------- */
@@ -377,7 +377,7 @@
       crash: S.crash, interrupted: S.interrupted, cap: S.cap, otherTabs: S.tabsOk ? 0 : S.otherTabs, notice: D.notice, toast: S.toast,
       lock: !!D.lock, unlocked: open, journal: open ? JN.scans.map(summ) : null, scanCount: JN.scans.length, scanId: S.scanId,
       scan: sc ? { s: summ(sc), res: sc.res } : null, cmp: cmp,
-      marks: mk, markList: marksList(), preview: S.preview, selftest: S.selftest, find: S.find, sideOpen: S.sideOpen
+      marks: mk, markList: marksList(), preview: S.preview, selftest: S.selftest, find: S.find, sideOpen: S.sideOpen, sideHint: S.sideHint
     };
   }
   function summ(s) { return { id: s.id, t0: s.t0, t1: s.t1, qText: s.qText, n: s.n, end: s.end, count: s.res.length } }
@@ -551,7 +551,10 @@
       case 'whatsnew-ok': D.settings.whatsNew = VERSION; D.notice = ''; save(); break;
       case 'min': D.settings.collapsed = !D.settings.collapsed; save(); break;
       case 'close': suspend(); break;
-      case 'side': try { chrome.runtime.sendMessage({ type: 'pns-open-side' }, function (r) { if (chrome.runtime.lastError || !r || !r.ok) { S.statusKey = 'side'; publish() } }) } catch (e) { S.statusKey = 'side'; publish() } break;
+      // Chrome only opens its side panel on a user gesture: the message is sent right here, from the click handler, and the
+      // service worker calls chrome.sidePanel.open(). If that fails (old Chrome, gesture lost), say how to open it by hand.
+      case 'side': try { chrome.runtime.sendMessage({ type: 'pns-open-side' }, function (r) { if (chrome.runtime.lastError || !r || !r.ok) { S.sideHint = true; publish() } }) } catch (e) { S.sideHint = true; publish() } break;
+      case 'side-hint-ok': S.sideHint = false; break;
       case 'float': break; /* handled by the side panel itself */
     }
     if (a.a !== 'draft') flushNow();
@@ -625,7 +628,7 @@
       });
       chrome.runtime.onConnect.addListener(function (p) {
         if (p.name !== 'pns-side') return;
-        port = p; S.sideOpen = true; S.sideGrace = false; clearTimeout(graceTimer); S.sideBye = false; applyHostVisibility(); if (!observer) { startObserving(); render() }
+        port = p; S.sideOpen = true; S.sideGrace = false; S.sideHint = false; clearTimeout(graceTimer); S.sideBye = false; applyHostVisibility(); if (!observer) { startObserving(); render() }
         if (!D.settings.lastSide) { D.settings.lastSide = true; save() }
         p.onMessage.addListener(function (m) { if (m && m.type === 'act' && m.a) act(m.a); else if (m && m.type === 'bye') S.sideBye = true; else if (m && m.type === 'hello') { try { p.postMessage({ type: 'state', state: snapshot() }) } catch (e) { /* closed */ } } });
         p.onDisconnect.addListener(function () {

@@ -61,6 +61,28 @@ check('missing reference reported', C.compile({ groups: [{ items: [{ ref: 'zzz' 
 check('serialize writes @name with current name', C.serialize({ groups: [{ items: [{ ref: 'a' }, { name: '', terms: [{ t: 'top' }] }] }] }, id => id === 'a' ? 'Plan A' : '') === '@"Plan A" + top')
 check('summary lines: one per criterion + exclusions', (() => { const l = C.summary(C.parse('Who: (kai, kei) + top -xxl').q); return l.length === 3 && l[0].label === 'Who' && l[2].kind === 'x' })())
 
+// ---- Advanced search mapping (ui-editor.js, pure part) ----
+{
+  vm.runInThisContext(fs.readFileSync(EXT + 'ui-editor.js', 'utf8'), { filename: 'ui-editor.js' })
+  const EN = { opAnd: 'AND', opOr: 'OR', edOr: 'or', without: 'Without' }
+  const ED = globalThis.PNS_UI_EDITOR.create({ T: k => EN[k] || k, nameOf: id => id === 's1' ? 'Big' : '', V: {}, S: () => ({}), h: () => null, ic: () => null, btn: () => null, send() {}, redraw() {}, stopKeys: x => x, ovWrap: x => x })
+  const rt = txt => { const ed = ED.fromQuery(C.parse(txt).q); return { ed, q: ED.toQuery(ed), w: ED.words(ed, ED.toQuery(ed)) } }
+  let r = rt('Role: (top, dom, active) + Size: (XXL, XL) -sub')
+  check('editor: AND query -> 2 groups, both required, same query back', r.ed.items.length === 2 && Object.values(r.ed.req).every(Boolean) && !r.ed.alts && C.sig(r.q) === C.sig(C.parse('Role: (top, dom, active) + Size: (XXL, XL) -sub').q))
+  check('editor: words "Role: top or dom or active, AND Size: XXL or XL, without sub"', r.w === 'Role: top or dom or active, AND Size: XXL or XL, without sub', r.w)
+  r = rt('top, dom')
+  check('editor: "top, dom" is ONE group of synonyms', r.ed.items.length === 1 && r.ed.items[0].terms.length === 2 && r.w === 'top or dom')
+  r = rt('xxl + top, xxl + dom')
+  check('editor: common item required, others as alternatives (xxl AND (top OR dom))', r.ed.items.length === 3 && r.ed.req[r.ed.items[0].k] && !r.ed.req[r.ed.items[1].k] && !r.ed.alts && r.w === 'xxl, AND (top, OR dom)' && C.sig(r.q) === C.sig(C.parse('xxl + top, xxl + dom').q), r.w)
+  r = rt('dom + top, bear + xxl')
+  check('editor: a combination that does not fit keeps its own alternatives (lossless)', r.ed.alts && r.ed.alts.length === 2 && C.sig(r.q) === C.sig(C.parse('dom + top, bear + xxl').q) && r.w === '(dom, AND top), OR (bear, AND xxl)', r.w)
+  r.ed.req[r.ed.items[0].k] = true; r.ed.alts = null; r.ed.items.forEach((it, i) => { if (i) r.ed.req[it.k] = false })
+  check('editor: ticking a box rebuilds: dom AND (top OR bear OR xxl)', C.sig(ED.toQuery(r.ed)) === C.sig(C.parse('dom + top, dom + bear, dom + xxl').q))
+  const ref = ED.fromQuery({ groups: [{ items: [{ ref: 's1', name: 'Big' }, { name: '', terms: [{ t: 'top' }] }] }], exclude: [] })
+  check('editor: saved search block is a group; words use its current name', ref.items[0].ref === 's1' && ED.words(ref, ED.toQuery(ref)) === 'Big, AND top')
+  check('editor: empty query opens with one empty group, builds an empty query', ED.fromQuery(null).items.length === 1 && C.isEmpty(ED.toQuery(ED.fromQuery(null))))
+}
+
 // ---- journal ----
 const now = Date.UTC(2026, 10, 4)
 let j = JR.empty()
@@ -139,8 +161,9 @@ check('PIN check', ST.checkPin(lk, '2468') && !ST.checkPin(lk, '1111') && ST.val
   check('every language has every key (no missing string)', langs.every(l => en.every(k => typeof W.__D[l][k] === 'string' && W.__D[l][k].length)), langs.map(l => l + ':' + en.filter(k => !W.__D[l][k]).join('|')).join(' '))
   check('placeholders consistent across languages', langs.every(l => en.every(k => (W.__D.en[k].match(/\{\w+\}/g) || []).sort().join() === (W.__D[l][k].match(/\{\w+\}/g) || []).sort().join())), langs.map(l => en.filter(k => (W.__D.en[k].match(/\{\w+\}/g) || []).sort().join() !== (W.__D[l][k].match(/\{\w+\}/g) || []).sort().join()).map(k => l + ':' + k)).flat().join(' '))
   const man = JSON.parse(fs.readFileSync(EXT + 'manifest.json', 'utf8'))
-  check('manifest 3.0.0, permissions storage + sidePanel only, no host permissions, no key (see docs)', man.version === '3.0.0' && JSON.stringify(man.permissions) === '["storage","sidePanel"]' && !man.host_permissions && !man.key)
+  check('manifest 3.0.1, permissions storage + sidePanel only, no host permissions, no key (see docs)', man.version === '3.0.1' && JSON.stringify(man.permissions) === '["storage","sidePanel"]' && !man.host_permissions && !man.key)
   check('every content script file exists', man.content_scripts[0].js.every(f => fs.existsSync(EXT + f)))
+  check('ui-editor.js is loaded right after ui.js in the content scripts and in sidepanel.html', man.content_scripts[0].js.indexOf('ui-editor.js') === man.content_scripts[0].js.indexOf('ui.js') + 1 && /ui\.js"><\/script><script src="ui-editor\.js"/.test(fs.readFileSync(EXT + 'sidepanel.html', 'utf8')))
   check('every shipped file stays under 70 KB (the repo is edited through tools that push whole files)', files.every(f => fs.statSync(EXT + f).size < 70000), files.filter(f => fs.statSync(EXT + f).size >= 70000).join())
 }
 console.log(`\n${passes} passed, ${fails} failed`); process.exit(fails ? 1 : 0)

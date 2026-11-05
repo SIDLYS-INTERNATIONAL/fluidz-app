@@ -1,4 +1,4 @@
-# Profile Name Search — fixed extension ID (manifest "key"): prepared, NOT shipped in 3.0.0
+# Profile Name Search — fixed extension ID (manifest "key"): prepared, NOT shipped in 3.0.0 (nor in 3.0.1 — same reasoning)
 
 ## Why it is not in 3.0.0
 Experiment run on real Chromium (persistent profile, `--headless=new`, `--load-extension`, same folder each time),
