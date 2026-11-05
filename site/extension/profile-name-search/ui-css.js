@@ -213,6 +213,7 @@
     '.prev{border-radius:12px;background:var(--bg2);padding:9px 10px;display:flex;flex-direction:column;gap:6px}',
     '.prev .cnt{font-size:11.5px;font-weight:700;color:var(--sage)}',
     '.foot{display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap}',
+    '.foot .lk.p{flex:1 1 100%;justify-content:center;order:9;margin-top:2px}',
     /* advanced search (ui-editor.js) */
     '.edb{display:flex;flex-direction:column;gap:10px}',
     '.edb .lk{white-space:normal;max-width:100%;text-align:left}',
