@@ -194,7 +194,7 @@
 .mini .shot img{aspect-ratio:3/2}
 .mini .shot figcaption b{font-size:18px}
 .mini .shot figcaption span{font-size:14.5px}
-#find .shots-note{margin-top:26px;text-align:center}
+#scan .shots-note{margin-top:26px;text-align:center}
 @media(max-width:900px){
   .top-nav{display:none}
   .frow{grid-template-columns:minmax(0,1fr);gap:26px}
