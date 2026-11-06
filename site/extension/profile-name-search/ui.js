@@ -47,7 +47,7 @@
     host.appendChild(style); host.appendChild(root);
 
     // View-only state (each panel has its own): which block is open, which overlay, menus, editor draft...
-    var V = { block: 1, ov: null, adv: false, menu: null, rename: null, confirm: null, ed: null, edFor: null, edSave: false, cmpA: '', cmpB: '', mtab: 'review', moveFor: null, ovArg: null };
+    var V = { open: { 1: true }, ov: null, adv: false, menu: null, rename: null, confirm: null, ed: null, edFor: null, edSave: false, cmpA: '', cmpB: '', mtab: 'review', moveFor: null, ovArg: null };
     var kind = '', slots = {}, sigs = {}, lastRunning = false, lastEnd = null, lastNote = null;
 
     function send(a) { ctx.send(a) }
@@ -58,7 +58,11 @@
     function toggle(on, label, action, extra) { return h('button', { type: 'button', cls: 'tg', attrs: { role: 'switch', 'aria-checked': on ? 'true' : 'false', 'aria-label': label }, on: { click: function () { send(Object.assign({ a: action }, extra || {})) } } }, h('i')) }
     function openOv(k, arg) { V.ov = k; V.ovArg = arg || null; V.menu = null; V.rename = null; V.confirm = null; redraw() }
     function closeOv() { if (V.ov === 'scan' || V.ov === 'compare') { send({ a: 'scan-open', id: null }); send({ a: 'compare' }) } V.ov = V.ov === 'scan' || V.ov === 'compare' ? 'journal' : (V.ov === 'data' || V.ov === 'selftest' || V.ov === 'help' && V.ovArg === 'settings' ? 'settings' : null); V.ovArg = null; V.menu = null; V.confirm = null; redraw() }
-    function openBlock(n) { V.block = n; V.ov = null; redraw() }
+    // The three blocks open and close on their own: any of them can stay open with the others (3.0.2).
+    function isOpen(n) { return !!V.open[n] }
+    function showBlock(n) { V.open[n] = true }
+    function openBlock(n) { V.open[n] = true; V.ov = null; redraw() }
+    function toggleBlock(n) { V.open[n] = !V.open[n]; redraw() }
     function redraw() { if (S) update(S, true) }
 
     /* ---------- the search field: chips (as in 2.x) + one input, kept across re-renders so focus and caret survive ----------
@@ -123,7 +127,7 @@
       setTimeout(function () { input.focus(); try { input.setSelectionRange(c.text.length, c.text.length) } catch (e) { /* ignore */ } }, 0);
     }
     function insertText(t, replace) { // from the "?" help: an example replaces the search, a keyword is added as a chip (OR)
-      V.ov = null; V.block = 1; typing = false; input.value = ''; setText(replace ? t : joinPiece(chipsText(), t)); redraw();
+      V.ov = null; showBlock(1); typing = false; input.value = ''; setText(replace ? t : joinPiece(chipsText(), t)); redraw();
       setTimeout(function () { input.focus() }, 0);
     }
     function opEl(kind) { return h('i', { cls: 'op ' + kind, text: T(kind === 'or' ? 'opOr' : 'opAnd') }) }
@@ -204,7 +208,7 @@
       if (S.otherTabs > 0) box.appendChild(card('warn', 'triangle-alert', T('tabsTitle'), T('tabsText'), [btn('', T('gotIt'), function () { send({ a: 'tabs-ok' }) })]));
       if (S.sideHint && !side) box.appendChild(card('sidehint', 'panel-right', T('sideHintT'), T('sideHint'), [btn('', T('gotIt'), function () { send({ a: 'side-hint-ok' }) })]));
       if (S.crash) box.appendChild(card('warn', 'triangle-alert', T('crashTitle'), T('crashText', { n: S.crash.n }), [btn('p', T('resumeScan'), function () { send({ a: 'crash-resume' }) }), btn('', T('openJournal'), function () { send({ a: 'crash-ok' }); openOv('journal') })]));
-      if (S.interrupted && !S.running) box.appendChild(card('warn', 'history', T('intTitle'), T('intText', { d: fmtDate(S.interrupted.t), n: S.interrupted.n, q: S.interrupted.qText }), [btn('p', T('resumeScan'), function () { send({ a: 'interrupted-resume' }); V.block = 2 }), btn('', T('openJournal'), function () { send({ a: 'interrupted-ok' }); openOv('journal') }), btn('', T('dismiss'), function () { send({ a: 'interrupted-ok' }) })]));
+      if (S.interrupted && !S.running) box.appendChild(card('warn', 'history', T('intTitle'), T('intText', { d: fmtDate(S.interrupted.t), n: S.interrupted.n, q: S.interrupted.qText }), [btn('p', T('resumeScan'), function () { send({ a: 'interrupted-resume' }); showBlock(2) }), btn('', T('openJournal'), function () { send({ a: 'interrupted-ok' }); openOv('journal') }), btn('', T('dismiss'), function () { send({ a: 'interrupted-ok' }) })]));
       if (S.cap) box.appendChild(card('warn', 'timer', T('capTitle'), T('capText', { m: S.settings.capMin }), [btn('p', T('resumeScan'), function () { send({ a: 'toggle-scroll' }) }), btn('', T('gotIt'), function () { send({ a: 'cap-ok' }) })]));
       if (S.notice === 'kept' && S.view === 'panel') box.appendChild(card('ok', 'circle-check', T('keptTitle'), T('keptText', { n: (S.searches || []).length }), [btn('', T('gotIt'), function () { send({ a: 'notice-ok' }) })]));
       if (S.note) {
@@ -220,18 +224,18 @@
 
     /* ---------- the three blocks ---------- */
     function blockHead(n, title, summary, hot, extra) {
-      var on = V.block === n;
+      var on = isOpen(n);
       return h('div', { cls: 'bhw', attrs: { style: 'display:flex;align-items:center;gap:4px;padding-right:' + (extra ? '8px' : '0') } },
-        h('button', { type: 'button', cls: 'bh', attrs: { 'aria-expanded': on ? 'true' : 'false', 'data-b': String(n) }, on: { click: function () { openBlock(on ? 0 : n) } } },
+        h('button', { type: 'button', cls: 'bh', attrs: { 'aria-expanded': on ? 'true' : 'false', 'data-b': String(n) }, on: { click: function () { toggleBlock(n) } } },
           h('span', { cls: 'n', text: String(n) }), h('span', { cls: 't', text: title }), h('span', { cls: 's' + (hot ? ' hot' : '') }, summary), ic('chevron-right')),
         extra || null);
     }
-    function wrapBlock(n, head, body) { var on = V.block === n; return h('section', { cls: 'blk' + (on ? ' on' : ''), attrs: { 'data-block': String(n) } }, head, on ? h('div', { cls: 'bb' }, body) : null) }
+    function wrapBlock(n, head, body) { var on = isOpen(n); return h('section', { cls: 'blk' + (on ? ' on' : ''), attrs: { 'data-block': String(n) } }, head, on ? h('div', { cls: 'bb' }, body) : null) }
 
     function buildB1() {
       var has = !C.isEmpty(S.q), short = C.shortText(S.q, nameOf, 40);
       var head = blockHead(1, T('b1'), has ? short : T('b1none'), has);
-      if (V.block !== 1) return wrapBlock(1, head);
+      if (!isOpen(1)) return wrapBlock(1, head);
       var row = h('div', { cls: 'frow' }, buildField(),
         (has || typing) ? h('button', { type: 'button', cls: 'fbtn clr', title: T('clearSearch'), on: { click: function () { typing = false; input.value = ''; sentText = ''; send({ a: 'clear-q' }); renderLive() } } }, ic('x')) : null,
         h('button', { type: 'button', cls: 'fbtn q', title: T('helpSyntax'), text: '?', on: { click: function () { openOv('help') } } }));
@@ -244,15 +248,15 @@
         btn('lk', T('saveSearch'), function () { openOv('searches', 'save') }, 'star', null),
         btn('lk', T('mySearches', { n: nSaved }), function () { openOv('searches') }, 'folder'),
         btn('lk', T('advCriteria'), function () { openEditor(S.q, null) }, 'list-filter')));
-      if (has) body.push(h('button', { type: 'button', cls: 'cta', on: { click: function () { V.block = 2; redraw(); if (!S.running) send({ a: 'toggle-scroll' }) } } }, ic('play'), h('span', { text: S.hasRun ? T('resume') : T('start') })));
+      if (has) body.push(h('button', { type: 'button', cls: 'cta', on: { click: function () { showBlock(2); redraw(); if (!S.running) send({ a: 'toggle-scroll' }) } } }, ic('play'), h('span', { text: S.hasRun ? T('resume') : T('start') })));
       renderLive();
       return wrapBlock(1, head, body);
     }
     function buildB2() {
       var run = S.running, sum = run ? [h('span', { cls: 'dot' }), document.createTextNode(T('scanning') + ' · ' + fmtN(S.scanned))] : (S.hasRun ? T('nScanned', { n: fmtN(S.scanned) }) : T('b2idle'));
-      var mini = (S.hasQuery || S.favFilter === 'fav') && V.block !== 2 ? h('button', { type: 'button', cls: 'mini', title: run ? T('pause') : (S.hasRun ? T('resume') : T('start')), on: { click: function () { send({ a: 'toggle-scroll' }) } } }, ic(run ? 'pause' : 'play')) : null;
+      var mini = (S.hasQuery || S.favFilter === 'fav') && !isOpen(2) ? h('button', { type: 'button', cls: 'mini', title: run ? T('pause') : (S.hasRun ? T('resume') : T('start')), on: { click: function () { send({ a: 'toggle-scroll' }) } } }, ic(run ? 'pause' : 'play')) : null;
       var head = blockHead(2, T('b2'), sum, run, mini);
-      if (V.block !== 2) return wrapBlock(2, head);
+      if (!isOpen(2)) return wrapBlock(2, head);
       var label = run ? T('pause') : (S.hasRun ? T('resume') : T('start'));
       var body = [h('button', { type: 'button', cls: 'go' + (run ? ' stop' : ''), on: { click: function () { send({ a: 'toggle-scroll' }) } } }, ic(run ? 'pause' : 'play'), h('span', { text: label }))];
       if (S.status) body.push(h('div', { cls: 'status', text: S.status, attrs: { role: 'status' } }));
@@ -270,7 +274,7 @@
       var n = S.found, nw = S.newCount;
       var sum = (S.hasQuery || S.favFilter === 'fav') ? [document.createTextNode(T('nFound', { n: n })), nw > 0 ? document.createTextNode(' · ' + T('nNew', { n: nw })) : null] : T('b3idle');
       var head = blockHead(3, T('b3'), sum, n > 0);
-      if (V.block !== 3) return wrapBlock(3, head);
+      if (!isOpen(3)) return wrapBlock(3, head);
       var c = S.counts || { all: 0, fav: 0, non: 0 }, f = S.favFilter || 'all', q = !!S.hasQuery;
       function tab(v, label, k, icon) {
         return h('button', { type: 'button', attrs: { role: 'tab', 'aria-selected': f === v ? 'true' : 'false', title: label }, on: { click: function () { if (f !== v) send({ a: 'favfilter', v: v }) } } },
@@ -514,19 +518,19 @@
       }
       return h('div', { attrs: { style: 'display:flex;flex-direction:column;gap:4px' } }, row, menu);
     }
-    function useSearch(id) { V.menu = null; V.ov = null; V.block = 2; typing = false; send({ a: 'search-load', id: id }); redraw() }
+    function useSearch(id) { V.menu = null; V.ov = null; showBlock(2); typing = false; send({ a: 'search-load', id: id }); redraw() }
     // Combine a saved search with the active one: AND adds it as a block to every alternative, OR adds it as a new alternative.
     function combine(id, mode) {
       var q = C.clone(C.clean(S.q)), item = { ref: id, name: nameOf(id) };
       if (!q.groups.length) q.groups.push({ items: [item] });
       else if (mode === 'and') q.groups.forEach(function (gr) { gr.items.push(C.clone(item)) });
       else q.groups.push({ items: [item] });
-      V.menu = null; V.ov = null; V.block = 1; typing = false; send({ a: 'set-q', q: q }); redraw();
+      V.menu = null; V.ov = null; showBlock(1); typing = false; send({ a: 'set-q', q: q }); redraw();
     }
 
     /* ---------- Advanced search (step by step): ui-editor.js, loaded after this file ---------- */
     var ED = g.PNS_UI_EDITOR ? g.PNS_UI_EDITOR.create({ h: h, ic: ic, btn: btn, T: T, S: function () { return S }, V: V, send: send, redraw: redraw, nameOf: nameOf, stopKeys: stopKeys, ovWrap: ovWrap,
-      applySearch: function (q) { V.ed = null; V.ov = null; V.block = 2; typing = false; input.value = ''; sentText = C.serialize(q, nameOf); send({ a: 'set-q', q: q }); redraw() },
+      applySearch: function (q) { V.ed = null; V.ov = null; showBlock(2); typing = false; input.value = ''; sentText = C.serialize(q, nameOf); send({ a: 'set-q', q: q }); redraw() },
       closeEditor: function (ov) { V.ed = null; V.ov = ov || null; redraw() } }) : null;
     function openEditor(q, forId) { if (ED) ED.open(q, forId) }
 
@@ -558,7 +562,7 @@
       var body = [h('div', { cls: 'act' }, h('div', { cls: 'top' }, h('span', { text: fmtDate(d.s.t0) }), endBadge(d.s.end)), h('div', { cls: 'lines' }, h('div', { cls: 'l' }, h('b', { text: d.s.qText }))), h('small', { text: T('jCount', { n: d.s.count, m: fmtN(d.s.n) }), attrs: { style: 'font-size:11px;color:var(--tx3)' } }))];
       if (S.find) {
         var f = S.find, txt = f.how === 'id' ? T('findId', { name: f.name }) : f.how === 'name' ? T('findName', { name: f.name, n: f.others }) : T('findNone', { name: f.name });
-        body.push(card(f.how === 'id' ? 'ok' : 'warn', f.how ? 'locate-fixed' : 'search', T('findT'), txt, [f.how ? null : btn('p', T('findSearchName'), function () { send({ a: 'search-name', name: f.name }); V.ov = null; V.block = 2; redraw() }), btn('', T('gotIt'), function () { send({ a: 'find-ok' }) })]));
+        body.push(card(f.how === 'id' ? 'ok' : 'warn', f.how ? 'locate-fixed' : 'search', T('findT'), txt, [f.how ? null : btn('p', T('findSearchName'), function () { send({ a: 'search-name', name: f.name }); V.ov = null; showBlock(2); redraw() }), btn('', T('gotIt'), function () { send({ a: 'find-ok' }) })]));
       }
       body.push(h('p', { cls: 'note honest', text: T('findHonest') }));
       body.push(h('div', { cls: 'list' }, d.res.map(function (r) {
@@ -567,7 +571,7 @@
       })));
       var conf = V.confirm === 'scan';
       body.push(h('div', { cls: 'links' },
-        btn('lk', T('reuseSearch'), function () { var it = (S.journal || []).filter(function (x) { return x.id === d.s.id })[0]; send({ a: 'set-text', v: d.s.qText }); void it; V.ov = null; V.block = 2; redraw() }, 'rotate-ccw'),
+        btn('lk', T('reuseSearch'), function () { var it = (S.journal || []).filter(function (x) { return x.id === d.s.id })[0]; send({ a: 'set-text', v: d.s.qText }); void it; V.ov = null; showBlock(2); redraw() }, 'rotate-ccw'),
         conf ? btn('lk warn', T('deleteSure'), function () { V.confirm = null; send({ a: 'scan-del', id: d.s.id }); V.ov = 'journal'; redraw() }, 'trash-2') : btn('lk', T('delete'), function () { V.confirm = 'scan'; redraw() }, 'trash-2')));
       return ovWrap(T('scanT'), body);
     }
@@ -605,7 +609,7 @@
       if (!items.length) body.push(h('p', { cls: 'note', text: T('marksEmpty') }));
       body.push(h('div', { cls: 'list' }, items.map(function (m) {
         return h('div', { cls: 'it' }, avatar(m.thumb), h('div', { cls: 'tx' }, h('b', { cls: 'nmx', text: m.name }), h('small', { text: m.on ? T('onGridNow') : T('notLoaded') })),
-          m.on ? btn('lk', T('show'), function () { send({ a: 'show', id: m.id }) }, 'locate-fixed') : btn('lk', T('findSearchName'), function () { send({ a: 'search-name', name: m.name }); V.ov = null; V.block = 2; redraw() }, 'search'),
+          m.on ? btn('lk', T('show'), function () { send({ a: 'show', id: m.id }) }, 'locate-fixed') : btn('lk', T('findSearchName'), function () { send({ a: 'search-name', name: m.name }); V.ov = null; showBlock(2); redraw() }, 'search'),
           h('button', { type: 'button', cls: 'dots', title: T('unmark'), on: { click: function () { send({ a: 'mark', id: m.id, m: null }) } } }, ic('x')));
       })));
       return ovWrap(T('marksT'), body);
@@ -666,7 +670,7 @@
     // Detects engine events that move the user forward: a scan that stops on a match or reaches the end opens ③ Results.
     function autoAdvance() {
       var endNow = !!S.end, noteNow = S.note ? S.note.id : null;
-      if ((endNow && !lastEnd) || (noteNow && noteNow !== lastNote)) { if (!V.ov && V.block === 2) V.block = 3 }
+      if ((endNow && !lastEnd) || (noteNow && noteNow !== lastNote)) { if (!V.ov) showBlock(3) }
       lastRunning = S.running; lastEnd = endNow; lastNote = noteNow;
     }
     function update(state, local) {
@@ -699,7 +703,7 @@
         return;
       }
       if (slots['ov$']) { slots['ov$'].remove(); delete slots['ov$']; delete sigs.ov }
-      var vb = V.block;
+      var vb = [isOpen(1), isOpen(2), isOpen(3)];
       slot(P, 'b1', JSON.stringify([L, vb, S.q, S.qText, (S.searches || []).length, S.searches && S.searches.map(function (s) { return s.name }), S.hasRun, S.running]), buildB1);
       slot(P, 'b2', JSON.stringify([L, vb, S.running, S.hasRun, S.status, S.scanned, S.found, S.favs, S.settings.speed, S.settings.pauseEach, S.settings.capMin, S.hasQuery, S.favFilter]), buildB2);
       var prevRes = slots.res, keepTop = prevRes && prevRes.isConnected ? prevRes.scrollTop : 0, curChanged = S.current !== lastCurrent; lastCurrent = S.current;
@@ -759,7 +763,7 @@
         setTimeout(function () { URL.revokeObjectURL(url) }, 4000);
       } else if (m.type === 'focus') focusInput();
     }
-    function focusInput() { V.ov = null; V.block = 1; redraw(); setTimeout(function () { input.focus() }, 0) }
+    function focusInput() { V.ov = null; showBlock(1); redraw(); setTimeout(function () { input.focus() }, 0) }
     return { update: function (s) { update(s, false) }, root: root, focusInput: focusInput, deliver: deliver, clearDraft: function () { input.value = ''; typing = false } };
   }
 

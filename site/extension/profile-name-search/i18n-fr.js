@@ -107,7 +107,7 @@
       edWithoutHint: 'mots exclus',
       sideHintT: 'Le panneau latéral ne s’est pas ouvert',
       sideHint: 'Clique sur l’icône de l’extension dans la barre d’outils de Chrome, puis « Ouvrir dans le panneau latéral de Chrome ».',
-      wn0: '3.0.1 — Le champ de recherche simple avec ses puces est de retour ; nouvelle Recherche avancée pas à pas.',
+      wn0: '3.0.2 — Chercher, Scanner et Résultats peuvent rester ouverts ensemble ; chacun se referme d’un clic.',
       byFluidz: 'par Fluidz',
       settings: 'Réglages & À propos',
       b1: 'Chercher',

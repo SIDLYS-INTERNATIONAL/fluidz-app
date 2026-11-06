@@ -107,7 +107,7 @@
       edWithoutHint: 'palabras excluidas',
       sideHintT: 'El panel lateral no se abrió',
       sideHint: 'Pulsa el icono de la extensión en la barra de Chrome y luego «Abrir en el panel lateral de Chrome».',
-      wn0: '3.0.1 — Vuelve el campo de búsqueda simple con fichas; nueva Búsqueda avanzada paso a paso.',
+      wn0: '3.0.2 — Buscar, Escanear y Resultados pueden quedarse abiertos a la vez; cada uno se cierra con un clic.',
       byFluidz: 'por Fluidz',
       settings: 'Ajustes e Información',
       b1: 'Buscar',

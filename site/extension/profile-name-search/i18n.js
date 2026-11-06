@@ -111,7 +111,7 @@
       edWithoutHint: 'excluded words',
       sideHintT: 'The side panel did not open',
       sideHint: 'Click the extension icon in Chrome’s toolbar, then “Open in Chrome’s side panel”.',
-      wn0: '3.0.1 — The simple search field with chips is back; new step-by-step Advanced search.',
+      wn0: '3.0.2 — Search, Scan and Results can stay open together; each one still closes with a click.',
       byFluidz: 'by Fluidz',
       settings: 'Settings & About',
       b1: 'Search',

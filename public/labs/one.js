@@ -77,6 +77,7 @@
     setMeta('meta[name="description"]', 'content', t('meta.desc'))
     setMeta('meta[property="og:title"]', 'content', t('meta.title')); setMeta('meta[name="twitter:title"]', 'content', t('meta.title'))
     setMeta('meta[property="og:description"]', 'content', t('meta.desc')); setMeta('meta[name="twitter:description"]', 'content', t('meta.desc'))
+    brApply()
     langUI()
     forms.forEach(function (f) { f.refreshText() })
     setDemo()
@@ -393,6 +394,39 @@
     $('#follow').hidden = n === 0
   }
 
+  /* ---------- browser: the same zip runs in every Chromium browser; only the install steps change (address, names, notes) ---------- */
+  var BRS = { chrome: { n: 'Chrome', u: 'chrome://extensions' }, brave: { n: 'Brave', u: 'brave://extensions' }, edge: { n: 'Edge', u: 'edge://extensions' }, arc: { n: 'Arc', u: 'chrome://extensions' }, opera: { n: 'Opera', u: 'opera://extensions' }, vivaldi: { n: 'Vivaldi', u: 'vivaldi://extensions' } }
+  var BR_KEY = 'fluidz_br', BR = 'chrome', BR_OFF = false, PNS_VERSION = '3.0.2', PNS_SIZE = '120 KB'
+  function detectBrowser() {
+    var ua = navigator.userAgent || ''
+    if (/Firefox\//.test(ua)) return 'firefox'
+    if (/Safari\//.test(ua) && !/Chrome|Chromium|CriOS|Edg/.test(ua)) return 'safari'
+    if (navigator.brave) return 'brave'
+    if (/Edg\//.test(ua)) return 'edge'
+    if (/OPR\//.test(ua)) return 'opera'
+    if (/Vivaldi/.test(ua)) return 'vivaldi'
+    try { if (getComputedStyle(D.documentElement).getPropertyValue('--arc-palette-title')) return 'arc' } catch (e) {}
+    return 'chrome'
+  }
+  function brInit() {
+    var d = detectBrowser(), saved = ''
+    try { saved = localStorage.getItem(BR_KEY) || '' } catch (e) {}
+    BR_OFF = d === 'firefox' || d === 'safari'
+    BR = BRS[saved] ? saved : (BRS[d] ? d : 'chrome')
+    $$('[data-br-pick]').forEach(function (b) { b.addEventListener('click', function () { BR = b.getAttribute('data-br-pick'); try { localStorage.setItem(BR_KEY, BR) } catch (e) {} brApply() }) })
+    if (BR === 'chrome' && !saved && !BR_OFF) setTimeout(function () { if (detectBrowser() === 'arc') { BR = 'arc'; brApply() } }, 1500) // Arc adds its CSS variables after load
+  }
+  function brApply() {
+    var b = BRS[BR] || BRS.chrome
+    $$('[data-br][data-i18n]').forEach(function (el) { var s = t(el.getAttribute('data-i18n')); el.textContent = BR === 'chrome' ? s : s.replace(/Google Chrome|Chrome(?! Web Store)/g, b.n).replace(LANG === 'fr' ? /\b([Dd])e (Edge|Arc)\b/g : /$^/, '$1’$2') })
+    $$('[data-br-url]').forEach(function (el) { el.textContent = b.u })
+    $$('[data-i18n-html="upd.2"]').forEach(function (el) { el.innerHTML = el.innerHTML.replace(/[a-z]+:\/\/extensions/g, b.u) })
+    $$('[data-br-only]').forEach(function (el) { el.hidden = el.getAttribute('data-br-only') !== BR })
+    $$('[data-br-pick]').forEach(function (el) { el.setAttribute('aria-pressed', el.getAttribute('data-br-pick') === BR ? 'true' : 'false') })
+    $$('[data-br-warn]').forEach(function (el) { el.hidden = !BR_OFF })
+    $$('[data-br-meta]').forEach(function (el) { el.textContent = 'v' + PNS_VERSION + ' · ' + (EN['l.br.for'] = EN['l.br.for'] || 'for {b}', t('l.br.for', { b: b.n })) + ' · ' + PNS_SIZE })
+  }
+
   /* ---------- install guide: one step open; on a computer its screenshot sits in the viewer on the right ---------- */
   function initStepper() {
     var box = $('#stepper'); if (!box) return
@@ -443,6 +477,7 @@
 
   /* ---------- init ---------- */
   buildForms()
+  brInit()
   collectEN()
   $$('[data-form]').forEach(function (r) { forms.push(new Form(r)) })
   var hero = forms.filter(function (f) { return f.name === 'hero' })[0]
@@ -453,7 +488,7 @@
   var cpy = $('#copy-ext')
   if (cpy) cpy.addEventListener('click', function () {
     var done = function () { cpy.textContent = t('how.copied'); setTimeout(function () { cpy.textContent = t('how.copy') }, 2200) }
-    try { navigator.clipboard.writeText('chrome://extensions').then(done, done) } catch (e) { done() }
+    try { navigator.clipboard.writeText((BRS[BR] || BRS.chrome).u).then(done, done) } catch (e) { done() }
   })
 
   $$('[data-goto-form]').forEach(function (a) {

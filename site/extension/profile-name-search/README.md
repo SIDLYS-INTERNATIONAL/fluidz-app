@@ -108,6 +108,10 @@ Some people report that the chat on Grindr Web disconnected after a long scan. W
 
 ## Changelog
 
+### 3.0.2
+- **Blocks open independently**: ① Search, ② Scan and ③ Results can stay open together; each header still opens or closes its own block. Start opens ② without closing ①, a match or the end of the scan opens ③ without closing the others.
+- Same permissions, no network access. All 6 languages.
+
 ### 3.0.1
 - **Simple search field with chips is back** (as in 2.x): comma or Enter makes a chip, `+ word` continues the last chip as AND (coral badge), OR pill between chips, click a chip to edit it, Backspace removes the last one, *Looking for: …* read-back line. Typed 2.x syntax and saved searches (2.x and 3.0) load unchanged. *Active search [Edit]* is only shown for searches the chips cannot display.
 - **New step-by-step Advanced search**: ① create keyword groups (name, synonyms, whole word, *Without*, reorder), ② combine them (*required* checkboxes, AND / OR toggle, saved searches as groups, preview in words, match count) with a precision reminder that turns coral at 3 required groups. Usable at side-panel width, keyboard friendly (Enter adds a chip, Esc closes).

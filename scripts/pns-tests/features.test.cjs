@@ -1,12 +1,12 @@
-/* Integration tests for Profile Name Search 3.0.1 (fake Grindr page + Playwright, virtual clock).
+/* Integration tests for Profile Name Search 3.0.2 (fake Grindr page + Playwright, virtual clock).
    Run: node scripts/pns-tests/features.test.cjs */
 const { chromium, mk, check, done } = require('./harness.cjs')
 const NAMES = ['Dom TOP', 'Bear', 'Leo XXL', 'Sam', 'Noah top', 'Eli', 'Dominant TOP XXL', 'Theo', 'laptop Max', 'José']
-const v3 = (extra) => ({ pns_v3: Object.assign({ schema: 3, settings: { welcomeDone: true, whatsNew: '3.0.1', lang: 'en' } }, extra || {}) })
+const v3 = (extra) => ({ pns_v3: Object.assign({ schema: 3, settings: { welcomeDone: true, whatsNew: '3.0.2', lang: 'en' } }, extra || {}) })
 
 // Types a new search: existing chips are cleared first (typing into a non-empty field adds a chip, as in 2.x).
 async function search(e, text) { const i = e.$('.field input'); if (!(await i.count())) { await e.$('.bh[data-b="1"]').click(); await e.run(200) } if (await e.$('.fbtn.clr').count()) { await e.$('.fbtn.clr').click(); await e.run(200) } await i.click(); await i.fill(text); await i.press('Enter'); await e.run(800) }
-async function block(e, n) { const open = await e.$('section.blk.on').getAttribute('data-block').catch(() => null); if (open !== String(n)) { await e.$('.bh[data-b="' + n + '"]').click(); await e.run(300) } }
+async function block(e, n) { const ex = await e.$('.bh[data-b="' + n + '"]').getAttribute('aria-expanded').catch(() => null); if (ex !== 'true') { await e.$('.bh[data-b="' + n + '"]').click(); await e.run(300) } }
 const gridMatches = e => e.page.evaluate(() => [...document.querySelectorAll('[role=gridcell].gnf-match p')].map(p => p.textContent))
 const resNames = e => e.sh(r => [...r.querySelectorAll('.res .r .tx b')].map(b => b.textContent))
 const cards = e => e.sh(r => [...r.querySelectorAll('.card h4')].map(h => h.textContent))
@@ -25,10 +25,15 @@ const hasAct = e => e.sh(r => !!r.querySelector('.act'))
   let e = await mk(b, base, { quiet: true })
   check('loads without page errors', e.errs.length === 0, e.errs)
   check('3 numbered blocks, only ① open', await e.sh(r => r.querySelectorAll('section.blk').length === 3 && r.querySelectorAll('section.blk.on').length === 1 && r.querySelector('section.blk.on').dataset.block === '1'))
+  await e.$('.bh[data-b="3"]').click(); await e.run(300)
+  check('3.0.2: opening ③ keeps ① open (blocks are independent)', await e.sh(r => [...r.querySelectorAll('section.blk.on')].map(x => x.dataset.block).join() === '1,3'))
+  await e.$('.bh[data-b="1"]').click(); await e.run(300)
+  check('3.0.2: ① closes on its own, ③ stays open', await e.sh(r => [...r.querySelectorAll('section.blk.on')].map(x => x.dataset.block).join() === '3'))
+  await e.$('.bh[data-b="3"]').click(); await e.$('.bh[data-b="1"]').click(); await e.run(300)
   check('header: "by Fluidz" link to fluidz.app + ⚙ button', await e.sh(r => { const a = r.querySelector('.brand a'); return a && a.href.startsWith('https://fluidz.app') && /Fluidz/.test(a.textContent) && !!r.querySelector('.btns button[title="Settings & About"]') }))
   check('Advanced is folded by default', await e.sh(r => !r.querySelector('.agrid') && r.querySelector('.advh').getAttribute('aria-expanded') === 'false'))
   await search(e, 'top')
-  check('Enter turns the text into a chip and stays in ① (one block at a time)', await e.sh(r => r.querySelectorAll('section.blk.on').length === 1 && r.querySelector('section.blk.on').dataset.block === '1') && JSON.stringify(await chips(e)) === '["top"]', await chips(e))
+  check('Enter turns the text into a chip and stays in ①', await e.sh(r => r.querySelector('section.blk[data-block="1"]').classList.contains('on')) && JSON.stringify(await chips(e)) === '["top"]', await chips(e))
   check('① shows the Start auto-scroll call to action once a search is set', await e.sh(r => !!r.querySelector('.cta')))
   check('default match is "contains": top finds TOP, top, laptop', JSON.stringify((await gridMatches(e)).sort()) === JSON.stringify(['Dom TOP', 'Dominant TOP XXL', 'Noah top', 'laptop Max']), await gridMatches(e))
   check('collapsed ① shows the active search', /top/.test(await e.sh(r => r.querySelector('.bh[data-b="1"] .s').textContent)))
@@ -130,7 +135,7 @@ const hasAct = e => e.sh(r => !!r.querySelector('.act'))
   await e.$('.ov .sec .txt').first().fill('Dom plan'); await e.$('.ov .sec .frm select').selectOption('f0'); await e.$('.ov .sec .foot .lk.p').click(); await e.run(500)
   check('Save from step 2 uses the saved-searches flow (name + folder)', (await e.mem()).pns_v3.searches.some(s => s.name === 'Dom plan' && s.q.groups[0].items.length === 2 && s.q.exclude.length === 1))
   await e.$('.foot').last().locator('button').last().click(); await e.run(800)
-  check('"Search" applies the built criteria: Dom TOP only, ② opens', JSON.stringify(await gridMatches(e)) === JSON.stringify(['Dom TOP']) && await e.sh(r => r.querySelector('section.blk.on').dataset.block === '2'), await gridMatches(e))
+  check('"Search" applies the built criteria: Dom TOP only, ② opens', JSON.stringify(await gridMatches(e)) === JSON.stringify(['Dom TOP']) && await e.sh(r => r.querySelector('section.blk[data-block="2"]').classList.contains('on')), await gridMatches(e))
   m = await e.mem(); check('stored model: 1 alternative with 2 criteria (synonyms + whole word) and 1 exclusion', m.pns_v3.q.groups.length === 1 && m.pns_v3.q.groups[0].items.length === 2 && m.pns_v3.q.groups[0].items[1].terms[0].w === true && m.pns_v3.q.exclude[0].t === 'xxl')
   await block(e, 1)
   check('advanced search: no chips, "Active search [Edit]" summary with the group name and Without', (await chips(e)).length === 0 && await e.sh(r => /Role/.test(r.querySelector('.act .lines').textContent) && /Without/.test(r.querySelector('.act .lines').textContent)))
@@ -223,7 +228,7 @@ const hasAct = e => e.sh(r => !!r.querySelector('.act'))
   await search(e, 'top'); await settings(e)
   check('⚙ Settings & About: language (6, EN first), speed, pause, limit, outline, discreet, lock, version, links', await e.sh(r => {
     const o = r.querySelector('.ov[data-ov=settings]'); if (!o) return false; const t = o.textContent; const l = [...o.querySelector('.chips').querySelectorAll('button')].map(x => x.textContent)
-    return l.length === 6 && l[0] === 'EN' && /Gentle/.test(t) && /Pause at each new match/.test(t) && /Scan time limit/.test(t) && /Coral outline/.test(t) && /Discreet/.test(t) && /PIN/.test(t) && /3\.0\.1/.test(t) && o.querySelector('a[href^="mailto:hello@fluidz.app"]') && o.querySelector('a[href^="https://fluidz.app"]') }))
+    return l.length === 6 && l[0] === 'EN' && /Gentle/.test(t) && /Pause at each new match/.test(t) && /Scan time limit/.test(t) && /Coral outline/.test(t) && /Discreet/.test(t) && /PIN/.test(t) && /3\.0\.2/.test(t) && o.querySelector('a[href^="mailto:hello@fluidz.app"]') && o.querySelector('a[href^="https://fluidz.app"]') }))
   check('pause at each match: ON by default (unchanged)', await e.sh(r => r.querySelector('.tg[aria-label="Pause at each new match"]').getAttribute('aria-checked') === 'true'))
   check('scan time limit default 30 min', await e.sh(r => [...r.querySelectorAll('.chips button.c')].some(x => x.textContent === '30 min' && x.getAttribute('aria-pressed') === 'true')))
   await e.$('.tg[aria-label="Coral outline on the grid"]').click(); await e.run(300)

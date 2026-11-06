@@ -4,7 +4,7 @@
 const { chromium, mk, check, done } = require('./harness.cjs')
 const NAMES = ['TOP 🚀', 'top guy', 'Kai', 'vers top', 'XXL', 'dom top', 'Rob', 'top dom', 'bear', 'Top here', 'Leo', 'xxl bear']
 const FAVS = [0, 3, 7] // TOP 🚀, vers top, top dom are favorites
-async function block(e, n) { const open = await e.$('section.blk.on').getAttribute('data-block').catch(() => null); if (open !== String(n)) { await e.$('.bh[data-b="' + n + '"]').click(); await e.run(300) } }
+async function block(e, n) { const ex = await e.$('.bh[data-b="' + n + '"]').getAttribute('aria-expanded').catch(() => null); if (ex !== 'true') { await e.$('.bh[data-b="' + n + '"]').click(); await e.run(300) } }
 async function st(e) { await block(e, 3); return e.sh(r => ({ tabs: [...r.querySelectorAll('.ftabs button')].map(b => b.textContent.replace(/\s+/g, ' ').trim() + (b.getAttribute('aria-selected') === 'true' ? '*' : '')), res: [...r.querySelectorAll('.res .r .tx b')].map(b => b.textContent), empty: (r.querySelector('.res .empty') || {}).textContent || '', grid: [...document.querySelectorAll('[role=gridcell].gnf-match p')].map(p => p.textContent) })) }
 async function tab(e, i) { await block(e, 3); await e.$('.ftabs button').nth(i).click(); await e.run(800) }
 async function type(e, t) { await clear(e); const i = e.$('.field input'); await i.click(); await i.fill(t); await i.press('Enter'); await e.run(1000) }
@@ -81,7 +81,7 @@ const WATCH = () => { window.__flash = 0; const h = document.getElementById('pns
   check('hint cleared by itself once the side panel connected (floating panel back after a deliberate close, no hint)', await shown(f) && !(await f.sh(r => !!r.querySelector('.card.sidehint'))))
   check('no page errors', f.errs.length === 0, f.errs)
   await f.ctx.close()
-  const lastSide = { pns_v3: { schema: 3, settings: { welcomeDone: true, whatsNew: '3.0.1', lang: 'en', lastSide: true } } }
+  const lastSide = { pns_v3: { schema: 3, settings: { welcomeDone: true, whatsNew: '3.0.2', lang: 'en', lastSide: true } } }
   f = await mk(b, { total: 6, first: 6, batch: 0, latency: 100, names: SIX, mem: lastSide })
   check('reload with lastSide: floating panel hidden during grace', !(await shown(f)))
   await f.page.evaluate(CONNECT); await f.run(2500)

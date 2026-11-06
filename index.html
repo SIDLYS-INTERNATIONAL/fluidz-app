@@ -32,10 +32,10 @@
 (function(){var ok=['en','fr','es','pt','it','de'],l='en',u='';try{u=new URLSearchParams(location.search).get('lang')||'';l=u||localStorage.getItem('fluidz_lang')||(navigator.language||'en').slice(0,2).toLowerCase()}catch(e){}
 l=String(l).toLowerCase();if(ok.indexOf(l)<0)l='en';window.ONE_LANG=l;window.ONE_I18N=window.ONE_I18N||{};document.documentElement.lang=l;
 try{if(u&&ok.indexOf(u)>=0)localStorage.setItem('fluidz_lang',l)}catch(e){}
-if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=2"><\/script>')})()</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Profile Name Search","applicationCategory":"BrowserApplication","operatingSystem":"Windows, macOS, Linux (Chrome 116 or later)","softwareVersion":"3.0.0","fileSize":"112 KB","url":"https://fluidz.app/","description":"Free Chrome extension for Grindr Web: find a profile by name in seconds, from the grid you already filtered. The extension sends nothing anywhere.","inLanguage":["en","fr","es","pt","it","de"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Fluidz Labs","url":"https://fluidz.app/"}}</script>
+if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=3"><\/script>')})()</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Profile Name Search","applicationCategory":"BrowserApplication","operatingSystem":"Windows, macOS, Linux (Chrome, Brave, Edge or Arc, version 116 or later)","softwareVersion":"3.0.2","fileSize":"120 KB","url":"https://fluidz.app/","description":"Free Chrome extension for Grindr Web: find a profile by name in seconds, from the grid you already filtered. The extension sends nothing anywhere.","inLanguage":["en","fr","es","pt","it","de"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Fluidz Labs","url":"https://fluidz.app/"}}</script>
 <link rel="stylesheet" href="/labs/one.css?v=3">
-<link rel="stylesheet" href="/labs/one-v3.css?v=3">
+<link rel="stylesheet" href="/labs/one-v3.css?v=4">
 </head>
 <body>
 <a class="skip" href="#main" data-i18n="skip">Skip to content</a>
@@ -186,6 +186,8 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=2"><\/script>')}
       <h2 data-i18n="ins.h2">Install it in 5 steps.</h2>
       <p class="lead" data-i18n="l.ins.lead">It isn’t on the Chrome Web Store, so you add it by hand. It takes two minutes.</p>
       <ul class="need"><li class="need-t" data-i18n="l.need">You need:</li><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#laptop"/></svg><span data-i18n="pre.1.t">A computer</span></li><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#app-window"/></svg><span data-i18n="pre.2.t">Chrome, Brave, Edge or Arc</span></li><li><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#globe"/></svg><span data-i18n="pre.3.t">Grindr Web</span></li></ul>
+      <div class="brsel" role="group" aria-label="Your browser" data-i18n-aria="l.br.aria"><span class="brsel-t" data-i18n="l.br.t">Your browser:</span><button type="button" data-br-pick="chrome" aria-pressed="true">Chrome</button><button type="button" data-br-pick="brave" aria-pressed="false">Brave</button><button type="button" data-br-pick="edge" aria-pressed="false">Edge</button><button type="button" data-br-pick="arc" aria-pressed="false">Arc</button></div>
+      <p class="br-warn" data-br-warn data-i18n="l.br.unsup" hidden>Firefox and Safari can’t run it yet: open this page in Chrome, Brave, Edge or Arc.</p>
       <p class="in-only banner" data-i18n="how.banner">You’re in. Next: install it.</p>
     </div>
     <ol class="stepper" id="stepper">
@@ -200,11 +202,11 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=2"><\/script>')}
         </div>
       </li>
       <li class="st" data-st>
-        <h3 class="st-h"><button type="button" class="st-b" aria-expanded="true" aria-controls="st-p2" id="st-h2"><span class="num" aria-hidden="true">2</span><span data-i18n="ins.2.t">Open Chrome’s extensions page</span></button></h3>
+        <h3 class="st-h"><button type="button" class="st-b" aria-expanded="true" aria-controls="st-p2" id="st-h2"><span class="num" aria-hidden="true">2</span><span data-i18n="ins.2.t" data-br>Open Chrome’s extensions page</span></button></h3>
         <div class="st-p" id="st-p2" role="region" aria-labelledby="st-h2">
-            <p data-i18n="ins.2.p">Copy this address, paste it into Chrome’s address bar and press Enter.</p>
-            <p class="cbx"><code>chrome://extensions</code><button type="button" class="btn btn-g btn-xs" id="copy-ext" data-i18n="how.copy">Copy</button></p>
-            <details class="more"><summary data-i18n="l.more">Details</summary><p data-i18n="ins.2.n">Why copy and not a link? For security, Chrome blocks websites from opening this page. Other way: menu ⋮ → Extensions → Manage extensions.</p></details>
+            <p data-i18n="ins.2.p" data-br>Copy this address, paste it into Chrome’s address bar and press Enter.</p>
+            <p class="cbx"><code data-br-url>chrome://extensions</code><button type="button" class="btn btn-g btn-xs" id="copy-ext" data-i18n="how.copy">Copy</button></p>
+            <details class="more"><summary data-i18n="l.more">Details</summary><p data-i18n="ins.2.n" data-br>Why copy and not a link? For security, Chrome blocks websites from opening this page. Other way: menu ⋮ → Extensions → Manage extensions.</p></details>
           <img class="lshot st-img" src="/labs/img/pns-install-2-en.webp" width="1040" height="230" loading="lazy" decoding="async" alt="chrome://extensions typed in Chrome’s address bar" data-i18n-alt="ins.2.alt">
           <button type="button" class="st-next" data-st-next><span data-i18n="l.st.next">Next step</span> →</button>
         </div>
@@ -214,6 +216,7 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=2"><\/script>')}
         <div class="st-p" id="st-p3" role="region" aria-labelledby="st-h3">
             <p data-i18n="ins.3.p">Top-right of the page, switch on “Developer mode”. Three new buttons appear on the left.</p>
             <details class="more"><summary data-i18n="l.more">Details</summary><p data-i18n="ins.3.n">Developer mode only lets you load extensions from a folder. You can switch it off later — but then the extension stops.</p></details>
+            <p class="br-note" data-br-only="edge" data-i18n="l.br.edge3" hidden>In Edge, the Developer mode switch is in the left column of the page.</p>
           <img class="lshot st-img" src="/labs/img/pns-install-3-en.webp" data-src-fr="/labs/img/pns-install-3-fr.webp" width="1040" height="238" loading="lazy" decoding="async" alt="The Developer mode switch, turned on, top-right of chrome://extensions" data-i18n-alt="ins.3.alt">
           <button type="button" class="st-next" data-st-next><span data-i18n="l.st.next">Next step</span> →</button>
         </div>
@@ -230,9 +233,10 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=2"><\/script>')}
       <li class="st" data-st>
         <h3 class="st-h"><button type="button" class="st-b" aria-expanded="true" aria-controls="st-p5" id="st-h5"><span class="num" aria-hidden="true">5</span><span data-i18n="ins.5.t">Pin its icon and open Grindr Web</span></button></h3>
         <div class="st-p" id="st-p5" role="region" aria-labelledby="st-h5">
-            <p data-i18n="l.ins.5.p">Pin the icon in Chrome’s toolbar, then open web.grindr.com: the panel appears.</p>
+            <p data-i18n="l.ins.5.p" data-br>Pin the icon in Chrome’s toolbar, then open web.grindr.com: the panel appears.</p>
             <a href="https://web.grindr.com" target="_blank" rel="noopener" class="btn btn-g btn-s st-btn"><span data-i18n="ins.5.btn">Open web.grindr.com</span> ↗</a>
-            <details class="more"><summary data-i18n="l.more">Details</summary><p data-i18n="ins.5.p">Click the puzzle icon in Chrome’s toolbar, then the pin next to Profile Name Search: its pink-and-purple icon stays in your toolbar. Click it anytime to show, hide or reset the panel. Then open web.grindr.com — the panel appears with a short 4-step welcome.</p><p data-i18n="ins.5.n">Already had Grindr Web open? Reload the tab (⌘R / Ctrl+R) so the panel shows up.</p></details>
+            <details class="more"><summary data-i18n="l.more">Details</summary><p data-i18n="ins.5.p" data-br>Click the puzzle icon in Chrome’s toolbar, then the pin next to Profile Name Search: its pink-and-purple icon stays in your toolbar. Click it anytime to show, hide or reset the panel. Then open web.grindr.com — the panel appears with a short 4-step welcome.</p><p data-i18n="ins.5.n">Already had Grindr Web open? Reload the tab (⌘R / Ctrl+R) so the panel shows up.</p></details>
+            <p class="br-note" data-br-only="arc" data-i18n="l.br.arc5" hidden>In Arc, the extension’s icon is in the extensions menu at the top of the sidebar.</p>
           <img class="lshot st-img" src="/labs/img/pns-install-5-en.webp" data-src-fr="/labs/img/pns-install-5-fr.webp" width="1040" height="557" loading="lazy" decoding="async" alt="The puzzle menu with the pin next to Profile Name Search, and the panel open on Grindr Web" data-i18n-alt="ins.5.alt">
         </div>
       </li>
@@ -241,7 +245,7 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=2"><\/script>')}
       <details class="upd-d"><summary><span data-i18n="upd.t">Already installed? Updating</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary>
         <div class="upd">
           <ol>
-            <li data-i18n="upd.1">Export a backup first (⚙ → My data). Then unzip the new download and replace the content of your existing extension folder with the content of the new one: Chrome keeps reading that folder.</li>
+            <li data-i18n="upd.1" data-br>Export a backup first (⚙ → My data). Then unzip the new download and replace the content of your existing extension folder with the content of the new one: Chrome keeps reading that folder.</li>
             <li data-i18n-html="upd.2">Open <code>chrome://extensions</code>.</li>
             <li data-i18n="upd.3">Click the reload arrow ↻ on the extension’s card. Don’t click Remove: your saved searches stay.</li>
           </ol>
@@ -310,9 +314,9 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=2"><\/script>')}
       <h3 class="ts-h" data-i18n="ts.h2">Stuck? It’s usually one of these.</h3>
       <div class="faq lp-faq">
         <details><summary><span data-i18n="ts.1.q">I don’t see the panel on Grindr Web.</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="ts.1.a">Reload the tab (⌘R / Ctrl+R). Check that the extension’s switch is blue in chrome://extensions and that you’re on web.grindr.com — not the phone app.</p></details>
-        <details><summary><span data-i18n="ts.2.q">Chrome says “Manifest file is missing or unreadable”.</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="ts.2.a">You selected the wrong folder. Pick the folder that directly contains manifest.json (often the one inside the first folder).</p></details>
+        <details><summary><span data-i18n="ts.2.q" data-br>Chrome says “Manifest file is missing or unreadable”.</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="ts.2.a">You selected the wrong folder. Pick the folder that directly contains manifest.json (often the one inside the first folder).</p></details>
         <details><summary><span data-i18n="ts.3.q">I can’t find “Load unpacked”.</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="ts.3.a">Developer mode is off: turn on the switch top-right of chrome://extensions and the button appears top-left.</p></details>
-        <details><summary><span data-i18n="ts.4.q">Chrome shows a warning about developer-mode extensions.</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="ts.4.a">That’s normal for any extension not installed from the store. Click × to dismiss it; it doesn’t affect anything.</p></details>
+        <details><summary><span data-i18n="ts.4.q" data-br>Chrome shows a warning about developer-mode extensions.</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="ts.4.a">That’s normal for any extension not installed from the store. Click × to dismiss it; it doesn’t affect anything.</p></details>
         <details><summary><span data-i18n="ts.5.q">Auto-scroll doesn’t move.</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="ts.5.a">Scroll the grid a little by hand first, then press Start again. Grindr sometimes loads slowly.</p></details>
         <details><summary><span data-i18n="ts.6.q">Grindr Web chat got disconnected after a search.</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="ts.6.a">It can happen after a long, fast scan: Grindr Web may drop its chat connection while thousands of profiles load. We can’t reproduce it ourselves and we don’t control Grindr’s side, so we can’t say for sure what triggers it or promise it’s gone. To get your chat back, reload the Grindr tab (⌘R / Ctrl+R): you stay signed in. For long chats, turn the extension off in chrome://extensions (or use another Chrome profile), or use the Grindr phone app. Since version 2.1.0 the scan is gentler: Scan speed is on Gentle by default, with short breaks taken automatically, while Fast (the old pace) may cause it. To update, download the new .zip and replace the content of your existing folder.</p></details>
         <details><summary><span data-i18n="ts.7.q">The panel says “Grindr stopped responding”.</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="ts.7.a">Grindr crashed or emptied the grid during a scan, so the scan paused and kept its results in the journal. Reload the Grindr tab if needed, then press Resume. After a reload, an unfinished scan is offered again.</p></details>
@@ -380,7 +384,8 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=2"><\/script>')}
     <div class="d-only">
       <p class="gc-t" data-i18n="ready.p">Your free extension is ready. Download it, then install it in about two minutes (steps below).</p>
       <button type="button" class="btn btn-p" data-download><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#download"/></svg><span data-i18n="ready.btn">Download the extension (.zip)</span></button>
-      <p class="meta">v3.0.0 · Chrome 116+ · 112 KB</p>
+      <p class="meta" data-br-meta>v3.0.2 · Chrome · 120 KB</p>
+      <p class="br-warn" data-br-warn data-i18n="l.br.unsup" hidden>Firefox and Safari can’t run it yet: open this page in Chrome, Brave, Edge or Arc.</p>
       <a href="#how" class="next" data-i18n="ready.next">Next: install it ↓</a>
     </div>
     <div class="m-only">
@@ -393,6 +398,6 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=2"><\/script>')}
   </div>
 </template>
 
-<script src="/labs/one.js?v=4"></script>
+<script src="/labs/one.js?v=5"></script>
 </body>
 </html>

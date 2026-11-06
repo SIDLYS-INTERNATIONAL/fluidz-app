@@ -107,7 +107,7 @@
       edWithoutHint: 'parole escluse',
       sideHintT: 'Il pannello laterale non si è aperto',
       sideHint: 'Clicca l’icona dell’estensione nella barra di Chrome, poi «Apri nel pannello laterale di Chrome».',
-      wn0: '3.0.1 — Torna il campo di ricerca semplice con le etichette; nuova Ricerca avanzata passo dopo passo.',
+      wn0: '3.0.2 — Cerca, Scansiona e Risultati possono restare aperti insieme; ognuno si chiude con un clic.',
       byFluidz: 'di Fluidz',
       settings: 'Impostazioni e Info',
       b1: 'Cerca',
