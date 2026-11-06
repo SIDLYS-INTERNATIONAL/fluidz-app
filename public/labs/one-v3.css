@@ -287,3 +287,14 @@
 .js-tabs .ts-p{margin-top:0}
 .js-tabs .ts-h{font-size:16px;font-family:inherit;font-weight:600;color:var(--mut)}
 @media(max-width:560px){.st-p .st-img{width:100%;max-width:100%;margin:14px 0 0;border-radius:12px;border-width:1px}}
+
+/* browser picker (install guide) */
+.brsel{display:inline-flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px;margin-top:14px;padding:5px;border:1px solid var(--rule2);border-radius:999px;background:var(--bg1)}
+.brsel-t{font-size:13.5px;font-weight:600;color:var(--mut);padding:0 6px 0 10px}
+.brsel button{border:0;background:none;color:var(--mut);font:inherit;font-size:14px;font-weight:700;padding:7px 14px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s}
+.brsel button:hover{color:var(--tx)}
+.brsel button[aria-pressed="true"]{background:var(--p);color:var(--ink)}
+.brsel button:focus-visible{outline:2px solid var(--p);outline-offset:2px}
+.br-warn{margin:14px auto 0;max-width:560px;padding:10px 14px;border-radius:12px;border:1px solid var(--pbd);background:var(--p2);color:var(--tx);font-size:14.5px;font-weight:600}
+.br-warn[hidden],.br-note[hidden]{display:none}
+.br-note{margin-top:10px;padding:8px 12px;border-left:3px solid var(--p);background:var(--p2);border-radius:0 10px 10px 0;font-size:14.5px;color:var(--tx)}
