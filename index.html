@@ -32,7 +32,7 @@
 (function(){var ok=['en','fr','es','pt','it','de'],l='en',u='';try{u=new URLSearchParams(location.search).get('lang')||'';l=u||localStorage.getItem('fluidz_lang')||(navigator.language||'en').slice(0,2).toLowerCase()}catch(e){}
 l=String(l).toLowerCase();if(ok.indexOf(l)<0)l='en';window.ONE_LANG=l;window.ONE_I18N=window.ONE_I18N||{};document.documentElement.lang=l;
 try{if(u&&ok.indexOf(u)>=0)localStorage.setItem('fluidz_lang',l)}catch(e){}
-if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=3"><\/script>')})()</script>
+if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=4"><\/script>')})()</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Profile Name Search","applicationCategory":"BrowserApplication","operatingSystem":"Windows, macOS, Linux (Chrome, Brave, Edge or Arc, version 116 or later)","softwareVersion":"3.0.2","fileSize":"120 KB","url":"https://fluidz.app/","description":"Free Chrome extension for Grindr Web: find a profile by name in seconds, from the grid you already filtered. The extension sends nothing anywhere.","inLanguage":["en","fr","es","pt","it","de"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Fluidz Labs","url":"https://fluidz.app/"}}</script>
 <link rel="stylesheet" href="/labs/one.css?v=3">
 <link rel="stylesheet" href="/labs/one-v3.css?v=4">
@@ -267,8 +267,8 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=3"><\/script>')}
       <details><summary><span data-i18n="faq.safe.q">Is it safe?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.safe.a">The download is a zip of about 110 KB: plain, readable JavaScript, nothing minified. The extension only asks Chrome for local storage, only runs on web.grindr.com, and makes no network requests — nothing leaves your browser. Open content.js in any text editor to check.</p></details>
       <details><summary><span data-i18n="faq.ban.q">Can I get banned from Grindr for using it?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.ban.a">No tool can promise that. Grindr’s terms are strict about third-party tools. Profile Name Search never acts for you — no favorites, no messages, no taps — it only reads the names already on your screen and scrolls the grid. But auto-scroll is a grey zone, so use it at your own discretion.</p></details>
       <details><summary><span data-i18n="faq.8.q">How much does it cost?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.8.a">Nothing. It’s free, with no trial and no limit.</p></details>
-      <details><summary><span data-i18n="faq.1.q">Does it work on my phone?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.1.a">No. Chrome extensions only run in desktop browsers: Chrome, Brave, Edge or Arc, version 116 or later. On your phone, enter your e-mail and open the link on your computer.</p></details>
-      <details><summary><span data-i18n="faq.2.q">Why do you ask for my e-mail?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.2.a">It’s how we send you the download link, and how we can tell you when a new version is out, since updates are manual for now. The link creates a free Fluidz account, with no password. You only get news if you tick the box, and we never sell or share your address.</p></details>
+      <details><summary><span data-i18n="faq.1.q">Does it work on my phone?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.1.a">Yes, in beta. On iPhone it runs in Safari with the free Userscripts app; on Android, in Firefox with Violentmonkey. Enter your e-mail on your phone and open the link there: you get the mobile version and a step-by-step install guide. On a computer, it’s the extension for Chrome, Brave, Edge or Arc.</p></details>
+      <details><summary><span data-i18n="faq.2.q">Why do you ask for my e-mail?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary><p data-i18n="faq.2.a">It’s how we send you the download link — the extension for your computer, or the mobile version on your phone — and how we can tell you when a new version is out. The link creates a free Fluidz account, with no password. You only get news if you tick the box, and we never sell or share your address.</p></details>
       <details><summary><span data-i18n="l.q.use">How do I use it well?</span><svg class="ic" aria-hidden="true"><use href="/labs/icons.svg#chevron-down"/></svg></summary>
         <div class="fa">
           <p data-i18n="use.p">On your first visit to Grindr Web, a 4-step welcome walks you through it, starting with “Get your grid ready”. ⚙ → Replay the tour shows it again anytime.</p>
@@ -373,7 +373,7 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=3"><\/script>')}
     <h2 class="gc-h" tabindex="-1" data-i18n="sent.t">Check your inbox</h2>
     <p class="gc-t"><span data-i18n="sent.p">We sent your link to</span> <b class="addr" data-to></b></p>
     <p class="gc-t" data-i18n="sent.computer">Open the e-mail on your computer: the link brings you back here, signed in, with the download.</p>
-    <p class="gc-t phone-note" data-i18n="sent.phone">You’re on a phone, and Chrome extensions don’t run on phones. Open the link on your computer.</p>
+    <p class="gc-t phone-note" data-i18n="sent.phone">On a phone? Open the link right here for the mobile version (beta), or on your computer for the extension.</p>
     <p class="fine" data-i18n="sent.spam">Nothing after a minute? Check your spam or Promotions tab.</p>
     <div class="acts"><button type="button" class="btn btn-g btn-s" data-resend data-i18n="sent.resend">Send it again</button><button type="button" class="linkbtn" data-other data-i18n="sent.other">Use another address</button></div>
     <p class="msg" data-msg role="status" aria-live="polite"></p>
@@ -389,8 +389,9 @@ if(l!=='en')document.write('<script src="/labs/one-l-'+l+'.js?v=3"><\/script>')}
       <a href="#how" class="next" data-i18n="ready.next">Next: install it ↓</a>
     </div>
     <div class="m-only">
-      <p class="gc-t"><b data-i18n="ready.phone.t">Chrome extensions don’t run on phones: open this page on your computer.</b></p>
-      <p class="gc-t" data-i18n="ready.phone.p">Use the link in your e-mail there, and the download appears on this page.</p>
+      <p class="gc-t"><b data-i18n="ready.phone.t">On your phone: the mobile version (beta)</b></p>
+      <p class="gc-t" data-i18n="ready.phone.p">It runs in Safari (iPhone) or Firefox (Android). The guide shows each step, about 5 minutes. For the extension, open this page on your computer.</p>
+      <a class="btn btn-p" href="/m/0b97765b/" data-i18n="ready.phone.btn">Install the mobile version</a>
       <button type="button" class="linkbtn" data-desktop data-i18n="ready.phone.override">I’m on a computer</button>
     </div>
     <p class="fine"><span data-i18n="ready.signed">Signed in as</span> <b data-who></b> · <button type="button" class="linkbtn" data-other data-i18n="ready.other">Use another address</button></p>
