@@ -302,6 +302,10 @@
     /* discreet mode: thumbnails and names blurred until hovered */
     '.disc .av,.disc .nmx{filter:blur(7px);transition:filter .15s}',
     '.disc .r:hover .av,.disc .r:hover .nmx,.disc .it:hover .av,.disc .it:hover .nmx,.disc .card.note:hover .av,.disc .card.note:hover .nmx{filter:none}',
-    '@media (prefers-reduced-motion:reduce){.tg,.tg i,.bh .chev,.advh .ic,.fh .ic,.disc .av,.disc .nmx{transition:none}}'
+    '.pill .pp{width:30px;height:30px;flex-shrink:0;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--p);color:var(--ink);cursor:pointer}',
+    '.pill .pp .ic{color:inherit;font-size:14px}.pill .pp.on{background:rgba(255,255,255,.1);color:var(--tx)}',
+    '.card.note .tap{cursor:pointer}.card.note.flash{cursor:pointer;animation:pnsIn .25s ease}',
+    '@keyframes pnsIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}',
+    '@media (prefers-reduced-motion:reduce){.card.note.flash{animation:none}.tg,.tg i,.bh .chev,.advh .ic,.fh .ic,.disc .av,.disc .nmx{transition:none}}'
   ].join('\n');
 })(typeof window !== 'undefined' ? window : self);

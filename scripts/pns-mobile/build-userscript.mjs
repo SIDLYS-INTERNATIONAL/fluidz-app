@@ -28,6 +28,8 @@ const MOBILE_UI_CSS = [
   '.dragbar,.grip{display:none!important}',
   '.bh{min-height:44px}',
   '.res .it{min-height:44px}',
+  '.pill{display:flex!important;width:100%!important;box-sizing:border-box;min-height:52px}', // minimized: a bottom bar
+  '.pill .pp{width:40px;height:40px}.pill>.ic:last-child{margin-left:auto}',
   'input,textarea{font-size:16px!important}' // iOS zooms into fields under 16px
 ].join('\n')
 const shim = `

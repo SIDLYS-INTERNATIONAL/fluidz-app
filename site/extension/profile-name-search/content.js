@@ -8,7 +8,7 @@
   window.__pnsInjected = true;
 
   var C = window.PNS_CRIT, JR = window.PNS_JOURNAL, ST = window.PNS_STORE;
-  var VERSION = '3.0.2';
+  var VERSION = '3.0.3';
   var CFG = {
     LIST_CAP: 150,
     // Page-observer pacing (ms). Renders are throttled, never one per DOM mutation; slower while a scan is running.

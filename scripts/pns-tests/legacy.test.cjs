@@ -81,7 +81,7 @@ const WATCH = () => { window.__flash = 0; const h = document.getElementById('pns
   check('hint cleared by itself once the side panel connected (floating panel back after a deliberate close, no hint)', await shown(f) && !(await f.sh(r => !!r.querySelector('.card.sidehint'))))
   check('no page errors', f.errs.length === 0, f.errs)
   await f.ctx.close()
-  const lastSide = { pns_v3: { schema: 3, settings: { welcomeDone: true, whatsNew: '3.0.2', lang: 'en', lastSide: true } } }
+  const lastSide = { pns_v3: { schema: 3, settings: { welcomeDone: true, whatsNew: '3.0.3', lang: 'en', lastSide: true } } }
   f = await mk(b, { total: 6, first: 6, batch: 0, latency: 100, names: SIX, mem: lastSide })
   check('reload with lastSide: floating panel hidden during grace', !(await shown(f)))
   await f.page.evaluate(CONNECT); await f.run(2500)

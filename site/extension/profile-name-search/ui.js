@@ -212,11 +212,12 @@
       if (S.cap) box.appendChild(card('warn', 'timer', T('capTitle'), T('capText', { m: S.settings.capMin }), [btn('p', T('resumeScan'), function () { send({ a: 'toggle-scroll' }) }), btn('', T('gotIt'), function () { send({ a: 'cap-ok' }) })]));
       if (S.notice === 'kept' && S.view === 'panel') box.appendChild(card('ok', 'circle-check', T('keptTitle'), T('keptText', { n: (S.searches || []).length }), [btn('', T('gotIt'), function () { send({ a: 'notice-ok' }) })]));
       if (S.note) {
-        box.appendChild(h('div', { cls: 'card note' }, avatar(S.note.thumb),
-          h('div', { cls: 'tx' }, h('b', { cls: 'nmx', text: T('noteTitle', { name: S.note.name }) }), h('small', { text: T('noteText') })),
+        box.appendChild(h('div', { cls: 'card note' }, h('span', { cls: 'tap', on: { click: function () { send({ a: 'note-show' }) } } }, avatar(S.note.thumb)),
+          h('div', { cls: 'tx tap', on: { click: function () { send({ a: 'note-show' }) } } }, h('b', { cls: 'nmx', text: T('noteTitle', { name: S.note.name }) }), h('small', { text: T('noteText') })),
           h('div', { cls: 'na' }, h('button', { type: 'button', cls: 'p', text: T('noteShow'), on: { click: function () { send({ a: 'note-show' }) } } }),
             h('button', { type: 'button', text: T('noteResume'), on: { click: function () { send({ a: 'note-resume' }) } } }))));
       }
+      if (MINI && kind === 'pill') { var fc = MINI.flashCard(S); if (fc) box.appendChild(fc) }
       if (S.end) box.appendChild(card('end', 'flag', T('endTitle'), T('endText', { n: fmtN(S.end.scanned) }), [btn('p', S.end.found ? T('endSee', { k: S.end.found }) : T('endSee0'), function () { send({ a: 'end-see' }); openBlock(3) })]));
       if (S.chatNote) box.appendChild(h('div', { cls: 'card', attrs: { role: 'note' } }, h('p', { text: T('chatNote') }), h('p', { text: T('chatTip'), attrs: { style: 'color:var(--tx3)' } }), h('div', { cls: 'acts' }, btn('', T('gotIt'), function () { send({ a: 'chat-note-ok' }) }))));
       return box;
@@ -533,6 +534,7 @@
       applySearch: function (q) { V.ed = null; V.ov = null; showBlock(2); typing = false; input.value = ''; sentText = C.serialize(q, nameOf); send({ a: 'set-q', q: q }); redraw() },
       closeEditor: function (ov) { V.ed = null; V.ov = ov || null; redraw() } }) : null;
     function openEditor(q, forId) { if (ED) ED.open(q, forId) }
+    var MINI = g.PNS_UI_MINI ? g.PNS_UI_MINI.create({ h: h, ic: ic, T: T, send: send, redraw: redraw, dragStart: ctx.dragStart, avatar: avatar }) : null;
 
     // Scan journal
     function lockGate() {
@@ -642,15 +644,7 @@
         h('p', { text: T('wnBackup'), attrs: { style: 'font-size:12px' } }),
         h('div', { cls: 'bot' }, h('a', { text: 'fluidz.app', attrs: { href: FLUIDZ, target: '_blank', rel: 'noopener noreferrer', style: 'font-size:12px;color:var(--tx3);text-decoration:none' } }), h('button', { type: 'button', cls: 'nx', on: { click: function () { send({ a: 'whatsnew-ok' }) } } }, h('span', { text: T('wnGo') }), ic('arrow-right'))));
     }
-    function buildPill() {
-      return h('div', { cls: 'pill', attrs: { role: 'button', tabindex: '0', 'aria-label': T('max') }, on: {
-        pointerdown: function (e) { if (ctx.dragStart) ctx.dragStart(e, function () { send({ a: 'min' }) }); else send({ a: 'min' }) },
-        keydown: function (e) { if (e.key === 'Enter' || e.key === ' ') send({ a: 'min' }) } } },
-        h('span', { cls: 'drop' }), h('b', { text: 'Profile Name Search' }),
-        S.found > 0 ? h('span', { cls: 'cnt', text: String(S.found) }) : null,
-        S.running ? h('span', { cls: 'st' }, h('i'), document.createTextNode(T('scrolling'))) : null,
-        ic('maximize-2'));
-    }
+    function buildPill() { return MINI ? MINI.pill(S) : h('div') }
 
     /* ---------- skeleton + update ---------- */
     function slot(parent, name, sig, build) {
@@ -678,6 +672,7 @@
       if (sentText != null && S.q && C.sig(C.parse(sentText, resolver).q) === C.sig(S.q)) sentText = null; // the engine caught up with the last search sent
       var k = state.nogrid ? 'nogrid' : (state.view === 'welcome' ? 'welcome' : (state.view === 'whatsnew' ? 'whatsnew' : (state.collapsed && !side ? 'pill' : 'panel')));
       if (!local) autoAdvance();
+      if (MINI) MINI.track(state, k === 'pill');
       var hadFocus = root.getRootNode().activeElement === input, edKey = hadFocus ? null : focusKey();
       quiet = true; try { updateBody(k) } finally { quiet = false }
       root.classList.toggle('disc', !!(state.settings && state.settings.discreet));
@@ -689,9 +684,9 @@
     function updateBody(k) {
       if (k !== kind) skeleton(k);
       var L = lang;
-      slot(slots.cards, 'cards', JSON.stringify([L, S.note, S.end, !!S.chatNote, S.crash, S.interrupted, S.cap, S.otherTabs, S.sideHint, S.notice, S.view, S.toast, S.running, S.settings && S.settings.capMin]), buildCards);
+      slot(slots.cards, 'cards', JSON.stringify([L, S.note, S.end, !!S.chatNote, S.crash, S.interrupted, S.cap, S.otherTabs, S.sideHint, S.notice, S.view, S.toast, S.running, S.settings && S.settings.capMin, k, MINI && MINI.flashSig()]), buildCards);
       if (S.toast && S.toast.id !== lastToast) { lastToast = S.toast.id; clearTimeout(toastTimer); toastTimer = setTimeout(function () { send({ a: 'toast-ok' }) }, 5000) }
-      if (k === 'pill') { slot(slots.main, 'pill', [L, S.found, S.running].join('|'), buildPill); return }
+      if (k === 'pill') { slot(slots.main, 'pill', [L, S.found, S.running, S.hasRun, S.hasQuery, S.favFilter].join('|'), buildPill); return }
       if (k === 'welcome') { slot(slots.main, 'welcome', [L, S.welcomeStep].join('|'), buildWelcome); return }
       if (k === 'whatsnew') { slot(slots.main, 'whatsnew', [L, S.notice, (S.searches || []).length].join('|'), buildWhatsNew); return }
       if (k === 'nogrid') { slot(slots.main, 'nogrid', L, function () { return h('div', { cls: 'panel nogrid' }, h('p', { text: T('spNo') }), h('div', { cls: 'acts' }, h('a', { cls: 'p', text: T('spOpen'), attrs: { href: 'https://web.grindr.com', target: '_blank', rel: 'noopener noreferrer' } }))) }); return }
