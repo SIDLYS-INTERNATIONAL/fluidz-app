@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "dev:clean": "rm -rf node_modules/.vite && vite",
-    "build": "node scripts/labs-images.mjs && tsc -b && vite build && node scripts/unpublish.mjs && node scripts/pns-mobile/build-userscript.mjs && node scripts/pns-mobile/install-page.mjs",
+    "build": "node scripts/labs-images.mjs && tsc -b && vite build && node scripts/unpublish.mjs && node scripts/stamp-version.mjs && node scripts/pns-mobile/build-userscript.mjs && node scripts/pns-mobile/install-page.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },
