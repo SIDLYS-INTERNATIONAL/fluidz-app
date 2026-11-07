@@ -1,8 +1,8 @@
-/* Integration tests for Profile Name Search 3.0.2 (fake Grindr page + Playwright, virtual clock).
+/* Integration tests for Profile Name Search 3.0.3 (fake Grindr page + Playwright, virtual clock).
    Run: node scripts/pns-tests/features.test.cjs */
 const { chromium, mk, check, done } = require('./harness.cjs')
 const NAMES = ['Dom TOP', 'Bear', 'Leo XXL', 'Sam', 'Noah top', 'Eli', 'Dominant TOP XXL', 'Theo', 'laptop Max', 'José']
-const v3 = (extra) => ({ pns_v3: Object.assign({ schema: 3, settings: { welcomeDone: true, whatsNew: '3.0.2', lang: 'en' } }, extra || {}) })
+const v3 = (extra) => ({ pns_v3: Object.assign({ schema: 3, settings: { welcomeDone: true, whatsNew: '3.0.3', lang: 'en' } }, extra || {}) })
 
 // Types a new search: existing chips are cleared first (typing into a non-empty field adds a chip, as in 2.x).
 async function search(e, text) { const i = e.$('.field input'); if (!(await i.count())) { await e.$('.bh[data-b="1"]').click(); await e.run(200) } if (await e.$('.fbtn.clr').count()) { await e.$('.fbtn.clr').click(); await e.run(200) } await i.click(); await i.fill(text); await i.press('Enter'); await e.run(800) }
@@ -228,7 +228,7 @@ const hasAct = e => e.sh(r => !!r.querySelector('.act'))
   await search(e, 'top'); await settings(e)
   check('⚙ Settings & About: language (6, EN first), speed, pause, limit, outline, discreet, lock, version, links', await e.sh(r => {
     const o = r.querySelector('.ov[data-ov=settings]'); if (!o) return false; const t = o.textContent; const l = [...o.querySelector('.chips').querySelectorAll('button')].map(x => x.textContent)
-    return l.length === 6 && l[0] === 'EN' && /Gentle/.test(t) && /Pause at each new match/.test(t) && /Scan time limit/.test(t) && /Coral outline/.test(t) && /Discreet/.test(t) && /PIN/.test(t) && /3\.0\.2/.test(t) && o.querySelector('a[href^="mailto:hello@fluidz.app"]') && o.querySelector('a[href^="https://fluidz.app"]') }))
+    return l.length === 6 && l[0] === 'EN' && /Gentle/.test(t) && /Pause at each new match/.test(t) && /Scan time limit/.test(t) && /Coral outline/.test(t) && /Discreet/.test(t) && /PIN/.test(t) && /3\.0\.3/.test(t) && o.querySelector('a[href^="mailto:hello@fluidz.app"]') && o.querySelector('a[href^="https://fluidz.app"]') }))
   check('pause at each match: ON by default (unchanged)', await e.sh(r => r.querySelector('.tg[aria-label="Pause at each new match"]').getAttribute('aria-checked') === 'true'))
   check('scan time limit default 30 min', await e.sh(r => [...r.querySelectorAll('.chips button.c')].some(x => x.textContent === '30 min' && x.getAttribute('aria-pressed') === 'true')))
   await e.$('.tg[aria-label="Coral outline on the grid"]').click(); await e.run(300)
@@ -264,6 +264,26 @@ const hasAct = e => e.sh(r => !!r.querySelector('.act'))
   check('"To review" list', await e.sh(r => r.querySelector('.ov[data-ov=marks]') && r.querySelectorAll('.ov .it').length === 1 && /Noah/.test(r.querySelector('.ov .it').textContent)))
   await e.$('.ov .ftabs button').nth(1).click(); await e.run(200); await e.$('.ov .it .dots').click(); await e.run(400)
   check('un-ignore brings the profile back', (await gridMatches(e)).includes('laptop Max'))
+  await e.ctx.close()
+
+  // ---------- 3.0.3: minimized panel (play / pause on the bubble, tap a new match to see him) ----------
+  const many = []; for (let i = 0; i < 60; i++) many.push(i % 6 === 3 ? 'Top guy ' + i : 'Guy ' + i)
+  e = await mk(b, { total: 60, first: 24, batch: 8, latency: 150, names: many, mem: { pns_v3: { schema: 3, settings: { welcomeDone: true, whatsNew: '3.0.3', lang: 'en', pauseEach: false } } } }, { quiet: true })
+  await search(e, 'top')
+  await e.$('.hd button[title="Minimize"]').click(); await e.run(400)
+  check('3.0.3: minimized bubble has its own play button', await e.sh(r => !!r.querySelector('.pill .pp') && !r.querySelector('section.blk')))
+  await e.$('.pill .pp').click(); await e.run(300)
+  check('3.0.3: play on the bubble starts the scan and keeps the panel minimized', await e.sh(r => !!r.querySelector('.pill .pp.on') && !!r.querySelector('.pill .st') && !r.querySelector('section.blk')))
+  let fl = false; for (let i = 0; i < 40 && !fl; i++) { await e.run(500); fl = await e.sh(r => !!r.querySelector('.card.note.flash')) }
+  check('3.0.3: a new match while minimized shows a tappable card above the bubble', fl && await e.sh(r => /New match: Top guy/.test(r.querySelector('.card.note.flash').textContent) && /Tap to see him/.test(r.querySelector('.card.note.flash').textContent)))
+  const flName = await e.sh(r => r.querySelector('.card.note.flash .nmx').textContent.replace('New match: ', ''))
+  await e.$('.pill .pp').click(); await e.run(300)
+  await e.page.evaluate(() => { window.__siv = []; const o = Element.prototype.scrollIntoView; Element.prototype.scrollIntoView = function (x) { window.__siv.push((this.querySelector('p') || {}).textContent); return o.call(this, x) } })
+  await e.$('.card.note.flash .tx').click(); await e.run(300)
+  check('3.0.3: tapping the card scrolls the grid to him (pulse), panel still minimized, card gone', await e.page.evaluate(n => window.__siv.includes(n) && [...document.querySelectorAll('[role=gridcell].gnf-pulse p')].some(p => p.textContent === n), flName) && await e.sh(r => !!r.querySelector('.pill') && !r.querySelector('.card.note.flash')), flName)
+  await e.run(8000)
+  check('3.0.3: pause from the bubble stops the scan', await e.sh(r => !r.querySelector('.pill .pp.on')))
+  check('no page errors (minimized panel)', e.errs.length === 0, e.errs)
   await e.ctx.close()
 
   console.log('--- part 1 done'); const f = done(); await b.close(); process.exit(f ? 1 : 0)

@@ -108,6 +108,10 @@ Some people report that the chat on Grindr Web disconnected after a long scan. W
 
 ## Changelog
 
+### 3.0.3
+- **Minimized panel**: the bubble has its own play / pause button, so the scan runs with the panel closed. While it is minimized, a new match shows a small card above the bubble for 7 seconds; a tap scrolls Grindr’s grid to that profile (it never opens the profile) and the panel stays minimized. The *New match* card (pause at each match) is also tappable.
+- New file `ui-mini.js` (the minimized view); every file stays under 70 KB. Same permissions, no network access. All 6 languages.
+
 ### 3.0.2
 - **Blocks open independently**: ① Search, ② Scan and ③ Results can stay open together; each header still opens or closes its own block. Start opens ② without closing ①, a match or the end of the scan opens ③ without closing the others.
 - Same permissions, no network access. All 6 languages.

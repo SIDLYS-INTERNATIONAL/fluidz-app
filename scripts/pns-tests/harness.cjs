@@ -20,7 +20,7 @@ body{margin:0;font:14px sans-serif;background:#111;color:#ddd}#app{display:flex}
 // Stubs run before the page: chrome.* (storage in memory), counters, observer tracking, fake network grid.
 const INIT = (cfg) => `(() => {
   window.__cfg = ${JSON.stringify(cfg)};
-  const mem = window.__cfg.mem || { pns_v3: { schema: 3, settings: { welcomeDone: true, whatsNew: '3.0.2', lang: 'en' } } }; const listeners = [], changed = [];
+  const mem = window.__cfg.mem || { pns_v3: { schema: 3, settings: { welcomeDone: true, whatsNew: '3.0.3', lang: 'en' } } }; const listeners = [], changed = [];
   const clone = o => JSON.parse(JSON.stringify(o));
   window.chrome = {
     storage: { local: {

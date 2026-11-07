@@ -27,7 +27,7 @@ const SEARCHES = [
   { id: 's3', name: 'Rocket', folder: 'f1', pinned: false, q: q('🚀'), created: T0 },
   { id: 's4', name: 'Leo or Noah', folder: 'f0', pinned: false, q: { groups: [{ items: [{ name: '', terms: [{ t: 'leo' }, { t: 'noah' }] }] }], exclude: [] }, created: T0 }]
 const FOLDERS = [{ id: 'f0', name: '', open: true }, { id: 'f1', name: 'Week-end', open: true }]
-const mem = (lang, extra) => ({ pns_v3: Object.assign({ schema: 3, settings: { welcomeDone: true, whatsNew: '3.0.2', lang, pauseEach: true }, folders: FOLDERS, searches: SEARCHES }, extra || {}), pns_journal_v1: JOURNAL })
+const mem = (lang, extra) => ({ pns_v3: Object.assign({ schema: 3, settings: { welcomeDone: true, whatsNew: '3.0.3', lang, pauseEach: true }, folders: FOLDERS, searches: SEARCHES }, extra || {}), pns_journal_v1: JOURNAL })
 const grid = (lang, extra, m) => ({ total: 300, first: 45, batch: 45, latency: 300, names: NAMES, favs: FAVS, mem: m || mem(lang, extra) })
 
 ;(async () => {
@@ -56,7 +56,7 @@ const grid = (lang, extra, m) => ({ total: 300, first: 45, batch: 45, latency: 3
     if (await e.$('.card.note').count()) await shot(e, '07-pause-on-match')
     await e.page.evaluate(() => 0); await (async () => { const s = await e.mem(); return s })()
     await e.ctx.close()
-    e = await mk(b, grid(lang, { settings: { welcomeDone: true, whatsNew: '3.0.2', lang, pauseEach: false } }), opts)
+    e = await mk(b, grid(lang, { settings: { welcomeDone: true, whatsNew: '3.0.3', lang, pauseEach: false } }), opts)
     await search(e, 'xxl'); await B(e, 2); await e.$('.go').click(); await e.run(9000); await shot(e, '05-block2-scan-running')
     // crash banner
     await e.page.evaluate(() => window.__crash()); await e.run(12000); await shot(e, '15-resume-banner-after-crash'); await e.ctx.close()
@@ -87,9 +87,9 @@ const grid = (lang, extra, m) => ({ total: 300, first: 45, batch: 45, latency: 3
     // empty state
     e = await mk(b, grid(lang), opts); await search(e, 'zzzz'); await B(e, 3); await shot(e, '21-empty-state'); await e.ctx.close()
     // discreet mode
-    e = await mk(b, grid(lang, { settings: { welcomeDone: true, whatsNew: '3.0.2', lang, discreet: true } }), opts); await search(e, 'top'); await B(e, 3); await shot(e, '22-discreet-mode'); await e.ctx.close()
+    e = await mk(b, grid(lang, { settings: { welcomeDone: true, whatsNew: '3.0.3', lang, discreet: true } }), opts); await search(e, 'top'); await B(e, 3); await shot(e, '22-discreet-mode'); await e.ctx.close()
     // other tab + time limit banners
-    e = await mk(b, Object.assign(grid(lang, { settings: { welcomeDone: true, whatsNew: '3.0.2', lang, pauseEach: false, capMin: 10, chatNoteDismissed: true } }), { total: 5000 }), opts)
+    e = await mk(b, Object.assign(grid(lang, { settings: { welcomeDone: true, whatsNew: '3.0.3', lang, pauseEach: false, capMin: 10, chatNoteDismissed: true } }), { total: 5000 }), opts)
     await e.page.evaluate(() => window.__bg.tabs(2)); await search(e, 'top'); await B(e, 2); await e.$('.go').click(); await e.run(10.5 * 60000); await shot(e, '23-banners-other-tab-time-limit'); await e.ctx.close()
   }
   await b.close()

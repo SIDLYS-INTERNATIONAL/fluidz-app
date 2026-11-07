@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Profile Name Search by Fluidz",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "Free Chrome extension for Grindr Web: find any profile by name, keyword or emoji.",
   "homepage_url": "https://fluidz.app/profile-name-search",
   "minimum_chrome_version": "116",
@@ -73,6 +73,7 @@
         "ui-css.js",
         "ui.js",
         "ui-editor.js",
+        "ui-mini.js",
         "content.js"
       ],
       "css": [
