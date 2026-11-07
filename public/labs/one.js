@@ -411,7 +411,7 @@
   function brInit() {
     var d = detectBrowser(), saved = ''
     try { saved = localStorage.getItem(BR_KEY) || '' } catch (e) {}
-    BR_OFF = d === 'firefox' || d === 'safari'
+    BR_OFF = (d === 'firefox' || d === 'safari') && !/iPhone|iPad|iPod|Android/.test(navigator.userAgent || '') // phones get the mobile tabs instead
     BR = BRS[saved] ? saved : (BRS[d] ? d : 'chrome')
     $$('[data-br-pick]').forEach(function (b) { b.addEventListener('click', function () { BR = b.getAttribute('data-br-pick'); try { localStorage.setItem(BR_KEY, BR) } catch (e) {} brApply() }) })
     if (BR === 'chrome' && !saved && !BR_OFF) setTimeout(function () { if (detectBrowser() === 'arc') { BR = 'arc'; brApply() } }, 1500) // Arc adds its CSS variables after load
@@ -425,6 +425,23 @@
     $$('[data-br-pick]').forEach(function (el) { el.setAttribute('aria-pressed', el.getAttribute('data-br-pick') === BR ? 'true' : 'false') })
     $$('[data-br-warn]').forEach(function (el) { el.hidden = !BR_OFF })
     $$('[data-br-meta]').forEach(function (el) { el.textContent = 'v' + PNS_VERSION + ' · ' + (EN['l.br.for'] = EN['l.br.for'] || 'for {b}', t('l.br.for', { b: b.n })) + ' · ' + PNS_SIZE })
+  }
+
+  /* ---------- install guide tabs: Computer / iPhone / Android (picked from the device, switchable) ---------- */
+  function deviceTab() { var ua = navigator.userAgent || ''; return /iPhone|iPad|iPod/.test(ua) ? 'ios' : (/Android/.test(ua) ? 'and' : 'pc') }
+  function initItabs() {
+    var bar = $('.itabs'); if (!bar) return
+    var ids = ['pc', 'ios', 'and'], bs = ids.map(function (k) { return $('#it-' + k) }), ps = ids.map(function (k) { return $('#ip-' + k) })
+    function sel(i, focus) {
+      bs.forEach(function (b, j) { var on = i === j; b.setAttribute('aria-selected', on ? 'true' : 'false'); b.tabIndex = on ? 0 : -1; ps[j].hidden = !on })
+      if (focus) bs[i].focus()
+    }
+    bs.forEach(function (b, i) {
+      b.addEventListener('click', function () { sel(i) })
+      b.addEventListener('keydown', function (e) { var d = e.key === 'ArrowRight' ? 1 : (e.key === 'ArrowLeft' ? -1 : 0); if (d) { e.preventDefault(); sel((i + d + 3) % 3, true) } })
+    })
+    $$('[data-itab]').forEach(function (a) { a.addEventListener('click', function () { var k = a.getAttribute('data-itab'); if (k === 'auto') k = deviceTab() === 'pc' ? 'ios' : deviceTab(); sel(ids.indexOf(k)) }) })
+    sel(ids.indexOf(deviceTab()))
   }
 
   /* ---------- install guide: one step open; on a computer its screenshot sits in the viewer on the right ---------- */
@@ -483,7 +500,7 @@
   var hero = forms.filter(function (f) { return f.name === 'hero' })[0]
   applyLang()
   langInit()
-  renderSocial(); startDemo(); startAnims(); initStepper(); initFaq()
+  renderSocial(); startDemo(); startAnims(); initStepper(); initFaq(); initItabs()
 
   var cpy = $('#copy-ext')
   if (cpy) cpy.addEventListener('click', function () {
